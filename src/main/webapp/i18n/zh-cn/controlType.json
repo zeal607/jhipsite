@@ -1,0 +1,9 @@
+{
+  "jhipsiteApp": {
+    "ControlType": {
+      "null": "",
+      "COMPANY": "COMPANY",
+      "OFFICE": "OFFICE"
+    }
+  }
+}

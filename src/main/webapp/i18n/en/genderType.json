@@ -1,0 +1,9 @@
+{
+  "jhipsiteApp": {
+    "GenderType": {
+      "null": "",
+      "MALE": "MALE",
+      "FEMALE": "FEMALE"
+    }
+  }
+}

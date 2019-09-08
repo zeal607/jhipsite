@@ -1,0 +1,27 @@
+{
+  "jhipsiteApp": {
+    "sysCompanyOffice": {
+      "home": {
+        "title": "Sys Company Offices",
+        "createLabel": "Create a new Sys Company Office",
+        "createOrEditLabel": "Create or edit a Sys Company Office",
+        "notFound": "No Sys Company Offices found"
+      },
+      "created": "A new Sys Company Office is created with identifier {{ param }}",
+      "updated": "A Sys Company Office is updated with identifier {{ param }}",
+      "deleted": "A Sys Company Office is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Sys Company Office {{ id }}?"
+      },
+      "detail": {
+        "title": "Sys Company Office"
+      },
+      "sysCompanyId": "Sys Company Id",
+      "sysOfficeId": "Sys Office Id",
+      "help": {
+        "sysCompanyId": "公司ID",
+        "sysOfficeId": "机构ID"
+      }
+    }
+  }
+}

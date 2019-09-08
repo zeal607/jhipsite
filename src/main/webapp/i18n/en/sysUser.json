@@ -1,0 +1,67 @@
+{
+  "jhipsiteApp": {
+    "sysUser": {
+      "home": {
+        "title": "Sys Users",
+        "createLabel": "Create a new Sys User",
+        "createOrEditLabel": "Create or edit a Sys User",
+        "notFound": "No Sys Users found"
+      },
+      "created": "A new Sys User is created with identifier {{ param }}",
+      "updated": "A Sys User is updated with identifier {{ param }}",
+      "deleted": "A Sys User is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Sys User {{ id }}?"
+      },
+      "detail": {
+        "title": "Sys User"
+      },
+      "userCode": "User Code",
+      "loginCode": "Login Code",
+      "userName": "User Name",
+      "password": "Password",
+      "email": "Email",
+      "mobile": "Mobile",
+      "phone": "Phone",
+      "sex": "Sex",
+      "avatar": "Avatar",
+      "sign": "Sign",
+      "wxOpenid": "Wx Openid",
+      "mobileImei": "Mobile Imei",
+      "userType": "User Type",
+      "refCode": "Ref Code",
+      "refName": "Ref Name",
+      "lastLoginIp": "Last Login Ip",
+      "lastLoginDate": "Last Login Date",
+      "freezeDate": "Freeze Date",
+      "freezeCause": "Freeze Cause",
+      "userSort": "User Sort",
+      "status": "Status",
+      "remarks": "Remarks",
+      "help": {
+        "userCode": "用户编码 ，该字段不作为表的关联外键，仅供展示",
+        "loginCode": "登录账号",
+        "userName": "用户昵称",
+        "password": "登录密码",
+        "email": "电子邮箱",
+        "mobile": "手机号码",
+        "phone": "办公电话",
+        "sex": "用户性别",
+        "avatar": "头像相对路径",
+        "sign": "个性签名",
+        "wxOpenid": "绑定的微信号",
+        "mobileImei": "绑定的手机MID",
+        "userType": "用户类型",
+        "refCode": "用户类型引用编号（雇员表或会员表的ID）",
+        "refName": "用户类型引用姓名",
+        "lastLoginIp": "最后登录IP",
+        "lastLoginDate": "最后登录时间",
+        "freezeDate": "冻结时间",
+        "freezeCause": "冻结原因",
+        "userSort": "用户权重，用于排序（降序）",
+        "status": "用户状态",
+        "remarks": "备注信息"
+      }
+    }
+  }
+}

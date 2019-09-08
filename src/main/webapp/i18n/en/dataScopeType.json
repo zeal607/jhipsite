@@ -1,0 +1,10 @@
+{
+  "jhipsiteApp": {
+    "DataScopeType": {
+      "null": "",
+      "NONE": "NONE",
+      "ALL": "ALL",
+      "CUSTOM": "CUSTOM"
+    }
+  }
+}

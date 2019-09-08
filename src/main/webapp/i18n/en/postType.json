@@ -1,0 +1,10 @@
+{
+  "jhipsiteApp": {
+    "PostType": {
+      "null": "",
+      "SENIOR": "SENIOR",
+      "MIDDLE": "MIDDLE",
+      "BASIC": "BASIC"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "jhipsiteApp": {
+    "sysEmployeeOffice": {
+      "home": {
+        "title": "Sys Employee Offices",
+        "createLabel": "Create a new Sys Employee Office",
+        "createOrEditLabel": "Create or edit a Sys Employee Office",
+        "notFound": "No Sys Employee Offices found"
+      },
+      "created": "A new Sys Employee Office is created with identifier {{ param }}",
+      "updated": "A Sys Employee Office is updated with identifier {{ param }}",
+      "deleted": "A Sys Employee Office is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Sys Employee Office {{ id }}?"
+      },
+      "detail": {
+        "title": "Sys Employee Office"
+      },
+      "sysEmployeeId": "Sys Employee Id",
+      "sysOfficeId": "Sys Office Id",
+      "sysPostId": "Sys Post Id",
+      "help": {
+        "sysEmployeeId": "员工ID",
+        "sysOfficeId": "机构ID",
+        "sysPostId": "岗位ID"
+      }
+    }
+  }
+}

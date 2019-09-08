@@ -1,0 +1,48 @@
+{
+    "name": "SysEmployeeOffice",
+    "fields": [
+        {
+            "fieldName": "sysEmployeeId",
+            "javadoc": "员工ID",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "sysOfficeId",
+            "javadoc": "机构ID",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "sysPostId",
+            "javadoc": "岗位ID",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190908024948",
+    "javadoc": "员工附属机构关系表\n@author 刘东奇",
+    "entityTableName": "sys_employee_office",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "jhipsite"
+    ]
+}

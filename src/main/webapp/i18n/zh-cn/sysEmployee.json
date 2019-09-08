@@ -1,0 +1,41 @@
+{
+  "jhipsiteApp": {
+    "sysEmployee": {
+      "home": {
+        "title": "Sys Employees",
+        "createLabel": "创建新 Sys Employee",
+        "createOrEditLabel": "创建或编辑 Sys Employee",
+        "notFound": "No Sys Employees found"
+      },
+      "created": "Sys Employee {{ param }} 创建成功",
+      "updated": "Sys Employee {{ param }} 更新成功",
+      "deleted": "Sys Employee {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Sys Employee {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Sys Employee"
+      },
+      "empCode": "Emp Code",
+      "empName": "Emp Name",
+      "empNameEn": "Emp Name En",
+      "sysOfficeId": "Sys Office Id",
+      "officeName": "Office Name",
+      "sysCompanyId": "Sys Company Id",
+      "companyName": "Company Name",
+      "status": "Status",
+      "remarks": "Remarks",
+      "help": {
+        "empCode": "员工编码",
+        "empName": "员工姓名",
+        "empNameEn": "英文名",
+        "sysOfficeId": "机构ID",
+        "officeName": "机构名称",
+        "sysCompanyId": "公司ID",
+        "companyName": "公司名称",
+        "status": "状态",
+        "remarks": "备注信息"
+      }
+    }
+  }
+}

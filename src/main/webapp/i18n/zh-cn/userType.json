@@ -1,0 +1,9 @@
+{
+  "jhipsiteApp": {
+    "UserType": {
+      "null": "",
+      "EMPLOYEE": "EMPLOYEE",
+      "MEMBER": "MEMBER"
+    }
+  }
+}

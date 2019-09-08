@@ -1,0 +1,33 @@
+{
+  "jhipsiteApp": {
+    "sysPost": {
+      "home": {
+        "title": "Sys Posts",
+        "createLabel": "创建新 Sys Post",
+        "createOrEditLabel": "创建或编辑 Sys Post",
+        "notFound": "No Sys Posts found"
+      },
+      "created": "Sys Post {{ param }} 创建成功",
+      "updated": "Sys Post {{ param }} 更新成功",
+      "deleted": "Sys Post {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Sys Post {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Sys Post"
+      },
+      "postCode": "Post Code",
+      "postName": "Post Name",
+      "postType": "Post Type",
+      "status": "Status",
+      "remarks": "Remarks",
+      "help": {
+        "postCode": "岗位编码",
+        "postName": "岗位名称",
+        "postType": "岗位分类（高管、中层、基层）",
+        "status": "状态",
+        "remarks": "备注信息"
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "jhipsiteApp": {
+    "MenuType": {
+      "null": "",
+      "MENU": "MENU",
+      "PERMISSION": "PERMISSION",
+      "DEV": "DEV"
+    }
+  }
+}

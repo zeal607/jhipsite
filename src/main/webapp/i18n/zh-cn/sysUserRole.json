@@ -1,0 +1,27 @@
+{
+  "jhipsiteApp": {
+    "sysUserRole": {
+      "home": {
+        "title": "Sys User Roles",
+        "createLabel": "创建新 Sys User Role",
+        "createOrEditLabel": "创建或编辑 Sys User Role",
+        "notFound": "No Sys User Roles found"
+      },
+      "created": "Sys User Role {{ param }} 创建成功",
+      "updated": "Sys User Role {{ param }} 更新成功",
+      "deleted": "Sys User Role {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Sys User Role {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Sys User Role"
+      },
+      "sysUserId": "Sys User Id",
+      "sysRoleId": "Sys Role Id",
+      "help": {
+        "sysUserId": "用户外键",
+        "sysRoleId": "角色外键"
+      }
+    }
+  }
+}

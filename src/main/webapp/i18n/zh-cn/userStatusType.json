@@ -1,0 +1,11 @@
+{
+  "jhipsiteApp": {
+    "UserStatusType": {
+      "null": "",
+      "NORMAL": "NORMAL",
+      "DELETE": "DELETE",
+      "DISABLE": "DISABLE",
+      "FREEZE": "FREEZE"
+    }
+  }
+}

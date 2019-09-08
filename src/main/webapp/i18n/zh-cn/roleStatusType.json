@@ -1,0 +1,10 @@
+{
+  "jhipsiteApp": {
+    "RoleStatusType": {
+      "null": "",
+      "NORMAl": "NORMAl",
+      "DELETE": "DELETE",
+      "DISABLE": "DISABLE"
+    }
+  }
+}

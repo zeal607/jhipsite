@@ -1,0 +1,10 @@
+{
+  "jhipsiteApp": {
+    "PostStatusType": {
+      "null": "",
+      "NORMAL": "NORMAL",
+      "DELETE": "DELETE",
+      "DISABLE": "DISABLE"
+    }
+  }
+}

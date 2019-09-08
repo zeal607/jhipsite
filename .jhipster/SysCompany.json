@@ -1,0 +1,140 @@
+{
+    "name": "SysCompany",
+    "fields": [
+        {
+            "fieldName": "companyCode",
+            "javadoc": "公司编码",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength",
+                "unique"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "parentCode",
+            "javadoc": "父级编号",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "parentCodes",
+            "javadoc": "所有父级编号",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 1000
+        },
+        {
+            "fieldName": "treeSort",
+            "javadoc": "本级排序号（升序）",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "treeSorts",
+            "javadoc": "所有级别排序号",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "treeLeaf",
+            "javadoc": "是否最末级",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "treeLevel",
+            "javadoc": "层次级别",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "treeNames",
+            "javadoc": "全节点名",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 1000
+        },
+        {
+            "fieldName": "viewCode",
+            "javadoc": "公司代码",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "companyName",
+            "javadoc": "公司名称",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 200
+        },
+        {
+            "fieldName": "fullName",
+            "javadoc": "公司全称",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength",
+                "unique"
+            ],
+            "fieldValidateRulesMaxlength": 200
+        },
+        {
+            "fieldName": "areaCode",
+            "javadoc": "区域编码",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "status",
+            "javadoc": "状态",
+            "fieldType": "CompanyStatusType",
+            "fieldValues": "NORMAL,DELETE,DISABLE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "remarks",
+            "javadoc": "备注信息",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 500
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190908024945",
+    "javadoc": "公司表\n@author 刘东奇",
+    "entityTableName": "sys_company",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "jhipsite"
+    ]
+}

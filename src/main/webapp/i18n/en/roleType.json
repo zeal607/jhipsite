@@ -1,0 +1,9 @@
+{
+  "jhipsiteApp": {
+    "RoleType": {
+      "null": "",
+      "ORGANIZARION": "ORGANIZARION",
+      "USER": "USER"
+    }
+  }
+}

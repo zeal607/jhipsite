@@ -1,0 +1,51 @@
+{
+  "jhipsiteApp": {
+    "sysCompany": {
+      "home": {
+        "title": "Sys Companies",
+        "createLabel": "创建新 Sys Company",
+        "createOrEditLabel": "创建或编辑 Sys Company",
+        "notFound": "No Sys Companies found"
+      },
+      "created": "Sys Company {{ param }} 创建成功",
+      "updated": "Sys Company {{ param }} 更新成功",
+      "deleted": "Sys Company {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Sys Company {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Sys Company"
+      },
+      "companyCode": "Company Code",
+      "parentCode": "Parent Code",
+      "parentCodes": "Parent Codes",
+      "treeSort": "Tree Sort",
+      "treeSorts": "Tree Sorts",
+      "treeLeaf": "Tree Leaf",
+      "treeLevel": "Tree Level",
+      "treeNames": "Tree Names",
+      "viewCode": "View Code",
+      "companyName": "Company Name",
+      "fullName": "Full Name",
+      "areaCode": "Area Code",
+      "status": "Status",
+      "remarks": "Remarks",
+      "help": {
+        "companyCode": "公司编码",
+        "parentCode": "父级编号",
+        "parentCodes": "所有父级编号",
+        "treeSort": "本级排序号（升序）",
+        "treeSorts": "所有级别排序号",
+        "treeLeaf": "是否最末级",
+        "treeLevel": "层次级别",
+        "treeNames": "全节点名",
+        "viewCode": "公司代码",
+        "companyName": "公司名称",
+        "fullName": "公司全称",
+        "areaCode": "区域编码",
+        "status": "状态",
+        "remarks": "备注信息"
+      }
+    }
+  }
+}

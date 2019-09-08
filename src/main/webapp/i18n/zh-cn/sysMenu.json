@@ -1,0 +1,61 @@
+{
+  "jhipsiteApp": {
+    "sysMenu": {
+      "home": {
+        "title": "Sys Menus",
+        "createLabel": "创建新 Sys Menu",
+        "createOrEditLabel": "创建或编辑 Sys Menu",
+        "notFound": "No Sys Menus found"
+      },
+      "created": "Sys Menu {{ param }} 创建成功",
+      "updated": "Sys Menu {{ param }} 更新成功",
+      "deleted": "Sys Menu {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Sys Menu {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Sys Menu"
+      },
+      "menuCode": "Menu Code",
+      "parentCode": "Parent Code",
+      "parentCodes": "Parent Codes",
+      "treeSort": "Tree Sort",
+      "treeSorts": "Tree Sorts",
+      "treeLeaf": "Tree Leaf",
+      "treeLevel": "Tree Level",
+      "treeNames": "Tree Names",
+      "menuName": "Menu Name",
+      "menuType": "Menu Type",
+      "menuHref": "Menu Href",
+      "menuIcon": "Menu Icon",
+      "menuTitle": "Menu Title",
+      "permission": "Permission",
+      "menuSort": "Menu Sort",
+      "isShow": "Is Show",
+      "sysCode": "Sys Code",
+      "status": "Status",
+      "remarks": "Remarks",
+      "help": {
+        "menuCode": "菜单编码",
+        "parentCode": "父级编号",
+        "parentCodes": "所有父级编号",
+        "treeSort": "本级排序号（升序）",
+        "treeSorts": "所有级别排序号",
+        "treeLeaf": "是否最末级",
+        "treeLevel": "层次级别",
+        "treeNames": "全节点名",
+        "menuName": "菜单名称",
+        "menuType": "菜单类型",
+        "menuHref": "链接",
+        "menuIcon": "图标",
+        "menuTitle": "菜单标题",
+        "permission": "权限标识",
+        "menuSort": "菜单排序（升序）",
+        "isShow": "是否显示",
+        "sysCode": "归属系统（default:主导航菜单、mobileApp:APP菜单）",
+        "status": "状态",
+        "remarks": "备注信息"
+      }
+    }
+  }
+}

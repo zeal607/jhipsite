@@ -1,0 +1,604 @@
+application{
+    config{
+    	//应用类型
+    	applicationType monolith
+    	//项目名称
+        baseName jhipsite
+        //包名
+        packageName com.ruowei
+
+        //后端构建工具
+        buildTool maven
+
+        //数据库类型
+        databaseType sql        
+        devDatabaseType mysql
+        prodDatabaseType mysql
+        //缓存框架
+		cacheProvider ehcache
+		//Hibernate二级缓存
+		enableHibernateCache true
+
+		//jhipster前缀
+		jhiPrefix jhi
+		//实体类后缀
+		entitySuffix false
+		//DTO后缀
+        dtoSuffix DTO
+
+		//前端包管理工具
+		clientPackageManager npm
+		//前端框架
+ 		clientFramework react
+ 		//是否国际化        
+        enableTranslation true
+        //支持语言
+        languages [zh-cn,en]
+        //默认语言
+        nativeLanguage zh-cn
+
+        //是否开启API驱动开发
+        enableSwaggerCodegen true 
+        //消息队列：kafka|false      
+		messageBroker false
+        //搜索引擎：elasticsearch|false
+        searchEngine false
+        //服务发现类型：eureka|consul|no
+        serviceDiscoveryType false
+        //websocket：spring-websocket|false
+        websocket false
+
+        //跳过前端
+        skipClient false
+        //跳过后端		
+		skipServer false
+		//跳过用户管理
+        skipUserManagement false
+    }
+    entities *
+}
+
+
+/** 启用DTO，并自带实体转换器 */
+dto all with mapstruct
+
+/** 启用服务接口及其实现 */
+service all with serviceImpl
+
+/** 启用前端查询参数转换器 */
+filter all
+
+/** 启用分页 */
+paginate all with pagination
+
+/**
+ * 1、使用id作为表的主键，id的生成策略需要修改，目前用UUID，确保全局唯一，建议搞一个脚本处理；
+ * 2、如果有表需要审计功能，需要创建人、创建时间、修改人、修改时间等字段，那么在设计表结构的时候可以暂时不用考虑这四个自动，而是基于spring的AUDIT框架实现；
+ */
+
+/**
+ * 用户表
+ * @author 刘东奇
+ */
+entity SysUser {
+	/** 用户编码 ，该字段不作为表的关联外键，仅供展示*/
+    userCode                String			required maxlength(100) unique
+    /** 登录账号 */          
+    loginCode	            String 			required maxlength(100) unique
+   	/** 用户昵称 */      
+    userName	            String 			maxlength(100)	
+    /** 登录密码 */        
+    password	            String 			required maxlength(100)
+    /** 电子邮箱 */
+    email                   String 			maxlength(300) unique
+    /** 手机号码 */        
+    mobile                  String 			maxlength(100) unique
+    /** 办公电话 */        
+    phone                   String 			maxlength(100)
+    /** 用户性别 */	        
+    sex                     GenderType
+    /** 头像相对路径 */                    
+    avatar                  String 			maxlength(1000)
+    /** 个性签名 */          
+    sign                    String 			maxlength(200)
+    /** 绑定的微信号 */          
+    wxOpenid                String 			maxlength(1000)	unique
+    /** 绑定的手机MID */     
+    mobileImei              String 			maxlength(100) unique
+    /** 用户类型 */
+    userType                UserType 
+    /** 用户类型引用编号（雇员表或会员表的ID） */                       
+    refCode                 String 			maxlength(100) 
+    /** 用户类型引用姓名 */         
+    refName                 String 			maxlength(100)
+    /** 最后登录IP */
+    lastLoginIp             String 			maxlength(100)
+    /** 最后登录时间 */         
+    lastLoginDate           Instant
+    /** 冻结时间 */                        
+    freezeDate              Instant
+    /** 冻结原因 */                        
+    freezeCause             String 			maxlength(200)
+    /** 用户权重，用于排序（降序）*/           
+    userSort                Integer 
+ 	/** 用户状态 */                         
+    status                  UserStatusType 	required
+    /** 备注信息 */                 
+    remarks                 String 			maxlength(500)           
+}
+
+/**
+ * 用户性别
+ * 男|女
+ * @author 刘东奇
+ */
+enum GenderType {
+    MALE,
+    FEMALE
+}
+
+/**
+ * 用户类型
+ * 雇员|会员
+ * @author 刘东奇
+ */
+enum UserType {
+    EMPLOYEE,
+    MEMBER
+}
+
+/**
+ * 管理员类型
+ * 非管理员|系统管理员|二级管理员
+ * @author 刘东奇
+ */
+enum AdminType {
+    NONE,
+    SYS_ADMIN,
+    SUB_ADMIN
+}
+
+/**
+ * 密码安全级别类型
+ * 初始|很弱|弱|安全|很安全
+ * @author 刘东奇
+ */
+enum PwdSecurityLevelType {
+    INITIAL,
+    VERY_WEAK,
+    WEAK,
+    STRONG,
+    VERY_STRONG
+}
+
+/**
+ * 用户状态类型
+ * 正常|删除|停用|冻结
+ * @author 刘东奇
+ */
+enum UserStatusType {
+    NORMAL,
+    DELETE,
+    DISABLE,
+    FREEZE
+}
+
+/**
+ * 角色表
+ * @author 刘东奇
+ */
+entity SysRole {
+	/** 角色编码 ，该字段不作为表的关联外键，仅供展示*/
+    roleCode                String 			required maxlength(100) unique 
+    /** 角色名称 */         
+    roleName	            String 			required maxlength(100) unique
+    /** 角色类型 */        
+    roleType	            RoleType		required
+    /** 角色排序（升序） */                  
+    roleSort	            Integer
+    /** 是否系统内置 */	                        
+    isSys                   Boolean	 		required
+    /** 数据范围设置 */                  
+    dataScope               DataScopeType
+    /** 适应业务范围 */                  
+    bizScope                String 			maxlength(255) 
+    /** 状态 */          
+    status                  RoleStatusType	required
+    /** 备注信息 */	                
+    remarks                 String 			maxlength(500)           
+}
+
+/**
+ * 角色类型
+ * 组织角色|用户角色
+ * @author 刘东奇
+ */
+enum RoleType {
+    ORGANIZARION,
+    USER
+}
+
+/**
+ * 数据范围类型
+ * 未设置|全部|自定义
+ * @author 刘东奇
+ */
+enum DataScopeType {
+    NONE,
+    ALL,
+    CUSTOM
+}
+
+/**
+ * 角色状态类型
+ * 正常|删除|停用
+ * @author 刘东奇
+ */
+enum RoleStatusType {
+    NORMAl,
+    DELETE,
+    DISABLE
+}
+
+/**
+ * 菜单表
+ * @author 刘东奇
+ */
+entity SysMenu {
+	/** 菜单编码 */
+    menuCode                String 			required maxlength(100) unique
+    /** 父级编号 */          
+    parentCode 	            String			maxlength(100)
+    /** 所有父级编号 */                          
+    parentCodes	            String 			maxlength(1000)
+ 	/** 本级排序号（升序） */ 	       
+    treeSort	            Integer
+ 	/** 所有级别排序号 */	                       
+    treeSorts               Integer
+    /** 是否最末级 */	                       
+    treeLeaf                Boolean   		required
+    /** 层次级别 */                      
+    treeLevel               Integer  		required
+    /** 全节点名 */                      
+    treeNames               String 			required maxlength(1000) 
+    /** 菜单名称 */         
+    menuName                String 			maxlength(100)
+    /** 菜单类型 */           
+    menuType                MenuType   		required
+    /** 链接 */	                        
+    menuHref                String 			maxlength(1000)
+    /** 图标 */          
+    menuIcon                String 			maxlength(100)
+    /** 菜单标题 */           
+    menuTitle               String 			maxlength(100)
+    /** 权限标识 */           
+    permission              String 			maxlength(1000)
+    /** 菜单排序（升序） */          
+    menuSort	            Integer
+    /** 是否显示 */	                        
+    isShow                  Boolean			required
+    /** 归属系统（default:主导航菜单、mobileApp:APP菜单） */                         
+    sysCode                 SysType 		required 
+    /** 状态 */                       
+    status                  MenuStatusType	required
+    /** 备注信息 */	                
+    remarks                 String 			maxlength(500)           
+}
+
+/**
+ * 菜单类型
+ * 菜单|权限|开发
+ * @author 刘东奇
+ */
+enum MenuType {
+    MENU,
+    PERMISSION,
+    DEV
+}
+
+/**
+ * 归属系统类型
+ * 主导航|APP菜单
+ * @author 刘东奇
+ */
+enum SysType {
+    WEB,
+    MOBILE
+}
+
+/**
+ * 菜单状态类型
+ * 正常|删除|停用
+ * @author 刘东奇
+ */
+enum MenuStatusType {
+    NORMAL,
+    DELETE,
+    DISABLE
+}
+
+/**
+ * 用户与角色关联表
+ * @author 刘东奇
+ */
+entity SysUserRole {
+	/** 用户外键 */
+    sysUserId         	String 		required maxlength(100) 
+     /** 角色外键 */           
+    sysRoleId  	       	String 		required maxlength(100)           
+}
+
+/**
+ * 角色与菜单关联表
+ * @author 刘东奇
+ */
+entity SysRoleMenu {
+	/** 角色外键 */
+    sysRoleId  	       	String 		required maxlength(100) 
+    /** 菜单外键 */           
+    sysMenuId         	String 		required maxlength(100)            
+}
+
+/**
+ * 公司表
+ * @author 刘东奇
+ */
+entity SysCompany {
+	/** 公司编码 */
+    companyCode             String 				required maxlength(100) unique
+    /** 父级编号 */         
+    parentCode 	            String 				maxlength(100)
+    /** 所有父级编号 */          
+    parentCodes	            String 				maxlength(1000)
+    /** 本级排序号（升序） */ 	        
+    treeSort	            Integer
+    /** 所有级别排序号 */                        
+    treeSorts               Integer
+    /** 是否最末级 */	                        
+    treeLeaf                Boolean  			required
+    /** 层次级别 */                      
+    treeLevel               Integer  			required
+    /** 全节点名 */                       
+    treeNames               String 				required maxlength(1000) 
+    /** 公司代码 */        
+    viewCode                String 				maxlength(100) 
+    /** 公司名称 */          
+    companyName             String 				required maxlength(200) 
+    /** 公司全称 */          
+    fullName                String 				required maxlength(200) unique
+    /** 区域编码 */          
+    areaCode                String 				maxlength(100)  
+    /** 状态 */         
+    status                  CompanyStatusType	required
+  	/** 备注信息 */	            
+    remarks                 String 				maxlength(500)          
+}
+
+/**
+ * 公司状态类型
+ * 正常|删除|停用
+ * @author 刘东奇
+ */
+enum CompanyStatusType {
+    NORMAL,
+    DELETE,
+    DISABLE
+}
+
+/**
+ * 组织机构表
+ * @author 刘东奇
+ */
+entity SysOffice {
+	/** 机构编码 */
+    officeCode             	String 				required maxlength(100) unique
+     /** 父级编号 */         
+    parentCode 	            String 				maxlength(100) 
+    /** 所有父级编号 */         
+    parentCodes	            String 				maxlength(1000) 
+    /** 本级排序号（升序） */	        
+    treeSort	            Integer	
+    /** 所有级别排序号 */                        
+    treeSorts               Integer
+    /** 是否最末级 */	                        
+    treeLeaf                Boolean  			required
+    /** 层次级别 */                      
+    treeLevel               Integer    			required 
+    /** 全节点名 */                    
+    treeNames               String 				required maxlength(1000)
+    /** 机构代码 */          
+    viewCode                String 				maxlength(100)
+    /** 机构名称 */         
+    officeName              String 				required maxlength(200) 
+    /** 机构全称 */          
+    fullName                String 				required maxlength(200) unique
+    /** 机构类型 */          
+    officeType              OfficeType 			required
+    /** 负责人 */                     
+    leader                  String 				maxlength(100)
+    /** 办公电话 */           
+    phone                   String 				maxlength(100)
+	/** 联系地址 */           
+    address                 String 				maxlength(255)
+    /** 邮政编码 */          
+    zipCode                 String 				maxlength(100) 
+    /** 电子邮箱 */          
+    email                   String 				maxlength(300) 
+    /** 备注信息 */          
+    remarks                 String 				maxlength(500) 
+    /** 状态 */          
+    status                  OfficeStatusType	required
+    /** 备注信息 */	            
+    remarks                 String 				maxlength(500)           
+}
+
+/**
+ * 机构类型
+ * @author 刘东奇
+ */
+enum OfficeType {
+    NATIONAL,
+    PROVINCIAL,
+    CITY
+}
+
+/**
+ * 机构状态类型
+ * 正常|删除|停用
+ * @author 刘东奇
+ */
+enum OfficeStatusType {
+    NORMAL,
+    DELETE,
+    DISABLE
+}
+
+/**
+ * 员工表
+ * @author 刘东奇
+ */
+entity SysEmployee {
+	/** 员工编码 */
+    empCode                 String 				required maxlength(100) unique
+    /** 员工姓名 */         
+    empName	                String 				required maxlength(100)
+   	/** 英文名 */           
+    empNameEn	            String 				maxlength(1000) 
+    /** 机构ID */	       
+    sysOfficeId             String 				maxlength(100) 
+    /** 机构名称 */          
+    officeName              String 				maxlength(100) 
+    /** 公司ID */          
+    sysCompanyId            String 				maxlength(200)
+    /** 公司名称 */           
+    companyName             String 				maxlength(100) 
+    /** 状态 */          
+    status                  EmployeeStatusType	required
+    /** 备注信息 */	            
+    remarks                 String 				maxlength(500)           
+}
+
+/**
+ * 员工状态类型
+ * 在职|删除|离职
+ * @author 刘东奇
+ */
+enum EmployeeStatusType {
+    NORMAL,
+    DELETE,
+    DEPARTUTE
+}
+
+/**
+ * 员工附属机构关系表
+ * @author 刘东奇
+ */
+entity SysEmployeeOffice {
+	/** 员工ID */
+    sysEmployeeId  	        String 			required maxlength(100) 
+    /** 机构ID */           
+    sysOfficeId             String 			required maxlength(100) 
+    /** 岗位ID */           
+    sysPostId               String 			required maxlength(100) 
+}
+
+/**
+ * 公司部门关联表
+ * @author 刘东奇
+ */
+entity SysCompanyOffice {
+	/** 公司ID */
+    sysCompanyId  	        String 			required maxlength(100)  
+    /** 机构ID */          
+    sysOfficeId             String 			required maxlength(100)            
+}
+
+/**
+ * 员工岗位
+ * @author 刘东奇
+ */
+entity SysPost {
+	/** 岗位编码 */
+    postCode                String 			required maxlength(100) unique
+    /** 岗位名称 */         
+    postName	            String 			required maxlength(100) 
+    /** 岗位分类（高管、中层、基层） */          
+    postType	            PostType 	  	
+    /** 状态 */                 
+    status                  PostStatusType	required
+    /** 备注信息 */	                
+    remarks                 String 			maxlength(500)           
+}
+
+/**
+ * 岗位分类
+ * 高管|中层|基层
+ * @author 刘东奇
+ */
+enum PostType {
+    SENIOR,
+    MIDDLE,
+    BASIC
+}
+
+/**
+ * 机构状态类型
+ * 正常|删除|停用
+ * @author 刘东奇
+ */
+enum PostStatusType {
+    NORMAL,
+    DELETE,
+    DISABLE
+}
+
+/**
+ * 员工与岗位关联表
+ * @author 刘东奇
+ */
+entity SysEmployeePost {
+	/** 员工ID */
+    sysEmployeeId  	        String 		required maxlength(100) 
+    /** 岗位ID */           
+    sysPostId               String 		required maxlength(100)            
+}
+
+/**
+ * 角色数据权限表
+ * @author 刘东奇
+ */
+entity SysRoleDataScope {
+	/** 控制角色ID */
+    sysRoleId  	            String 			required maxlength(100)
+   	/** 控制类型 */           
+    ctrlType                ControlType		required
+    /** 控制数据，如控制类型为公司，那么这里就是公司编号 */                    
+    ctrlData                String 			maxlength(100)
+    /** 控制权限 ??????????????????? */           
+    ctrlPermi               String 			maxlength(100)            
+}
+
+/**
+ * 控制类型
+ * 公司级|机构级
+ * @author 刘东奇
+ */
+enum ControlType {
+    COMPANY,
+    OFFICE
+}
+
+/**
+ * 用户数据权限表
+ * @author 刘东奇
+ */
+entity SysUserDataScope {
+	/** 控制用户ID */
+    sysUserId  	            String 			required maxlength(100) 
+    /** 控制类型 */          
+    ctrlType                ControlType 	required
+    /** 控制数据，如控制类型为公司，那么这里就是公司编号 */                   
+    ctrlData                String 			maxlength(100) 
+    /** 控制权限 ???????????????????*/           
+    ctrlPermi               String 			maxlength(100)            
+}

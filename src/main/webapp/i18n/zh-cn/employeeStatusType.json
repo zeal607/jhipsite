@@ -1,0 +1,10 @@
+{
+  "jhipsiteApp": {
+    "EmployeeStatusType": {
+      "null": "",
+      "NORMAL": "NORMAL",
+      "DELETE": "DELETE",
+      "DEPARTUTE": "DEPARTUTE"
+    }
+  }
+}

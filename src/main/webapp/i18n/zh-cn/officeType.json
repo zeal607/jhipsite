@@ -1,0 +1,10 @@
+{
+  "jhipsiteApp": {
+    "OfficeType": {
+      "null": "",
+      "NATIONAL": "NATIONAL",
+      "PROVINCIAL": "PROVINCIAL",
+      "CITY": "CITY"
+    }
+  }
+}

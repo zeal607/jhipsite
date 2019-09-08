@@ -1,0 +1,177 @@
+{
+    "name": "SysMenu",
+    "fields": [
+        {
+            "fieldName": "menuCode",
+            "javadoc": "菜单编码",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength",
+                "unique"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "parentCode",
+            "javadoc": "父级编号",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "parentCodes",
+            "javadoc": "所有父级编号",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 1000
+        },
+        {
+            "fieldName": "treeSort",
+            "javadoc": "本级排序号（升序）",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "treeSorts",
+            "javadoc": "所有级别排序号",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "treeLeaf",
+            "javadoc": "是否最末级",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "treeLevel",
+            "javadoc": "层次级别",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "treeNames",
+            "javadoc": "全节点名",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 1000
+        },
+        {
+            "fieldName": "menuName",
+            "javadoc": "菜单名称",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "menuType",
+            "javadoc": "菜单类型",
+            "fieldType": "MenuType",
+            "fieldValues": "MENU,PERMISSION,DEV",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "menuHref",
+            "javadoc": "链接",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 1000
+        },
+        {
+            "fieldName": "menuIcon",
+            "javadoc": "图标",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "menuTitle",
+            "javadoc": "菜单标题",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "permission",
+            "javadoc": "权限标识",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 1000
+        },
+        {
+            "fieldName": "menuSort",
+            "javadoc": "菜单排序（升序）",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "isShow",
+            "javadoc": "是否显示",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "sysCode",
+            "javadoc": "归属系统（default:主导航菜单、mobileApp:APP菜单）",
+            "fieldType": "SysType",
+            "fieldValues": "WEB,MOBILE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "javadoc": "状态",
+            "fieldType": "MenuStatusType",
+            "fieldValues": "NORMAL,DELETE,DISABLE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "remarks",
+            "javadoc": "备注信息",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 500
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190908024942",
+    "javadoc": "菜单表\n@author 刘东奇",
+    "entityTableName": "sys_menu",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "jhipsite"
+    ]
+}

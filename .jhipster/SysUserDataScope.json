@@ -1,0 +1,55 @@
+{
+    "name": "SysUserDataScope",
+    "fields": [
+        {
+            "fieldName": "sysUserId",
+            "javadoc": "控制用户ID",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "ctrlType",
+            "javadoc": "控制类型",
+            "fieldType": "ControlType",
+            "fieldValues": "COMPANY,OFFICE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "ctrlData",
+            "javadoc": "控制数据，如控制类型为公司，那么这里就是公司编号",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "ctrlPermi",
+            "javadoc": "控制权限 ???????????????????",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190908024953",
+    "javadoc": "用户数据权限表\n@author 刘东奇",
+    "entityTableName": "sys_user_data_scope",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "jhipsite"
+    ]
+}

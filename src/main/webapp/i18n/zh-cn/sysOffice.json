@@ -1,0 +1,61 @@
+{
+  "jhipsiteApp": {
+    "sysOffice": {
+      "home": {
+        "title": "Sys Offices",
+        "createLabel": "创建新 Sys Office",
+        "createOrEditLabel": "创建或编辑 Sys Office",
+        "notFound": "No Sys Offices found"
+      },
+      "created": "Sys Office {{ param }} 创建成功",
+      "updated": "Sys Office {{ param }} 更新成功",
+      "deleted": "Sys Office {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Sys Office {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Sys Office"
+      },
+      "officeCode": "Office Code",
+      "parentCode": "Parent Code",
+      "parentCodes": "Parent Codes",
+      "treeSort": "Tree Sort",
+      "treeSorts": "Tree Sorts",
+      "treeLeaf": "Tree Leaf",
+      "treeLevel": "Tree Level",
+      "treeNames": "Tree Names",
+      "viewCode": "View Code",
+      "officeName": "Office Name",
+      "fullName": "Full Name",
+      "officeType": "Office Type",
+      "leader": "Leader",
+      "phone": "Phone",
+      "address": "Address",
+      "zipCode": "Zip Code",
+      "email": "Email",
+      "remarks": "Remarks",
+      "status": "Status",
+      "help": {
+        "officeCode": "机构编码",
+        "parentCode": "父级编号",
+        "parentCodes": "所有父级编号",
+        "treeSort": "本级排序号（升序）",
+        "treeSorts": "所有级别排序号",
+        "treeLeaf": "是否最末级",
+        "treeLevel": "层次级别",
+        "treeNames": "全节点名",
+        "viewCode": "机构代码",
+        "officeName": "机构名称",
+        "fullName": "机构全称",
+        "officeType": "机构类型",
+        "leader": "负责人",
+        "phone": "办公电话",
+        "address": "联系地址",
+        "zipCode": "邮政编码",
+        "email": "电子邮箱",
+        "remarks": "备注信息",
+        "status": "状态"
+      }
+    }
+  }
+}

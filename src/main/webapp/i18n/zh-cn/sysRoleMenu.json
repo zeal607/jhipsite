@@ -1,0 +1,27 @@
+{
+  "jhipsiteApp": {
+    "sysRoleMenu": {
+      "home": {
+        "title": "Sys Role Menus",
+        "createLabel": "创建新 Sys Role Menu",
+        "createOrEditLabel": "创建或编辑 Sys Role Menu",
+        "notFound": "No Sys Role Menus found"
+      },
+      "created": "Sys Role Menu {{ param }} 创建成功",
+      "updated": "Sys Role Menu {{ param }} 更新成功",
+      "deleted": "Sys Role Menu {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Sys Role Menu {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Sys Role Menu"
+      },
+      "sysRoleId": "Sys Role Id",
+      "sysMenuId": "Sys Menu Id",
+      "help": {
+        "sysRoleId": "角色外键",
+        "sysMenuId": "菜单外键"
+      }
+    }
+  }
+}

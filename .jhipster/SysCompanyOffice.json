@@ -1,0 +1,38 @@
+{
+    "name": "SysCompanyOffice",
+    "fields": [
+        {
+            "fieldName": "sysCompanyId",
+            "javadoc": "公司ID",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "sysOfficeId",
+            "javadoc": "机构ID",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190908024949",
+    "javadoc": "公司部门关联表\n@author 刘东奇",
+    "entityTableName": "sys_company_office",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "jhipsite"
+    ]
+}

@@ -1,0 +1,9 @@
+{
+  "jhipsiteApp": {
+    "SysType": {
+      "null": "",
+      "WEB": "WEB",
+      "MOBILE": "MOBILE"
+    }
+  }
+}

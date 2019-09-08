@@ -1,0 +1,29 @@
+{
+  "jhipsiteApp": {
+    "sysEmployeeOffice": {
+      "home": {
+        "title": "Sys Employee Offices",
+        "createLabel": "创建新 Sys Employee Office",
+        "createOrEditLabel": "创建或编辑 Sys Employee Office",
+        "notFound": "No Sys Employee Offices found"
+      },
+      "created": "Sys Employee Office {{ param }} 创建成功",
+      "updated": "Sys Employee Office {{ param }} 更新成功",
+      "deleted": "Sys Employee Office {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Sys Employee Office {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Sys Employee Office"
+      },
+      "sysEmployeeId": "Sys Employee Id",
+      "sysOfficeId": "Sys Office Id",
+      "sysPostId": "Sys Post Id",
+      "help": {
+        "sysEmployeeId": "员工ID",
+        "sysOfficeId": "机构ID",
+        "sysPostId": "岗位ID"
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "jhipsiteApp": {
+    "sysRole": {
+      "home": {
+        "title": "Sys Roles",
+        "createLabel": "Create a new Sys Role",
+        "createOrEditLabel": "Create or edit a Sys Role",
+        "notFound": "No Sys Roles found"
+      },
+      "created": "A new Sys Role is created with identifier {{ param }}",
+      "updated": "A Sys Role is updated with identifier {{ param }}",
+      "deleted": "A Sys Role is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Sys Role {{ id }}?"
+      },
+      "detail": {
+        "title": "Sys Role"
+      },
+      "roleCode": "Role Code",
+      "roleName": "Role Name",
+      "roleType": "Role Type",
+      "roleSort": "Role Sort",
+      "isSys": "Is Sys",
+      "dataScope": "Data Scope",
+      "bizScope": "Biz Scope",
+      "status": "Status",
+      "remarks": "Remarks",
+      "help": {
+        "roleCode": "角色编码 ，该字段不作为表的关联外键，仅供展示",
+        "roleName": "角色名称",
+        "roleType": "角色类型",
+        "roleSort": "角色排序（升序）",
+        "isSys": "是否系统内置",
+        "dataScope": "数据范围设置",
+        "bizScope": "适应业务范围",
+        "status": "状态",
+        "remarks": "备注信息"
+      }
+    }
+  }
+}

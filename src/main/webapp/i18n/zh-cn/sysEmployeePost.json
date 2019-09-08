@@ -1,0 +1,27 @@
+{
+  "jhipsiteApp": {
+    "sysEmployeePost": {
+      "home": {
+        "title": "Sys Employee Posts",
+        "createLabel": "创建新 Sys Employee Post",
+        "createOrEditLabel": "创建或编辑 Sys Employee Post",
+        "notFound": "No Sys Employee Posts found"
+      },
+      "created": "Sys Employee Post {{ param }} 创建成功",
+      "updated": "Sys Employee Post {{ param }} 更新成功",
+      "deleted": "Sys Employee Post {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Sys Employee Post {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Sys Employee Post"
+      },
+      "sysEmployeeId": "Sys Employee Id",
+      "sysPostId": "Sys Post Id",
+      "help": {
+        "sysEmployeeId": "员工ID",
+        "sysPostId": "岗位ID"
+      }
+    }
+  }
+}

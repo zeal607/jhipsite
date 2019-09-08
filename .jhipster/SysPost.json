@@ -1,0 +1,63 @@
+{
+    "name": "SysPost",
+    "fields": [
+        {
+            "fieldName": "postCode",
+            "javadoc": "岗位编码",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength",
+                "unique"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "postName",
+            "javadoc": "岗位名称",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "postType",
+            "javadoc": "岗位分类（高管、中层、基层）",
+            "fieldType": "PostType",
+            "fieldValues": "SENIOR,MIDDLE,BASIC"
+        },
+        {
+            "fieldName": "status",
+            "javadoc": "状态",
+            "fieldType": "PostStatusType",
+            "fieldValues": "NORMAL,DELETE,DISABLE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "remarks",
+            "javadoc": "备注信息",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 500
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190908024950",
+    "javadoc": "员工岗位\n@author 刘东奇",
+    "entityTableName": "sys_post",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "jhipsite"
+    ]
+}

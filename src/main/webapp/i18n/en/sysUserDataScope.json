@@ -1,0 +1,31 @@
+{
+  "jhipsiteApp": {
+    "sysUserDataScope": {
+      "home": {
+        "title": "Sys User Data Scopes",
+        "createLabel": "Create a new Sys User Data Scope",
+        "createOrEditLabel": "Create or edit a Sys User Data Scope",
+        "notFound": "No Sys User Data Scopes found"
+      },
+      "created": "A new Sys User Data Scope is created with identifier {{ param }}",
+      "updated": "A Sys User Data Scope is updated with identifier {{ param }}",
+      "deleted": "A Sys User Data Scope is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Sys User Data Scope {{ id }}?"
+      },
+      "detail": {
+        "title": "Sys User Data Scope"
+      },
+      "sysUserId": "Sys User Id",
+      "ctrlType": "Ctrl Type",
+      "ctrlData": "Ctrl Data",
+      "ctrlPermi": "Ctrl Permi",
+      "help": {
+        "sysUserId": "控制用户ID",
+        "ctrlType": "控制类型",
+        "ctrlData": "控制数据，如控制类型为公司，那么这里就是公司编号",
+        "ctrlPermi": "控制权限 ???????????????????"
+      }
+    }
+  }
+}
