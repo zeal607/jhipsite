@@ -1,9 +1,10 @@
-package com.ruowei.service;
+package com.ruowei.modules.sys.service.support;
 
 import java.util.List;
 
-import javax.persistence.criteria.JoinType;
-
+import com.ruowei.modules.sys.domain.SysUser;
+import com.ruowei.modules.sys.domain.SysUser_;
+import com.ruowei.modules.sys.repository.SysUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -14,12 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.github.jhipster.service.QueryService;
 
-import com.ruowei.domain.SysUser;
-import com.ruowei.domain.*; // for static metamodels
-import com.ruowei.repository.SysUserRepository;
-import com.ruowei.service.dto.SysUserCriteria;
-import com.ruowei.service.dto.SysUserDTO;
-import com.ruowei.service.mapper.SysUserMapper;
+import com.ruowei.modules.sys.pojo.SysUserCriteria;
+import com.ruowei.modules.sys.pojo.SysUserDTO;
+import com.ruowei.modules.sys.mapper.SysUserMapper;
 
 /**
  * Service for executing complex queries for {@link SysUser} entities in the database.

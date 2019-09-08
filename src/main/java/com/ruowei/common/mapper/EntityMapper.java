@@ -1,4 +1,4 @@
-package com.ruowei.service.mapper;
+package com.ruowei.common.mapper;
 
 import java.util.List;
 
@@ -18,4 +18,5 @@ public interface EntityMapper <D, E> {
     List <E> toEntity(List<D> dtoList);
 
     List <D> toDto(List<E> entityList);
+
 }

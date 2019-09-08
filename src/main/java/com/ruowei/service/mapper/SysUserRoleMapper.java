@@ -1,5 +1,6 @@
 package com.ruowei.service.mapper;
 
+import com.ruowei.common.mapper.EntityMapper;
 import com.ruowei.domain.*;
 import com.ruowei.service.dto.SysUserRoleDTO;
 

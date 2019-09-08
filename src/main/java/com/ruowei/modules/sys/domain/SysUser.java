@@ -1,4 +1,5 @@
-package com.ruowei.domain;
+package com.ruowei.modules.sys.domain;
+import com.ruowei.common.entity.BaseEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -21,7 +22,7 @@ import com.ruowei.domain.enumeration.UserStatusType;
 @Entity
 @Table(name = "sys_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUser implements Serializable {
+public class SysUser extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

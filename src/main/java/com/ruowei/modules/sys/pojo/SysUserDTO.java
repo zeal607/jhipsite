@@ -1,4 +1,5 @@
-package com.ruowei.service.dto;
+package com.ruowei.modules.sys.pojo;
+import com.ruowei.common.pojo.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.Instant;
@@ -10,10 +11,10 @@ import com.ruowei.domain.enumeration.UserType;
 import com.ruowei.domain.enumeration.UserStatusType;
 
 /**
- * A DTO for the {@link com.ruowei.domain.SysUser} entity.
+ * A DTO for the {@link com.ruowei.modules.sys.domain.SysUser} entity.
  */
 @ApiModel(description = "用户表 @author 刘东奇")
-public class SysUserDTO implements Serializable {
+public class SysUserDTO extends BaseDTO {
 
     private Long id;
 
@@ -169,11 +170,12 @@ public class SysUserDTO implements Serializable {
     @ApiModelProperty(value = "备注信息")
     private String remarks;
 
-
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

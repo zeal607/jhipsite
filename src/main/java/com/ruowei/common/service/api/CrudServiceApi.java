@@ -1,0 +1,53 @@
+package com.ruowei.common.service.api;
+
+import com.ruowei.common.entity.BaseEntity;
+import com.ruowei.common.pojo.BaseView;
+
+/**
+ * 增删改 通用接口
+ * @author 刘东奇
+ * @date 2019/9/2
+ * @param <Entity> 实体
+ * @param <Long> 主键
+ * @param <Criteria> 查询对象
+ * @param <VO> 视图对象
+ * @param <DTO> 数据传输对象
+ */
+public interface CrudServiceApi<Entity extends BaseEntity,Long,Criteria,VO extends BaseView,DTO>
+    extends QueryServiceApi<Entity,Long,Criteria,VO>{
+
+    /**
+     * 插入
+     * @param entity
+     * @return
+     */
+    Entity insert(Entity entity);
+
+    /**
+     * 更新
+     * @param entity
+     * @return
+     */
+    Entity update(Entity entity);
+
+    /**
+     * 插入或更新
+     * @param entity
+     * @return
+     */
+    Entity save(Entity entity);
+
+    /**
+     * 插入或更新
+     * @param dto
+     * @return
+     */
+    DTO save(DTO dto);
+
+
+    /**
+     * 删除单条数据
+     * @param id
+     */
+    void delete(Long id);
+}

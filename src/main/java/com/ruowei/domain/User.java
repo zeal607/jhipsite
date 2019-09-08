@@ -1,5 +1,6 @@
 package com.ruowei.domain;
 
+import com.ruowei.common.entity.AbstractAuditingEntity;
 import com.ruowei.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

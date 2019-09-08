@@ -1,4 +1,4 @@
-package com.ruowei.domain;
+package com.ruowei.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.envers.Audited;
@@ -21,7 +21,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Audited
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AbstractAuditingEntity implements Serializable {
+public abstract class AbstractAuditingEntity extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

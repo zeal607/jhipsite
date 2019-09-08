@@ -1,10 +1,10 @@
-package com.ruowei.web.rest;
+package com.ruowei.modules.sys.web;
 
-import com.ruowei.service.SysUserService;
+import com.ruowei.modules.sys.service.support.SysUserQueryService;
+import com.ruowei.modules.sys.service.support.SysUserServiceSupport;
 import com.ruowei.web.rest.errors.BadRequestAlertException;
-import com.ruowei.service.dto.SysUserDTO;
-import com.ruowei.service.dto.SysUserCriteria;
-import com.ruowei.service.SysUserQueryService;
+import com.ruowei.modules.sys.pojo.SysUserDTO;
+import com.ruowei.modules.sys.pojo.SysUserCriteria;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * REST controller for managing {@link com.ruowei.domain.SysUser}.
+ * REST controller for managing {@link com.ruowei.modules.sys.domain.SysUser}.
  */
 @RestController
 @RequestMapping("/api")
@@ -41,11 +40,11 @@ public class SysUserResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final SysUserService sysUserService;
+    private final SysUserServiceSupport sysUserService;
 
     private final SysUserQueryService sysUserQueryService;
 
-    public SysUserResource(SysUserService sysUserService, SysUserQueryService sysUserQueryService) {
+    public SysUserResource(SysUserServiceSupport sysUserService, SysUserQueryService sysUserQueryService) {
         this.sysUserService = sysUserService;
         this.sysUserQueryService = sysUserQueryService;
     }
@@ -125,12 +124,12 @@ public class SysUserResource {
      * @param id the id of the sysUserDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the sysUserDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/sys-users/{id}")
-    public ResponseEntity<SysUserDTO> getSysUser(@PathVariable Long id) {
-        log.debug("REST request to get SysUser : {}", id);
-        Optional<SysUserDTO> sysUserDTO = sysUserService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(sysUserDTO);
-    }
+//    @GetMapping("/sys-users/{id}")
+//    public ResponseEntity<SysUserDTO> getSysUser(@PathVariable Long id) {
+//        log.debug("REST request to get SysUser : {}", id);
+//        Optional<SysUserDTO> sysUserDTO = sysUserService.get(id);
+//        return ResponseUtil.wrapOrNotFound(sysUserDTO);
+//    }
 
     /**
      * {@code DELETE  /sys-users/:id} : delete the "id" sysUser.
