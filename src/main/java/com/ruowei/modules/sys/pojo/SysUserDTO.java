@@ -1,14 +1,13 @@
 package com.ruowei.modules.sys.pojo;
 import com.ruowei.common.pojo.BaseDTO;
+import com.ruowei.modules.sys.domain.enumeration.GenderType;
+import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
+import com.ruowei.modules.sys.domain.enumeration.UserType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.Instant;
 import javax.validation.constraints.*;
-import java.io.Serializable;
 import java.util.Objects;
-import com.ruowei.domain.enumeration.GenderType;
-import com.ruowei.domain.enumeration.UserType;
-import com.ruowei.domain.enumeration.UserStatusType;
 
 /**
  * A DTO for the {@link com.ruowei.modules.sys.domain.SysUser} entity.

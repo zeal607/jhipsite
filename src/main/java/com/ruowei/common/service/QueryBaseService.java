@@ -1,6 +1,7 @@
 package com.ruowei.common.service;
 
 import com.querydsl.core.types.Predicate;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ruowei.common.entity.BaseEntity;
 import com.ruowei.common.pojo.BaseView;
 import com.ruowei.common.repository.BaseRepository;
@@ -10,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -27,6 +31,17 @@ public abstract class QueryBaseService <Entity extends BaseEntity,Long,Criteria,
     implements QueryServiceApi<Entity,Long,Criteria,VO> {
     @Autowired
     protected Repository jpaRepository;
+
+    @Autowired
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    protected JPAQueryFactory queryFactory;
+
+    @PostConstruct
+    public void init() {
+        queryFactory = new JPAQueryFactory(entityManager);
+    }
 
     /**
      * 根据ID获取实体

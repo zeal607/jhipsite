@@ -2,7 +2,7 @@ package com.ruowei.modules.sys.pojo;
 
 import com.ruowei.common.pojo.BaseView;
 import com.ruowei.domain.enumeration.EmployeeStatusType;
-import com.ruowei.domain.enumeration.UserStatusType;
+import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

@@ -10,6 +10,7 @@ import com.ruowei.modules.sys.pojo.SysUserEmployeeVM;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -26,6 +27,12 @@ public class SysUserService
 
     private final Logger log = LoggerFactory.getLogger(SysUserService.class);
 
+    private final SysUserQueryService sysUserQueryService;
+
+    public SysUserService(SysUserQueryService sysUserQueryService) {
+        this.sysUserQueryService = sysUserQueryService;
+    }
+
     /**
      * 通过条件分页查询机构员工
      *
@@ -37,6 +44,10 @@ public class SysUserService
      */
     @Override
     public Page<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(SysUserCriteria userCriteria, SysEmployeeCriteria employeeCriteria, Pageable page) {
+//        sysUserQueryService.countByCriteria()
         return null;
     }
+
+
+
 }

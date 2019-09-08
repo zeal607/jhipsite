@@ -1,6 +1,7 @@
 package com.ruowei.common.service;
 
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ruowei.common.entity.BaseEntity;
 import com.ruowei.common.error.ErrorMessageUtils;
 import com.ruowei.common.error.exception.DataAlreadyExistException;
@@ -16,6 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 /**
@@ -36,6 +40,17 @@ public abstract class CrudBaseService<Entity extends BaseEntity,Long ,Criteria,V
 
     @Autowired
     protected Repository jpaRepository;
+
+    @Autowired
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    protected JPAQueryFactory queryFactory;
+
+    @PostConstruct
+    public void init() {
+        queryFactory = new JPAQueryFactory(entityManager);
+    }
 
     /**
      * 删除

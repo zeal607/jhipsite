@@ -2,10 +2,16 @@ package com.ruowei.modules.sys.service;
 
 import java.util.List;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.Projections;
 import com.ruowei.common.service.QueryBaseService;
+import com.ruowei.domain.QSysEmployee;
+import com.ruowei.modules.sys.domain.QSysUser;
 import com.ruowei.modules.sys.domain.SysUser;
 import com.ruowei.modules.sys.domain.SysUser_;
+import com.ruowei.modules.sys.domain.enumeration.UserType;
+import com.ruowei.modules.sys.pojo.SysEmployeeCriteria;
 import com.ruowei.modules.sys.pojo.SysUserEmployeeVM;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import org.slf4j.Logger;
@@ -180,6 +186,38 @@ public class SysUserQueryService extends QueryBaseService<SysUser,Long,SysUserCr
      */
     @Override
     public Predicate toQuerydslPredicate(SysUserCriteria userCriteria) {
+        return null;
+    }
+
+    public Page<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(SysUserCriteria userCriteria, SysEmployeeCriteria employeeCriteria, Pageable page) {
+        QSysUser qSysUser =  QSysUser.sysUser;
+        QSysEmployee qSysEmployee = QSysEmployee.sysEmployee;
+        this.queryFactory.select(
+            Projections.bean(
+                SysUserEmployeeVM.class,
+                qSysUser.userCode,
+                qSysUser.loginCode,
+                qSysUser.userName,
+                qSysEmployee.empName,
+                qSysEmployee.empNameEn,
+                qSysEmployee.sysOfficeId,
+                qSysEmployee.officeName,
+                qSysEmployee.sysCompanyId,
+                qSysEmployee.companyName,
+                qSysUser.email,
+                qSysUser.phone,
+                qSysUser.status.as("userStatus"),
+                qSysEmployee.status.as("empStatus")
+            )
+        ).from(qSysUser)
+            .leftJoin(qSysEmployee).on(qSysUser.userType.eq(UserType.EMPLOYEE).and(qSysUser.refCode.eq(qSysEmployee.empCode)))
+            .where();
+        BooleanBuilder builder = new BooleanBuilder();
+        if(userCriteria!=null){
+            if(userCriteria.getAvatar()!=null){
+
+            }
+        }
         return null;
     }
 }
