@@ -1,19 +1,16 @@
 package com.ruowei.modules.sys.domain;
 import com.ruowei.common.entity.BaseEntity;
+import com.ruowei.modules.sys.domain.enumeration.GenderType;
+import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
+import com.ruowei.modules.sys.domain.enumeration.UserType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import java.io.Serializable;
 import java.time.Instant;
 
-import com.ruowei.domain.enumeration.GenderType;
-
-import com.ruowei.domain.enumeration.UserType;
-
-import com.ruowei.domain.enumeration.UserStatusType;
 
 /**
  * 用户表
@@ -25,10 +22,6 @@ import com.ruowei.domain.enumeration.UserStatusType;
 public class SysUser extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     /**
      * 用户编码 ，该字段不作为表的关联外键，仅供展示
@@ -186,13 +179,6 @@ public class SysUser extends BaseEntity {
     private String remarks;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUserCode() {
         return userCode;

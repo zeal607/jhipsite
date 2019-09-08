@@ -13,8 +13,7 @@ import com.ruowei.common.pojo.BaseView;
  * @param <VO> 视图对象
  * @param <DTO> 数据传输对象
  */
-public interface CrudServiceApi<Entity extends BaseEntity,Long,Criteria,VO extends BaseView,DTO>
-    extends QueryServiceApi<Entity,Long,Criteria,VO>{
+public interface CrudServiceApi<Entity extends BaseEntity,Long,Criteria,VO extends BaseView,DTO>{
 
     /**
      * 插入
@@ -36,14 +35,6 @@ public interface CrudServiceApi<Entity extends BaseEntity,Long,Criteria,VO exten
      * @return
      */
     Entity save(Entity entity);
-
-    /**
-     * 插入或更新
-     * @param dto
-     * @return
-     */
-    DTO save(DTO dto);
-
 
     /**
      * 删除单条数据

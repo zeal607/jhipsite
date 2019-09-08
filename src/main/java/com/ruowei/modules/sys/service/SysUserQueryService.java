@@ -1,9 +1,12 @@
-package com.ruowei.modules.sys.service.support;
+package com.ruowei.modules.sys.service;
 
 import java.util.List;
 
+import com.querydsl.core.types.Predicate;
+import com.ruowei.common.service.QueryBaseService;
 import com.ruowei.modules.sys.domain.SysUser;
 import com.ruowei.modules.sys.domain.SysUser_;
+import com.ruowei.modules.sys.pojo.SysUserEmployeeVM;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,16 +30,13 @@ import com.ruowei.modules.sys.mapper.SysUserMapper;
  */
 @Service
 @Transactional(readOnly = true)
-public class SysUserQueryService extends QueryService<SysUser> {
+public class SysUserQueryService extends QueryBaseService<SysUser,Long,SysUserCriteria, SysUserEmployeeVM,SysUserRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysUserQueryService.class);
 
-    private final SysUserRepository sysUserRepository;
-
     private final SysUserMapper sysUserMapper;
 
-    public SysUserQueryService(SysUserRepository sysUserRepository, SysUserMapper sysUserMapper) {
-        this.sysUserRepository = sysUserRepository;
+    public SysUserQueryService(SysUserMapper sysUserMapper) {
         this.sysUserMapper = sysUserMapper;
     }
 
@@ -49,7 +49,7 @@ public class SysUserQueryService extends QueryService<SysUser> {
     public List<SysUserDTO> findByCriteria(SysUserCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specification<SysUser> specification = createSpecification(criteria);
-        return sysUserMapper.toDto(sysUserRepository.findAll(specification));
+        return sysUserMapper.toDto(this.jpaRepository.findAll(specification));
     }
 
     /**
@@ -62,7 +62,7 @@ public class SysUserQueryService extends QueryService<SysUser> {
     public Page<SysUserDTO> findByCriteria(SysUserCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<SysUser> specification = createSpecification(criteria);
-        return sysUserRepository.findAll(specification, page)
+        return jpaRepository.findAll(specification, page)
             .map(sysUserMapper::toDto);
     }
 
@@ -75,7 +75,7 @@ public class SysUserQueryService extends QueryService<SysUser> {
     public long countByCriteria(SysUserCriteria criteria) {
         log.debug("count by criteria : {}", criteria);
         final Specification<SysUser> specification = createSpecification(criteria);
-        return sysUserRepository.count(specification);
+        return jpaRepository.count(specification);
     }
 
     /**
@@ -157,5 +157,29 @@ public class SysUserQueryService extends QueryService<SysUser> {
             }
         }
         return specification;
+    }
+
+    /**
+     * 把前端传过来的Query转换成JPA能处理的Specification
+     * 可以根据实际需求有不同的实现
+     *
+     * @param userCriteria
+     * @return
+     */
+    @Override
+    public Specification<SysUser> toJPASpecification(SysUserCriteria userCriteria) {
+        return createSpecification(userCriteria);
+    }
+
+    /**
+     * 把前端传过来的Query转换成Querydsl能处理的Predicate
+     * 可以根据实际需求有不同的实现
+     *
+     * @param userCriteria
+     * @return
+     */
+    @Override
+    public Predicate toQuerydslPredicate(SysUserCriteria userCriteria) {
+        return null;
     }
 }

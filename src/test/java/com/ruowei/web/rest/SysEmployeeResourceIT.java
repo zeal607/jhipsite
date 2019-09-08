@@ -7,7 +7,6 @@ import com.ruowei.service.SysEmployeeService;
 import com.ruowei.service.dto.SysEmployeeDTO;
 import com.ruowei.service.mapper.SysEmployeeMapper;
 import com.ruowei.web.rest.errors.ExceptionTranslator;
-import com.ruowei.service.dto.SysEmployeeCriteria;
 import com.ruowei.service.SysEmployeeQueryService;
 
 import org.junit.jupiter.api.BeforeEach;

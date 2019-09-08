@@ -1,0 +1,42 @@
+package com.ruowei.modules.sys.service;
+
+import com.ruowei.common.service.CrudBaseService;
+import com.ruowei.modules.sys.api.SysUserApi;
+import com.ruowei.modules.sys.domain.SysUser;
+import com.ruowei.modules.sys.pojo.SysEmployeeCriteria;
+import com.ruowei.modules.sys.pojo.SysUserCriteria;
+import com.ruowei.modules.sys.pojo.SysUserDTO;
+import com.ruowei.modules.sys.pojo.SysUserEmployeeVM;
+import com.ruowei.modules.sys.repository.SysUserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@Transactional
+public class SysUserService
+    extends CrudBaseService<SysUser, Long, SysUserCriteria, SysUserEmployeeVM, SysUserDTO, SysUserRepository>
+    implements SysUserApi {
+
+    private final Logger log = LoggerFactory.getLogger(SysUserService.class);
+
+    /**
+     * 通过条件分页查询机构员工
+     *
+     * @param userCriteria
+     * @param employeeCriteria
+     * @param page
+     * @author 刘东奇
+     * @date 2019/9/8
+     */
+    @Override
+    public Page<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(SysUserCriteria userCriteria, SysEmployeeCriteria employeeCriteria, Pageable page) {
+        return null;
+    }
+}

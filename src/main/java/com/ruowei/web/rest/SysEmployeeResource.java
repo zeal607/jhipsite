@@ -3,7 +3,7 @@ package com.ruowei.web.rest;
 import com.ruowei.service.SysEmployeeService;
 import com.ruowei.web.rest.errors.BadRequestAlertException;
 import com.ruowei.service.dto.SysEmployeeDTO;
-import com.ruowei.service.dto.SysEmployeeCriteria;
+import com.ruowei.modules.sys.pojo.SysEmployeeCriteria;
 import com.ruowei.service.SysEmployeeQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

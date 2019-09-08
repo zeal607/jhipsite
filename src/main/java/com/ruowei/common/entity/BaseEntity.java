@@ -15,7 +15,7 @@ public class BaseEntity implements Serializable {
     @Id
     @GenericGenerator(name="idGenerator", strategy = "com.ruowei.common.idgen.IdGenerator")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "idGenerator")
-    private Long id;
+    protected Long id;
 
     @Transient
     protected String entityName;

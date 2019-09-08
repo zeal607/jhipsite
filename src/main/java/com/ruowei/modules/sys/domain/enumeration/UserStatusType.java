@@ -1,4 +1,4 @@
-package com.ruowei.domain.enumeration;
+package com.ruowei.modules.sys.domain.enumeration;
 
 /**
  * The UserStatusType enumeration.

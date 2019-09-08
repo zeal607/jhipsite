@@ -1,5 +1,7 @@
 package com.ruowei.common.error;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 错误提示语构建工具
  * @author 刘东奇
@@ -8,11 +10,15 @@ package com.ruowei.common.error;
 public class ErrorMessageUtils {
 
     public static String getNotFoundMessage(String entityName, String id){
+        entityName= StringUtils.trimToEmpty(entityName);
+        id= StringUtils.trimToEmpty(id);
         String message="找不到ID为 "+id+" 的"+entityName+"。";
         return message;
     }
 
     public static String getAlreadyExistMessage(String entityName, String id){
+        entityName= StringUtils.trimToEmpty(entityName);
+        id= StringUtils.trimToEmpty(id);
         String message="ID为 "+id+" 的"+entityName+"已存在。";
         return message;
     }

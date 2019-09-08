@@ -2,8 +2,6 @@ package com.ruowei.service;
 
 import java.util.List;
 
-import javax.persistence.criteria.JoinType;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,7 +15,7 @@ import io.github.jhipster.service.QueryService;
 import com.ruowei.domain.SysEmployee;
 import com.ruowei.domain.*; // for static metamodels
 import com.ruowei.repository.SysEmployeeRepository;
-import com.ruowei.service.dto.SysEmployeeCriteria;
+import com.ruowei.modules.sys.pojo.SysEmployeeCriteria;
 import com.ruowei.service.dto.SysEmployeeDTO;
 import com.ruowei.service.mapper.SysEmployeeMapper;
 

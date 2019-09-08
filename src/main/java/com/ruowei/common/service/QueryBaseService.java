@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * 查询 通用服务层
+ * @author 刘东奇
  * @param <Entity> 实体
  * @param <Long> 主键
  * @param <Criteria> 查询对象
@@ -21,8 +22,8 @@ import java.util.List;
  * @param <Repository> dao层
  */
 @Transactional(readOnly = true)
-public abstract class QueryService <Entity extends BaseEntity,Long,Criteria,VO extends BaseView,Repository extends BaseRepository<Entity,Long>>
-    extends BaseService
+public abstract class QueryBaseService <Entity extends BaseEntity,Long,Criteria,VO extends BaseView,Repository extends BaseRepository<Entity,Long>>
+    extends io.github.jhipster.service.QueryService
     implements QueryServiceApi<Entity,Long,Criteria,VO> {
     @Autowired
     protected Repository jpaRepository;

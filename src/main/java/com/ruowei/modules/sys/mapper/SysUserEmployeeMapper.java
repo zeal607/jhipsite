@@ -15,8 +15,6 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring", uses = {})
 public interface SysUserEmployeeMapper{
 
-
-
     @Mappings({
         @Mapping(source = "sysUserDTO.id", target = "id"),
         @Mapping(source = "sysUserDTO.status", target = "userStatus"),
