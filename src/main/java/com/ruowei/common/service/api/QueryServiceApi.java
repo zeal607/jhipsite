@@ -1,5 +1,6 @@
 package com.ruowei.common.service.api;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.ruowei.common.entity.BaseEntity;
 import com.ruowei.common.pojo.BaseView;
@@ -27,7 +28,7 @@ public interface QueryServiceApi <Entity extends BaseEntity,Long,Criteria,VO ext
      * @param criteria
      * @return
      */
-    Specification toJPASpecification(Criteria criteria);
+    Specification<Entity> createSpecification(Criteria criteria);
 
     /**
      * 把前端传过来的Query转换成Querydsl能处理的Predicate
@@ -35,7 +36,7 @@ public interface QueryServiceApi <Entity extends BaseEntity,Long,Criteria,VO ext
      * @param criteria
      * @return
      */
-    Predicate toQuerydslPredicate(Criteria criteria);
+    BooleanBuilder createBooleanBuilder(Criteria criteria);
 
     /**
      * 根据Id查询唯一实体

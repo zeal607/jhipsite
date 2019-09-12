@@ -12,9 +12,4 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class CrudServiceTest {
 
-    @Test
-    void delete() {
-        SysUserService sysUserService=new SysUserService();
-        sysUserService.delete(1l);
-    }
 }

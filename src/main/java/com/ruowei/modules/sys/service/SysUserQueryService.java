@@ -89,7 +89,8 @@ public class SysUserQueryService extends QueryBaseService<SysUser,Long,SysUserCr
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
      */    
-    protected Specification<SysUser> createSpecification(SysUserCriteria criteria) {
+    @Override
+    public Specification<SysUser> createSpecification(SysUserCriteria criteria) {
         Specification<SysUser> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
@@ -166,18 +167,6 @@ public class SysUserQueryService extends QueryBaseService<SysUser,Long,SysUserCr
     }
 
     /**
-     * 把前端传过来的Query转换成JPA能处理的Specification
-     * 可以根据实际需求有不同的实现
-     *
-     * @param userCriteria
-     * @return
-     */
-    @Override
-    public Specification<SysUser> toJPASpecification(SysUserCriteria userCriteria) {
-        return createSpecification(userCriteria);
-    }
-
-    /**
      * 把前端传过来的Query转换成Querydsl能处理的Predicate
      * 可以根据实际需求有不同的实现
      *
@@ -185,13 +174,115 @@ public class SysUserQueryService extends QueryBaseService<SysUser,Long,SysUserCr
      * @return
      */
     @Override
-    public Predicate toQuerydslPredicate(SysUserCriteria userCriteria) {
-        return null;
+    public BooleanBuilder createBooleanBuilder(SysUserCriteria userCriteria) {
+        QSysUser qSysUser =  QSysUser.sysUser;
+        BooleanBuilder builder = new BooleanBuilder();
+        if(userCriteria!=null){
+            if(userCriteria.getId()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getId(),qSysUser.id));
+            }
+            if(userCriteria.getUserCode()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getUserCode(),qSysUser.userCode));
+            }
+            if(userCriteria.getLoginCode()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getLoginCode(),qSysUser.loginCode));
+            }
+            if(userCriteria.getUserName()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getUserName(),qSysUser.userName));
+            }
+//            if(userCriteria.getPassword()!=null){
+//                builder.and(createBooleanBuilder(userCriteria.getPassword(),qSysUser.password));
+//            }
+            if(userCriteria.getEmail()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getEmail(),qSysUser.email));
+            }
+            if(userCriteria.getMobile()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getMobile(),qSysUser.mobile));
+            }
+            if(userCriteria.getPhone()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getPhone(),qSysUser.phone));
+            }
+            if(userCriteria.getSex()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getSex(),qSysUser.sex));
+            }
+            if(userCriteria.getAvatar()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getAvatar(),qSysUser.avatar));
+            }
+            if(userCriteria.getSign()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getSign(),qSysUser.sign));
+            }
+            if(userCriteria.getWxOpenid()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getWxOpenid(),qSysUser.wxOpenid));
+            }
+            if(userCriteria.getMobileImei()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getMobileImei(),qSysUser.mobileImei));
+            }
+            if(userCriteria.getUserType()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getUserType(),qSysUser.userType));
+            }
+            if(userCriteria.getRefCode()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getRefCode(),qSysUser.refCode));
+            }
+            if(userCriteria.getRefName()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getRefName(),qSysUser.refName));
+            }
+            if(userCriteria.getLastLoginIp()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getLastLoginIp(),qSysUser.lastLoginIp));
+            }
+            if(userCriteria.getLastLoginDate()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getLastLoginDate(),qSysUser.lastLoginDate));
+            }
+            if(userCriteria.getFreezeCause()!=null){
+                builder.and(createBooleanBuilder(userCriteria.getFreezeCause(),qSysUser.freezeCause));
+            }
+        }
+        return builder;
+    }
+
+    public BooleanBuilder createBooleanBuilder(SysEmployeeCriteria employeeCriteria) {
+        QSysEmployee qSysEmployee =  QSysEmployee.sysEmployee;
+        BooleanBuilder builder = new BooleanBuilder();
+        if(employeeCriteria != null){
+            if(employeeCriteria.getId()!=null){
+                builder.and(createBooleanBuilder(employeeCriteria.getId(),qSysEmployee.id));
+            }
+            if(employeeCriteria.getEmpCode()!=null){
+                builder.and(createBooleanBuilder(employeeCriteria.getEmpCode(),qSysEmployee.empCode));
+            }
+            if(employeeCriteria.getEmpName()!=null){
+                builder.and(createBooleanBuilder(employeeCriteria.getEmpName(),qSysEmployee.empName));
+            }
+            if(employeeCriteria.getEmpNameEn()!=null){
+                builder.and(createBooleanBuilder(employeeCriteria.getEmpNameEn(),qSysEmployee.empNameEn));
+            }
+            if(employeeCriteria.getSysOfficeId()!=null){
+                builder.and(createBooleanBuilder(employeeCriteria.getSysOfficeId(),qSysEmployee.sysOfficeId));
+            }
+            if(employeeCriteria.getOfficeName()!=null){
+                builder.and(createBooleanBuilder(employeeCriteria.getOfficeName(),qSysEmployee.officeName));
+            }
+            if(employeeCriteria.getSysCompanyId()!=null){
+                builder.and(createBooleanBuilder(employeeCriteria.getSysCompanyId(),qSysEmployee.sysCompanyId));
+            }
+            if(employeeCriteria.getCompanyName()!=null){
+                builder.and(createBooleanBuilder(employeeCriteria.getCompanyName(),qSysEmployee.companyName));
+            }
+            if(employeeCriteria.getStatus()!=null){
+                builder.and(createBooleanBuilder(employeeCriteria.getStatus(),qSysEmployee.status));
+            }
+            if(employeeCriteria.getRemarks()!=null){
+                builder.and(createBooleanBuilder(employeeCriteria.getRemarks(),qSysEmployee.remarks));
+            }
+        }
+        return builder;
     }
 
     public Page<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(SysUserCriteria userCriteria, SysEmployeeCriteria employeeCriteria, Pageable page) {
         QSysUser qSysUser =  QSysUser.sysUser;
         QSysEmployee qSysEmployee = QSysEmployee.sysEmployee;
+        BooleanBuilder userBuilder = createBooleanBuilder(userCriteria);
+        BooleanBuilder employeeBuilder = createBooleanBuilder(employeeCriteria);
+
         this.queryFactory.select(
             Projections.bean(
                 SysUserEmployeeVM.class,
@@ -211,13 +302,13 @@ public class SysUserQueryService extends QueryBaseService<SysUser,Long,SysUserCr
             )
         ).from(qSysUser)
             .leftJoin(qSysEmployee).on(qSysUser.userType.eq(UserType.EMPLOYEE).and(qSysUser.refCode.eq(qSysEmployee.empCode)))
-            .where();
-        BooleanBuilder builder = new BooleanBuilder();
-        if(userCriteria!=null){
-            if(userCriteria.getAvatar()!=null){
+            .where(userBuilder)
+            .where(employeeBuilder)
+            .offset(page.getOffset())
+            .limit(page.getPageSize());
 
-            }
-        }
+
+
         return null;
     }
 }

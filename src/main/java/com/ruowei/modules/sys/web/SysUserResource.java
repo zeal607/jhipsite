@@ -1,5 +1,6 @@
 package com.ruowei.modules.sys.web;
 
+import com.ruowei.modules.sys.service.SysUserQueryService;
 import com.ruowei.web.rest.errors.BadRequestAlertException;
 import com.ruowei.modules.sys.pojo.SysUserDTO;
 import com.ruowei.modules.sys.pojo.SysUserCriteria;
@@ -40,12 +41,11 @@ public class SysUserResource {
 
 //    private final SysUserServiceSupport sysUserService;
 //
-//    private final SysUserQueryService sysUserQueryService;
-//
-//    public SysUserResource(SysUserServiceSupport sysUserService, SysUserQueryService sysUserQueryService) {
-//        this.sysUserService = sysUserService;
-//        this.sysUserQueryService = sysUserQueryService;
-//    }
+    private final SysUserQueryService sysUserQueryService;
+
+    public SysUserResource( SysUserQueryService sysUserQueryService) {
+        this.sysUserQueryService = sysUserQueryService;
+    }
 
     /**
      * {@code POST  /sys-users} : Create a new sysUser.
@@ -96,13 +96,13 @@ public class SysUserResource {
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of sysUsers in body.
      */
-//    @GetMapping("/sys-users")
-//    public ResponseEntity<List<SysUserDTO>> getAllSysUsers(SysUserCriteria criteria, Pageable pageable) {
-//        log.debug("REST request to get SysUsers by criteria: {}", criteria);
-//        Page<SysUserDTO> page = sysUserQueryService.findByCriteria(criteria, pageable);
-//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-//        return ResponseEntity.ok().headers(headers).body(page.getContent());
-//    }
+    @GetMapping("/sys-users")
+    public ResponseEntity<List<SysUserDTO>> getAllSysUsers(SysUserCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get SysUsers by criteria: {}", criteria);
+        Page<SysUserDTO> page = sysUserQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 
     /**
     * {@code GET  /sys-users/count} : count all the sysUsers.
