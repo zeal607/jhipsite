@@ -1,5 +1,6 @@
 package com.ruowei.modules.sys.service;
 
+import com.querydsl.core.QueryResults;
 import com.ruowei.common.service.CrudBaseService;
 import com.ruowei.modules.sys.api.SysUserApi;
 import com.ruowei.modules.sys.domain.SysUser;
@@ -43,9 +44,9 @@ public class SysUserService
      * @date 2019/9/8
      */
     @Override
-    public Page<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(SysUserCriteria userCriteria, SysEmployeeCriteria employeeCriteria, Pageable page) {
-//        sysUserQueryService.countByCriteria()
-        return null;
+    public QueryResults<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(SysUserCriteria userCriteria, SysEmployeeCriteria employeeCriteria, Pageable page) {
+        QueryResults<SysUserEmployeeVM> results = sysUserQueryService.findSysUserEmployeeVMPageByCriteria(userCriteria,employeeCriteria,page);
+        return results;
     }
 
 

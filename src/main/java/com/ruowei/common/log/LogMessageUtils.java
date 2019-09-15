@@ -11,7 +11,7 @@ public class LogMessageUtils {
     public static String getEnterMessage(String methodName, Object ...varargs){
         methodName= StringUtils.trimToEmpty(methodName);
         String parameterString="";
-        for(Object param:varargs){
+        if(varargs != null)for(Object param:varargs){
             if(param!=null){
                 parameterString+= StringUtils.trimToEmpty(param.toString());
                 parameterString+=",";
@@ -24,7 +24,7 @@ public class LogMessageUtils {
     public static String getLeaveMessage(String methodName, Object returnValue){
         methodName= StringUtils.trimToEmpty(methodName);
         String returnValueString="";
-        if(returnValue!=null){
+        if(returnValue != null){
             returnValueString+=StringUtils.trimToEmpty(returnValue.toString());
         }
         String message="离开方法["+methodName+"],携带返回值["+returnValueString+"]";

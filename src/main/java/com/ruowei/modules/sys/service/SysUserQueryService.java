@@ -3,8 +3,11 @@ package com.ruowei.modules.sys.service;
 import java.util.List;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.ruowei.common.querydsl.OrderByUtils;
 import com.ruowei.common.service.QueryBaseService;
 import com.ruowei.domain.QSysEmployee;
 import com.ruowei.modules.sys.domain.QSysUser;
@@ -277,13 +280,13 @@ public class SysUserQueryService extends QueryBaseService<SysUser,Long,SysUserCr
         return builder;
     }
 
-    public Page<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(SysUserCriteria userCriteria, SysEmployeeCriteria employeeCriteria, Pageable page) {
+    public QueryResults<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(SysUserCriteria userCriteria, SysEmployeeCriteria employeeCriteria, Pageable page) {
         QSysUser qSysUser =  QSysUser.sysUser;
         QSysEmployee qSysEmployee = QSysEmployee.sysEmployee;
         BooleanBuilder userBuilder = createBooleanBuilder(userCriteria);
         BooleanBuilder employeeBuilder = createBooleanBuilder(employeeCriteria);
 
-        this.queryFactory.select(
+        JPAQuery<SysUserEmployeeVM> jpaQuery = this.queryFactory.select(
             Projections.bean(
                 SysUserEmployeeVM.class,
                 qSysUser.userCode,
@@ -303,12 +306,13 @@ public class SysUserQueryService extends QueryBaseService<SysUser,Long,SysUserCr
         ).from(qSysUser)
             .leftJoin(qSysEmployee).on(qSysUser.userType.eq(UserType.EMPLOYEE).and(qSysUser.refCode.eq(qSysEmployee.empCode)))
             .where(userBuilder)
-            .where(employeeBuilder)
+            .where(employeeBuilder);
+
+        QueryResults<SysUserEmployeeVM> results = jpaQuery
+            .orderBy(OrderByUtils.createOrderSpecifierBy(page.getSort(),qSysUser,qSysEmployee))
             .offset(page.getOffset())
-            .limit(page.getPageSize());
+            .limit(page.getPageSize()).fetchResults();
 
-
-
-        return null;
+        return results;
     }
 }

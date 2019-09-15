@@ -1,29 +1,24 @@
 package com.ruowei.modules.sys.web;
 
-import com.ruowei.modules.sys.service.SysUserQueryService;
-import com.ruowei.web.rest.errors.BadRequestAlertException;
-import com.ruowei.modules.sys.pojo.SysUserDTO;
+import com.querydsl.core.QueryResults;
+import com.ruowei.common.response.PaginationUtil;
+import com.ruowei.modules.sys.pojo.SysEmployeeCriteria;
+import com.ruowei.modules.sys.pojo.SysUserEmployeeVM;
+import com.ruowei.modules.sys.service.SysUserService;
 import com.ruowei.modules.sys.pojo.SysUserCriteria;
 
-import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing {@link com.ruowei.modules.sys.domain.SysUser}.
@@ -41,10 +36,10 @@ public class SysUserResource {
 
 //    private final SysUserServiceSupport sysUserService;
 //
-    private final SysUserQueryService sysUserQueryService;
+    private final SysUserService sysUserService;
 
-    public SysUserResource( SysUserQueryService sysUserQueryService) {
-        this.sysUserQueryService = sysUserQueryService;
+    public SysUserResource( SysUserService sysUserService) {
+        this.sysUserService = sysUserService;
     }
 
     /**
@@ -91,17 +86,18 @@ public class SysUserResource {
      * {@code GET  /sys-users} : get all the sysUsers.
      *
 
+     * @param criteria the criteria which the requested entities should match.
      * @param pageable the pagination information.
 
-     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of sysUsers in body.
      */
     @GetMapping("/sys-users")
-    public ResponseEntity<List<SysUserDTO>> getAllSysUsers(SysUserCriteria criteria, Pageable pageable) {
+    public ResponseEntity<List<SysUserEmployeeVM>> getAllSysUsers(SysUserCriteria criteria, SysEmployeeCriteria employeeCriteria, Pageable pageable) {
         log.debug("REST request to get SysUsers by criteria: {}", criteria);
-        Page<SysUserDTO> page = sysUserQueryService.findByCriteria(criteria, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        QueryResults<SysUserEmployeeVM> queryResults = sysUserService.findSysUserEmployeeVMPageByCriteria(criteria,employeeCriteria,pageable);
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), queryResults);
+        return ResponseEntity.ok().headers(headers).body(queryResults.getResults());
     }
 
     /**

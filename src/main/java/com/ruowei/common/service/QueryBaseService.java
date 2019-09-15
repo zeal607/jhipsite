@@ -5,10 +5,13 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ruowei.common.entity.BaseEntity;
+import com.ruowei.common.log.LogMessageUtils;
 import com.ruowei.common.pojo.BaseView;
 import com.ruowei.common.repository.BaseRepository;
 import com.ruowei.common.service.api.QueryServiceApi;
 import io.github.jhipster.service.filter.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +36,8 @@ public abstract class QueryBaseService <Entity extends BaseEntity,Long,Criteria,
     extends io.github.jhipster.service.QueryService
     implements QueryServiceApi<Entity,Long,Criteria,VO> {
 
+    private final Logger log = LoggerFactory.getLogger(QueryBaseService.class);
+
     @Autowired
     protected Repository jpaRepository;
 
@@ -55,7 +60,9 @@ public abstract class QueryBaseService <Entity extends BaseEntity,Long,Criteria,
      */
     @Override
     public Entity getById(Long id){
+        log.debug(LogMessageUtils.getEnterMessage("getById",id));
         Entity one= jpaRepository.getOne(id);
+        log.debug(LogMessageUtils.getLeaveMessage("getById",one));
         return one;
     }
 
@@ -67,7 +74,9 @@ public abstract class QueryBaseService <Entity extends BaseEntity,Long,Criteria,
      */
     @Override
     public Entity getOne(Predicate predicate){
+        log.debug(LogMessageUtils.getEnterMessage("getOne",predicate));
         Entity one= (Entity) jpaRepository.findOne(predicate).orElse(null);
+        log.debug(LogMessageUtils.getLeaveMessage("getOne",one));
         return one;
     }
 
@@ -80,7 +89,9 @@ public abstract class QueryBaseService <Entity extends BaseEntity,Long,Criteria,
      */
     @Override
     public List<Entity> findAllEntity(){
+        log.debug(LogMessageUtils.getEnterMessage("findAllEntity",null));
         List<Entity> list= jpaRepository.findAll();
+        log.debug(LogMessageUtils.getLeaveMessage("findAllEntity",list));
         return list;
     }
 
@@ -92,10 +103,15 @@ public abstract class QueryBaseService <Entity extends BaseEntity,Long,Criteria,
      */
     @Override
     public List<Entity> findAllEntity(Predicate predicate) {
+        log.debug(LogMessageUtils.getEnterMessage("findAllEntity",predicate));
+        List<Entity> list= null;
         if(predicate==null){
-            return jpaRepository.findAll();
+            list = jpaRepository.findAll();
+        }else{
+            list = (List<Entity>) jpaRepository.findAll(predicate);
         }
-        return (List<Entity>) jpaRepository.findAll(predicate);
+        log.debug(LogMessageUtils.getLeaveMessage("findAllEntity",list));
+        return list;
     }
 
     /**
@@ -106,10 +122,15 @@ public abstract class QueryBaseService <Entity extends BaseEntity,Long,Criteria,
      */
     @Override
     public Page<Entity> findPageEntity(Predicate predicate, Pageable pageable){
+        log.debug(LogMessageUtils.getEnterMessage("findPageEntity",predicate,pageable));
+        Page<Entity> page= null;
         if(predicate==null){
-            return (Page<Entity>) jpaRepository.findAll(pageable);
+            page = (Page<Entity>) jpaRepository.findAll(pageable);
+        }else{
+            page = (Page<Entity>) jpaRepository.findAll(predicate,pageable);
         }
-        return (Page<Entity>) jpaRepository.findAll(predicate,pageable);
+        log.debug(LogMessageUtils.getLeaveMessage("findPageEntity",page));
+        return page;
     }
 
 

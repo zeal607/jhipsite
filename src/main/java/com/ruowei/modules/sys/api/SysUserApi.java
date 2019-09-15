@@ -1,5 +1,6 @@
 package com.ruowei.modules.sys.api;
 
+import com.querydsl.core.QueryResults;
 import com.ruowei.modules.sys.pojo.SysEmployeeCriteria;
 import com.ruowei.modules.sys.pojo.SysUserCriteria;
 import com.ruowei.modules.sys.pojo.SysUserEmployeeVM;
@@ -23,7 +24,7 @@ public interface SysUserApi {
      * @param employeeCriteria
      * @param page
      */
-    Page<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(SysUserCriteria userCriteria, SysEmployeeCriteria employeeCriteria, Pageable page);
+    QueryResults<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(SysUserCriteria userCriteria, SysEmployeeCriteria employeeCriteria, Pageable page);
 
 //    /**
 //     * 重置用户密码
