@@ -1,10 +1,10 @@
 package com.ruowei.service.impl;
 
-import com.ruowei.service.SysPostService;
-import com.ruowei.domain.SysPost;
-import com.ruowei.repository.SysPostRepository;
-import com.ruowei.service.dto.SysPostDTO;
-import com.ruowei.service.mapper.SysPostMapper;
+import com.ruowei.modules.sys.service.post.SysPostService;
+import com.ruowei.modules.sys.domain.SysPost;
+import com.ruowei.modules.sys.repository.SysPostRepository;
+import com.ruowei.modules.sys.pojo.SysPostDTO;
+import com.ruowei.modules.sys.mapper.SysPostMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -2,8 +2,6 @@ package com.ruowei.service;
 
 import java.util.List;
 
-import javax.persistence.criteria.JoinType;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -18,8 +16,8 @@ import com.ruowei.domain.SysRole;
 import com.ruowei.domain.*; // for static metamodels
 import com.ruowei.repository.SysRoleRepository;
 import com.ruowei.service.dto.SysRoleCriteria;
-import com.ruowei.service.dto.SysRoleDTO;
-import com.ruowei.service.mapper.SysRoleMapper;
+import com.ruowei.modules.sys.pojo.SysRoleDTO;
+import com.ruowei.modules.sys.mapper.SysRoleMapper;
 
 /**
  * Service for executing complex queries for {@link SysRole} entities in the database.

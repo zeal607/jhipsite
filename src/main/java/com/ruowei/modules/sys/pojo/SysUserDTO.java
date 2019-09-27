@@ -15,8 +15,6 @@ import java.util.Objects;
 @ApiModel(description = "用户表 @author 刘东奇")
 public class SysUserDTO extends BaseDTO {
 
-    private Long id;
-
     /**
      * 用户编码 ，该字段不作为表的关联外键，仅供展示
      */
@@ -168,16 +166,6 @@ public class SysUserDTO extends BaseDTO {
     @Size(max = 500)
     @ApiModelProperty(value = "备注信息")
     private String remarks;
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUserCode() {
         return userCode;

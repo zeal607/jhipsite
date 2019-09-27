@@ -2,14 +2,16 @@ package com.ruowei.modules.sys.pojo;
 
 import java.io.Serializable;
 import java.util.Objects;
+
+import com.ruowei.modules.sys.domain.SysEmployee;
 import io.github.jhipster.service.Criteria;
-import com.ruowei.domain.enumeration.EmployeeStatusType;
+import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 import io.github.jhipster.service.filter.Filter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
 
 /**
- * Criteria class for the {@link com.ruowei.domain.SysEmployee} entity. This class is used
+ * Criteria class for the {@link SysEmployee} entity. This class is used
  * in {@link com.ruowei.web.rest.SysEmployeeResource} to receive all the possible filtering options from
  * the Http GET request parameters.
  * For example the following could be a valid request:

@@ -1,10 +1,10 @@
 package com.ruowei.service.impl;
 
-import com.ruowei.service.SysUserRoleService;
-import com.ruowei.domain.SysUserRole;
-import com.ruowei.repository.SysUserRoleRepository;
-import com.ruowei.service.dto.SysUserRoleDTO;
-import com.ruowei.service.mapper.SysUserRoleMapper;
+import com.ruowei.modules.sys.service.user.SysUserRoleService;
+import com.ruowei.modules.sys.domain.SysUserRole;
+import com.ruowei.modules.sys.repository.SysUserRoleRepository;
+import com.ruowei.modules.sys.pojo.SysUserRoleDTO;
+import com.ruowei.modules.sys.mapper.SysUserRoleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

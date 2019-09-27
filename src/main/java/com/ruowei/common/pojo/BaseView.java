@@ -1,5 +1,12 @@
 package com.ruowei.common.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruowei.common.json.LongJsonDeserializer;
+import com.ruowei.common.json.LongJsonSerializer;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.time.Instant;
 
 /**
@@ -12,6 +19,9 @@ public class BaseView {
     /**
      * id
      */
+    @ApiModelProperty(value = "主键")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     protected Long id;
 
     /**

@@ -6,6 +6,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ruowei.common.entity.BaseEntity;
 import com.ruowei.common.log.LogMessageUtils;
+import com.ruowei.common.pojo.BaseDTO;
 import com.ruowei.common.pojo.BaseView;
 import com.ruowei.common.repository.BaseRepository;
 import com.ruowei.common.service.api.QueryServiceApi;
@@ -27,14 +28,13 @@ import java.util.List;
  * @author 刘东奇
  * @param <Entity> 实体
  * @param <Long> 主键
- * @param <Criteria> 查询对象
- * @param <VO> 视图对象
+ * @param <VM> 视图对象
  * @param <Repository> dao层
  */
 @Transactional(readOnly = true)
-public abstract class QueryBaseService <Entity extends BaseEntity,Long,Criteria,VO extends BaseView,Repository extends BaseRepository<Entity,Long>>
+public abstract class QueryBaseService <Entity extends BaseEntity,Long,DTO extends BaseDTO,VM extends BaseView,Repository extends BaseRepository<Entity,Long>>
     extends io.github.jhipster.service.QueryService
-    implements QueryServiceApi<Entity,Long,Criteria,VO> {
+    implements QueryServiceApi<Entity,Long,DTO,VM> {
 
     private final Logger log = LoggerFactory.getLogger(QueryBaseService.class);
 

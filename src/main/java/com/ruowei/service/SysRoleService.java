@@ -1,6 +1,6 @@
 package com.ruowei.service;
 
-import com.ruowei.service.dto.SysRoleDTO;
+import com.ruowei.modules.sys.pojo.SysRoleDTO;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

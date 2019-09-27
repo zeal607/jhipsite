@@ -11,7 +11,6 @@ import com.ruowei.common.pojo.BaseDTO;
 import com.ruowei.common.pojo.BaseView;
 import com.ruowei.common.repository.BaseRepository;
 import com.ruowei.common.service.api.CrudServiceApi;
-import com.ruowei.modules.sys.service.SysUserQueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -33,8 +33,8 @@ import java.util.Optional;
  * @param <Repository> dao层
  */
 @Transactional
-public abstract class CrudBaseService<Entity extends BaseEntity,Long ,Criteria,VO extends BaseView,DTO extends BaseDTO,Repository extends BaseRepository<Entity,Long>>
-    implements CrudServiceApi<Entity,Long,Criteria,VO,DTO> {
+public abstract class CrudBaseService<Entity extends BaseEntity,Long ,VO extends BaseView,DTO extends BaseDTO,Repository extends BaseRepository<Entity,Long>>
+    implements CrudServiceApi<Entity,Long,VO,DTO> {
 
     private final Logger log = LoggerFactory.getLogger(CrudBaseService.class);
 
@@ -65,7 +65,8 @@ public abstract class CrudBaseService<Entity extends BaseEntity,Long ,Criteria,V
         log.debug(LogMessageUtils.getLeaveMessage("delete",null));
     }
 
-    /** 插入
+    /**
+     * 插入
      * @author 刘东奇
      * @date 2019/9/6
      * @param entity
@@ -73,13 +74,17 @@ public abstract class CrudBaseService<Entity extends BaseEntity,Long ,Criteria,V
     @Override
     public Entity insert(Entity entity) {
         log.debug(LogMessageUtils.getEnterMessage("insert",entity));
-        Optional<Entity> exist =  jpaRepository.findById((Long) entity.getId());
-        if(exist.isPresent()){
-            //如果存在，抛异常
-            throw new DataAlreadyExistException(ErrorMessageUtils.getAlreadyExistMessage(entity.getEntityName(),entity.getId().toString()));
-        }else{
-            //不存在，则插入
+        if(entity.getId() == null){
             entity = jpaRepository.save(entity);
+        }else{
+            Optional<Entity> exist =  jpaRepository.findById((Long) entity.getId());
+            if(exist.isPresent()){
+                //如果存在，抛异常
+                throw new DataAlreadyExistException(ErrorMessageUtils.getAlreadyExistMessage(entity.getEntityName(),entity.getId().toString()));
+            }else{
+                //不存在，则插入
+                entity = jpaRepository.save(entity);
+            }
         }
         log.debug(LogMessageUtils.getLeaveMessage("insert",entity));
         return entity;
@@ -94,14 +99,18 @@ public abstract class CrudBaseService<Entity extends BaseEntity,Long ,Criteria,V
     @Override
     public Entity update(Entity entity) {
         log.debug(LogMessageUtils.getEnterMessage("update",entity));
-        Optional<Entity> exist =  jpaRepository.findById((Long) entity.getId());
-        if(exist.isPresent()){
-            //如果存在，则更新
-            entity = jpaRepository.save(entity);
-
+        if(entity.getId() == null){
+            throw new DataNotFoundException(ErrorMessageUtils.getNotFoundMessage(entity.getEntityName(),entity.getId().toString()));
         }else{
-            //不存在，抛异常
-            throw new DataNotFoundException(ErrorMessageUtils.getAlreadyExistMessage(entity.getEntityName(),entity.getId().toString()));
+            Optional<Entity> exist =  jpaRepository.findById((Long) entity.getId());
+            if(exist.isPresent()){
+                //如果存在，则更新
+                entity = jpaRepository.save(entity);
+
+            }else{
+                //不存在，抛异常
+                throw new DataNotFoundException(ErrorMessageUtils.getNotFoundMessage(entity.getEntityName(),entity.getId().toString()));
+            }
         }
         log.debug(LogMessageUtils.getLeaveMessage("update",entity));
         return entity;
@@ -121,5 +130,17 @@ public abstract class CrudBaseService<Entity extends BaseEntity,Long ,Criteria,V
         return entity;
     }
 
-
+    /**
+     * 批量插入或更新
+     * @author 刘东奇
+     * @date 2019/9/23
+     * @param list
+     */
+    @Override
+    public List<Entity> saveAll(List<Entity> list) {
+        log.debug(LogMessageUtils.getEnterMessage("saveAll",list));
+        List<Entity> result= jpaRepository.saveAll(list);
+        log.debug(LogMessageUtils.getLeaveMessage("saveAll",list));
+        return result;
+    }
 }

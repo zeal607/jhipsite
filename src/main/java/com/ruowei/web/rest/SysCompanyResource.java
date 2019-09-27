@@ -1,9 +1,9 @@
 package com.ruowei.web.rest;
 
-import com.ruowei.service.SysCompanyService;
+import com.ruowei.modules.sys.service.SysCompanyService;
 import com.ruowei.web.rest.errors.BadRequestAlertException;
 import com.ruowei.service.dto.SysCompanyDTO;
-import com.ruowei.service.dto.SysCompanyCriteria;
+import com.ruowei.modules.sys.pojo.SysCompanyCriteria;
 import com.ruowei.service.SysCompanyQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

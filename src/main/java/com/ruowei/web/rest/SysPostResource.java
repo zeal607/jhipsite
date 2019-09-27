@@ -1,10 +1,11 @@
 package com.ruowei.web.rest;
 
-import com.ruowei.service.SysPostService;
+import com.ruowei.modules.sys.domain.SysPost;
+import com.ruowei.modules.sys.service.post.SysPostService;
 import com.ruowei.web.rest.errors.BadRequestAlertException;
-import com.ruowei.service.dto.SysPostDTO;
-import com.ruowei.service.dto.SysPostCriteria;
-import com.ruowei.service.SysPostQueryService;
+import com.ruowei.modules.sys.pojo.SysPostDTO;
+import com.ruowei.modules.sys.pojo.SysPostCriteria;
+import com.ruowei.modules.sys.service.post.SysPostQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -15,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * REST controller for managing {@link com.ruowei.domain.SysPost}.
+ * REST controller for managing {@link SysPost}.
  */
 @RestController
 @RequestMapping("/api")

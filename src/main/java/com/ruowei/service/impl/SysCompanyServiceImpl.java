@@ -1,6 +1,6 @@
 package com.ruowei.service.impl;
 
-import com.ruowei.service.SysCompanyService;
+import com.ruowei.modules.sys.service.SysCompanyService;
 import com.ruowei.domain.SysCompany;
 import com.ruowei.repository.SysCompanyRepository;
 import com.ruowei.service.dto.SysCompanyDTO;

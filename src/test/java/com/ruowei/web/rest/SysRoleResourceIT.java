@@ -4,10 +4,9 @@ import com.ruowei.JhipsiteApp;
 import com.ruowei.domain.SysRole;
 import com.ruowei.repository.SysRoleRepository;
 import com.ruowei.service.SysRoleService;
-import com.ruowei.service.dto.SysRoleDTO;
-import com.ruowei.service.mapper.SysRoleMapper;
+import com.ruowei.modules.sys.pojo.SysRoleDTO;
+import com.ruowei.modules.sys.mapper.SysRoleMapper;
 import com.ruowei.web.rest.errors.ExceptionTranslator;
-import com.ruowei.service.dto.SysRoleCriteria;
 import com.ruowei.service.SysRoleQueryService;
 
 import org.junit.jupiter.api.BeforeEach;

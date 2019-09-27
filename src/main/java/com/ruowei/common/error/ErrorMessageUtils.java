@@ -23,6 +23,13 @@ public class ErrorMessageUtils {
         return message;
     }
 
+    public static String getDataInvalidMessage(String entityName, String id,String expectData,String actualData){
+        entityName= StringUtils.trimToEmpty(entityName);
+        id= StringUtils.trimToEmpty(id);
+        String message="ID为 "+id+" 的"+entityName+"数据错误。期望数据："+expectData+"|实际数据："+actualData;
+        return message;
+    }
+
 //    public static String getNotFoundMessage(String entityName,Map<String,String> queryAndConditionMap,Map<String,String> queryOrConditionMap){
 //        String message="找不到";
 //        Boolean isFirst=true;

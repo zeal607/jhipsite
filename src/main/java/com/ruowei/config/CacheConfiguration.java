@@ -2,6 +2,7 @@ package com.ruowei.config;
 
 import java.time.Duration;
 
+import com.ruowei.modules.sys.domain.*;
 import org.ehcache.config.builders.*;
 import org.ehcache.jsr107.Eh107Configuration;
 
@@ -46,15 +47,15 @@ public class CacheConfiguration {
             createCache(cm, com.ruowei.modules.sys.domain.SysUser.class.getName());
             createCache(cm, com.ruowei.domain.SysRole.class.getName());
             createCache(cm, com.ruowei.domain.SysMenu.class.getName());
-            createCache(cm, com.ruowei.domain.SysUserRole.class.getName());
+            createCache(cm, SysUserRole.class.getName());
             createCache(cm, com.ruowei.domain.SysRoleMenu.class.getName());
             createCache(cm, com.ruowei.domain.SysCompany.class.getName());
-            createCache(cm, com.ruowei.domain.SysOffice.class.getName());
-            createCache(cm, com.ruowei.domain.SysEmployee.class.getName());
-            createCache(cm, com.ruowei.domain.SysEmployeeOffice.class.getName());
+            createCache(cm, SysOffice.class.getName());
+            createCache(cm, SysEmployee.class.getName());
+            createCache(cm, SysEmployeeOffice.class.getName());
             createCache(cm, com.ruowei.domain.SysCompanyOffice.class.getName());
-            createCache(cm, com.ruowei.domain.SysPost.class.getName());
-            createCache(cm, com.ruowei.domain.SysEmployeePost.class.getName());
+            createCache(cm, SysPost.class.getName());
+            createCache(cm, SysEmployeePost.class.getName());
             createCache(cm, com.ruowei.domain.SysRoleDataScope.class.getName());
             createCache(cm, com.ruowei.domain.SysUserDataScope.class.getName());
             // jhipster-needle-ehcache-add-entry

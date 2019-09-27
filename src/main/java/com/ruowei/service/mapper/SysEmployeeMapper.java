@@ -1,8 +1,8 @@
 package com.ruowei.service.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
-import com.ruowei.domain.*;
-import com.ruowei.service.dto.SysEmployeeDTO;
+import com.ruowei.modules.sys.domain.SysEmployee;
+import com.ruowei.modules.sys.pojo.SysEmployeeDTO;
 
 import org.mapstruct.*;
 

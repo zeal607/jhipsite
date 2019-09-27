@@ -3,8 +3,8 @@ package com.ruowei.service.impl;
 import com.ruowei.service.SysRoleService;
 import com.ruowei.domain.SysRole;
 import com.ruowei.repository.SysRoleRepository;
-import com.ruowei.service.dto.SysRoleDTO;
-import com.ruowei.service.mapper.SysRoleMapper;
+import com.ruowei.modules.sys.pojo.SysRoleDTO;
+import com.ruowei.modules.sys.mapper.SysRoleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

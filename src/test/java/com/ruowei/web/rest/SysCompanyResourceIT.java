@@ -3,11 +3,10 @@ package com.ruowei.web.rest;
 import com.ruowei.JhipsiteApp;
 import com.ruowei.domain.SysCompany;
 import com.ruowei.repository.SysCompanyRepository;
-import com.ruowei.service.SysCompanyService;
+import com.ruowei.modules.sys.service.SysCompanyService;
 import com.ruowei.service.dto.SysCompanyDTO;
 import com.ruowei.service.mapper.SysCompanyMapper;
 import com.ruowei.web.rest.errors.ExceptionTranslator;
-import com.ruowei.service.dto.SysCompanyCriteria;
 import com.ruowei.service.SysCompanyQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -188,6 +187,7 @@ public class SysCompanyResourceIT {
 
         // Create the SysCompany
         SysCompanyDTO sysCompanyDTO = sysCompanyMapper.toDto(sysCompany);
+        System.out.println(new String(TestUtil.convertObjectToJsonBytes(sysCompanyDTO)));
         restSysCompanyMockMvc.perform(post("/api/sys-companies")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(sysCompanyDTO)))

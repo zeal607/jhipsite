@@ -1,15 +1,20 @@
 package com.ruowei.modules.sys.web;
 
 import com.ruowei.JhipsiteApp;
-import com.ruowei.domain.enumeration.PostStatusType;
-import com.ruowei.domain.enumeration.PostType;
+import com.ruowei.domain.SysCompany;
+import com.ruowei.domain.enumeration.OfficeType;
+import com.ruowei.modules.sys.domain.enumeration.PostType;
 import com.ruowei.modules.sys.domain.SysUser;
 import com.ruowei.modules.sys.domain.enumeration.GenderType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
+import com.ruowei.modules.sys.pojo.SysOfficeDTO;
+import com.ruowei.modules.sys.pojo.SysPostDTO;
+import com.ruowei.modules.sys.pojo.SysUserEmployeeDTO;
 import com.ruowei.modules.sys.repository.SysUserRepository;
-import com.ruowei.modules.sys.service.SysUserQueryService;
-import com.ruowei.web.rest.SysPostResource;
+import com.ruowei.modules.sys.service.user.SysUserService;
+import com.ruowei.service.mapper.SysCompanyMapper;
+import com.ruowei.web.rest.TestUtil;
 import com.ruowei.web.rest.errors.ExceptionTranslator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,11 +33,16 @@ import javax.persistence.EntityManager;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.ruowei.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -112,8 +122,89 @@ class SysUserResourceTest {
     private static final String DEFAULT_REMARKS = "AAAAAAAAAA";
     private static final String UPDATED_REMARKS = "BBBBBBBBBB";
 
+    private static final String DEFAULT_SYS_OFFICE_ID = "AAAAAAAAAA";
+    private static final String UPDATED_SYS_OFFICE_ID = "BBBBBBBBBB";
+
+    private static final String DEFAULT_OFFICE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_OFFICE_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_SYS_COMPANY_ID = "AAAAAAAAAA";
+    private static final String UPDATED_SYS_COMPANY_ID = "BBBBBBBBBB";
+
+    private static final String DEFAULT_COMPANY_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_COMPANY_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_POST_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_POST_CODE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_POST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_POST_NAME = "BBBBBBBBBB";
+
+    private static final PostType DEFAULT_POST_TYPE = PostType.SENIOR;
+    private static final PostType UPDATED_POST_TYPE = PostType.MIDDLE;
+
+    private static final String DEFAULT_EMP_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_EMP_CODE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_EMP_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_EMP_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_EMP_NAME_EN = "AAAAAAAAAA";
+    private static final String UPDATED_EMP_NAME_EN = "BBBBBBBBBB";
+
+    private static final String DEFAULT_OFFICE_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_OFFICE_CODE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PARENT_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_PARENT_CODE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PARENT_CODES = "AAAAAAAAAA";
+    private static final String UPDATED_PARENT_CODES = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_TREE_SORT = 1;
+    private static final Integer UPDATED_TREE_SORT = 2;
+    private static final Integer SMALLER_TREE_SORT = 1 - 1;
+
+    private static final Integer DEFAULT_TREE_SORTS = 1;
+    private static final Integer UPDATED_TREE_SORTS = 2;
+    private static final Integer SMALLER_TREE_SORTS = 1 - 1;
+
+    private static final Boolean DEFAULT_TREE_LEAF = false;
+    private static final Boolean UPDATED_TREE_LEAF = true;
+
+    private static final Integer DEFAULT_TREE_LEVEL = 1;
+    private static final Integer UPDATED_TREE_LEVEL = 2;
+    private static final Integer SMALLER_TREE_LEVEL = 1 - 1;
+
+    private static final String DEFAULT_TREE_NAMES = "AAAAAAAAAA";
+    private static final String UPDATED_TREE_NAMES = "BBBBBBBBBB";
+
+    private static final String DEFAULT_VIEW_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_VIEW_CODE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_FULL_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_FULL_NAME = "BBBBBBBBBB";
+
+    private static final OfficeType DEFAULT_OFFICE_TYPE = OfficeType.NATIONAL;
+    private static final OfficeType UPDATED_OFFICE_TYPE = OfficeType.PROVINCIAL;
+
+    private static final String DEFAULT_LEADER = "AAAAAAAAAA";
+    private static final String UPDATED_LEADER = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ZIP_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_ZIP_CODE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_COMPANY_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_COMPANY_CODE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_AREA_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_AREA_CODE = "BBBBBBBBBB";
+
     @Autowired
-    private SysUserQueryService sysUserQueryService;
+    private SysUserService sysUserService;
     private MockMvc restSysUserMockMvc;
     @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
@@ -125,9 +216,13 @@ class SysUserResourceTest {
     private Validator validator;
 
     @Autowired
+    private SysCompanyMapper sysCompanyMapper;
+
+    @Autowired
     private SysUserRepository sysUserRepository;
 
     private SysUser sysUser;
+    private SysCompany sysCompany;
 
     @Autowired
     private EntityManager em;
@@ -135,7 +230,7 @@ class SysUserResourceTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SysUserResource sysUserResource = new SysUserResource(sysUserQueryService);
+        final SysUserResource sysUserResource = new SysUserResource(sysUserService);
         this.restSysUserMockMvc = MockMvcBuilders.standaloneSetup(sysUserResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -146,10 +241,10 @@ class SysUserResourceTest {
 
     @BeforeEach
     public void initTest() {
-        sysUser = createEntity(em);
+        sysUser = createSysUserEntity(em);
     }
 
-    public static SysUser createEntity(EntityManager em) {
+    public static SysUser createSysUserEntity(EntityManager em) {
         SysUser sysUser = new SysUser()
             .userCode(DEFAULT_USER_CODE)
             .loginCode(DEFAULT_LOGIN_CODE)
@@ -176,38 +271,112 @@ class SysUserResourceTest {
         return sysUser;
     }
 
+    public static SysOfficeDTO createSysOfficeDTO(EntityManager em) {
+        SysOfficeDTO sysOfficeDTO = new SysOfficeDTO();
+        sysOfficeDTO.setOfficeCode(DEFAULT_OFFICE_CODE);
+        sysOfficeDTO.setParentCode(DEFAULT_PARENT_CODE);
+        sysOfficeDTO.setParentCodes(DEFAULT_PARENT_CODES);
+        sysOfficeDTO.setTreeNames(DEFAULT_TREE_NAMES);
+        sysOfficeDTO.setViewCode(DEFAULT_VIEW_CODE);
+        sysOfficeDTO.setOfficeName(DEFAULT_OFFICE_NAME);
+        sysOfficeDTO.setAddress(DEFAULT_ADDRESS);
+        return sysOfficeDTO;
+    }
+
+    public static SysPostDTO createSysPostDTO(EntityManager em) {
+        SysPostDTO sysPostDTO = new SysPostDTO();
+        sysPostDTO.setPostCode(DEFAULT_POST_CODE);
+        sysPostDTO.setPostName(DEFAULT_POST_NAME);
+        sysPostDTO.setPostType(DEFAULT_POST_TYPE);
+        return sysPostDTO;
+    }
+
+    public static SysUserEmployeeDTO createSysUserEmployeeDTO(EntityManager em) {
+        List<SysPostDTO> sysPostDTOList = new ArrayList<SysPostDTO>();
+        sysPostDTOList.add(createSysPostDTO(em));
+        Map<SysOfficeDTO, SysPostDTO> sysOfficePostMap =new HashMap<SysOfficeDTO, SysPostDTO>();
+        sysOfficePostMap.put(createSysOfficeDTO(em),createSysPostDTO(em));
+
+        SysUserEmployeeDTO sysUserEmployeeDTO = new SysUserEmployeeDTO();
+        sysUserEmployeeDTO.setSysOfficeId(DEFAULT_SYS_OFFICE_ID);
+        sysUserEmployeeDTO.setOfficeName(DEFAULT_COMPANY_NAME);
+        sysUserEmployeeDTO.setSysCompanyId(DEFAULT_SYS_COMPANY_ID);
+        sysUserEmployeeDTO.setCompanyName(DEFAULT_COMPANY_NAME);
+        sysUserEmployeeDTO.setLoginCode(DEFAULT_LOGIN_CODE);
+        sysUserEmployeeDTO.setUserName(DEFAULT_USER_NAME);
+        sysUserEmployeeDTO.setEmail(DEFAULT_EMAIL);
+        sysUserEmployeeDTO.setMobile(DEFAULT_MOBILE);
+        sysUserEmployeeDTO.setPhone(DEFAULT_PHONE);
+        sysUserEmployeeDTO.setUserSort(DEFAULT_USER_SORT);
+        sysUserEmployeeDTO.setEmpCode(DEFAULT_EMP_CODE);
+        sysUserEmployeeDTO.setEmpName(DEFAULT_EMP_NAME);
+        sysUserEmployeeDTO.setEmpNameEn(DEFAULT_EMP_NAME_EN);
+//        sysUserEmployeeDTO.setSysOfficePostMap(sysOfficePostMap);
+//        sysUserEmployeeDTO.setSysPostDTOList(sysPostDTOList);
+        return sysUserEmployeeDTO;
+    }
+
+    public static SysCompany createEntity(EntityManager em) {
+        SysCompany sysCompany = new SysCompany()
+            .companyCode(DEFAULT_COMPANY_CODE)
+            .parentCode(DEFAULT_PARENT_CODE)
+            .parentCodes(DEFAULT_PARENT_CODES)
+            .treeSort(DEFAULT_TREE_SORT)
+            .treeSorts(DEFAULT_TREE_SORTS)
+            .treeLeaf(DEFAULT_TREE_LEAF)
+            .treeLevel(DEFAULT_TREE_LEVEL)
+            .treeNames(DEFAULT_TREE_NAMES)
+            .viewCode(DEFAULT_VIEW_CODE)
+            .companyName(DEFAULT_COMPANY_NAME)
+            .fullName(DEFAULT_FULL_NAME)
+            .areaCode(DEFAULT_AREA_CODE)
+            .remarks(DEFAULT_REMARKS);
+        return sysCompany;
+    }
+
     @Test
     @Transactional
-    public void getAllSysUsers() throws Exception {
+    public void getAllSysUserEmployees() throws Exception {
         // Initialize the database
         sysUserRepository.saveAndFlush(sysUser);
 
         // Get all the sysUserList
-        restSysUserMockMvc.perform(get("/api/sys-users?sort=id,desc&userCode.specified=true&freezeDate.equals="+DEFAULT_FREEZE_DATE.toString()+"&userSort.lessThan=10&status.equals="+DEFAULT_STATUS.toString()))
+        restSysUserMockMvc.perform(get("/api/sys-user-employees?sort=id,desc&userCode.specified=true&freezeDate.equals="+DEFAULT_FREEZE_DATE.toString()+"&userSort.lessThan=10"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(sysUser.getId().longValue())))
             .andExpect(jsonPath("$.[*].userCode").value(hasItem(DEFAULT_USER_CODE.toString())))
             .andExpect(jsonPath("$.[*].loginCode").value(hasItem(DEFAULT_LOGIN_CODE.toString())))
             .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME.toString())))
-            .andExpect(jsonPath("$.[*].password").value(hasItem(DEFAULT_PASSWORD.toString())))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
             .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE.toString())))
-            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE.toString())))
-            .andExpect(jsonPath("$.[*].sex").value(hasItem(DEFAULT_SEX.toString())))
-            .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
-            .andExpect(jsonPath("$.[*].sign").value(hasItem(DEFAULT_SIGN.toString())))
-            .andExpect(jsonPath("$.[*].wxOpenid").value(hasItem(DEFAULT_WX_OPENID.toString())))
-            .andExpect(jsonPath("$.[*].mobileImei").value(hasItem(DEFAULT_MOBILE_IMEI.toString())))
-            .andExpect(jsonPath("$.[*].userType").value(hasItem(DEFAULT_USER_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].refCode").value(hasItem(DEFAULT_REF_CODE.toString())))
-            .andExpect(jsonPath("$.[*].refName").value(hasItem(DEFAULT_REF_NAME.toString())))
-            .andExpect(jsonPath("$.[*].lastLoginIp").value(hasItem(DEFAULT_LAST_LOGIN_IP.toString())))
-            .andExpect(jsonPath("$.[*].lastLoginDate").value(hasItem(DEFAULT_LAST_LOGIN_DATE.toString())))
-            .andExpect(jsonPath("$.[*].freezeDate").value(hasItem(DEFAULT_FREEZE_DATE.toString())))
-            .andExpect(jsonPath("$.[*].freezeCause").value(hasItem(DEFAULT_FREEZE_CAUSE.toString())))
-            .andExpect(jsonPath("$.[*].userSort").value(hasItem(DEFAULT_USER_SORT)))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].remarks").value(hasItem(DEFAULT_REMARKS.toString())));
+            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE.toString())));
+    }
+
+    @Test
+    @Transactional
+    public void createSysUserEmployee() throws Exception {
+        int databaseSizeBeforeCreate = sysUserRepository.findAll().size();
+
+        // Create the SysUserEmployee
+        SysUserEmployeeDTO sysUserEmployeeDTO = createSysUserEmployeeDTO(em);
+        System.out.println(new String(TestUtil.convertObjectToJsonBytes(sysUserEmployeeDTO)));
+        restSysUserMockMvc.perform(post("/api/sys-user-employees")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(sysUserEmployeeDTO)))
+            .andExpect(status().isCreated());
+
+        // Validate the SysEmployee in the database
+//        List<Sy> sysEmployeeList = sysUserRepository.findAll();
+//        assertThat(sysEmployeeList).hasSize(databaseSizeBeforeCreate + 1);
+//        SysEmployee testSysEmployee = sysEmployeeList.get(sysEmployeeList.size() - 1);
+//        assertThat(testSysEmployee.getEmpCode()).isEqualTo(DEFAULT_EMP_CODE);
+//        assertThat(testSysEmployee.getEmpName()).isEqualTo(DEFAULT_EMP_NAME);
+//        assertThat(testSysEmployee.getEmpNameEn()).isEqualTo(DEFAULT_EMP_NAME_EN);
+//        assertThat(testSysEmployee.getSysOfficeId()).isEqualTo(DEFAULT_SYS_OFFICE_ID);
+//        assertThat(testSysEmployee.getOfficeName()).isEqualTo(DEFAULT_OFFICE_NAME);
+//        assertThat(testSysEmployee.getSysCompanyId()).isEqualTo(DEFAULT_SYS_COMPANY_ID);
+//        assertThat(testSysEmployee.getCompanyName()).isEqualTo(DEFAULT_COMPANY_NAME);
+//        assertThat(testSysEmployee.getStatus()).isEqualTo(DEFAULT_STATUS);
+//        assertThat(testSysEmployee.getRemarks()).isEqualTo(DEFAULT_REMARKS);
     }
 }

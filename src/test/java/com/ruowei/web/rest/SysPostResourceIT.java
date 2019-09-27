@@ -1,14 +1,13 @@
 package com.ruowei.web.rest;
 
 import com.ruowei.JhipsiteApp;
-import com.ruowei.domain.SysPost;
-import com.ruowei.repository.SysPostRepository;
-import com.ruowei.service.SysPostService;
-import com.ruowei.service.dto.SysPostDTO;
-import com.ruowei.service.mapper.SysPostMapper;
+import com.ruowei.modules.sys.domain.SysPost;
+import com.ruowei.modules.sys.repository.SysPostRepository;
+import com.ruowei.modules.sys.service.post.SysPostService;
+import com.ruowei.modules.sys.pojo.SysPostDTO;
+import com.ruowei.modules.sys.mapper.SysPostMapper;
 import com.ruowei.web.rest.errors.ExceptionTranslator;
-import com.ruowei.service.dto.SysPostCriteria;
-import com.ruowei.service.SysPostQueryService;
+import com.ruowei.modules.sys.service.post.SysPostQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.ruowei.domain.enumeration.PostType;
+import com.ruowei.modules.sys.domain.enumeration.PostType;
 import com.ruowei.domain.enumeration.PostStatusType;
 /**
  * Integration tests for the {@link SysPostResource} REST controller.
