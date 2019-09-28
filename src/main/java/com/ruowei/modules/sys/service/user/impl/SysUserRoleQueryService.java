@@ -1,8 +1,7 @@
-package com.ruowei.modules.sys.service.user;
+package com.ruowei.modules.sys.service.user.impl;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
@@ -10,7 +9,8 @@ import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
 import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.QSysUser;
+import com.ruowei.modules.sys.domain.QSysUserRole;
+import com.ruowei.modules.sys.domain.SysUserRole_;
 import com.ruowei.modules.sys.mapper.SysRoleMapper;
 import com.ruowei.modules.sys.pojo.SysRoleDTO;
 import io.github.jhipster.service.Criteria;
@@ -208,31 +208,5 @@ public class SysUserRoleQueryService
             .leftJoin(qSysRole).on(qSysUserRole.sysRoleId.eq(qSysRole.roleCode));
         return jpaQuery;
     }
-    
-    /**
-     * @author 刘东奇
-     * @date 2019/9/27
-     * @param sysUserId
-     */
-    public List<SysRoleDTO> getSysRoleDTOListBySysUserId(Long sysUserId) {
-//        QSysUser qSysUser =  QSysUser.sysUser;
-//        QSysUserRole qSysUserRole =  QSysUserRole.sysUserRole;
-//        QSysRole qSysRole =  QSysRole.sysRole;
-//
-//        JPAQuery<Tuple> tupleJPAQuery = getTupleJPAQuery();
-//        List<SysRoleDTO> sysRoleDTOList=tupleJPAQuery.where(qSysUser.id.eq(sysUserId)).fetch()
-//            .stream().map(
-//                tuple -> {
-//                    SysUserRole sysUserRole = tuple.get(qSysUserRole);
-//                    SysRole sysRole = tuple.get(qSysRole);
-//
-//                    SysUserRoleDTO sysEmployeeOfficeDTO = sysUserRoleMapper.toDto(sysUserRole);
-//                    SysRoleDTO sysRoleDTO = sysRoleMapper.toDto(sysRole);
-//
-//                    sysEmployeeOfficeDTO.setSysRoleDTO(sysRoleDTO);
-//                    return sysEmployeeOfficeDTO;
-//                }
-//            ).collect(Collectors.toList());
-        return null;
-    }
+
 }

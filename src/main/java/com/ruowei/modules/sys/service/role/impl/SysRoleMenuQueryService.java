@@ -1,8 +1,6 @@
-package com.ruowei.service;
+package com.ruowei.modules.sys.service.role.impl;
 
 import java.util.List;
-
-import javax.persistence.criteria.JoinType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

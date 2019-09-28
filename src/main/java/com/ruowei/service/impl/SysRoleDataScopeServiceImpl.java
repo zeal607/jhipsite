@@ -1,6 +1,6 @@
 package com.ruowei.service.impl;
 
-import com.ruowei.service.SysRoleDataScopeService;
+import com.ruowei.modules.sys.service.role.SysRoleDataScopeService;
 import com.ruowei.domain.SysRoleDataScope;
 import com.ruowei.repository.SysRoleDataScopeRepository;
 import com.ruowei.service.dto.SysRoleDataScopeDTO;

@@ -1,4 +1,5 @@
-package com.ruowei.domain;
+package com.ruowei.modules.sys.domain;
+import com.ruowei.common.entity.BaseEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -20,13 +21,9 @@ import com.ruowei.domain.enumeration.RoleStatusType;
 @Entity
 @Table(name = "sys_role")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysRole implements Serializable {
+public class SysRole extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     /**
      * 角色编码 ，该字段不作为表的关联外键，仅供展示
@@ -95,13 +92,6 @@ public class SysRole implements Serializable {
     private String remarks;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getRoleCode() {
         return roleCode;

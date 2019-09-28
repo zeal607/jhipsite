@@ -1,13 +1,13 @@
 package com.ruowei.web.rest;
 
 import com.ruowei.JhipsiteApp;
-import com.ruowei.domain.SysRole;
-import com.ruowei.repository.SysRoleRepository;
-import com.ruowei.service.SysRoleService;
+import com.ruowei.modules.sys.domain.SysRole;
+import com.ruowei.modules.sys.repository.SysRoleRepository;
+import com.ruowei.modules.sys.service.role.SysRoleService;
 import com.ruowei.modules.sys.pojo.SysRoleDTO;
 import com.ruowei.modules.sys.mapper.SysRoleMapper;
 import com.ruowei.web.rest.errors.ExceptionTranslator;
-import com.ruowei.service.SysRoleQueryService;
+import com.ruowei.modules.sys.service.role.impl.SysRoleQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

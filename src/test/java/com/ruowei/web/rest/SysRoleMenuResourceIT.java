@@ -3,12 +3,11 @@ package com.ruowei.web.rest;
 import com.ruowei.JhipsiteApp;
 import com.ruowei.domain.SysRoleMenu;
 import com.ruowei.repository.SysRoleMenuRepository;
-import com.ruowei.service.SysRoleMenuService;
+import com.ruowei.modules.sys.service.role.SysRoleMenuService;
 import com.ruowei.service.dto.SysRoleMenuDTO;
 import com.ruowei.service.mapper.SysRoleMenuMapper;
 import com.ruowei.web.rest.errors.ExceptionTranslator;
-import com.ruowei.service.dto.SysRoleMenuCriteria;
-import com.ruowei.service.SysRoleMenuQueryService;
+import com.ruowei.modules.sys.service.role.impl.SysRoleMenuQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

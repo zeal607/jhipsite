@@ -3,12 +3,11 @@ package com.ruowei.web.rest;
 import com.ruowei.JhipsiteApp;
 import com.ruowei.domain.SysRoleDataScope;
 import com.ruowei.repository.SysRoleDataScopeRepository;
-import com.ruowei.service.SysRoleDataScopeService;
+import com.ruowei.modules.sys.service.role.SysRoleDataScopeService;
 import com.ruowei.service.dto.SysRoleDataScopeDTO;
 import com.ruowei.service.mapper.SysRoleDataScopeMapper;
 import com.ruowei.web.rest.errors.ExceptionTranslator;
-import com.ruowei.service.dto.SysRoleDataScopeCriteria;
-import com.ruowei.service.SysRoleDataScopeQueryService;
+import com.ruowei.modules.sys.service.role.impl.SysRoleDataScopeQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

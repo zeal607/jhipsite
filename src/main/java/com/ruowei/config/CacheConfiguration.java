@@ -45,7 +45,7 @@ public class CacheConfiguration {
             createCache(cm, com.ruowei.domain.Authority.class.getName());
             createCache(cm, com.ruowei.domain.User.class.getName() + ".authorities");
             createCache(cm, com.ruowei.modules.sys.domain.SysUser.class.getName());
-            createCache(cm, com.ruowei.domain.SysRole.class.getName());
+            createCache(cm, SysRole.class.getName());
             createCache(cm, com.ruowei.domain.SysMenu.class.getName());
             createCache(cm, SysUserRole.class.getName());
             createCache(cm, com.ruowei.domain.SysRoleMenu.class.getName());

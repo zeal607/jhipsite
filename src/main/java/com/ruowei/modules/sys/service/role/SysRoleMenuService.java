@@ -1,4 +1,4 @@
-package com.ruowei.service;
+package com.ruowei.modules.sys.service.role;
 
 import com.ruowei.service.dto.SysRoleMenuDTO;
 

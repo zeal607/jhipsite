@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.service.user;
+package com.ruowei.modules.sys.service.user.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +16,7 @@ import com.ruowei.modules.sys.pojo.*;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import com.ruowei.modules.sys.service.employee.SysEmployeeOfficeQueryService;
 import com.ruowei.modules.sys.service.post.SysPostQueryService;
+import com.ruowei.modules.sys.service.role.impl.SysRoleQueryService;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +47,7 @@ public class SysUserQueryService
      */
     private final SysPostQueryService sysPostQueryService;
     private final SysEmployeeOfficeQueryService sysEmployeeOfficeQueryService;
+    private final SysRoleQueryService sysRoleQueryService;
     /**
      * mapper依赖
      */
@@ -53,9 +55,11 @@ public class SysUserQueryService
 
     public SysUserQueryService(SysPostQueryService sysPostQueryService,
                                SysEmployeeOfficeQueryService sysEmployeeOfficeQueryService,
+                               SysRoleQueryService sysRoleQueryService,
                                SysUserMapper sysUserMapper) {
         this.sysPostQueryService = sysPostQueryService;
         this.sysEmployeeOfficeQueryService = sysEmployeeOfficeQueryService;
+        this.sysRoleQueryService = sysRoleQueryService;
 
         this.sysUserMapper = sysUserMapper;
     }
@@ -244,11 +248,12 @@ public class SysUserQueryService
             sysUserEmployeeDTO.setSysPostDTOList(postDTOList);
 
             // 获取员工附属机构及岗位信息
-            List<SysEmployeeOfficeDTO> sysEmployeeOfficeDTOList=sysEmployeeOfficeQueryService.getSysEmployeeOfficeDTOListBySysUserId(id);
+            List<SysEmployeeOfficeDTO> sysEmployeeOfficeDTOList = sysEmployeeOfficeQueryService.getSysEmployeeOfficeDTOListBySysUserId(id);
             sysUserEmployeeDTO.setSysEmployeeOfficeDTOList(sysEmployeeOfficeDTOList);
 
-            //TODO 获取用户角色信息
-
+            // 获取用户角色信息
+            List<SysRoleDTO> sysRoleDTOList = sysRoleQueryService.getSysRoleDTOListBySysUserId(id);
+            sysUserEmployeeDTO.setSysRoleDTOList(sysRoleDTOList);
         }
 
         Optional<SysUserEmployeeDTO> result = Optional.ofNullable(sysUserEmployeeDTO);

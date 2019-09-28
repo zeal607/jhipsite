@@ -10,11 +10,5 @@ import java.util.List;
  * @author 刘东奇
  */
 public interface SysUserRoleService {
-    /**
-     * 通过用户id获取角色列表
-     * @author 刘东奇
-     * @date 2019/9/27
-     * @param
-     */
-    List<SysRoleDTO> getSysRoleDTOListBySysUserId(Long sysUserId);
+
 }

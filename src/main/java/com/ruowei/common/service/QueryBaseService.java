@@ -133,6 +133,18 @@ public abstract class QueryBaseService <Entity extends BaseEntity,Long,DTO exten
         return page;
     }
 
+    /**
+     * 判断是否存在
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean existsById(Long id) {
+        log.debug(LogMessageUtils.getEnterMessage("existsById",id));
+        Boolean result = jpaRepository.existsById(id);
+        log.debug(LogMessageUtils.getLeaveMessage("existsById",id));
+        return result;
+    }
 
     /**
      * 拼接某一字段的查询条件
@@ -282,4 +294,6 @@ public abstract class QueryBaseService <Entity extends BaseEntity,Long,DTO exten
         }
         return builder;
     }
+
+
 }

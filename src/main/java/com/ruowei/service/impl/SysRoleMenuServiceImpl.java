@@ -1,6 +1,6 @@
 package com.ruowei.service.impl;
 
-import com.ruowei.service.SysRoleMenuService;
+import com.ruowei.modules.sys.service.role.SysRoleMenuService;
 import com.ruowei.domain.SysRoleMenu;
 import com.ruowei.repository.SysRoleMenuRepository;
 import com.ruowei.service.dto.SysRoleMenuDTO;

@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.service.user;
+package com.ruowei.modules.sys.service.user.impl;
 
 import com.querydsl.core.QueryResults;
 import com.ruowei.common.error.ErrorMessageUtils;
@@ -17,6 +17,8 @@ import com.ruowei.modules.sys.repository.SysUserRepository;
 import com.ruowei.modules.sys.service.employee.SysEmployeeOfficeService;
 import com.ruowei.modules.sys.service.employee.SysEmployeePostService;
 import com.ruowei.modules.sys.service.employee.SysEmployeeService;
+import com.ruowei.modules.sys.service.office.SysOfficeQueryService;
+import com.ruowei.modules.sys.service.user.SysUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +41,11 @@ public class SysUserServiceImpl
 
     private final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
+    /**
+     * service依赖
+     */
     private final SysUserQueryService sysUserQueryService;
+    private final SysOfficeQueryService sysOfficeQueryService;
     private final SysEmployeeService sysEmployeeService;
     private final SysEmployeePostService sysEmployeePostService;
     private final SysEmployeeOfficeService sysEmployeeOfficeService;
@@ -55,14 +61,16 @@ public class SysUserServiceImpl
     private final static Pattern USER_CODE_PATTERN = Pattern.compile("^user");
 
     public SysUserServiceImpl(SysUserQueryService sysUserQueryService,
-                          SysEmployeeService sysEmployeeService,
-                          SysEmployeePostService sysEmployeePostService,
-                          SysEmployeeOfficeService sysEmployeeOfficeService,
-                          SysUserEmployeeMapper sysUserEmployeeMapper,
-                          SysEmployeePostMapper sysEmployeePostMapper,
-                          SysEmployeeOfficeMapper sysEmployeeOfficeMapper,
-                          PasswordEncoder passwordEncoder) {
+                              SysOfficeQueryService sysOfficeQueryService,
+                              SysEmployeeService sysEmployeeService,
+                              SysEmployeePostService sysEmployeePostService,
+                              SysEmployeeOfficeService sysEmployeeOfficeService,
+                              SysUserEmployeeMapper sysUserEmployeeMapper,
+                              SysEmployeePostMapper sysEmployeePostMapper,
+                              SysEmployeeOfficeMapper sysEmployeeOfficeMapper,
+                              PasswordEncoder passwordEncoder) {
         this.sysUserQueryService = sysUserQueryService;
+        this.sysOfficeQueryService = sysOfficeQueryService;
         this.sysEmployeeService = sysEmployeeService;
         this.sysEmployeePostService = sysEmployeePostService;
         this.sysEmployeeOfficeService = sysEmployeeOfficeService;

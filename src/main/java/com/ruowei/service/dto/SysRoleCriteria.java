@@ -2,20 +2,20 @@ package com.ruowei.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+
+import com.ruowei.modules.sys.domain.SysRole;
 import io.github.jhipster.service.Criteria;
 import com.ruowei.domain.enumeration.RoleType;
 import com.ruowei.domain.enumeration.DataScopeType;
 import com.ruowei.domain.enumeration.RoleStatusType;
 import io.github.jhipster.service.filter.BooleanFilter;
-import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
-import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
 
 /**
- * Criteria class for the {@link com.ruowei.domain.SysRole} entity. This class is used
+ * Criteria class for the {@link SysRole} entity. This class is used
  * in {@link com.ruowei.web.rest.SysRoleResource} to receive all the possible filtering options from
  * the Http GET request parameters.
  * For example the following could be a valid request:

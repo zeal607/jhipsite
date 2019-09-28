@@ -129,6 +129,10 @@ public interface QueryServiceApi <Entity extends BaseEntity,
      */
     JPAQuery<Tuple> getTupleJPAQuery();
 
-
-
+    /**
+     * 判断是否存在
+     * @param id
+     * @return
+     */
+    Boolean existsById(Long id);
 }

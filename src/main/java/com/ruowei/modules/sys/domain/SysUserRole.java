@@ -19,10 +19,6 @@ public class SysUserRole extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     /**
      * 用户外键
      */
@@ -40,13 +36,6 @@ public class SysUserRole extends BaseEntity implements Serializable {
     private String sysRoleId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getSysUserId() {
         return sysUserId;

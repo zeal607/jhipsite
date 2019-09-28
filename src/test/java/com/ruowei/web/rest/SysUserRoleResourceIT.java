@@ -7,7 +7,7 @@ import com.ruowei.modules.sys.service.user.SysUserRoleService;
 import com.ruowei.modules.sys.pojo.SysUserRoleDTO;
 import com.ruowei.modules.sys.mapper.SysUserRoleMapper;
 import com.ruowei.web.rest.errors.ExceptionTranslator;
-import com.ruowei.modules.sys.service.user.SysUserRoleQueryService;
+import com.ruowei.modules.sys.service.user.impl.SysUserRoleQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

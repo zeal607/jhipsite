@@ -9,6 +9,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 
@@ -19,7 +20,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "sys_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUser extends BaseEntity {
+public class SysUser extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

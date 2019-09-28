@@ -1,10 +1,11 @@
 package com.ruowei.web.rest;
 
-import com.ruowei.service.SysRoleService;
+import com.ruowei.modules.sys.domain.SysRole;
+import com.ruowei.modules.sys.service.role.SysRoleService;
 import com.ruowei.web.rest.errors.BadRequestAlertException;
 import com.ruowei.modules.sys.pojo.SysRoleDTO;
 import com.ruowei.service.dto.SysRoleCriteria;
-import com.ruowei.service.SysRoleQueryService;
+import com.ruowei.modules.sys.service.role.impl.SysRoleQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * REST controller for managing {@link com.ruowei.domain.SysRole}.
+ * REST controller for managing {@link SysRole}.
  */
 @RestController
 @RequestMapping("/api")
