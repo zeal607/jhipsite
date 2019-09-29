@@ -135,4 +135,11 @@ public interface QueryServiceApi <Entity extends BaseEntity,
      * @return
      */
     Boolean existsById(Long id);
+
+    /**
+     * 判断是否存在
+     * @param predicate
+     * @return
+     */
+    Boolean exists(Predicate predicate);
 }

@@ -10,8 +10,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
 import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.QSysUser;
-import com.ruowei.modules.sys.domain.QSysUserRole;
+import com.ruowei.modules.sys.domain.*;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ruowei.modules.sys.domain.SysRole;
 import com.ruowei.domain.*; // for static metamodels
 import com.ruowei.modules.sys.repository.SysRoleRepository;
 import com.ruowei.service.dto.SysRoleCriteria;

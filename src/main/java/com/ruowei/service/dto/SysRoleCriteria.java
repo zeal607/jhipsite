@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.ruowei.modules.sys.domain.SysRole;
+import com.ruowei.modules.sys.web.SysRoleResource;
 import io.github.jhipster.service.Criteria;
 import com.ruowei.domain.enumeration.RoleType;
 import com.ruowei.domain.enumeration.DataScopeType;
@@ -16,7 +17,7 @@ import io.github.jhipster.service.filter.StringFilter;
 
 /**
  * Criteria class for the {@link SysRole} entity. This class is used
- * in {@link com.ruowei.web.rest.SysRoleResource} to receive all the possible filtering options from
+ * in {@link SysRoleResource} to receive all the possible filtering options from
  * the Http GET request parameters.
  * For example the following could be a valid request:
  * {@code /sys-roles?id.greaterThan=5&attr1.contains=something&attr2.specified=false}

@@ -194,9 +194,13 @@ public class SysOfficeQueryService
      * @return
      */
     @Override
-    @Deprecated
     public Optional<SysOfficeDTO> getDTOById(Long id) {
-        return Optional.empty();
+        QSysOffice qSysOffice = QSysOffice.sysOffice;
+        JPAQuery<SysOfficeDTO> jpaQuery =  getDTOJPAQuery();
+        jpaQuery.where(qSysOffice.id.eq(id));
+        SysOfficeDTO sysOfficeDTO = jpaQuery.fetchFirst();
+        Optional<SysOfficeDTO> result = Optional.ofNullable(sysOfficeDTO);
+        return result;
     }
 
     /**

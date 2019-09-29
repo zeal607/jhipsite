@@ -9,6 +9,7 @@ import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
 import com.ruowei.common.service.QueryBaseService;
+import com.ruowei.modules.sys.domain.QSysRole;
 import com.ruowei.modules.sys.domain.QSysUserRole;
 import com.ruowei.modules.sys.domain.SysUserRole_;
 import com.ruowei.modules.sys.mapper.SysRoleMapper;

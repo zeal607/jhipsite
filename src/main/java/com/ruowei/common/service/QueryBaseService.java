@@ -147,6 +147,19 @@ public abstract class QueryBaseService <Entity extends BaseEntity,Long,DTO exten
     }
 
     /**
+     * 判断是否存在
+     * @param predicate
+     * @return
+     */
+    @Override
+    public Boolean exists(Predicate predicate) {
+        log.debug(LogMessageUtils.getEnterMessage("exists",predicate));
+        Boolean result = jpaRepository.exists(predicate);
+        log.debug(LogMessageUtils.getLeaveMessage("exists",predicate));
+        return result;
+    }
+
+    /**
      * 拼接某一字段的查询条件
      * 字段数据类型:Long
      * @author 刘东奇

@@ -1,13 +1,14 @@
 package com.ruowei.modules.sys.service.user.impl;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.ruowei.common.error.ErrorMessageUtils;
+import com.ruowei.common.error.exception.DataAlreadyExistException;
 import com.ruowei.common.error.exception.DataInvalidException;
+import com.ruowei.common.error.exception.DataNotFoundException;
 import com.ruowei.common.service.CrudBaseService;
-import com.ruowei.modules.sys.domain.SysEmployee;
-import com.ruowei.modules.sys.domain.SysEmployeeOffice;
-import com.ruowei.modules.sys.domain.SysEmployeePost;
-import com.ruowei.modules.sys.domain.SysUser;
+import com.ruowei.modules.sys.domain.*;
+import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.mapper.SysEmployeeOfficeMapper;
 import com.ruowei.modules.sys.mapper.SysEmployeePostMapper;
@@ -19,6 +20,7 @@ import com.ruowei.modules.sys.service.employee.SysEmployeePostService;
 import com.ruowei.modules.sys.service.employee.SysEmployeeService;
 import com.ruowei.modules.sys.service.office.SysOfficeQueryService;
 import com.ruowei.modules.sys.service.user.SysUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +28,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -118,44 +122,72 @@ public class SysUserServiceImpl
      */
     @Override
     public SysUserEmployeeDTO createSysUserEmployee(SysUserEmployeeDTO sysUserEmployeeDTO) {
+        String officeCode = null;
 
         if(sysUserEmployeeDTO.getSysOfficeId() != null){
-            //TODO 判断机构是否有效存在
+            // 判断机构是否有效存在
+            Optional<SysOfficeDTO> sysOfficeDTOOptional = sysOfficeQueryService.getDTOById(Long.valueOf(sysUserEmployeeDTO.getSysOfficeId()));
+            if(sysOfficeDTOOptional.isPresent()){
+                officeCode =sysOfficeDTOOptional.get().getOfficeCode();
+            }else{
+                // 机构不存在
+                throw new DataNotFoundException(ErrorMessageUtils.getNotFoundMessage("机构",sysUserEmployeeDTO.getSysOfficeId().toString()));
+            }
         }
 
         if(sysUserEmployeeDTO.getSysCompanyId() != null){
             //TODO 判断公司是否有效存在
         }
 
-        //创建用户
+        // 创建用户
+        // 判断登录id、电话是否重复
+        QSysUser qSysUser = QSysUser.sysUser;
+        BooleanBuilder booleanBuilder = new BooleanBuilder(qSysUser.loginCode.eq(sysUserEmployeeDTO.getLoginCode()));
+        HashMap map= new HashMap<String,String>();
+        map.put("登录ID", sysUserEmployeeDTO.getLoginCode());
+        if(StringUtils.isNotEmpty(sysUserEmployeeDTO.getMobile())){
+            booleanBuilder.or(qSysUser.mobile.eq(sysUserEmployeeDTO.getMobile()));
+            map.put("电话", sysUserEmployeeDTO.getMobile());
+        }
+        if(this.sysUserQueryService.exists(booleanBuilder)){
+            throw new DataAlreadyExistException(ErrorMessageUtils.getAlreadyExistMessageByOrMap("用户",map));
+        }
         SysUser sysUser = sysUserEmployeeMapper.converter2(sysUserEmployeeDTO);
         sysUser.setStatus(UserStatusType.NORMAL);
         sysUser.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
         sysUser.setUserCode(generateUserCode());
-        this.insert(sysUser);
+        sysUser = this.insert(sysUser);
 
         //创建员工
         SysEmployee sysEmployee = sysUserEmployeeMapper.converter3(sysUserEmployeeDTO);
-        //TODO 生成员工编号
+        sysEmployee.setStatus(EmployeeStatusType.NORMAL);
+        // 生成员工编号
+        sysEmployee.setEmpCode(sysEmployeeService.generateEmpCode(sysUserEmployeeDTO.getSysOfficeId(),officeCode));
         sysEmployeeService.insert(sysEmployee);
 
         //保存岗位关系
         List<SysPostDTO> sysPostDTOList = sysUserEmployeeDTO.getSysPostDTOList();
-        for(SysPostDTO sysPostDTO:sysPostDTOList){
-            SysEmployeePost sysEmployeePost = sysEmployeePostMapper.converter1(sysPostDTO,sysEmployee);
-            sysEmployeePostService.save(sysEmployeePost);
+        if(sysPostDTOList != null){
+            for(SysPostDTO sysPostDTO:sysPostDTOList){
+                SysEmployeePost sysEmployeePost = sysEmployeePostMapper.converter1(sysPostDTO,sysEmployee);
+                sysEmployeePostService.save(sysEmployeePost);
+            }
         }
 
         //保存附属机构及岗位
         List<SysEmployeeOfficeDTO> sysEmployeeOfficeDTOList = sysUserEmployeeDTO.getSysEmployeeOfficeDTOList();
-        for(SysEmployeeOfficeDTO sysEmployeeOfficeDTO:sysEmployeeOfficeDTOList){
-            SysEmployeeOffice sysEmployeeOffice = sysEmployeeOfficeMapper.toEntity(sysEmployeeOfficeDTO);
-            sysEmployeeOfficeService.save(sysEmployeeOffice);
+        if(sysEmployeeOfficeDTOList != null){
+            for(SysEmployeeOfficeDTO sysEmployeeOfficeDTO:sysEmployeeOfficeDTOList){
+                SysEmployeeOffice sysEmployeeOffice = sysEmployeeOfficeMapper.toEntity(sysEmployeeOfficeDTO);
+                sysEmployeeOfficeService.save(sysEmployeeOffice);
+            }
         }
+
 
         //TODO 保存角色
 
-        return sysUserEmployeeDTO;
+        Optional<SysUserEmployeeDTO> sysUserEmployeeDTOOptional = getSysUserEmployeeById(sysUser.getId());
+        return sysUserEmployeeDTOOptional.get();
     }
 
     /**

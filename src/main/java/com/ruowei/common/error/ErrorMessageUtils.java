@@ -2,6 +2,8 @@ package com.ruowei.common.error;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
+
 /**
  * 错误提示语构建工具
  * @author 刘东奇
@@ -23,29 +25,51 @@ public class ErrorMessageUtils {
         return message;
     }
 
+    public static String getAlreadyExistMessageByAndMap(String entityName, Map<String,String> map){
+
+        String message="";
+        Boolean isFirst=true;
+        if(map != null && map.size() > 0){
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                if(!isFirst){
+                    message+=" 且 ";
+                }
+                if(StringUtils.isNotEmpty(entry.getKey())){
+                    message += entry.getKey();
+                    message += "=";
+                }
+                message += entry.getValue();
+                isFirst = false;
+            }
+        }
+        message += "的" + entityName + "已存在";
+        return message;
+    }
+
+    public static String getAlreadyExistMessageByOrMap(String entityName, Map<String,String> map){
+        String message="";
+        Boolean isFirst=true;
+        if(map != null && map.size() > 0){
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                if(!isFirst){
+                    message+=" 或 ";
+                }
+                if(StringUtils.isNotEmpty(entry.getKey())){
+                    message += entry.getKey();
+                    message += "=";
+                }
+                message += entry.getValue();
+                isFirst = false;
+            }
+        }
+        message += "的" + entityName + "已存在";
+        return message;
+    }
+
     public static String getDataInvalidMessage(String entityName, String id,String expectData,String actualData){
         entityName= StringUtils.trimToEmpty(entityName);
         id= StringUtils.trimToEmpty(id);
         String message="ID为 "+id+" 的"+entityName+"数据错误。期望数据："+expectData+"|实际数据："+actualData;
         return message;
     }
-
-//    public static String getNotFoundMessage(String entityName,Map<String,String> queryAndConditionMap,Map<String,String> queryOrConditionMap){
-//        String message="找不到";
-//        Boolean isFirst=true;
-//        if(queryAndConditionMap!=null&&queryAndConditionMap.size()>0){
-//            if(!isFirst){
-//                message+="且"
-//            }
-//        }
-//        for (Map.Entry<String, String> entry : queryConditionMap.entrySet()) {
-//            if(StringUtils.isNotEmpty(entry.getKey())){
-//                message+=entry.getKey();
-//                message+="=";
-//            }
-//            System.out.println("key = " + entry.getKey() + ", value = " + entry.getValue());
-//        }
-//        String message="找不到ID为 "+id+" 的"+entityName;
-//        return message;
-//    }
 }
