@@ -13,13 +13,18 @@ import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.mapper.SysEmployeeOfficeMapper;
 import com.ruowei.modules.sys.mapper.SysEmployeePostMapper;
 import com.ruowei.modules.sys.mapper.SysUserEmployeeMapper;
+import com.ruowei.modules.sys.mapper.SysUserRoleMapper;
 import com.ruowei.modules.sys.pojo.*;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import com.ruowei.modules.sys.service.employee.SysEmployeeOfficeService;
 import com.ruowei.modules.sys.service.employee.SysEmployeePostService;
 import com.ruowei.modules.sys.service.employee.SysEmployeeService;
 import com.ruowei.modules.sys.service.office.SysOfficeQueryService;
+import com.ruowei.modules.sys.service.post.SysPostQueryService;
+import com.ruowei.modules.sys.service.role.impl.SysRoleQueryService;
+import com.ruowei.modules.sys.service.user.SysUserRoleService;
 import com.ruowei.modules.sys.service.user.SysUserService;
+import com.ruowei.modules.sys.service.company.SysCompanyQueryService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +35,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -40,7 +44,7 @@ import java.util.regex.Pattern;
 @Service
 @Transactional
 public class SysUserServiceImpl
-    extends CrudBaseService<SysUser, Long, SysUserEmployeeVM, SysUserDTO, SysUserRepository>
+    extends CrudBaseService<SysUser, Long, SysUserRepository>
     implements SysUserService {
 
     private final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
@@ -50,14 +54,18 @@ public class SysUserServiceImpl
      */
     private final SysUserQueryService sysUserQueryService;
     private final SysOfficeQueryService sysOfficeQueryService;
+    private final SysCompanyQueryService sysCompanyQueryService;
     private final SysEmployeeService sysEmployeeService;
     private final SysEmployeePostService sysEmployeePostService;
     private final SysEmployeeOfficeService sysEmployeeOfficeService;
-
-    private final SysUserEmployeeMapper sysUserEmployeeMapper;
-    private final SysEmployeePostMapper sysEmployeePostMapper;
-    private final SysEmployeeOfficeMapper sysEmployeeOfficeMapper;
-
+    private final SysUserRoleService sysUserRoleService;
+    /**
+     * mapper依赖
+     */
+    private final SysUserEmployeeMapper sysUserEmployeeMapper;;
+    /**
+     * 密码加密器
+     */
     private final PasswordEncoder passwordEncoder;
 
     private final static String DEFAULT_PASSWORD = "123456";
@@ -66,22 +74,22 @@ public class SysUserServiceImpl
 
     public SysUserServiceImpl(SysUserQueryService sysUserQueryService,
                               SysOfficeQueryService sysOfficeQueryService,
+                              SysCompanyQueryService sysCompanyQueryService,
                               SysEmployeeService sysEmployeeService,
                               SysEmployeePostService sysEmployeePostService,
                               SysEmployeeOfficeService sysEmployeeOfficeService,
+                              SysUserRoleService sysUserRoleService,
                               SysUserEmployeeMapper sysUserEmployeeMapper,
-                              SysEmployeePostMapper sysEmployeePostMapper,
-                              SysEmployeeOfficeMapper sysEmployeeOfficeMapper,
                               PasswordEncoder passwordEncoder) {
         this.sysUserQueryService = sysUserQueryService;
         this.sysOfficeQueryService = sysOfficeQueryService;
+        this.sysCompanyQueryService = sysCompanyQueryService;
         this.sysEmployeeService = sysEmployeeService;
         this.sysEmployeePostService = sysEmployeePostService;
         this.sysEmployeeOfficeService = sysEmployeeOfficeService;
+        this.sysUserRoleService = sysUserRoleService;
 
         this.sysUserEmployeeMapper = sysUserEmployeeMapper;
-        this.sysEmployeePostMapper = sysEmployeePostMapper;
-        this.sysEmployeeOfficeMapper = sysEmployeeOfficeMapper;
 
         this.passwordEncoder = passwordEncoder;
     }
@@ -131,12 +139,16 @@ public class SysUserServiceImpl
                 officeCode =sysOfficeDTOOptional.get().getOfficeCode();
             }else{
                 // 机构不存在
-                throw new DataNotFoundException(ErrorMessageUtils.getNotFoundMessage("机构",sysUserEmployeeDTO.getSysOfficeId().toString()));
+                throw new DataNotFoundException(ErrorMessageUtils.getNotFoundMessage("机构",sysUserEmployeeDTO.getSysOfficeId()));
             }
         }
 
         if(sysUserEmployeeDTO.getSysCompanyId() != null){
-            //TODO 判断公司是否有效存在
+            // 判断公司是否有效存在
+            if(!sysCompanyQueryService.existsById(Long.valueOf(sysUserEmployeeDTO.getSysCompanyId()))){
+                // 公司不存在
+                throw new DataNotFoundException(ErrorMessageUtils.getNotFoundMessage("公司",sysUserEmployeeDTO.getSysCompanyId()));
+            }
         }
 
         // 创建用户
@@ -152,39 +164,29 @@ public class SysUserServiceImpl
         if(this.sysUserQueryService.exists(booleanBuilder)){
             throw new DataAlreadyExistException(ErrorMessageUtils.getAlreadyExistMessageByOrMap("用户",map));
         }
-        SysUser sysUser = sysUserEmployeeMapper.converter2(sysUserEmployeeDTO);
+        SysUser sysUser = sysUserEmployeeMapper.projectIntoUser(sysUserEmployeeDTO);
         sysUser.setStatus(UserStatusType.NORMAL);
         sysUser.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
         sysUser.setUserCode(generateUserCode());
         sysUser = this.insert(sysUser);
 
         //创建员工
-        SysEmployee sysEmployee = sysUserEmployeeMapper.converter3(sysUserEmployeeDTO);
+        SysEmployee sysEmployee = sysUserEmployeeMapper.projectIntoEmployee(sysUserEmployeeDTO);
         sysEmployee.setStatus(EmployeeStatusType.NORMAL);
         // 生成员工编号
         sysEmployee.setEmpCode(sysEmployeeService.generateEmpCode(sysUserEmployeeDTO.getSysOfficeId(),officeCode));
         sysEmployeeService.insert(sysEmployee);
 
-        //保存岗位关系
-        List<SysPostDTO> sysPostDTOList = sysUserEmployeeDTO.getSysPostDTOList();
-        if(sysPostDTOList != null){
-            for(SysPostDTO sysPostDTO:sysPostDTOList){
-                SysEmployeePost sysEmployeePost = sysEmployeePostMapper.converter1(sysPostDTO,sysEmployee);
-                sysEmployeePostService.save(sysEmployeePost);
-            }
-        }
+        // 保存岗位关系
+        // 判断岗位是否存在
+        sysEmployeePostService.saveEmployeePostRelationship(sysEmployee,sysUserEmployeeDTO.getSysPostDTOList());
 
-        //保存附属机构及岗位
-        List<SysEmployeeOfficeDTO> sysEmployeeOfficeDTOList = sysUserEmployeeDTO.getSysEmployeeOfficeDTOList();
-        if(sysEmployeeOfficeDTOList != null){
-            for(SysEmployeeOfficeDTO sysEmployeeOfficeDTO:sysEmployeeOfficeDTOList){
-                SysEmployeeOffice sysEmployeeOffice = sysEmployeeOfficeMapper.toEntity(sysEmployeeOfficeDTO);
-                sysEmployeeOfficeService.save(sysEmployeeOffice);
-            }
-        }
+        // 保存附属机构及岗位
+        // 判断附属机构及岗位是否存在
+        sysEmployeeOfficeService.saveEmployeeOfficePostRelationship(sysEmployee,sysUserEmployeeDTO.getSysEmployeeOfficeDTOList());
 
-
-        //TODO 保存角色
+        // 保存角色关系
+        sysUserRoleService.saveUserRoleRelationship(sysUser,sysUserEmployeeDTO.getSysRoleDTOList());
 
         Optional<SysUserEmployeeDTO> sysUserEmployeeDTOOptional = getSysUserEmployeeById(sysUser.getId());
         return sysUserEmployeeDTOOptional.get();

@@ -1,21 +1,24 @@
 package com.ruowei.modules.sys.service.employee;
 
-import com.ruowei.common.pojo.BaseDTO;
-import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.CrudBaseService;
+import com.ruowei.common.service.api.CrudServiceApi;
+import com.ruowei.modules.sys.domain.SysEmployee;
 import com.ruowei.modules.sys.domain.SysEmployeeOffice;
+import com.ruowei.modules.sys.pojo.SysEmployeeOfficeDTO;
 
-import com.ruowei.modules.sys.repository.SysEmployeeOfficeRepository;
-import io.github.jhipster.service.Criteria;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 /**
- * Service Interface for managing {@link SysEmployeeOffice}.
+ * @author 刘东奇
+ * @date 2019/9/30
  */
-@Service
-@Transactional
-public class SysEmployeeOfficeService
-    extends CrudBaseService<SysEmployeeOffice, Long, BaseView, BaseDTO, SysEmployeeOfficeRepository> {
+public interface SysEmployeeOfficeService extends CrudServiceApi<SysEmployeeOffice,Long> {
 
+    /**
+     * 保存员工附属机构及岗位关系
+     * @author 刘东奇
+     * @date 2019/9/30
+     * @param sysEmployee
+     * @param sysEmployeeOfficeDTOList
+     */
+    void saveEmployeeOfficePostRelationship(SysEmployee sysEmployee, List<SysEmployeeOfficeDTO> sysEmployeeOfficeDTOList);
 }

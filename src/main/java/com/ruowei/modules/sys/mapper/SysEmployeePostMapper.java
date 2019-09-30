@@ -18,12 +18,18 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {})
 public interface SysEmployeePostMapper extends EntityMapper<SysEmployeePostDTO, SysEmployeePost> {
 
+    /**
+     * 组装SysEmployeePost
+     * @param sysPostDTO
+     * @param sysEmployee
+     * @return
+     */
     @Mappings({
         @Mapping(target = "id" ,ignore=true),
         @Mapping(source = "sysEmployee.empCode", target = "sysEmployeeId"),
         @Mapping(source = "sysPostDTO.postCode", target = "sysPostId")
     })
-    SysEmployeePost converter1(SysPostDTO sysPostDTO, SysEmployee sysEmployee);
+    SysEmployeePost assembleEntity(SysPostDTO sysPostDTO, SysEmployee sysEmployee);
 
     default SysEmployeePost fromId(Long id) {
         if (id == null) {

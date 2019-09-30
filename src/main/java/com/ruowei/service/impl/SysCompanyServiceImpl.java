@@ -1,9 +1,9 @@
 package com.ruowei.service.impl;
 
-import com.ruowei.modules.sys.service.SysCompanyService;
-import com.ruowei.domain.SysCompany;
-import com.ruowei.repository.SysCompanyRepository;
-import com.ruowei.service.dto.SysCompanyDTO;
+import com.ruowei.modules.sys.service.company.SysCompanyService;
+import com.ruowei.modules.sys.domain.SysCompany;
+import com.ruowei.modules.sys.repository.SysCompanyRepository;
+import com.ruowei.modules.sys.pojo.SysCompanyDTO;
 import com.ruowei.service.mapper.SysCompanyMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

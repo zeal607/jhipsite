@@ -1,7 +1,7 @@
 package com.ruowei.modules.sys.web;
 
 import com.ruowei.JhipsiteApp;
-import com.ruowei.domain.SysCompany;
+import com.ruowei.modules.sys.domain.SysCompany;
 import com.ruowei.domain.enumeration.OfficeType;
 import com.ruowei.modules.sys.domain.enumeration.PostType;
 import com.ruowei.modules.sys.domain.SysUser;

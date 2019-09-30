@@ -27,14 +27,13 @@ import java.util.Optional;
  * @author 刘东奇
  * @param <Entity> 实体
  * @param <Long> 主键
- * @param <Criteria> 查询对象
  * @param <VO> 视图对象
  * @param <DTO> 数据传输对象
  * @param <Repository> dao层
  */
 @Transactional
-public abstract class CrudBaseService<Entity extends BaseEntity,Long ,VO extends BaseView,DTO extends BaseDTO,Repository extends BaseRepository<Entity,Long>>
-    implements CrudServiceApi<Entity,Long,VO,DTO> {
+public abstract class CrudBaseService<Entity extends BaseEntity,Long ,Repository extends BaseRepository<Entity,Long>>
+    implements CrudServiceApi<Entity,Long> {
 
     private final Logger log = LoggerFactory.getLogger(CrudBaseService.class);
 

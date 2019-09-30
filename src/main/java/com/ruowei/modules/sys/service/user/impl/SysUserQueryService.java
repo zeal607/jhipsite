@@ -14,7 +14,7 @@ import com.ruowei.modules.sys.domain.*;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
 import com.ruowei.modules.sys.pojo.*;
 import com.ruowei.modules.sys.repository.SysUserRepository;
-import com.ruowei.modules.sys.service.employee.SysEmployeeOfficeQueryService;
+import com.ruowei.modules.sys.service.employee.impl.SysEmployeeOfficeQueryService;
 import com.ruowei.modules.sys.service.post.SysPostQueryService;
 import com.ruowei.modules.sys.service.role.impl.SysRoleQueryService;
 import io.github.jhipster.service.Criteria;

@@ -1,75 +1,66 @@
-package com.ruowei.domain;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
+package com.ruowei.modules.sys.pojo;
+import com.ruowei.common.pojo.BaseDTO;
+import com.ruowei.modules.sys.domain.SysCompany;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
-
 import java.io.Serializable;
-
+import java.util.Objects;
 import com.ruowei.domain.enumeration.CompanyStatusType;
 
 /**
- * 公司表
+ * A DTO for the {@link SysCompany} entity.
  * @author 刘东奇
  */
-@Entity
-@Table(name = "sys_company")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysCompany implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@ApiModel(description = "公司表 @author 刘东奇")
+public class SysCompanyDTO extends BaseDTO implements Serializable {
 
     /**
      * 公司编码
      */
     @NotNull
     @Size(max = 100)
-    @Column(name = "company_code", length = 100, nullable = false, unique = true)
+    @ApiModelProperty(value = "公司编码", required = true)
     private String companyCode;
 
     /**
      * 父级编号
      */
     @Size(max = 100)
-    @Column(name = "parent_code", length = 100)
+    @ApiModelProperty(value = "父级编号")
     private String parentCode;
 
     /**
      * 所有父级编号
      */
     @Size(max = 1000)
-    @Column(name = "parent_codes", length = 1000)
+    @ApiModelProperty(value = "所有父级编号")
     private String parentCodes;
 
     /**
      * 本级排序号（升序）
      */
-    @Column(name = "tree_sort")
+    @ApiModelProperty(value = "本级排序号（升序）")
     private Integer treeSort;
 
     /**
      * 所有级别排序号
      */
-    @Column(name = "tree_sorts")
+    @ApiModelProperty(value = "所有级别排序号")
     private Integer treeSorts;
 
     /**
      * 是否最末级
      */
     @NotNull
-    @Column(name = "tree_leaf", nullable = false)
+    @ApiModelProperty(value = "是否最末级", required = true)
     private Boolean treeLeaf;
 
     /**
      * 层次级别
      */
     @NotNull
-    @Column(name = "tree_level", nullable = false)
+    @ApiModelProperty(value = "层次级别", required = true)
     private Integer treeLevel;
 
     /**
@@ -77,14 +68,14 @@ public class SysCompany implements Serializable {
      */
     @NotNull
     @Size(max = 1000)
-    @Column(name = "tree_names", length = 1000, nullable = false)
+    @ApiModelProperty(value = "全节点名", required = true)
     private String treeNames;
 
     /**
      * 公司代码
      */
     @Size(max = 100)
-    @Column(name = "view_code", length = 100)
+    @ApiModelProperty(value = "公司代码")
     private String viewCode;
 
     /**
@@ -92,7 +83,7 @@ public class SysCompany implements Serializable {
      */
     @NotNull
     @Size(max = 200)
-    @Column(name = "company_name", length = 200, nullable = false)
+    @ApiModelProperty(value = "公司名称", required = true)
     private String companyName;
 
     /**
@@ -100,47 +91,32 @@ public class SysCompany implements Serializable {
      */
     @NotNull
     @Size(max = 200)
-    @Column(name = "full_name", length = 200, nullable = false, unique = true)
+    @ApiModelProperty(value = "公司全称", required = true)
     private String fullName;
 
     /**
      * 区域编码
      */
     @Size(max = 100)
-    @Column(name = "area_code", length = 100)
+    @ApiModelProperty(value = "区域编码")
     private String areaCode;
 
     /**
      * 状态
      */
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @ApiModelProperty(value = "状态", required = true)
     private CompanyStatusType status;
 
     /**
      * 备注信息
      */
     @Size(max = 500)
-    @Column(name = "remarks", length = 500)
+    @ApiModelProperty(value = "备注信息")
     private String remarks;
-
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getCompanyCode() {
         return companyCode;
-    }
-
-    public SysCompany companyCode(String companyCode) {
-        this.companyCode = companyCode;
-        return this;
     }
 
     public void setCompanyCode(String companyCode) {
@@ -151,22 +127,12 @@ public class SysCompany implements Serializable {
         return parentCode;
     }
 
-    public SysCompany parentCode(String parentCode) {
-        this.parentCode = parentCode;
-        return this;
-    }
-
     public void setParentCode(String parentCode) {
         this.parentCode = parentCode;
     }
 
     public String getParentCodes() {
         return parentCodes;
-    }
-
-    public SysCompany parentCodes(String parentCodes) {
-        this.parentCodes = parentCodes;
-        return this;
     }
 
     public void setParentCodes(String parentCodes) {
@@ -177,22 +143,12 @@ public class SysCompany implements Serializable {
         return treeSort;
     }
 
-    public SysCompany treeSort(Integer treeSort) {
-        this.treeSort = treeSort;
-        return this;
-    }
-
     public void setTreeSort(Integer treeSort) {
         this.treeSort = treeSort;
     }
 
     public Integer getTreeSorts() {
         return treeSorts;
-    }
-
-    public SysCompany treeSorts(Integer treeSorts) {
-        this.treeSorts = treeSorts;
-        return this;
     }
 
     public void setTreeSorts(Integer treeSorts) {
@@ -203,22 +159,12 @@ public class SysCompany implements Serializable {
         return treeLeaf;
     }
 
-    public SysCompany treeLeaf(Boolean treeLeaf) {
-        this.treeLeaf = treeLeaf;
-        return this;
-    }
-
     public void setTreeLeaf(Boolean treeLeaf) {
         this.treeLeaf = treeLeaf;
     }
 
     public Integer getTreeLevel() {
         return treeLevel;
-    }
-
-    public SysCompany treeLevel(Integer treeLevel) {
-        this.treeLevel = treeLevel;
-        return this;
     }
 
     public void setTreeLevel(Integer treeLevel) {
@@ -229,22 +175,12 @@ public class SysCompany implements Serializable {
         return treeNames;
     }
 
-    public SysCompany treeNames(String treeNames) {
-        this.treeNames = treeNames;
-        return this;
-    }
-
     public void setTreeNames(String treeNames) {
         this.treeNames = treeNames;
     }
 
     public String getViewCode() {
         return viewCode;
-    }
-
-    public SysCompany viewCode(String viewCode) {
-        this.viewCode = viewCode;
-        return this;
     }
 
     public void setViewCode(String viewCode) {
@@ -255,22 +191,12 @@ public class SysCompany implements Serializable {
         return companyName;
     }
 
-    public SysCompany companyName(String companyName) {
-        this.companyName = companyName;
-        return this;
-    }
-
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
     public String getFullName() {
         return fullName;
-    }
-
-    public SysCompany fullName(String fullName) {
-        this.fullName = fullName;
-        return this;
     }
 
     public void setFullName(String fullName) {
@@ -281,22 +207,12 @@ public class SysCompany implements Serializable {
         return areaCode;
     }
 
-    public SysCompany areaCode(String areaCode) {
-        this.areaCode = areaCode;
-        return this;
-    }
-
     public void setAreaCode(String areaCode) {
         this.areaCode = areaCode;
     }
 
     public CompanyStatusType getStatus() {
         return status;
-    }
-
-    public SysCompany status(CompanyStatusType status) {
-        this.status = status;
-        return this;
     }
 
     public void setStatus(CompanyStatusType status) {
@@ -307,35 +223,34 @@ public class SysCompany implements Serializable {
         return remarks;
     }
 
-    public SysCompany remarks(String remarks) {
-        this.remarks = remarks;
-        return this;
-    }
-
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SysCompany)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        return id != null && id.equals(((SysCompany) o).id);
+
+        SysCompanyDTO sysCompanyDTO = (SysCompanyDTO) o;
+        if (sysCompanyDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), sysCompanyDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hashCode(getId());
     }
 
     @Override
     public String toString() {
-        return "SysCompany{" +
+        return "SysCompanyDTO{" +
             "id=" + getId() +
             ", companyCode='" + getCompanyCode() + "'" +
             ", parentCode='" + getParentCode() + "'" +

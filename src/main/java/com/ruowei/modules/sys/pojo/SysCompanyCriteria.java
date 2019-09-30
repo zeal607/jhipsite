@@ -2,6 +2,9 @@ package com.ruowei.modules.sys.pojo;
 
 import java.io.Serializable;
 import java.util.Objects;
+
+import com.ruowei.modules.sys.domain.SysCompany;
+import com.ruowei.modules.sys.web.SysCompanyResource;
 import io.github.jhipster.service.Criteria;
 import com.ruowei.domain.enumeration.CompanyStatusType;
 import io.github.jhipster.service.filter.BooleanFilter;
@@ -11,8 +14,8 @@ import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
 
 /**
- * Criteria class for the {@link com.ruowei.domain.SysCompany} entity. This class is used
- * in {@link com.ruowei.web.rest.SysCompanyResource} to receive all the possible filtering options from
+ * Criteria class for the {@link SysCompany} entity. This class is used
+ * in {@link SysCompanyResource} to receive all the possible filtering options from
  * the Http GET request parameters.
  * For example the following could be a valid request:
  * {@code /sys-companies?id.greaterThan=5&attr1.contains=something&attr2.specified=false}

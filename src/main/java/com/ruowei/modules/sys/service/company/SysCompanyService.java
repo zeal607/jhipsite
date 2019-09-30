@@ -1,6 +1,7 @@
-package com.ruowei.modules.sys.service;
+package com.ruowei.modules.sys.service.company;
 
-import com.ruowei.service.dto.SysCompanyDTO;
+import com.ruowei.modules.sys.domain.SysCompany;
+import com.ruowei.modules.sys.pojo.SysCompanyDTO;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 /**
- * Service Interface for managing {@link com.ruowei.domain.SysCompany}.
+ * Service Interface for managing {@link SysCompany}.
  */
 public interface SysCompanyService {
 

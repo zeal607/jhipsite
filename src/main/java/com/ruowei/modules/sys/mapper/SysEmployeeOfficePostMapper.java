@@ -17,11 +17,18 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {})
 public interface SysEmployeeOfficePostMapper {
 
+    /**
+     * 组装SysEmployeeOffice
+     * @param sysOfficeDTO
+     * @param sysPostDTO
+     * @param sysEmployee
+     * @return
+     */
     @Mappings({
         @Mapping(target = "id" ,ignore=true),
         @Mapping(source = "sysEmployee.empCode", target = "sysEmployeeId"),
         @Mapping(source = "sysOfficeDTO.officeCode", target = "sysOfficeId"),
         @Mapping(source = "sysPostDTO.postCode", target = "sysPostId")
     })
-    SysEmployeeOffice converter(SysOfficeDTO sysOfficeDTO, SysPostDTO sysPostDTO, SysEmployee sysEmployee);
+    SysEmployeeOffice assembleEntity(SysOfficeDTO sysOfficeDTO, SysPostDTO sysPostDTO, SysEmployee sysEmployee);
 }

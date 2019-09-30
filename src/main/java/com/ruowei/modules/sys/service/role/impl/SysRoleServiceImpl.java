@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 @Transactional
 public class SysRoleServiceImpl
-    extends CrudBaseService<SysRole, Long, BaseView, SysRoleDTO, SysRoleRepository>
+    extends CrudBaseService<SysRole, Long, SysRoleRepository>
     implements SysRoleService {
 
     private final Logger log = LoggerFactory.getLogger(SysRoleServiceImpl.class);

@@ -11,10 +11,8 @@ import java.util.List;
  * @date 2019/9/2
  * @param <Entity> 实体
  * @param <Long> 主键
- * @param <VO> 视图对象
- * @param <DTO> 数据传输对象
  */
-public interface CrudServiceApi<Entity extends BaseEntity,Long,VO extends BaseView,DTO>{
+public interface CrudServiceApi<Entity extends BaseEntity,Long>{
 
     /**
      * 插入

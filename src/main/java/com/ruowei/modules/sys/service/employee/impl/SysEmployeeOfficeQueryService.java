@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.service.employee;
+package com.ruowei.modules.sys.service.employee.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,18 +43,13 @@ public class SysEmployeeOfficeQueryService
 
     private final Logger log = LoggerFactory.getLogger(SysEmployeeOfficeQueryService.class);
 
-    private final SysEmployeeOfficeRepository sysEmployeeOfficeRepository;
-
     private final SysEmployeeOfficeMapper sysEmployeeOfficeMapper;
     private final SysOfficeMapper sysOfficeMapper;
     private final SysPostMapper sysPostMapper;
 
-    public SysEmployeeOfficeQueryService(SysEmployeeOfficeRepository sysEmployeeOfficeRepository,
-                                         SysEmployeeOfficeMapper sysEmployeeOfficeMapper,
+    public SysEmployeeOfficeQueryService(SysEmployeeOfficeMapper sysEmployeeOfficeMapper,
                                          SysOfficeMapper sysOfficeMapper,
                                          SysPostMapper sysPostMapper) {
-        this.sysEmployeeOfficeRepository = sysEmployeeOfficeRepository;
-
         this.sysEmployeeOfficeMapper = sysEmployeeOfficeMapper;
         this.sysOfficeMapper = sysOfficeMapper;
         this.sysPostMapper = sysPostMapper;
@@ -69,7 +64,7 @@ public class SysEmployeeOfficeQueryService
     public List<SysEmployeeOfficeDTO> findByCriteria(SysEmployeeOfficeCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specification<SysEmployeeOffice> specification = createSpecification(criteria);
-        return sysEmployeeOfficeMapper.toDto(sysEmployeeOfficeRepository.findAll(specification));
+        return sysEmployeeOfficeMapper.toDto(this.jpaRepository.findAll(specification));
     }
 
     /**
@@ -82,7 +77,7 @@ public class SysEmployeeOfficeQueryService
     public Page<SysEmployeeOfficeDTO> findByCriteria(SysEmployeeOfficeCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<SysEmployeeOffice> specification = createSpecification(criteria);
-        return sysEmployeeOfficeRepository.findAll(specification, page)
+        return this.jpaRepository.findAll(specification, page)
             .map(sysEmployeeOfficeMapper::toDto);
     }
 
@@ -95,7 +90,7 @@ public class SysEmployeeOfficeQueryService
     public long countByCriteria(SysEmployeeOfficeCriteria criteria) {
         log.debug("count by criteria : {}", criteria);
         final Specification<SysEmployeeOffice> specification = createSpecification(criteria);
-        return sysEmployeeOfficeRepository.count(specification);
+        return this.jpaRepository.count(specification);
     }
 
     /**

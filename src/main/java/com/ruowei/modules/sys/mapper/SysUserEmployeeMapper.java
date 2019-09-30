@@ -16,15 +16,32 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring", uses = {})
 public interface SysUserEmployeeMapper{
 
+    /**
+     * 组装SysUserEmployeeVM
+     * @param sysUserDTO
+     * @param sysEmployeeDTO
+     * @return
+     */
     @Mappings({
         @Mapping(source = "sysUserDTO.id", target = "id"),
         @Mapping(source = "sysUserDTO.buildTime", target = "buildTime"),
         @Mapping(source = "sysUserDTO.status", target = "userStatus"),
         @Mapping(source = "sysEmployeeDTO.status", target = "empStatus")
     })
-    SysUserEmployeeVM converter1(SysUserDTO sysUserDTO, SysEmployeeDTO sysEmployeeDTO);
+    SysUserEmployeeVM assembleVM(SysUserDTO sysUserDTO, SysEmployeeDTO sysEmployeeDTO);
 
-    SysUser converter2(SysUserEmployeeDTO sysUserEmployeeDTO);
 
-    SysEmployee converter3(SysUserEmployeeDTO sysUserEmployeeDTO);
+    /**
+     * 投影到SysUser
+     * @param sysUserEmployeeDTO
+     * @return
+     */
+    SysUser projectIntoUser(SysUserEmployeeDTO sysUserEmployeeDTO);
+
+    /**
+     * 投影到SysEmployee
+     * @param sysUserEmployeeDTO
+     * @return
+     */
+    SysEmployee projectIntoEmployee(SysUserEmployeeDTO sysUserEmployeeDTO);
 }

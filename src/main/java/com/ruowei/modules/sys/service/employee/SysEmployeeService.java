@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 @Service
 @Transactional
 public class SysEmployeeService
-    extends CrudBaseService<SysEmployee, Long, SysUserEmployeeVM, SysEmployeeDTO, SysEmployeeRepository> {
+    extends CrudBaseService<SysEmployee, Long, SysEmployeeRepository> {
     private static String EMP_CODE_REGEX = "^emp\\d{8}$";
     private static Pattern EMP_CODE_PATTERN = Pattern.compile("^emp\\d{3}");
 

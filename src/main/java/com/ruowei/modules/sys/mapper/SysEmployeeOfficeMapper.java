@@ -1,6 +1,7 @@
 package com.ruowei.modules.sys.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
+import com.ruowei.modules.sys.domain.SysEmployee;
 import com.ruowei.modules.sys.domain.SysEmployeeOffice;
 import com.ruowei.modules.sys.pojo.SysEmployeeOfficeDTO;
 
@@ -22,4 +23,17 @@ public interface SysEmployeeOfficeMapper extends EntityMapper<SysEmployeeOfficeD
         sysEmployeeOffice.setId(id);
         return sysEmployeeOffice;
     }
+
+    /**
+     * 组装SysEmployeeOffice
+     * @param sysEmployeeOfficeDTO
+     * @param sysEmployee
+     * @return
+     */
+    @Mappings({
+        @Mapping(target = "id" ,ignore=true),
+        @Mapping(source = "sysEmployee.empCode", target = "sysEmployeeId"),
+        @Mapping(source = "sysEmployeeOfficeDTO.sysOfficeId", target = "sysOfficeId")
+    })
+    SysEmployeeOffice assembleEntity(SysEmployeeOfficeDTO sysEmployeeOfficeDTO, SysEmployee sysEmployee);
 }

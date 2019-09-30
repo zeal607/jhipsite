@@ -41,6 +41,7 @@ public interface SysUserApi {
      * @author 刘东奇
      * @date 2019/9/22
      * @param sysUserEmployeeDTO
+     * @return SysUserEmployeeDTO
      */
     SysUserEmployeeDTO createSysUserEmployee(SysUserEmployeeDTO sysUserEmployeeDTO);
 

@@ -91,7 +91,6 @@ public class SysUserEmployeeDTO extends BaseDTO implements Serializable {
     /**
      * 员工编码
      */
-    @NotNull
     @Size(max = 100)
     @ApiModelProperty(value = "员工编码")
     private String empCode;

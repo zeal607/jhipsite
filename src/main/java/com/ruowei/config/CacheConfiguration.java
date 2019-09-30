@@ -49,7 +49,7 @@ public class CacheConfiguration {
             createCache(cm, com.ruowei.domain.SysMenu.class.getName());
             createCache(cm, SysUserRole.class.getName());
             createCache(cm, com.ruowei.domain.SysRoleMenu.class.getName());
-            createCache(cm, com.ruowei.domain.SysCompany.class.getName());
+            createCache(cm, SysCompany.class.getName());
             createCache(cm, SysOffice.class.getName());
             createCache(cm, SysEmployee.class.getName());
             createCache(cm, SysEmployeeOffice.class.getName());

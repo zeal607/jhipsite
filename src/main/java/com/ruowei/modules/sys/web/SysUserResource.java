@@ -8,10 +8,10 @@ import com.ruowei.modules.sys.pojo.SysUserEmployeeVM;
 import com.ruowei.modules.sys.pojo.SysUserCriteria;
 
 import com.ruowei.modules.sys.service.user.SysUserService;
-import com.ruowei.service.dto.SysCompanyDTO;
 import com.ruowei.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,6 +56,7 @@ public class SysUserResource {
      * @param employeeCriteria
      * @param pageable
      */
+    @ApiOperation(value = "查询员工分页")
     @GetMapping("/sys-user-employees")
     public ResponseEntity<List<SysUserEmployeeVM>> getAllSysUserEmployees(SysUserCriteria sysUserCriteria, SysEmployeeCriteria employeeCriteria, Pageable pageable) {
         log.debug("REST request to get SysUsers by criteria: {}", sysUserCriteria);
@@ -71,6 +72,7 @@ public class SysUserResource {
      * @date 2019/9/17
      * @param id
      */
+    @ApiOperation(value = "获取单个员工")
     @GetMapping("/sys-user-employee/{id}")
     public ResponseEntity<SysUserEmployeeDTO> getSysUserEmployee(@PathVariable Long id) {
         log.debug("REST request to get SysUser : {}", id);
@@ -83,6 +85,7 @@ public class SysUserResource {
      * @author 刘东奇
      * @date 2019/9/22
      */
+    @ApiOperation(value = "新增员工")
     @PostMapping("/sys-user-employees")
     public ResponseEntity<SysUserEmployeeDTO> createSysUserEmployee(@Valid @RequestBody SysUserEmployeeDTO sysUserEmployeeDTO) throws URISyntaxException {
         log.debug("REST request to save SysUserEmployee : {}", sysUserEmployeeDTO);
