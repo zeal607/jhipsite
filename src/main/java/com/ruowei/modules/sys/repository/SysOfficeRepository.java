@@ -38,5 +38,5 @@ public interface SysOfficeRepository
      * @author 刘东奇
      * @date 2019/9/30
      */
-    List<SysOffice> findAllOrderByTreeSortsAsc();
+    List<SysOffice> findAllByOrderByTreeSortsAsc();
 }
