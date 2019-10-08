@@ -71,6 +71,7 @@ public class SysOfficeServiceImpl
      */
     @Override
     public SysOfficeTreeVM findSysOfficeTreeVMByCriteria(SysOfficeCriteria sysOfficeCriteria) {
+        sysOfficeQueryService.findAllEntity();
         return null;
     }
 

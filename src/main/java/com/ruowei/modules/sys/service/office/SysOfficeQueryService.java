@@ -13,6 +13,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.error.exception.DataInvalidException;
 import com.ruowei.common.pojo.BaseView;
 import com.ruowei.common.pojo.TreeDTO;
+import com.ruowei.common.querydsl.OrderByUtils;
 import com.ruowei.common.service.QueryBaseService;
 import com.ruowei.modules.sys.domain.QSysOffice;
 import com.ruowei.modules.sys.domain.SysOffice_;
@@ -172,9 +173,10 @@ public class SysOfficeQueryService
      * @return
      */
     @Override
-    @Deprecated
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
-        return null;
+        SysOfficeCriteria sysOfficeCriteria = (SysOfficeCriteria) criteriaArray[0];
+        BooleanBuilder sysOfficeBooleanBuilder = createBooleanBuilder(sysOfficeCriteria);
+        return sysOfficeBooleanBuilder;
     }
 
     /**
@@ -285,6 +287,7 @@ public class SysOfficeQueryService
      * @date 2019/9/30
      * @param
      */
+    @Deprecated
     public TreeDTO getOfficeTreeByRecursiveQuery() {
         SysOffice root = this.jpaRepository.findFirstByParentCodeIsNullOrderByTreeSortAsc();
         if(root != null){
@@ -294,6 +297,34 @@ public class SysOfficeQueryService
             throw new DataInvalidException(OFFICE_ROOT_NOT_FOUND);
         }
 
+    }
+
+    /**
+     * 通过循环获取机构树
+     * 依赖SysOffice的TreeSorts字段
+     * @author 刘东奇
+     * @date 2019/9/30
+     * @param
+     */
+    public TreeDTO getOfficeTreeByOneQuery(SysOfficeCriteria sysOfficeCriteria){
+        BooleanBuilder booleanBuilder = createBooleanBuilder(sysOfficeCriteria);
+        List<SysOffice> sysOfficeList = this.findAllEntity(booleanBuilder);
+        if(sysOfficeList == null){
+            throw new DataInvalidException(OFFICE_ROOT_NOT_FOUND);
+        }
+        SysOffice root = sysOfficeList.remove(0);
+        TreeDTO result = sysOfficeMapper.toTreeDTO(root);
+        HashMap<String,List<TreeDTO>> childrenMap = new HashMap<String,List<TreeDTO>>();
+        for(SysOffice sysOffice:sysOfficeList){
+            List<TreeDTO> list = childrenMap.get(sysOffice.getParentCode());
+            if(list == null){
+                list = new ArrayList<TreeDTO>();
+                childrenMap.put(sysOffice.getParentCode(),list);
+            }
+            list.add(sysOfficeMapper.toTreeDTO(sysOffice));
+        }
+        recursiveTree(result,childrenMap);
+        return result;
     }
 
     /**
