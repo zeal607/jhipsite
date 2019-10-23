@@ -1,6 +1,6 @@
 package com.ruowei.web.rest;
 
-import com.ruowei.service.AuditEventService;
+import com.ruowei.modules.sys.service.AuditEventService;
 
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;

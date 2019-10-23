@@ -30,4 +30,5 @@
     <include file="config/liquibase/changelog/20190908024953_added_entity_SysUserDataScope.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <include file="config/liquibase/changelog/20191022040050_changelog.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

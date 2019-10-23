@@ -1,9 +1,9 @@
 package com.ruowei.service.impl;
 
+import com.ruowei.modules.sys.domain.SysRoleDataScope;
+import com.ruowei.modules.sys.repository.SysRoleDataScopeRepository;
 import com.ruowei.modules.sys.service.role.SysRoleDataScopeService;
-import com.ruowei.domain.SysRoleDataScope;
-import com.ruowei.repository.SysRoleDataScopeRepository;
-import com.ruowei.service.dto.SysRoleDataScopeDTO;
+import com.ruowei.modules.sys.pojo.SysRoleDataScopeDTO;
 import com.ruowei.service.mapper.SysRoleDataScopeMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

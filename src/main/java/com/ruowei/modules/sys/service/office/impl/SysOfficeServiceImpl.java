@@ -1,17 +1,13 @@
 package com.ruowei.modules.sys.service.office.impl;
 
-import com.ruowei.common.error.ErrorMessageUtils;
-import com.ruowei.common.error.exception.DataInvalidException;
-import com.ruowei.common.error.exception.DataNotFoundException;
-import com.ruowei.common.pojo.TreeDTO;
+import com.ruowei.common.pojo.BaseTree;
 import com.ruowei.common.service.CrudBaseService;
 import com.ruowei.modules.sys.domain.SysOffice;
 
 import com.ruowei.modules.sys.mapper.SysOfficeMapper;
-import com.ruowei.modules.sys.mapper.SysUserRoleMapper;
 import com.ruowei.modules.sys.pojo.SysOfficeCriteria;
 import com.ruowei.modules.sys.pojo.SysOfficeDTO;
-import com.ruowei.modules.sys.pojo.SysOfficeTreeVM;
+import com.ruowei.modules.sys.pojo.SysOfficeTree;
 import com.ruowei.modules.sys.repository.SysOfficeRepository;
 import com.ruowei.modules.sys.service.office.SysOfficeQueryService;
 import com.ruowei.modules.sys.service.office.SysOfficeService;
@@ -57,9 +53,21 @@ public class SysOfficeServiceImpl
      * @date 2019/9/30
      */
     @Override
-    public TreeDTO getOfficeTree() {
-//        return sysOfficeQueryService.getOfficeTreeByRecursiveQuery();
+    public BaseTree getEntireOfficeTreeAtOnce() {
         return sysOfficeQueryService.getOfficeTreeByOneQuery();
+    }
+
+    /**
+     * 一次性获取某机构及其下属构成的树
+     *
+     * @param parentCode
+     * @return BaseTree
+     * @author 刘东奇
+     * @date 2019/10/18
+     */
+    @Override
+    public SysOfficeTree getOfficeTreeAtOnce(String parentCode) {
+        return sysOfficeQueryService.getOfficeTreeByOneQuery(parentCode);
     }
 
     /**
@@ -70,9 +78,9 @@ public class SysOfficeServiceImpl
      * @date 2019/10/6
      */
     @Override
-    public SysOfficeTreeVM findSysOfficeTreeVMByCriteria(SysOfficeCriteria sysOfficeCriteria) {
-        sysOfficeQueryService.findAllEntity();
-        return null;
+    public List<SysOfficeDTO> findSysOfficeTreeVMByCriteria(SysOfficeCriteria sysOfficeCriteria) {
+        List<SysOfficeDTO> sysOfficeDTOList = sysOfficeQueryService.findByCriteria(sysOfficeCriteria);
+        return sysOfficeDTOList;
     }
 
     /**

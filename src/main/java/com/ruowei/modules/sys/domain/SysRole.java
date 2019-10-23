@@ -1,5 +1,8 @@
 package com.ruowei.modules.sys.domain;
 import com.ruowei.common.entity.BaseEntity;
+import com.ruowei.modules.sys.domain.enumeration.DataScopeType;
+import com.ruowei.modules.sys.domain.enumeration.RoleStatusType;
+import com.ruowei.modules.sys.domain.enumeration.RoleType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -7,12 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-
-import com.ruowei.domain.enumeration.RoleType;
-
-import com.ruowei.domain.enumeration.DataScopeType;
-
-import com.ruowei.domain.enumeration.RoleStatusType;
 
 /**
  * 角色表

@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.ruowei.modules.sys.domain.SysPost;
+import com.ruowei.modules.sys.domain.enumeration.PostStatusType;
 import io.github.jhipster.service.Criteria;
 import com.ruowei.modules.sys.domain.enumeration.PostType;
-import com.ruowei.domain.enumeration.PostStatusType;
 import io.github.jhipster.service.filter.Filter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;

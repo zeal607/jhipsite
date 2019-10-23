@@ -1,9 +1,9 @@
 package com.ruowei.service.impl;
 
+import com.ruowei.modules.sys.domain.SysRoleMenu;
+import com.ruowei.modules.sys.repository.SysRoleMenuRepository;
 import com.ruowei.modules.sys.service.role.SysRoleMenuService;
-import com.ruowei.domain.SysRoleMenu;
-import com.ruowei.repository.SysRoleMenuRepository;
-import com.ruowei.service.dto.SysRoleMenuDTO;
+import com.ruowei.modules.sys.pojo.SysRoleMenuDTO;
 import com.ruowei.service.mapper.SysRoleMenuMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

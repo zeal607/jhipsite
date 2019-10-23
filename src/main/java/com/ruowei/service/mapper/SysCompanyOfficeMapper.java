@@ -1,7 +1,7 @@
 package com.ruowei.service.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
-import com.ruowei.domain.*;
+import com.ruowei.modules.sys.domain.SysCompanyOffice;
 import com.ruowei.service.dto.SysCompanyOfficeDTO;
 
 import org.mapstruct.*;

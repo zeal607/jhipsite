@@ -93,6 +93,7 @@
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+            <!--auditable columns-->
         </createTable>
 
     </changeSet>

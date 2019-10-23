@@ -7,36 +7,46 @@ import com.ruowei.common.error.exception.DataAlreadyExistException;
 import com.ruowei.common.error.exception.DataInvalidException;
 import com.ruowei.common.error.exception.DataNotFoundException;
 import com.ruowei.common.service.CrudBaseService;
+import com.ruowei.config.Constants;
 import com.ruowei.modules.sys.domain.*;
 import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
-import com.ruowei.modules.sys.mapper.SysEmployeeOfficeMapper;
-import com.ruowei.modules.sys.mapper.SysEmployeePostMapper;
 import com.ruowei.modules.sys.mapper.SysUserEmployeeMapper;
-import com.ruowei.modules.sys.mapper.SysUserRoleMapper;
+import com.ruowei.modules.sys.mapper.SysUserMapper;
 import com.ruowei.modules.sys.pojo.*;
+import com.ruowei.modules.sys.pojo.user.SysUserRegisterDTO;
+import com.ruowei.modules.sys.repository.AuthorityRepository;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import com.ruowei.modules.sys.service.employee.SysEmployeeOfficeService;
 import com.ruowei.modules.sys.service.employee.SysEmployeePostService;
 import com.ruowei.modules.sys.service.employee.SysEmployeeService;
 import com.ruowei.modules.sys.service.office.SysOfficeQueryService;
-import com.ruowei.modules.sys.service.post.SysPostQueryService;
-import com.ruowei.modules.sys.service.role.impl.SysRoleQueryService;
 import com.ruowei.modules.sys.service.user.SysUserRoleService;
 import com.ruowei.modules.sys.service.user.SysUserService;
 import com.ruowei.modules.sys.service.company.SysCompanyQueryService;
+import com.ruowei.modules.sys.service.MailService;
+import com.ruowei.modules.sys.service.user.util.SysUserUtil;
+import com.ruowei.security.AuthoritiesConstants;
+import com.ruowei.security.SecurityUtils;
+import com.ruowei.service.util.RandomUtil;
+import com.ruowei.web.rest.errors.EmailAlreadyUsedException;
+import com.ruowei.web.rest.errors.EmailNotFoundException;
+import com.ruowei.web.rest.errors.InvalidPasswordException;
+import com.ruowei.web.rest.errors.LoginAlreadyUsedException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.CacheManager;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.time.Instant;
+import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author 刘东奇
@@ -59,18 +69,26 @@ public class SysUserServiceImpl
     private final SysEmployeePostService sysEmployeePostService;
     private final SysEmployeeOfficeService sysEmployeeOfficeService;
     private final SysUserRoleService sysUserRoleService;
+    private final MailService mailService;
+    /**
+     * repository依赖
+     */
+    private final AuthorityRepository authorityRepository;
     /**
      * mapper依赖
      */
-    private final SysUserEmployeeMapper sysUserEmployeeMapper;;
+    private final SysUserEmployeeMapper sysUserEmployeeMapper;
+    private final SysUserMapper sysUserMapper;
     /**
      * 密码加密器
      */
     private final PasswordEncoder passwordEncoder;
+    /**
+     * 缓存
+     */
+    private final CacheManager cacheManager;
 
     private final static String DEFAULT_PASSWORD = "123456";
-    private final static String USER_CODE_REGEX = "^user\\d{5}$";
-    private final static Pattern USER_CODE_PATTERN = Pattern.compile("^user");
 
     public SysUserServiceImpl(SysUserQueryService sysUserQueryService,
                               SysOfficeQueryService sysOfficeQueryService,
@@ -79,8 +97,12 @@ public class SysUserServiceImpl
                               SysEmployeePostService sysEmployeePostService,
                               SysEmployeeOfficeService sysEmployeeOfficeService,
                               SysUserRoleService sysUserRoleService,
+                              MailService mailService,
+                              AuthorityRepository authorityRepository,
                               SysUserEmployeeMapper sysUserEmployeeMapper,
-                              PasswordEncoder passwordEncoder) {
+                              SysUserMapper sysUserMapper,
+                              PasswordEncoder passwordEncoder,
+                              CacheManager cacheManager) {
         this.sysUserQueryService = sysUserQueryService;
         this.sysOfficeQueryService = sysOfficeQueryService;
         this.sysCompanyQueryService = sysCompanyQueryService;
@@ -88,10 +110,16 @@ public class SysUserServiceImpl
         this.sysEmployeePostService = sysEmployeePostService;
         this.sysEmployeeOfficeService = sysEmployeeOfficeService;
         this.sysUserRoleService = sysUserRoleService;
+        this.mailService = mailService;
+
+        this.authorityRepository = authorityRepository;
 
         this.sysUserEmployeeMapper = sysUserEmployeeMapper;
+        this.sysUserMapper = sysUserMapper;
 
         this.passwordEncoder = passwordEncoder;
+
+        this.cacheManager = cacheManager;
     }
 
     /**
@@ -167,7 +195,7 @@ public class SysUserServiceImpl
         SysUser sysUser = sysUserEmployeeMapper.projectIntoUser(sysUserEmployeeDTO);
         sysUser.setStatus(UserStatusType.NORMAL);
         sysUser.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
-        sysUser.setUserCode(generateUserCode());
+        sysUser.setUserCode(SysUserUtil.generateUserCode());
         sysUser = this.insert(sysUser);
 
         //创建员工
@@ -193,36 +221,261 @@ public class SysUserServiceImpl
     }
 
     /**
-     * 生成不重复的用户编码
+     * 根据激活码激活用户
+     *
+     * @param key
+     * @return
      * @author 刘东奇
-     * @date 2019/9/25
-     * @param
+     * @date 2019/10/21
      */
-    private String generateUserCode(){
-        //按UserCode倒叙查询用户表第一条数据
-         Optional<SysUser> userOptional = this.jpaRepository.findFirstByUserCodeNotNullOrderByUserCodeDesc();
-         if(userOptional.isPresent()){
-             SysUser user = userOptional.get();
-             String existUserCode=user.getUserCode();
-             if( Pattern.matches(USER_CODE_REGEX, existUserCode)){
-                //符合规则，则
-                 String code = USER_CODE_PATTERN.matcher(existUserCode).replaceAll("");
-                 Integer codeNum = new Integer(code);
-                 String newCode = String.format("%05d",codeNum+1);
-                 return "user"+newCode;
-             }else{
-                 //不符合规则
-                 //抛异常
-                 throw new DataInvalidException(ErrorMessageUtils.getDataInvalidMessage(
-                     user.getEntityName(),
-                     user.getId().toString(),
-                     USER_CODE_REGEX,
-                     existUserCode));
-             }
-         }else{
-             return "user00001";
-         }
+    @Override
+    public Optional<SysUser> activateRegistration(String key) {
+        log.debug("Activating user for activation key {}", key);
+        // 根据激活码找到SysUser并更新激活状态
+        return jpaRepository.findOneByActivationKey(key)
+            .map(user -> {
+                user.setActivated(true);
+                user.setActivationKey(null);
+                this.clearUserCaches(user.getLoginCode(),user.getEmail());
+                log.debug("Activated user: {}", user);
+                return user;
+            });
+    }
+
+    /**
+     * 更新用户表缓存
+     * @author 刘东奇
+     * @date 2019/10/21
+     * @param loginCode
+     * @param email
+     */
+    private void clearUserCaches(String loginCode,String email) {
+        Objects.requireNonNull(cacheManager.getCache(SysUserRepository.USERS_BY_LOGIN_CODE_CACHE)).evict(loginCode);
+        Objects.requireNonNull(cacheManager.getCache(SysUserRepository.USERS_BY_EMAIL_CACHE)).evict(email);
+    }
+
+    /**
+     * 根据新密码和重置码完成密码重置
+     *
+     * @param newPassword
+     * @param key
+     * @return
+     * @author 刘东奇
+     * @date 2019/10/21
+     */
+    @Override
+    public Optional<SysUser> completePasswordReset(String newPassword, String key) {
+        log.debug("Reset user password for reset key {}", key);
+        return jpaRepository.findOneByResetKey(key)
+            .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
+            .map(user -> {
+                user.setPassword(passwordEncoder.encode(newPassword));
+                user.setResetKey(null);
+                user.setResetDate(null);
+                this.clearUserCaches(user.getLoginCode(),user.getEmail());
+                return user;
+            });
+    }
+
+    /**
+     * 请求密码重置
+     *
+     * @param mail
+     * @return
+     * @author 刘东奇
+     * @date 2019/10/21
+     */
+    @Override
+    public void requestPasswordReset(String mail) {
+        // 按邮箱查询用户
+        // 生成重置码
+        // 发送对方邮箱
+        mailService.sendPasswordResetMail(findOneByEmailIgnoreCase(mail)
+            .filter(SysUserDTO::isActivated)
+            .map(user -> {
+                user.setResetKey(RandomUtil.generateResetKey());
+                user.setResetDate(Instant.now());
+                this.clearUserCaches(user.getLoginCode(),user.getEmail());
+                return user;
+            }).orElseThrow(EmailNotFoundException::new));
+        return;
+    }
+
+    /**
+     * 注册用户
+     *
+     * @param sysUserRegisterDTO
+     * @return
+     * @author 刘东奇
+     * @date 2019/10/21
+     */
+    @Override
+    public SysUserDTO registerUser(SysUserRegisterDTO sysUserRegisterDTO) {
+        //TODO 注册用户
+        jpaRepository.findOneByLoginCode(sysUserRegisterDTO.getLogin().toLowerCase()).ifPresent(existingUser -> {
+            throw new LoginAlreadyUsedException();
+        });
+        jpaRepository.findOneByEmailIgnoreCase(sysUserRegisterDTO.getEmail()).ifPresent(existingUser -> {
+            throw new EmailAlreadyUsedException();
+        });
+        SysUser user = sysUserMapper.assembleEntity(sysUserRegisterDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setLoginCode(user.getLoginCode().toLowerCase());
+        user.setActivationKey(SysUserUtil.generateActivationKey());
+        Set<Authority> authorities = new HashSet<>();
+        authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
+        user.setAuthorities(authorities);
+        jpaRepository.save(user);
+        this.clearUserCaches(user.getLoginCode(),user.getEmail());
+        log.debug("Created Information for User: {}", user);
+        return sysUserMapper.toDto(user);
+    }
+
+    /**
+     * 创建用户
+     *
+     * @param userDTO
+     * @return
+     * @author 刘东奇
+     * @date 2019/10/21
+     */
+    @Override
+    public SysUserDTO createUser(SysUserDTO userDTO) {
+        //TODO 创建用户
+        return null;
+    }
+
+    /**
+     * 更新用户
+     *
+     * @param userDTO
+     * @return
+     * @author 刘东奇
+     * @date 2019/10/21
+     */
+    @Override
+    public SysUserDTO updateUser(SysUserDTO userDTO) {
+        //TODO 更新用户
+        return null;
+    }
+
+    /**
+     * 根据登录Id删除用户
+     *
+     * @param loginCode
+     * @author 刘东奇
+     * @date 2019/10/21
+     */
+    @Override
+    public void deleteUser(String loginCode) {
+        jpaRepository.findOneByLoginCode(loginCode).ifPresent(user -> {
+            jpaRepository.delete(user);
+            this.clearUserCaches(user.getLoginCode(),user.getEmail());
+            log.debug("Deleted User: {}", user);
+        });
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param currentClearTextPassword
+     * @param newPassword
+     * @author 刘东奇
+     * @date 2019/10/21
+     */
+    @Override
+    public void changePassword(String currentClearTextPassword, String newPassword) {
+        SecurityUtils.getCurrentUserLogin()
+            .flatMap(jpaRepository::findOneByLoginCode)
+            .ifPresent(user -> {
+                String currentEncryptedPassword = user.getPassword();
+                if (!passwordEncoder.matches(currentClearTextPassword, currentEncryptedPassword)) {
+                    throw new InvalidPasswordException();
+                }
+                String encryptedPassword = passwordEncoder.encode(newPassword);
+                user.setPassword(encryptedPassword);
+                this.clearUserCaches(user.getLoginCode(),user.getEmail());
+                log.debug("Changed password for User: {}", user);
+            });
+    }
+
+    /**
+     * 获取用户列表
+     *
+     * @param pageable
+     * @author 刘东奇
+     * @date 2019/10/21
+     */
+    @Override
+    public Page<SysUserDTO> getAllUsers(Pageable pageable) {
+        return jpaRepository.findAllByLoginCodeNot(pageable, Constants.ANONYMOUS_USER).map(user->
+            sysUserMapper.toDto(user)
+        );
+    }
+
+    /**
+     * 通过LoginCode查询用户
+     * @author 刘东奇
+     * @date 2019/10/21
+     * @param loginCode
+     */
+    @Override
+    public Optional<SysUserDTO> findOneByLoginCode(String loginCode) {
+        return this.jpaRepository.findOneByLoginCode(loginCode).map(
+            user->{
+                SysUserDTO sysUserDTO = sysUserMapper.toDto(user);
+                return sysUserDTO;
+            }
+        );
+    }
+
+    /**
+     * 通过email查询用户
+     *
+     * @param email
+     * @author 刘东奇
+     * @date 2019/10/21
+     */
+    @Override
+    public Optional<SysUserDTO> findOneByEmailIgnoreCase(String email) {
+        return this.jpaRepository.findOneByEmailIgnoreCase(email).map(
+            user->{
+                SysUserDTO sysUserDTO = sysUserMapper.toDto(user);
+                return sysUserDTO;
+            }
+        );
     }
 
 
+    /**
+     * Gets a list of all the authorities.
+     * @return a list of all the authorities.
+     */
+    @Override
+    public List<String> getAuthorities() {
+        return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+    }
+
+    /**
+     * 根据登录Id获取用户信息并携带权限
+     *
+     * @param loginCode
+     * @author 刘东奇
+     * @date 2019/10/21
+     */
+    @Override
+    public Optional<SysUserDTO> getUserWithAuthoritiesByLogin(String loginCode) {
+        return jpaRepository.findOneWithAuthoritiesByLoginCode(loginCode).map(user->sysUserMapper.toDto(user));
+    }
+
+    /**
+     * 获取当前登录用户信息并携带权限
+     *
+     * @author 刘东奇
+     * @date 2019/10/21
+     */
+    @Override
+    public Optional<SysUserDTO> getUserWithAuthorities() {
+        return SecurityUtils.getCurrentUserLogin().flatMap(this::getUserWithAuthoritiesByLogin);
+    }
 }

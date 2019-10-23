@@ -1,12 +1,12 @@
 package com.ruowei.modules.sys.pojo;
 import com.ruowei.common.pojo.BaseDTO;
 import com.ruowei.modules.sys.domain.SysCompany;
+import com.ruowei.modules.sys.domain.enumeration.CompanyStatusType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.ruowei.domain.enumeration.CompanyStatusType;
 
 /**
  * A DTO for the {@link SysCompany} entity.

@@ -82,7 +82,7 @@ public class SysEmployeeQueryService extends QueryService<SysEmployee> {
      * Function to convert ConsumerCriteria to a {@link Specification}
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
-     */    
+     */
     protected Specification<SysEmployee> createSpecification(SysEmployeeCriteria criteria) {
         Specification<SysEmployee> specification = Specification.where(null);
         if (criteria != null) {

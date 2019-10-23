@@ -1,5 +1,6 @@
 package com.ruowei.modules.sys.domain;
 import com.ruowei.common.entity.BaseEntity;
+import com.ruowei.modules.sys.domain.enumeration.CompanyStatusType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,7 +9,6 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 
-import com.ruowei.domain.enumeration.CompanyStatusType;
 
 /**
  * 公司表

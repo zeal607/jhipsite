@@ -1,7 +1,6 @@
 package com.ruowei.modules.sys.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
-import com.ruowei.domain.SysCompanyOffice;
 import com.ruowei.modules.sys.domain.SysEmployee;
 import com.ruowei.modules.sys.domain.SysEmployeePost;
 import com.ruowei.modules.sys.pojo.*;

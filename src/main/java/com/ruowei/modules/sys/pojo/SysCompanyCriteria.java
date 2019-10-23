@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.ruowei.modules.sys.domain.SysCompany;
-import com.ruowei.modules.sys.web.SysCompanyResource;
+import com.ruowei.modules.sys.domain.enumeration.CompanyStatusType;
+import com.ruowei.modules.sys.web.rest.SysCompanyResource;
 import io.github.jhipster.service.Criteria;
-import com.ruowei.domain.enumeration.CompanyStatusType;
 import io.github.jhipster.service.filter.BooleanFilter;
 import io.github.jhipster.service.filter.Filter;
 import io.github.jhipster.service.filter.IntegerFilter;

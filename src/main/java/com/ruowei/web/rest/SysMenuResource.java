@@ -2,9 +2,9 @@ package com.ruowei.web.rest;
 
 import com.ruowei.service.SysMenuService;
 import com.ruowei.web.rest.errors.BadRequestAlertException;
-import com.ruowei.service.dto.SysMenuDTO;
-import com.ruowei.service.dto.SysMenuCriteria;
-import com.ruowei.service.SysMenuQueryService;
+import com.ruowei.modules.sys.pojo.SysMenuDTO;
+import com.ruowei.modules.sys.pojo.SysMenuCriteria;
+import com.ruowei.modules.sys.service.menu.SysMenuQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,5 +1,6 @@
 package com.ruowei.modules.sys.domain;
 import com.ruowei.common.entity.BaseEntity;
+import com.ruowei.modules.sys.domain.enumeration.PostStatusType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -9,8 +10,6 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 
 import com.ruowei.modules.sys.domain.enumeration.PostType;
-
-import com.ruowei.domain.enumeration.PostStatusType;
 
 /**
  * 员工岗位

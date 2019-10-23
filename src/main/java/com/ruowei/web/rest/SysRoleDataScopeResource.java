@@ -2,8 +2,8 @@ package com.ruowei.web.rest;
 
 import com.ruowei.modules.sys.service.role.SysRoleDataScopeService;
 import com.ruowei.web.rest.errors.BadRequestAlertException;
-import com.ruowei.service.dto.SysRoleDataScopeDTO;
-import com.ruowei.service.dto.SysRoleDataScopeCriteria;
+import com.ruowei.modules.sys.pojo.SysRoleDataScopeDTO;
+import com.ruowei.modules.sys.pojo.SysRoleDataScopeCriteria;
 import com.ruowei.modules.sys.service.role.impl.SysRoleDataScopeQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;

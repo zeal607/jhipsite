@@ -1,6 +1,6 @@
 package com.ruowei.service;
 
-import com.ruowei.service.dto.SysMenuDTO;
+import com.ruowei.modules.sys.pojo.SysMenuDTO;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

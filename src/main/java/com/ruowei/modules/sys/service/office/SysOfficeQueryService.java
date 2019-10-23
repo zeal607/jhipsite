@@ -11,12 +11,12 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.error.exception.DataInvalidException;
+import com.ruowei.common.pojo.BaseTree;
 import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.pojo.TreeDTO;
-import com.ruowei.common.querydsl.OrderByUtils;
 import com.ruowei.common.service.QueryBaseService;
 import com.ruowei.modules.sys.domain.QSysOffice;
 import com.ruowei.modules.sys.domain.SysOffice_;
+import com.ruowei.modules.sys.pojo.SysOfficeTree;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +47,8 @@ public class SysOfficeQueryService
 
     private final SysOfficeMapper sysOfficeMapper;
 
-    private final static String OFFICE_ROOT_NOT_FOUND = "机构树的根节点不能为空";
+    private final static String OFFICE_ROOT_NOT_FOUND = "没找到机构树的根节点";
+    private final static String OFFICE_TREE_NOT_FOUND = "没找到机构树";
 
     public SysOfficeQueryService(SysOfficeMapper sysOfficeMapper) {
         this.sysOfficeMapper = sysOfficeMapper;
@@ -288,10 +289,10 @@ public class SysOfficeQueryService
      * @param
      */
     @Deprecated
-    public TreeDTO getOfficeTreeByRecursiveQuery() {
+    public BaseTree getOfficeTreeByRecursiveQuery() {
         SysOffice root = this.jpaRepository.findFirstByParentCodeIsNullOrderByTreeSortAsc();
         if(root != null){
-            TreeDTO result = recursiveQuerySysOffice(root);
+            BaseTree result = recursiveQuerySysOffice(root);
             return result;
         }else{
             throw new DataInvalidException(OFFICE_ROOT_NOT_FOUND);
@@ -306,49 +307,41 @@ public class SysOfficeQueryService
      * @date 2019/9/30
      * @param
      */
-    public TreeDTO getOfficeTreeByOneQuery(SysOfficeCriteria sysOfficeCriteria){
-        BooleanBuilder booleanBuilder = createBooleanBuilder(sysOfficeCriteria);
-        List<SysOffice> sysOfficeList = this.findAllEntity(booleanBuilder);
+    public BaseTree getOfficeTreeByOneQuery(){
+        List<SysOffice> sysOfficeList = this.jpaRepository.findAllByOrderByTreeSortsAsc();
         if(sysOfficeList == null){
-            throw new DataInvalidException(OFFICE_ROOT_NOT_FOUND);
+            throw new DataInvalidException(OFFICE_TREE_NOT_FOUND);
         }
         SysOffice root = sysOfficeList.remove(0);
-        TreeDTO result = sysOfficeMapper.toTreeDTO(root);
-        HashMap<String,List<TreeDTO>> childrenMap = new HashMap<String,List<TreeDTO>>();
+        BaseTree result = sysOfficeMapper.toBaseTree(root);
+        HashMap<String,List<BaseTree>> childrenMap = new HashMap<String,List<BaseTree>>();
         for(SysOffice sysOffice:sysOfficeList){
-            List<TreeDTO> list = childrenMap.get(sysOffice.getParentCode());
+            List<BaseTree> list = childrenMap.get(sysOffice.getParentCode());
             if(list == null){
-                list = new ArrayList<TreeDTO>();
+                list = new ArrayList<BaseTree>();
                 childrenMap.put(sysOffice.getParentCode(),list);
             }
-            list.add(sysOfficeMapper.toTreeDTO(sysOffice));
+            list.add(sysOfficeMapper.toBaseTree(sysOffice));
         }
         recursiveTree(result,childrenMap);
         return result;
     }
 
-    /**
-     * 通过循环获取机构树
-     * 依赖SysOffice的TreeSorts字段
-     * @author 刘东奇
-     * @date 2019/9/30
-     * @param
-     */
-    public TreeDTO getOfficeTreeByOneQuery(){
-        List<SysOffice> sysOfficeList = this.jpaRepository.findAllByOrderByTreeSortsAsc();
+    public SysOfficeTree getOfficeTreeByOneQuery(String parentCode){
+        List<SysOffice> sysOfficeList = this.jpaRepository.findAllByParentCodesLikeOrderByTreeSortsAsc(parentCode);
         if(sysOfficeList == null){
-            throw new DataInvalidException(OFFICE_ROOT_NOT_FOUND);
+            throw new DataInvalidException(OFFICE_TREE_NOT_FOUND);
         }
         SysOffice root = sysOfficeList.remove(0);
-        TreeDTO result = sysOfficeMapper.toTreeDTO(root);
-        HashMap<String,List<TreeDTO>> childrenMap = new HashMap<String,List<TreeDTO>>();
+        SysOfficeTree result = sysOfficeMapper.toSysOfficeTree(root);
+        HashMap<String,List<SysOfficeTree>> childrenMap = new HashMap<String,List<SysOfficeTree>>();
         for(SysOffice sysOffice:sysOfficeList){
-            List<TreeDTO> list = childrenMap.get(sysOffice.getParentCode());
+            List<SysOfficeTree> list = childrenMap.get(sysOffice.getParentCode());
             if(list == null){
-                list = new ArrayList<TreeDTO>();
+                list = new ArrayList<SysOfficeTree>();
                 childrenMap.put(sysOffice.getParentCode(),list);
             }
-            list.add(sysOfficeMapper.toTreeDTO(sysOffice));
+            list.add(sysOfficeMapper.toSysOfficeTree(sysOffice));
         }
         recursiveTree(result,childrenMap);
         return result;
@@ -360,11 +353,11 @@ public class SysOfficeQueryService
      * @date 2019/9/30
      * @param parent
      */
-    private TreeDTO recursiveQuerySysOffice(SysOffice parent){
-        TreeDTO result = sysOfficeMapper.toTreeDTO(parent);
+    private BaseTree recursiveQuerySysOffice(SysOffice parent){
+        BaseTree result = sysOfficeMapper.toBaseTree(parent);
         if(!parent.isTreeLeaf()){
             List<SysOffice> sysOfficeList = this.jpaRepository.findAllByParentCodeOrderByTreeSortAsc(parent.getOfficeCode());
-            List<TreeDTO> children = new ArrayList<TreeDTO>();
+            List<BaseTree> children = new ArrayList<BaseTree>();
             if(sysOfficeList!=null){
                 for(SysOffice sysOffice: sysOfficeList){
                     children.add(recursiveQuerySysOffice(sysOffice));
@@ -382,15 +375,35 @@ public class SysOfficeQueryService
      * @param node
      * @param childrenMap
      */
-    private void recursiveTree(TreeDTO node,HashMap<String,List<TreeDTO>> childrenMap){
-        List<TreeDTO> list = childrenMap.get(node.getCode());
+    private void recursiveTree(BaseTree node, HashMap<String,List<BaseTree>> childrenMap){
+        List<BaseTree> list = childrenMap.get(node.getCode());
         node.setChildrenList(list);
         if(list == null){
             //说明本节点是叶子节点
             return;
         }else{
-            for(TreeDTO treeDTO:list){
-                recursiveTree(treeDTO,childrenMap);
+            for(BaseTree baseTree :list){
+                recursiveTree(baseTree,childrenMap);
+            }
+        }
+    }
+
+    /**
+     * 递归树
+     * @author 刘东奇
+     * @date 2019/9/30
+     * @param node
+     * @param childrenMap
+     */
+    private void recursiveTree(SysOfficeTree node, HashMap<String,List<SysOfficeTree>> childrenMap){
+        List<SysOfficeTree> list = childrenMap.get(node.getCode());
+        node.setChildrenList(list);
+        if(list == null){
+            //说明本节点是叶子节点
+            return;
+        }else{
+            for(SysOfficeTree baseTree :list){
+                recursiveTree(baseTree,childrenMap);
             }
         }
     }

@@ -20,9 +20,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ruowei.domain.*; // for static metamodels
 import com.ruowei.modules.sys.repository.SysRoleRepository;
-import com.ruowei.service.dto.SysRoleCriteria;
+import com.ruowei.modules.sys.pojo.SysRoleCriteria;
 import com.ruowei.modules.sys.pojo.SysRoleDTO;
 import com.ruowei.modules.sys.mapper.SysRoleMapper;
 

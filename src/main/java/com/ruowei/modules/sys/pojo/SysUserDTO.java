@@ -1,4 +1,5 @@
 package com.ruowei.modules.sys.pojo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ruowei.common.pojo.BaseDTO;
 import com.ruowei.modules.sys.domain.enumeration.GenderType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
@@ -6,8 +7,10 @@ import com.ruowei.modules.sys.domain.enumeration.UserType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.Instant;
+import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.ruowei.modules.sys.domain.SysUser} entity.
@@ -166,6 +169,25 @@ public class SysUserDTO extends BaseDTO {
     @Size(max = 500)
     @ApiModelProperty(value = "备注信息")
     private String remarks;
+
+    @NotNull
+    @Column(nullable = false)
+    private boolean activated;
+
+    @Size(max = 20)
+    @Column(name = "activation_key", length = 20)
+    @JsonIgnore
+    private String activationKey;
+
+    @Size(max = 20)
+    @Column(name = "reset_key", length = 20)
+    @JsonIgnore
+    private String resetKey;
+
+    @Column(name = "reset_date")
+    private Instant resetDate = null;
+
+    private Set<String> authorities;
 
     public String getUserCode() {
         return userCode;
@@ -357,6 +379,46 @@ public class SysUserDTO extends BaseDTO {
             return false;
         }
         return Objects.equals(getId(), sysUserDTO.getId());
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    public String getActivationKey() {
+        return activationKey;
+    }
+
+    public void setActivationKey(String activationKey) {
+        this.activationKey = activationKey;
+    }
+
+    public String getResetKey() {
+        return resetKey;
+    }
+
+    public void setResetKey(String resetKey) {
+        this.resetKey = resetKey;
+    }
+
+    public Instant getResetDate() {
+        return resetDate;
+    }
+
+    public void setResetDate(Instant resetDate) {
+        this.resetDate = resetDate;
+    }
+
+    public Set<String> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<String> authorities) {
+        this.authorities = authorities;
     }
 
     @Override

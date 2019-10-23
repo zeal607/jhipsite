@@ -1,8 +1,11 @@
 package com.ruowei.modules.sys.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ruowei.common.entity.AbstractAuditingEntity;
 import com.ruowei.common.entity.BaseEntity;
 import com.ruowei.modules.sys.domain.enumeration.GenderType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -11,6 +14,8 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -20,7 +25,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "sys_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUser extends BaseEntity implements Serializable {
+public class SysUser extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -178,6 +183,37 @@ public class SysUser extends BaseEntity implements Serializable {
     @Size(max = 500)
     @Column(name = "remarks", length = 500)
     private String remarks;
+
+    /**
+     * 是否激活
+     */
+    @NotNull
+    @Column(nullable = false)
+    private boolean activated;
+
+    @Size(max = 20)
+    @Column(name = "activation_key", length = 20)
+    @JsonIgnore
+    private String activationKey;
+
+    @Size(max = 20)
+    @Column(name = "reset_key", length = 20)
+    @JsonIgnore
+    private String resetKey;
+
+    @Column(name = "reset_date")
+    private Instant resetDate = null;
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+        name = "jhi_user_authority",
+        joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @BatchSize(size = 20)
+    private Set<Authority> authorities = new HashSet<>();
+
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -484,32 +520,80 @@ public class SysUser extends BaseEntity implements Serializable {
         return 31;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    public String getActivationKey() {
+        return activationKey;
+    }
+
+    public void setActivationKey(String activationKey) {
+        this.activationKey = activationKey;
+    }
+
+    public String getResetKey() {
+        return resetKey;
+    }
+
+    public void setResetKey(String resetKey) {
+        this.resetKey = resetKey;
+    }
+
+    public Instant getResetDate() {
+        return resetDate;
+    }
+
+    public void setResetDate(Instant resetDate) {
+        this.resetDate = resetDate;
+    }
+
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
     @Override
     public String toString() {
         return "SysUser{" +
-            "id=" + getId() +
-            ", userCode='" + getUserCode() + "'" +
-            ", loginCode='" + getLoginCode() + "'" +
-            ", userName='" + getUserName() + "'" +
-            ", password='" + getPassword() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", mobile='" + getMobile() + "'" +
-            ", phone='" + getPhone() + "'" +
-            ", sex='" + getSex() + "'" +
-            ", avatar='" + getAvatar() + "'" +
-            ", sign='" + getSign() + "'" +
-            ", wxOpenid='" + getWxOpenid() + "'" +
-            ", mobileImei='" + getMobileImei() + "'" +
-            ", userType='" + getUserType() + "'" +
-            ", refCode='" + getRefCode() + "'" +
-            ", refName='" + getRefName() + "'" +
-            ", lastLoginIp='" + getLastLoginIp() + "'" +
-            ", lastLoginDate='" + getLastLoginDate() + "'" +
-            ", freezeDate='" + getFreezeDate() + "'" +
-            ", freezeCause='" + getFreezeCause() + "'" +
-            ", userSort=" + getUserSort() +
-            ", status='" + getStatus() + "'" +
-            ", remarks='" + getRemarks() + "'" +
-            "}";
+            "userCode='" + userCode + '\'' +
+            ", loginCode='" + loginCode + '\'' +
+            ", userName='" + userName + '\'' +
+            ", password='" + password + '\'' +
+            ", email='" + email + '\'' +
+            ", mobile='" + mobile + '\'' +
+            ", phone='" + phone + '\'' +
+            ", sex=" + sex +
+            ", avatar='" + avatar + '\'' +
+            ", sign='" + sign + '\'' +
+            ", wxOpenid='" + wxOpenid + '\'' +
+            ", mobileImei='" + mobileImei + '\'' +
+            ", userType=" + userType +
+            ", refCode='" + refCode + '\'' +
+            ", refName='" + refName + '\'' +
+            ", lastLoginIp='" + lastLoginIp + '\'' +
+            ", lastLoginDate=" + lastLoginDate +
+            ", freezeDate=" + freezeDate +
+            ", freezeCause='" + freezeCause + '\'' +
+            ", userSort=" + userSort +
+            ", status=" + status +
+            ", remarks='" + remarks + '\'' +
+            ", activated=" + activated +
+            ", activationKey='" + activationKey + '\'' +
+            ", resetKey='" + resetKey + '\'' +
+            ", resetDate=" + resetDate +
+            ", authorities=" + authorities +
+            '}';
     }
 }

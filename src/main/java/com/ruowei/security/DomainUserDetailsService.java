@@ -1,7 +1,8 @@
 package com.ruowei.security;
 
-import com.ruowei.domain.User;
-import com.ruowei.repository.UserRepository;
+import com.ruowei.modules.sys.domain.SysUser;
+import com.ruowei.modules.sys.pojo.SysUserDTO;
+import com.ruowei.modules.sys.repository.SysUserRepository;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +25,9 @@ public class DomainUserDetailsService implements UserDetailsService {
 
     private final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
-    private final UserRepository userRepository;
+    private final SysUserRepository userRepository;
 
-    public DomainUserDetailsService(UserRepository userRepository) {
+    public DomainUserDetailsService(SysUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -42,20 +43,20 @@ public class DomainUserDetailsService implements UserDetailsService {
         }
 
         String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
-        return userRepository.findOneWithAuthoritiesByLogin(lowercaseLogin)
+        return userRepository.findOneWithAuthoritiesByLoginCode(lowercaseLogin)
             .map(user -> createSpringSecurityUser(lowercaseLogin, user))
             .orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database"));
 
     }
 
-    private org.springframework.security.core.userdetails.User createSpringSecurityUser(String lowercaseLogin, User user) {
-        if (!user.getActivated()) {
+    private org.springframework.security.core.userdetails.User createSpringSecurityUser(String lowercaseLogin, SysUser user) {
+        if (!user.isActivated()) {
             throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
         }
         List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
             .map(authority -> new SimpleGrantedAuthority(authority.getName()))
             .collect(Collectors.toList());
-        return new org.springframework.security.core.userdetails.User(user.getLogin(),
+        return new org.springframework.security.core.userdetails.User(user.getLoginCode(),
             user.getPassword(),
             grantedAuthorities);
     }

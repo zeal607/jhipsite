@@ -2,7 +2,7 @@ package com.ruowei.web.rest;
 
 import com.ruowei.modules.sys.service.role.SysRoleMenuService;
 import com.ruowei.web.rest.errors.BadRequestAlertException;
-import com.ruowei.service.dto.SysRoleMenuDTO;
+import com.ruowei.modules.sys.pojo.SysRoleMenuDTO;
 import com.ruowei.service.dto.SysRoleMenuCriteria;
 import com.ruowei.modules.sys.service.role.impl.SysRoleMenuQueryService;
 

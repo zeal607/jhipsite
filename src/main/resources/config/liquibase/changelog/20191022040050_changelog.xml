@@ -1,0 +1,130 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="Administrator (generated)" id="1571716862409-132">
+        <addColumn tableName="sys_user">
+            <column name="activated" type="bit">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-133">
+        <addColumn tableName="sys_user">
+            <column name="activation_key" type="varchar(20)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-134">
+        <addColumn tableName="sys_office">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-135">
+        <addColumn tableName="sys_user">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-136">
+        <addColumn tableName="sys_office">
+            <column name="created_date" type="datetime"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-137">
+        <addColumn tableName="sys_user">
+            <column name="created_date" type="datetime"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-138">
+        <addColumn tableName="sys_office">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-139">
+        <addColumn tableName="sys_user">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-140">
+        <addColumn tableName="sys_office">
+            <column name="last_modified_date" type="datetime"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-141">
+        <addColumn tableName="sys_user">
+            <column name="last_modified_date" type="datetime"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-142">
+        <addColumn tableName="sys_user">
+            <column name="reset_date" type="datetime"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-143">
+        <addColumn tableName="sys_user">
+            <column name="reset_key" type="varchar(20)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-144">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_authority" constraintName="FKa8pk9y2othep7btqhe1au7uyf" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sys_user" validate="true"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-145">
+        <dropForeignKeyConstraint baseTableName="jhi_user_authority" constraintName="fk_user_id"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-146">
+        <dropUniqueConstraint constraintName="ux_user_email" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-147">
+        <dropUniqueConstraint constraintName="ux_user_login" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-148">
+        <dropTable tableName="jhi_user"/>
+    </changeSet>
+
+    <changeSet author="Administrator (generated)" id="1571716862409-117">
+        <addUniqueConstraint columnNames="company_code" constraintName="UC_SYS_COMPANYCOMPANY_CODE_COL" tableName="sys_company"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-118">
+        <addUniqueConstraint columnNames="full_name" constraintName="UC_SYS_COMPANYFULL_NAME_COL" tableName="sys_company"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-119">
+        <addUniqueConstraint columnNames="emp_code" constraintName="UC_SYS_EMPLOYEEEMP_CODE_COL" tableName="sys_employee"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-120">
+        <addUniqueConstraint columnNames="menu_code" constraintName="UC_SYS_MENUMENU_CODE_COL" tableName="sys_menu"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-121">
+        <addUniqueConstraint columnNames="full_name" constraintName="UC_SYS_OFFICEFULL_NAME_COL" tableName="sys_office"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-122">
+        <addUniqueConstraint columnNames="office_code" constraintName="UC_SYS_OFFICEOFFICE_CODE_COL" tableName="sys_office"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-123">
+        <addUniqueConstraint columnNames="post_code" constraintName="UC_SYS_POSTPOST_CODE_COL" tableName="sys_post"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-124">
+        <addUniqueConstraint columnNames="role_code" constraintName="UC_SYS_ROLEROLE_CODE_COL" tableName="sys_role"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-125">
+        <addUniqueConstraint columnNames="role_name" constraintName="UC_SYS_ROLEROLE_NAME_COL" tableName="sys_role"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-126">
+        <addUniqueConstraint columnNames="email" constraintName="UC_SYS_USEREMAIL_COL" tableName="sys_user"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-127">
+        <addUniqueConstraint columnNames="login_code" constraintName="UC_SYS_USERLOGIN_CODE_COL" tableName="sys_user"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-128">
+        <addUniqueConstraint columnNames="mobile" constraintName="UC_SYS_USERMOBILE_COL" tableName="sys_user"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-129">
+        <addUniqueConstraint columnNames="mobile_imei" constraintName="UC_SYS_USERMOBILE_IMEI_COL" tableName="sys_user"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-130">
+        <addUniqueConstraint columnNames="user_code" constraintName="UC_SYS_USERUSER_CODE_COL" tableName="sys_user"/>
+    </changeSet>
+    <changeSet author="Administrator (generated)" id="1571716862409-131">
+        <addUniqueConstraint columnNames="wx_openid" constraintName="UC_SYS_USERWX_OPENID_COL" tableName="sys_user"/>
+    </changeSet>
+</databaseChangeLog>

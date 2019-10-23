@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruowei.modules.sys.domain.SysUserRole;
-import com.ruowei.domain.*; // for static metamodels
 import com.ruowei.modules.sys.repository.SysUserRoleRepository;
 import com.ruowei.modules.sys.pojo.SysUserRoleCriteria;
 import com.ruowei.modules.sys.pojo.SysUserRoleDTO;

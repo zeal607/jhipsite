@@ -1,7 +1,18 @@
 package com.ruowei.modules.sys.service.role.impl;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.QueryResults;
+import com.querydsl.core.Tuple;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.ruowei.common.pojo.BaseView;
+import com.ruowei.common.service.QueryBaseService;
+import com.ruowei.modules.sys.domain.SysRoleMenu;
+import com.ruowei.modules.sys.domain.SysRoleMenu_;
+import com.ruowei.modules.sys.repository.SysRoleMenuRepository;
+import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -9,14 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import io.github.jhipster.service.QueryService;
-
-import com.ruowei.domain.SysRoleMenu;
-import com.ruowei.domain.*; // for static metamodels
-import com.ruowei.repository.SysRoleMenuRepository;
 import com.ruowei.service.dto.SysRoleMenuCriteria;
-import com.ruowei.service.dto.SysRoleMenuDTO;
+import com.ruowei.modules.sys.pojo.SysRoleMenuDTO;
 import com.ruowei.service.mapper.SysRoleMenuMapper;
 
 /**
@@ -27,7 +32,8 @@ import com.ruowei.service.mapper.SysRoleMenuMapper;
  */
 @Service
 @Transactional(readOnly = true)
-public class SysRoleMenuQueryService extends QueryService<SysRoleMenu> {
+public class SysRoleMenuQueryService
+    extends QueryBaseService<SysRoleMenu,Long,SysRoleMenuDTO, BaseView,SysRoleMenuRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysRoleMenuQueryService.class);
 
@@ -82,7 +88,7 @@ public class SysRoleMenuQueryService extends QueryService<SysRoleMenu> {
      * Function to convert ConsumerCriteria to a {@link Specification}
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
-     */    
+     */
     protected Specification<SysRoleMenu> createSpecification(SysRoleMenuCriteria criteria) {
         Specification<SysRoleMenu> specification = Specification.where(null);
         if (criteria != null) {
@@ -97,5 +103,96 @@ public class SysRoleMenuQueryService extends QueryService<SysRoleMenu> {
             }
         }
         return specification;
+    }
+
+    /**
+     * 把前端传过来的Query转换成JPA能处理的Specification
+     * 可以根据实际需求有不同的实现
+     *
+     * @param criteria
+     * @return
+     */
+    @Override
+    public Specification<SysRoleMenu> createSpecification(Criteria criteria) {
+        return null;
+    }
+
+    /**
+     * 把前端传过来的Query转换成Querydsl能处理的Predicate
+     * 可以根据实际需求有不同的实现
+     *
+     * @param criteriaArray
+     * @return
+     */
+    @Override
+    public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
+        return null;
+    }
+
+    /**
+     * 通过CriteriaArray查询分页视图
+     *
+     * @param pageable
+     * @param criteriaArray
+     * @author 刘东奇
+     */
+    @Override
+    public QueryResults<BaseView> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
+        return null;
+    }
+
+    /**
+     * 根据Id查询唯一DTO
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Optional<SysRoleMenuDTO> getDTOById(Long id) {
+        return Optional.empty();
+    }
+
+    /**
+     * 组装Entity视图
+     *
+     * @author 刘东奇
+     * @date 2019/9/25
+     */
+    @Override
+    public JPAQuery<SysRoleMenu> getEntityJPAQuery() {
+        return null;
+    }
+
+    /**
+     * 组装VM视图
+     *
+     * @author 刘东奇
+     * @date 2019/9/25
+     */
+    @Override
+    public JPAQuery<BaseView> getVMJPAQuery() {
+        return null;
+    }
+
+    /**
+     * 组装DTO视图
+     *
+     * @author 刘东奇
+     * @date 2019/9/25
+     */
+    @Override
+    public JPAQuery<SysRoleMenuDTO> getDTOJPAQuery() {
+        return null;
+    }
+
+    /**
+     * 组装Tuple视图
+     *
+     * @author 刘东奇
+     * @date 2019/9/26
+     */
+    @Override
+    public JPAQuery<Tuple> getTupleJPAQuery() {
+        return null;
     }
 }

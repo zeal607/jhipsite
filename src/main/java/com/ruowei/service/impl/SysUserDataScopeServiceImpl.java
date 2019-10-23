@@ -1,9 +1,9 @@
 package com.ruowei.service.impl;
 
-import com.ruowei.service.SysUserDataScopeService;
-import com.ruowei.domain.SysUserDataScope;
-import com.ruowei.repository.SysUserDataScopeRepository;
-import com.ruowei.service.dto.SysUserDataScopeDTO;
+import com.ruowei.modules.sys.domain.SysUserDataScope;
+import com.ruowei.modules.sys.repository.SysUserDataScopeRepository;
+import com.ruowei.modules.sys.service.user.SysUserDataScopeService;
+import com.ruowei.modules.sys.pojo.SysUserDataScopeDTO;
 import com.ruowei.service.mapper.SysUserDataScopeMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

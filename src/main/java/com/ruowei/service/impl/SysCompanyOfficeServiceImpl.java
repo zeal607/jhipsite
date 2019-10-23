@@ -1,8 +1,8 @@
 package com.ruowei.service.impl;
 
-import com.ruowei.service.SysCompanyOfficeService;
-import com.ruowei.domain.SysCompanyOffice;
-import com.ruowei.repository.SysCompanyOfficeRepository;
+import com.ruowei.modules.sys.domain.SysCompanyOffice;
+import com.ruowei.modules.sys.repository.SysCompanyOfficeRepository;
+import com.ruowei.modules.sys.service.company.SysCompanyOfficeService;
 import com.ruowei.service.dto.SysCompanyOfficeDTO;
 import com.ruowei.service.mapper.SysCompanyOfficeMapper;
 import org.slf4j.Logger;

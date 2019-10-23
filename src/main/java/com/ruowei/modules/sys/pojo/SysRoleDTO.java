@@ -1,22 +1,20 @@
 package com.ruowei.modules.sys.pojo;
 import com.ruowei.common.pojo.BaseDTO;
 import com.ruowei.modules.sys.domain.SysRole;
+import com.ruowei.modules.sys.domain.enumeration.DataScopeType;
+import com.ruowei.modules.sys.domain.enumeration.RoleStatusType;
+import com.ruowei.modules.sys.domain.enumeration.RoleType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.ruowei.domain.enumeration.RoleType;
-import com.ruowei.domain.enumeration.DataScopeType;
-import com.ruowei.domain.enumeration.RoleStatusType;
 
 /**
  * A DTO for the {@link SysRole} entity.
  */
 @ApiModel(description = "角色表 @author 刘东奇")
 public class SysRoleDTO extends BaseDTO implements Serializable {
-
-    private Long id;
 
     /**
      * 角色编码 ，该字段不作为表的关联外键，仅供展示
@@ -80,15 +78,6 @@ public class SysRoleDTO extends BaseDTO implements Serializable {
     @Size(max = 500)
     @ApiModelProperty(value = "备注信息")
     private String remarks;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getRoleCode() {
         return roleCode;

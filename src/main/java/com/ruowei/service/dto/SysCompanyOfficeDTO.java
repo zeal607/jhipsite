@@ -1,4 +1,5 @@
 package com.ruowei.service.dto;
+import com.ruowei.common.pojo.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
@@ -9,7 +10,7 @@ import java.util.Objects;
  * A DTO for the {@link com.ruowei.domain.SysCompanyOffice} entity.
  */
 @ApiModel(description = "公司部门关联表 @author 刘东奇")
-public class SysCompanyOfficeDTO implements Serializable {
+public class SysCompanyOfficeDTO extends BaseDTO implements Serializable {
 
     private Long id;
 

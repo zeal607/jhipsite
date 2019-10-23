@@ -1,5 +1,6 @@
 package com.ruowei.modules.sys.domain;
-import com.ruowei.common.entity.BaseEntity;
+import com.ruowei.common.entity.AbstractAuditingEntity;
+import com.ruowei.modules.sys.domain.enumeration.OfficeType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,7 +9,6 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 
-import com.ruowei.domain.enumeration.OfficeType;
 
 import com.ruowei.modules.sys.domain.enumeration.OfficeStatusType;
 
@@ -19,7 +19,7 @@ import com.ruowei.modules.sys.domain.enumeration.OfficeStatusType;
 @Entity
 @Table(name = "sys_office")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysOffice extends BaseEntity implements Serializable {
+public class SysOffice extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

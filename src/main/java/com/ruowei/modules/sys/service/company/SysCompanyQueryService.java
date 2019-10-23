@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruowei.modules.sys.domain.SysCompany;
-import com.ruowei.domain.*; // for static metamodels
 import com.ruowei.modules.sys.repository.SysCompanyRepository;
 import com.ruowei.modules.sys.pojo.SysCompanyCriteria;
 import com.ruowei.modules.sys.pojo.SysCompanyDTO;

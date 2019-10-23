@@ -1,12 +1,12 @@
 package com.ruowei.modules.sys.pojo;
 import com.ruowei.common.pojo.BaseDTO;
 import com.ruowei.modules.sys.domain.SysOffice;
+import com.ruowei.modules.sys.domain.enumeration.OfficeType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.ruowei.domain.enumeration.OfficeType;
 import com.ruowei.modules.sys.domain.enumeration.OfficeStatusType;
 
 /**
