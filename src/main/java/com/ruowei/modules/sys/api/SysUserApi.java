@@ -1,11 +1,14 @@
 package com.ruowei.modules.sys.api;
 
 import com.querydsl.core.QueryResults;
-import com.ruowei.modules.sys.domain.SysUser;
+import com.querydsl.core.types.Predicate;
+import com.ruowei.modules.sys.domain.table.SysEmployee;
+import com.ruowei.modules.sys.domain.table.SysUser;
 import com.ruowei.modules.sys.pojo.*;
 import com.ruowei.modules.sys.pojo.user.SysUserRegisterDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,10 +26,27 @@ public interface SysUserApi {
      * @date 2019/9/8
      * @param userCriteria
      * @param employeeCriteria
-     * @param page
+     * @param pageable
      * @return
      */
-    QueryResults<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(SysUserCriteria userCriteria, SysEmployeeCriteria employeeCriteria, Pageable page);
+    QueryResults<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(
+        SysUserCriteria userCriteria,
+        SysEmployeeCriteria employeeCriteria,
+        Pageable pageable);
+
+    /**
+     * 通过条件分页查询员工信息
+     * @author 刘东奇
+     * @date 2019/11/4
+     * @param sysUserPredicate
+     * @param sysEmployeePredicate
+     * @param pageable
+     * @return
+     */
+    QueryResults<SysUserEmployeeVM> findSysUserEmployeeVMPageByPredicate(
+        @QuerydslPredicate(root = SysUser.class) Predicate sysUserPredicate,
+        @QuerydslPredicate(root = SysEmployee.class) Predicate sysEmployeePredicate,
+        Pageable pageable);
 
     /**
      * 通过主键获取员工信息

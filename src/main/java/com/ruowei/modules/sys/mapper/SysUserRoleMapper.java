@@ -1,9 +1,8 @@
 package com.ruowei.modules.sys.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
-import com.ruowei.modules.sys.domain.SysEmployee;
-import com.ruowei.modules.sys.domain.SysUser;
-import com.ruowei.modules.sys.domain.SysUserRole;
+import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.table.SysUserRole;
 import com.ruowei.modules.sys.pojo.SysRoleDTO;
 import com.ruowei.modules.sys.pojo.SysUserRoleDTO;
 

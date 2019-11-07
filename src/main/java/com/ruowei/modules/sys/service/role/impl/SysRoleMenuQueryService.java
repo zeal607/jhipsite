@@ -8,9 +8,10 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.SysRoleMenu;
-import com.ruowei.modules.sys.domain.SysRoleMenu_;
+import com.ruowei.common.service.query.simple.QueryService;
+import com.ruowei.modules.sys.domain.table.QSysRoleMenu;
+import com.ruowei.modules.sys.domain.table.SysRoleMenu;
+import com.ruowei.modules.sys.domain.table.SysRoleMenu_;
 import com.ruowei.modules.sys.repository.SysRoleMenuRepository;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
@@ -33,7 +34,10 @@ import com.ruowei.service.mapper.SysRoleMenuMapper;
 @Service
 @Transactional(readOnly = true)
 public class SysRoleMenuQueryService
-    extends QueryBaseService<SysRoleMenu,Long,SysRoleMenuDTO, BaseView,SysRoleMenuRepository> {
+    extends QueryService<
+    SysRoleMenu,
+    QSysRoleMenu,
+    SysRoleMenuRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysRoleMenuQueryService.class);
 
@@ -112,7 +116,7 @@ public class SysRoleMenuQueryService
      * @param criteria
      * @return
      */
-    @Override
+//    @Override
     public Specification<SysRoleMenu> createSpecification(Criteria criteria) {
         return null;
     }
@@ -124,7 +128,7 @@ public class SysRoleMenuQueryService
      * @param criteriaArray
      * @return
      */
-    @Override
+//    @Override
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
         return null;
     }
@@ -136,7 +140,7 @@ public class SysRoleMenuQueryService
      * @param criteriaArray
      * @author 刘东奇
      */
-    @Override
+//    @Override
     public QueryResults<BaseView> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
         return null;
     }
@@ -147,7 +151,7 @@ public class SysRoleMenuQueryService
      * @param id
      * @return
      */
-    @Override
+//    @Override
     public Optional<SysRoleMenuDTO> getDTOById(Long id) {
         return Optional.empty();
     }
@@ -158,7 +162,7 @@ public class SysRoleMenuQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysRoleMenu> getEntityJPAQuery() {
         return null;
     }
@@ -169,7 +173,7 @@ public class SysRoleMenuQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<BaseView> getVMJPAQuery() {
         return null;
     }
@@ -180,7 +184,7 @@ public class SysRoleMenuQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysRoleMenuDTO> getDTOJPAQuery() {
         return null;
     }
@@ -191,7 +195,7 @@ public class SysRoleMenuQueryService
      * @author 刘东奇
      * @date 2019/9/26
      */
-    @Override
+//    @Override
     public JPAQuery<Tuple> getTupleJPAQuery() {
         return null;
     }

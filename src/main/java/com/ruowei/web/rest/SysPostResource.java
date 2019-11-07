@@ -1,6 +1,6 @@
 package com.ruowei.web.rest;
 
-import com.ruowei.modules.sys.domain.SysPost;
+import com.ruowei.modules.sys.domain.table.SysPost;
 import com.ruowei.modules.sys.service.post.SysPostService;
 import com.ruowei.web.rest.errors.BadRequestAlertException;
 import com.ruowei.modules.sys.pojo.SysPostDTO;

@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.SysEmployeePost;
-import org.springframework.data.jpa.repository.*;
+import com.ruowei.modules.sys.domain.table.QSysEmployeePost;
+import com.ruowei.modules.sys.domain.table.SysEmployeePost;
 import org.springframework.stereotype.Repository;
 
 
@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface SysEmployeePostRepository
-    extends BaseRepository<SysEmployeePost, Long> {
+    extends BaseRepository<Long, SysEmployeePost, QSysEmployeePost> {
 
 }

@@ -8,12 +8,9 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.QSysRole;
-import com.ruowei.modules.sys.domain.QSysUserRole;
-import com.ruowei.modules.sys.domain.SysUserRole_;
+import com.ruowei.common.service.query.simple.QueryService;
+import com.ruowei.modules.sys.domain.table.*;
 import com.ruowei.modules.sys.mapper.SysRoleMapper;
-import com.ruowei.modules.sys.pojo.SysRoleDTO;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +20,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ruowei.modules.sys.domain.SysUserRole;
 import com.ruowei.modules.sys.repository.SysUserRoleRepository;
 import com.ruowei.modules.sys.pojo.SysUserRoleCriteria;
 import com.ruowei.modules.sys.pojo.SysUserRoleDTO;
@@ -39,7 +35,10 @@ import com.ruowei.modules.sys.mapper.SysUserRoleMapper;
 @Service
 @Transactional(readOnly = true)
 public class SysUserRoleQueryService
-    extends QueryBaseService<SysUserRole,Long,SysUserRoleDTO, BaseView,SysUserRoleRepository> {
+    extends QueryService<
+    SysUserRole,
+    QSysUserRole,
+    SysUserRoleRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysUserRoleQueryService.class);
 
@@ -101,7 +100,7 @@ public class SysUserRoleQueryService
      * @param superCriteria
      * @return
      */
-    @Override
+//    @Override
     public Specification<SysUserRole> createSpecification(Criteria superCriteria) {
         SysUserRoleCriteria criteria= (SysUserRoleCriteria) superCriteria;
         Specification<SysUserRole> specification = Specification.where(null);
@@ -126,7 +125,7 @@ public class SysUserRoleQueryService
      * @param criteriaArray
      * @return
      */
-    @Override
+//    @Override
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
         return null;
     }
@@ -138,7 +137,7 @@ public class SysUserRoleQueryService
      * @param criteriaArray
      * @author 刘东奇
      */
-    @Override
+//    @Override
     @Deprecated
     public QueryResults<BaseView> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
         return null;
@@ -150,7 +149,7 @@ public class SysUserRoleQueryService
      * @param id
      * @return
      */
-    @Override
+//    @Override
     @Deprecated
     public Optional<SysUserRoleDTO> getDTOById(Long id) {
         return Optional.empty();
@@ -162,7 +161,7 @@ public class SysUserRoleQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<SysUserRole> getEntityJPAQuery() {
         return null;
@@ -174,7 +173,7 @@ public class SysUserRoleQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<BaseView> getVMJPAQuery() {
         return null;
@@ -186,7 +185,7 @@ public class SysUserRoleQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<SysUserRoleDTO> getDTOJPAQuery() {
         return null;
@@ -198,7 +197,7 @@ public class SysUserRoleQueryService
      * @author 刘东奇
      * @date 2019/9/26
      */
-    @Override
+//    @Override
     public JPAQuery<Tuple> getTupleJPAQuery() {
         QSysUserRole qSysUserRole =  QSysUserRole.sysUserRole;
         QSysRole qSysRole =  QSysRole.sysRole;

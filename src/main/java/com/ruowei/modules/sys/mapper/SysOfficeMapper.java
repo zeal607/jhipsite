@@ -2,13 +2,11 @@ package com.ruowei.modules.sys.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
 import com.ruowei.common.pojo.BaseTree;
-import com.ruowei.modules.sys.domain.SysOffice;
+import com.ruowei.modules.sys.domain.table.SysOffice;
 import com.ruowei.modules.sys.pojo.SysOfficeDTO;
 
 import com.ruowei.modules.sys.pojo.SysOfficeTree;
 import org.mapstruct.*;
-
-import java.util.List;
 
 /**
  * Mapper for the entity {@link SysOffice} and its DTO {@link SysOfficeDTO}.

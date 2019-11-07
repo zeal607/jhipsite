@@ -2,7 +2,7 @@ package com.ruowei.modules.sys.service.employee.impl;
 
 import java.util.List;
 
-import com.ruowei.modules.sys.domain.SysEmployee_;
+import com.ruowei.modules.sys.domain.table.SysEmployee_;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.github.jhipster.service.QueryService;
 
-import com.ruowei.modules.sys.domain.SysEmployee;
+import com.ruowei.modules.sys.domain.table.SysEmployee;
 import com.ruowei.modules.sys.repository.SysEmployeeRepository;
 import com.ruowei.modules.sys.pojo.SysEmployeeCriteria;
 import com.ruowei.modules.sys.pojo.SysEmployeeDTO;

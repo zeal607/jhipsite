@@ -1,7 +1,7 @@
 package com.ruowei.service.impl;
 
 import com.ruowei.modules.sys.service.post.SysPostService;
-import com.ruowei.modules.sys.domain.SysPost;
+import com.ruowei.modules.sys.domain.table.SysPost;
 import com.ruowei.modules.sys.repository.SysPostRepository;
 import com.ruowei.modules.sys.pojo.SysPostDTO;
 import com.ruowei.modules.sys.mapper.SysPostMapper;

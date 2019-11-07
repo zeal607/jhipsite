@@ -1,7 +1,7 @@
 package com.ruowei.config.audit;
 
 
-import com.ruowei.modules.sys.domain.PersistentAuditEvent;
+import com.ruowei.modules.sys.domain.table.PersistentAuditEvent;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;

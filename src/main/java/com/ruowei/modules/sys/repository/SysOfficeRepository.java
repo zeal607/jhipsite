@@ -1,9 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.SysEmployee;
-import com.ruowei.modules.sys.domain.SysOffice;
-import org.springframework.data.jpa.repository.*;
+import com.ruowei.modules.sys.domain.table.QSysOffice;
+import com.ruowei.modules.sys.domain.table.SysOffice;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.Size;
@@ -17,7 +16,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface SysOfficeRepository
-    extends BaseRepository<SysOffice, Long> {
+    extends BaseRepository<Long, SysOffice, QSysOffice> {
     /**
      * 查询机构树根节点
      * @author 刘东奇

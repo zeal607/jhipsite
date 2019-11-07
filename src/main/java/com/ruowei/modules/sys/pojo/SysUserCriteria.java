@@ -6,6 +6,7 @@ import java.util.Objects;
 import com.ruowei.modules.sys.domain.enumeration.GenderType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
+import com.ruowei.modules.sys.domain.table.SysUser;
 import com.ruowei.modules.sys.web.rest.SysUserResource;
 import io.github.jhipster.service.Criteria;
 import io.github.jhipster.service.filter.Filter;
@@ -15,7 +16,7 @@ import io.github.jhipster.service.filter.StringFilter;
 import io.github.jhipster.service.filter.InstantFilter;
 
 /**
- * Criteria class for the {@link com.ruowei.modules.sys.domain.SysUser} entity. This class is used
+ * Criteria class for the {@link SysUser} entity. This class is used
  * in {@link SysUserResource} to receive all the possible filtering options from
  * the Http GET request parameters.
  * For example the following could be a valid request:

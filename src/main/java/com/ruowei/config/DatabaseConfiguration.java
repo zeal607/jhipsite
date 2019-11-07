@@ -1,5 +1,6 @@
 package com.ruowei.config;
 
+import com.ruowei.common.repository.BaseRepositoryImpl;
 import io.github.jhipster.config.JHipsterConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @Configuration
-@EnableJpaRepositories("com.ruowei.repository")
+@EnableJpaRepositories(value = "com.ruowei.modules.*.repository",repositoryBaseClass = BaseRepositoryImpl.class)
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 public class DatabaseConfiguration {

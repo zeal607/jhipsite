@@ -9,8 +9,8 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.*;
+import com.ruowei.common.service.query.simple.QueryService;
+import com.ruowei.modules.sys.domain.table.*;
 import com.ruowei.modules.sys.mapper.SysOfficeMapper;
 import com.ruowei.modules.sys.mapper.SysPostMapper;
 import com.ruowei.modules.sys.pojo.SysOfficeDTO;
@@ -39,7 +39,10 @@ import com.ruowei.modules.sys.mapper.SysEmployeeOfficeMapper;
 @Service
 @Transactional(readOnly = true)
 public class SysEmployeeOfficeQueryService
-    extends QueryBaseService<SysEmployeeOffice,Long, SysEmployeeOfficeDTO, BaseView, SysEmployeeOfficeRepository> {
+    extends QueryService<
+        SysEmployeeOffice,
+        QSysEmployeeOffice,
+        SysEmployeeOfficeRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysEmployeeOfficeQueryService.class);
 
@@ -100,7 +103,7 @@ public class SysEmployeeOfficeQueryService
      * @param superCriteria
      * @return
      */
-    @Override
+//    @Override
     public Specification<SysEmployeeOffice> createSpecification(Criteria superCriteria) {
         SysEmployeeOfficeCriteria criteria= (SysEmployeeOfficeCriteria) superCriteria;
         Specification<SysEmployeeOffice> specification = Specification.where(null);
@@ -128,7 +131,7 @@ public class SysEmployeeOfficeQueryService
      * @param criteriaArray
      * @return
      */
-    @Override
+//    @Override
     @Deprecated
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
         return null;
@@ -141,7 +144,7 @@ public class SysEmployeeOfficeQueryService
      * @param criteriaArray
      * @author 刘东奇
      */
-    @Override
+//    @Override
     @Deprecated
     public QueryResults<BaseView> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
         return null;
@@ -153,7 +156,7 @@ public class SysEmployeeOfficeQueryService
      * @param id
      * @return
      */
-    @Override
+//    @Override
     @Deprecated
     public Optional<SysEmployeeOfficeDTO> getDTOById(Long id) {
         return Optional.empty();
@@ -165,7 +168,7 @@ public class SysEmployeeOfficeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<SysEmployeeOffice> getEntityJPAQuery() {
         return null;
@@ -177,7 +180,7 @@ public class SysEmployeeOfficeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<BaseView> getVMJPAQuery() {
         return null;
@@ -189,7 +192,7 @@ public class SysEmployeeOfficeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<SysEmployeeOfficeDTO> getDTOJPAQuery() {
         return null;
@@ -201,7 +204,7 @@ public class SysEmployeeOfficeQueryService
      * @author 刘东奇
      * @date 2019/9/26
      */
-    @Override
+//    @Override
     public JPAQuery<Tuple> getTupleJPAQuery() {
         QSysEmployeeOffice qSysEmployeeOffice = QSysEmployeeOffice.sysEmployeeOffice;
         QSysOffice qSysOffice = QSysOffice.sysOffice;

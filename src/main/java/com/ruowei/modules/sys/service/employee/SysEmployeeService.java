@@ -2,22 +2,16 @@ package com.ruowei.modules.sys.service.employee;
 
 import com.ruowei.common.error.ErrorMessageUtils;
 import com.ruowei.common.error.exception.DataInvalidException;
-import com.ruowei.common.service.CrudBaseService;
-import com.ruowei.modules.sys.domain.SysEmployee;
-import com.ruowei.modules.sys.domain.SysUser;
-import com.ruowei.modules.sys.pojo.SysEmployeeCriteria;
-import com.ruowei.modules.sys.pojo.SysUserEmployeeVM;
-import com.ruowei.modules.sys.pojo.SysEmployeeDTO;
+import com.ruowei.common.service.crud.CrudBaseService;
+import com.ruowei.modules.sys.domain.table.QSysEmployee;
+import com.ruowei.modules.sys.domain.table.SysEmployee;
 
 import com.ruowei.modules.sys.repository.SysEmployeeRepository;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -26,7 +20,10 @@ import java.util.regex.Pattern;
 @Service
 @Transactional
 public class SysEmployeeService
-    extends CrudBaseService<SysEmployee, Long, SysEmployeeRepository> {
+    extends CrudBaseService<
+    SysEmployee,
+    QSysEmployee,
+    SysEmployeeRepository> {
     private static String EMP_CODE_REGEX = "^emp\\d{8}$";
     private static Pattern EMP_CODE_PATTERN = Pattern.compile("^emp\\d{3}");
 

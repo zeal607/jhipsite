@@ -1,12 +1,16 @@
 package com.ruowei.modules.sys.web.rest;
 
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.Predicate;
 import com.ruowei.common.response.PaginationUtil;
 import com.ruowei.config.Constants;
-import com.ruowei.modules.sys.domain.SysUser;
+import com.ruowei.modules.sys.domain.SysUserEmployeeLVM;
+import com.ruowei.modules.sys.domain.table.SysEmployee;
+import com.ruowei.modules.sys.domain.table.SysUser;
 import com.ruowei.modules.sys.pojo.*;
 
 import com.ruowei.modules.sys.pojo.user.SysUserRegisterDTO;
+import com.ruowei.modules.sys.repository.SysUserEmployeeLVMRepository;
 import com.ruowei.modules.sys.service.MailService;
 import com.ruowei.modules.sys.service.user.SysUserService;
 import com.ruowei.security.AuthoritiesConstants;
@@ -21,9 +25,11 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,7 +46,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * REST controller for managing {@link com.ruowei.modules.sys.domain.SysUser}.
+ * REST controller for managing {@link SysUser}.
  * @author 刘东奇
  */
 @RestController
@@ -63,10 +69,14 @@ public class SysUserResource {
     private final SysUserService sysUserService;
     private final MailService mailService;
 
+    private final SysUserEmployeeLVMRepository sysUserEmployeeLVMRepository;
+
     public SysUserResource( SysUserService sysUserService,
-                            MailService mailService) {
+                            MailService mailService,
+                            SysUserEmployeeLVMRepository sysUserEmployeeLVMRepository) {
         this.sysUserService = sysUserService;
         this.mailService = mailService;
+        this.sysUserEmployeeLVMRepository = sysUserEmployeeLVMRepository;
     }
 
     /**
@@ -85,6 +95,46 @@ public class SysUserResource {
 
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), queryResults);
         return ResponseEntity.ok().headers(headers).body(queryResults.getResults());
+    }
+
+    /**
+     * 查询员工分页2
+     * @author 刘东奇
+     * @date 2019/11/4
+     * @param sysUserPredicate
+     * @param sysEmployeePredicate
+     * @param pageable
+     */
+    @ApiOperation(value = "查询员工分页2")
+    @GetMapping("/sys-user-employees2")
+    public ResponseEntity<List<SysUserEmployeeVM>> getAllSysUserEmployees2(
+        @QuerydslPredicate(root = SysUser.class) Predicate sysUserPredicate,
+        @QuerydslPredicate(root = SysEmployee.class) Predicate sysEmployeePredicate,
+        Pageable pageable) {
+        log.debug("REST request 查询员工分页2 by 参数: {},{}", sysUserPredicate,sysEmployeePredicate);
+
+
+        QueryResults<SysUserEmployeeVM> queryResults = sysUserService.findSysUserEmployeeVMPageByPredicate(sysUserPredicate,sysEmployeePredicate,pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), queryResults);
+        return ResponseEntity.ok().headers(headers).body(queryResults.getResults());
+    }
+
+    /**
+     * 查询员工分页3
+     * @author 刘东奇
+     * @date 2019/11/5
+     * @param pageable
+     */
+    @ApiOperation(value = "查询员工分页3")
+    @GetMapping("/sys-user-employees3")
+    public ResponseEntity<List<SysUserEmployeeLVM>> getAllSysUserEmployees3(
+        @QuerydslPredicate(root = SysUserEmployeeLVM.class) Predicate sysUserEmployeeLVMPredicate,
+        Pageable pageable) {
+        log.debug("REST request 查询员工分页3 by 参数: {}", sysUserEmployeeLVMPredicate);
+
+        Page<SysUserEmployeeLVM> page = sysUserEmployeeLVMRepository.findAll(sysUserEmployeeLVMPredicate,pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page,"");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**

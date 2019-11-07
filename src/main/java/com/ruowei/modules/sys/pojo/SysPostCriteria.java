@@ -3,7 +3,7 @@ package com.ruowei.modules.sys.pojo;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.ruowei.modules.sys.domain.SysPost;
+import com.ruowei.modules.sys.domain.table.SysPost;
 import com.ruowei.modules.sys.domain.enumeration.PostStatusType;
 import io.github.jhipster.service.Criteria;
 import com.ruowei.modules.sys.domain.enumeration.PostType;

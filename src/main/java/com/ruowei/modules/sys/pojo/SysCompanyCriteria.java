@@ -3,7 +3,7 @@ package com.ruowei.modules.sys.pojo;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.ruowei.modules.sys.domain.SysCompany;
+import com.ruowei.modules.sys.domain.table.SysCompany;
 import com.ruowei.modules.sys.domain.enumeration.CompanyStatusType;
 import com.ruowei.modules.sys.web.rest.SysCompanyResource;
 import io.github.jhipster.service.Criteria;

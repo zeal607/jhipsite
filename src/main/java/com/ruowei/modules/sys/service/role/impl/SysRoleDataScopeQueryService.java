@@ -8,9 +8,10 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.SysRoleDataScope;
-import com.ruowei.modules.sys.domain.SysRoleDataScope_;
+import com.ruowei.common.service.query.simple.QueryService;
+import com.ruowei.modules.sys.domain.table.QSysRoleDataScope;
+import com.ruowei.modules.sys.domain.table.SysRoleDataScope;
+import com.ruowei.modules.sys.domain.table.SysRoleDataScope_;
 import com.ruowei.modules.sys.repository.SysRoleDataScopeRepository;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
@@ -33,7 +34,10 @@ import com.ruowei.service.mapper.SysRoleDataScopeMapper;
 @Service
 @Transactional(readOnly = true)
 public class SysRoleDataScopeQueryService
-    extends QueryBaseService<SysRoleDataScope,Long,SysRoleDataScopeDTO, BaseView, SysRoleDataScopeRepository> {
+    extends QueryService<
+    SysRoleDataScope,
+    QSysRoleDataScope,
+    SysRoleDataScopeRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysRoleDataScopeQueryService.class);
 
@@ -118,7 +122,7 @@ public class SysRoleDataScopeQueryService
      * @param criteria
      * @return
      */
-    @Override
+//    @Override
     public Specification<SysRoleDataScope> createSpecification(Criteria criteria) {
         return null;
     }
@@ -130,7 +134,7 @@ public class SysRoleDataScopeQueryService
      * @param criteriaArray
      * @return
      */
-    @Override
+//    @Override
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
         return null;
     }
@@ -142,7 +146,7 @@ public class SysRoleDataScopeQueryService
      * @param criteriaArray
      * @author 刘东奇
      */
-    @Override
+//    @Override
     public QueryResults<BaseView> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
         return null;
     }
@@ -153,7 +157,7 @@ public class SysRoleDataScopeQueryService
      * @param id
      * @return
      */
-    @Override
+//    @Override
     public Optional<SysRoleDataScopeDTO> getDTOById(Long id) {
         return Optional.empty();
     }
@@ -164,7 +168,7 @@ public class SysRoleDataScopeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysRoleDataScope> getEntityJPAQuery() {
         return null;
     }
@@ -175,7 +179,7 @@ public class SysRoleDataScopeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<BaseView> getVMJPAQuery() {
         return null;
     }
@@ -186,7 +190,7 @@ public class SysRoleDataScopeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysRoleDataScopeDTO> getDTOJPAQuery() {
         return null;
     }
@@ -197,7 +201,7 @@ public class SysRoleDataScopeQueryService
      * @author 刘东奇
      * @date 2019/9/26
      */
-    @Override
+//    @Override
     public JPAQuery<Tuple> getTupleJPAQuery() {
         return null;
     }

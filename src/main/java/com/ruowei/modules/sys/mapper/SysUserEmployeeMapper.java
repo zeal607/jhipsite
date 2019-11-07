@@ -1,7 +1,7 @@
 package com.ruowei.modules.sys.mapper;
 
-import com.ruowei.modules.sys.domain.SysEmployee;
-import com.ruowei.modules.sys.domain.SysUser;
+import com.ruowei.modules.sys.domain.table.SysEmployee;
+import com.ruowei.modules.sys.domain.table.SysUser;
 import com.ruowei.modules.sys.pojo.SysUserDTO;
 import com.ruowei.modules.sys.pojo.SysUserEmployeeDTO;
 import com.ruowei.modules.sys.pojo.SysUserEmployeeVM;

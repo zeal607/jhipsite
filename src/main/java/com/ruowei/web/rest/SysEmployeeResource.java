@@ -1,6 +1,6 @@
 package com.ruowei.web.rest;
 
-import com.ruowei.modules.sys.domain.SysEmployee;
+import com.ruowei.modules.sys.domain.table.SysEmployee;
 
 import org.springframework.web.bind.annotation.*;
 

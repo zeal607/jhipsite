@@ -1,8 +1,6 @@
 package com.ruowei.modules.sys.service.user;
 
-import com.ruowei.common.service.api.CrudServiceApi;
 import com.ruowei.modules.sys.api.SysUserApi;
-import com.ruowei.modules.sys.domain.SysUser;
 import com.ruowei.modules.sys.pojo.SysUserDTO;
 
 import java.util.Optional;
@@ -11,7 +9,7 @@ import java.util.Optional;
  * @author 刘东奇
  * @date 2019/9/27
  */
-public interface SysUserService extends SysUserApi, CrudServiceApi<SysUser,Long> {
+public interface SysUserService extends SysUserApi {
 
     /**
      * 通过LoginCode查询用户

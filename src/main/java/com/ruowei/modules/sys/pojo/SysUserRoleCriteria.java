@@ -3,7 +3,7 @@ package com.ruowei.modules.sys.pojo;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.ruowei.modules.sys.domain.SysUserRole;
+import com.ruowei.modules.sys.domain.table.SysUserRole;
 import io.github.jhipster.service.Criteria;
 import io.github.jhipster.service.filter.Filter;
 import io.github.jhipster.service.filter.LongFilter;

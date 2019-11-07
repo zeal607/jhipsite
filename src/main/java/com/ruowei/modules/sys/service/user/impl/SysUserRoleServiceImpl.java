@@ -2,15 +2,13 @@ package com.ruowei.modules.sys.service.user.impl;
 
 import com.ruowei.common.error.ErrorMessageUtils;
 import com.ruowei.common.error.exception.DataNotFoundException;
-import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.CrudBaseService;
-import com.ruowei.modules.sys.domain.SysUser;
-import com.ruowei.modules.sys.domain.SysUserRole;
-import com.ruowei.modules.sys.mapper.SysUserEmployeeMapper;
+import com.ruowei.common.service.crud.CrudBaseService;
+import com.ruowei.modules.sys.domain.table.QSysUserRole;
+import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.table.SysUserRole;
 import com.ruowei.modules.sys.mapper.SysUserRoleMapper;
 import com.ruowei.modules.sys.pojo.SysRoleDTO;
 import com.ruowei.modules.sys.repository.SysUserRoleRepository;
-import com.ruowei.modules.sys.pojo.SysUserRoleDTO;
 import com.ruowei.modules.sys.service.role.impl.SysRoleQueryService;
 import com.ruowei.modules.sys.service.user.SysUserRoleService;
 import org.slf4j.Logger;
@@ -27,7 +25,10 @@ import java.util.List;
 @Service
 @Transactional
 public class SysUserRoleServiceImpl
-    extends CrudBaseService<SysUserRole, Long, SysUserRoleRepository>
+    extends CrudBaseService<
+    SysUserRole,
+    QSysUserRole,
+    SysUserRoleRepository>
     implements SysUserRoleService {
 
     private final Logger log = LoggerFactory.getLogger(SysUserRoleServiceImpl.class);

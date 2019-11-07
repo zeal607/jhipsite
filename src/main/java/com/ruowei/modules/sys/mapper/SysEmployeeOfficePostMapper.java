@@ -1,14 +1,11 @@
 package com.ruowei.modules.sys.mapper;
 
-import com.ruowei.modules.sys.domain.SysEmployee;
-import com.ruowei.modules.sys.domain.SysEmployeeOffice;
-import com.ruowei.modules.sys.domain.SysEmployeePost;
+import com.ruowei.modules.sys.domain.table.SysEmployee;
+import com.ruowei.modules.sys.domain.table.SysEmployeeOffice;
 import com.ruowei.modules.sys.pojo.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-
-import java.util.List;
 
 /**
  * @author 刘东奇

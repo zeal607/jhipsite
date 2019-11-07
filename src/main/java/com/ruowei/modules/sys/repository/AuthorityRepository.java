@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.repository;
 
-import com.ruowei.modules.sys.domain.Authority;
+import com.ruowei.modules.sys.domain.table.Authority;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

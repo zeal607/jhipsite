@@ -1,7 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.SysRoleMenu;
+import com.ruowei.modules.sys.domain.table.QSysRoleMenu;
+import com.ruowei.modules.sys.domain.table.SysRoleMenu;
 import org.springframework.stereotype.Repository;
 
 
@@ -11,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface SysRoleMenuRepository
-    extends BaseRepository<SysRoleMenu, Long> {
+    extends BaseRepository<Long,SysRoleMenu, QSysRoleMenu> {
 
 }

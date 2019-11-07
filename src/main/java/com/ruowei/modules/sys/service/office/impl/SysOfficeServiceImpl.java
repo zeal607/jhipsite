@@ -1,8 +1,9 @@
 package com.ruowei.modules.sys.service.office.impl;
 
 import com.ruowei.common.pojo.BaseTree;
-import com.ruowei.common.service.CrudBaseService;
-import com.ruowei.modules.sys.domain.SysOffice;
+import com.ruowei.common.service.crud.CrudBaseService;
+import com.ruowei.modules.sys.domain.table.QSysOffice;
+import com.ruowei.modules.sys.domain.table.SysOffice;
 
 import com.ruowei.modules.sys.mapper.SysOfficeMapper;
 import com.ruowei.modules.sys.pojo.SysOfficeCriteria;
@@ -24,7 +25,10 @@ import java.util.*;
 @Service
 @Transactional
 public class SysOfficeServiceImpl
-    extends CrudBaseService<SysOffice, Long, SysOfficeRepository>
+    extends CrudBaseService<
+    SysOffice,
+    QSysOffice,
+    SysOfficeRepository>
     implements SysOfficeService {
 
     private final Logger log = LoggerFactory.getLogger(SysOfficeServiceImpl.class);

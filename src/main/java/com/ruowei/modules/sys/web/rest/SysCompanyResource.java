@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.web.rest;
 
-import com.ruowei.modules.sys.domain.SysCompany;
+import com.ruowei.modules.sys.domain.table.SysCompany;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -8,8 +8,9 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.SysEmployeePost_;
+import com.ruowei.common.service.query.simple.QueryService;
+import com.ruowei.modules.sys.domain.table.QSysEmployeePost;
+import com.ruowei.modules.sys.domain.table.SysEmployeePost_;
 import com.ruowei.modules.sys.mapper.SysEmployeePostMapper;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ruowei.modules.sys.domain.SysEmployeePost;
+import com.ruowei.modules.sys.domain.table.SysEmployeePost;
 import com.ruowei.modules.sys.repository.SysEmployeePostRepository;
 import com.ruowei.modules.sys.pojo.SysEmployeePostCriteria;
 import com.ruowei.modules.sys.pojo.SysEmployeePostDTO;
@@ -35,7 +36,10 @@ import com.ruowei.modules.sys.pojo.SysEmployeePostDTO;
 @Service
 @Transactional(readOnly = true)
 public class SysEmployeePostQueryService
-    extends QueryBaseService<SysEmployeePost,Long,SysEmployeePostDTO, BaseView,SysEmployeePostRepository> {
+    extends QueryService<
+    SysEmployeePost,
+    QSysEmployeePost,
+    SysEmployeePostRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysEmployeePostQueryService.class);
 
@@ -90,7 +94,7 @@ public class SysEmployeePostQueryService
      * Function to convert ConsumerCriteria to a {@link Specification}
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
-     */    
+     */
     protected Specification<SysEmployeePost> createSpecification(SysEmployeePostCriteria criteria) {
         Specification<SysEmployeePost> specification = Specification.where(null);
         if (criteria != null) {
@@ -114,7 +118,7 @@ public class SysEmployeePostQueryService
      * @param criteria
      * @return
      */
-    @Override
+//    @Override
     public Specification<SysEmployeePost> createSpecification(Criteria criteria) {
         return null;
     }
@@ -126,7 +130,7 @@ public class SysEmployeePostQueryService
      * @param criteriaArray
      * @return
      */
-    @Override
+//    @Override
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
         return null;
     }
@@ -138,7 +142,7 @@ public class SysEmployeePostQueryService
      * @param criteriaArray
      * @author 刘东奇
      */
-    @Override
+//    @Override
     public QueryResults<BaseView> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
         return null;
     }
@@ -149,7 +153,7 @@ public class SysEmployeePostQueryService
      * @param id
      * @return
      */
-    @Override
+//    @Override
     public Optional<SysEmployeePostDTO> getDTOById(Long id) {
         return Optional.empty();
     }
@@ -160,7 +164,7 @@ public class SysEmployeePostQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysEmployeePost> getEntityJPAQuery() {
         return null;
     }
@@ -171,7 +175,7 @@ public class SysEmployeePostQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<BaseView> getVMJPAQuery() {
         return null;
     }
@@ -182,7 +186,7 @@ public class SysEmployeePostQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysEmployeePostDTO> getDTOJPAQuery() {
         return null;
     }
@@ -193,7 +197,7 @@ public class SysEmployeePostQueryService
      * @author 刘东奇
      * @date 2019/9/26
      */
-    @Override
+//    @Override
     public JPAQuery<Tuple> getTupleJPAQuery() {
         return null;
     }

@@ -1,7 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.SysCompanyOffice;
+import com.ruowei.modules.sys.domain.table.QSysCompanyOffice;
+import com.ruowei.modules.sys.domain.table.SysCompanyOffice;
 import org.springframework.stereotype.Repository;
 
 
@@ -11,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface SysCompanyOfficeRepository
-    extends BaseRepository<SysCompanyOffice, Long> {
+    extends BaseRepository<Long, SysCompanyOffice, QSysCompanyOffice> {
 
 }

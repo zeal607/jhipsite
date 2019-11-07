@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.pojo;
 import com.ruowei.common.pojo.BaseDTO;
-import com.ruowei.modules.sys.domain.SysRole;
+import com.ruowei.modules.sys.domain.table.SysRole;
 import com.ruowei.modules.sys.domain.enumeration.DataScopeType;
 import com.ruowei.modules.sys.domain.enumeration.RoleStatusType;
 import com.ruowei.modules.sys.domain.enumeration.RoleType;

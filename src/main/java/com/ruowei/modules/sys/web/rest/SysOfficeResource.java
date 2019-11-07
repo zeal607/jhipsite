@@ -1,7 +1,7 @@
 package com.ruowei.modules.sys.web.rest;
 
 import com.ruowei.common.pojo.BaseTree;
-import com.ruowei.modules.sys.domain.SysOffice;
+import com.ruowei.modules.sys.domain.table.SysOffice;
 
 import com.ruowei.modules.sys.pojo.*;
 import com.ruowei.modules.sys.service.office.SysOfficeService;

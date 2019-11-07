@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.service.company;
 
-import com.ruowei.modules.sys.domain.SysCompany;
+import com.ruowei.modules.sys.domain.table.SysCompany;
 import com.ruowei.modules.sys.pojo.SysCompanyDTO;
 
 import org.springframework.data.domain.Page;

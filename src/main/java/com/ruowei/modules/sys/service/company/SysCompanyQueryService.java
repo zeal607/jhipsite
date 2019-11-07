@@ -8,8 +8,9 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.SysCompany_;
+import com.ruowei.common.service.query.simple.QueryService;
+import com.ruowei.modules.sys.domain.table.QSysCompany;
+import com.ruowei.modules.sys.domain.table.SysCompany_;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ruowei.modules.sys.domain.SysCompany;
+import com.ruowei.modules.sys.domain.table.SysCompany;
 import com.ruowei.modules.sys.repository.SysCompanyRepository;
 import com.ruowei.modules.sys.pojo.SysCompanyCriteria;
 import com.ruowei.modules.sys.pojo.SysCompanyDTO;
@@ -35,7 +36,10 @@ import com.ruowei.service.mapper.SysCompanyMapper;
 @Service
 @Transactional(readOnly = true)
 public class SysCompanyQueryService
-    extends QueryBaseService<SysCompany,Long,SysCompanyDTO, BaseView,SysCompanyRepository> {
+    extends QueryService<
+        SysCompany,
+        QSysCompany,
+        SysCompanyRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysCompanyQueryService.class);
 
@@ -50,7 +54,7 @@ public class SysCompanyQueryService
      * @param superCriteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
      */
-    @Override
+//    @Override
     public Specification<SysCompany> createSpecification(Criteria superCriteria) {
         SysCompanyCriteria criteria= (SysCompanyCriteria) superCriteria;
         Specification<SysCompany> specification = Specification.where(null);
@@ -111,7 +115,7 @@ public class SysCompanyQueryService
      * @param criteriaArray
      * @return
      */
-    @Override
+//    @Override
     @Deprecated
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
         return null;
@@ -124,7 +128,7 @@ public class SysCompanyQueryService
      * @param criteriaArray
      * @author 刘东奇
      */
-    @Override
+//    @Override
     @Deprecated
     public QueryResults<BaseView> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
         return null;
@@ -136,7 +140,7 @@ public class SysCompanyQueryService
      * @param id
      * @return
      */
-    @Override
+//    @Override
     @Deprecated
     public Optional<SysCompanyDTO> getDTOById(Long id) {
         return Optional.empty();
@@ -148,7 +152,7 @@ public class SysCompanyQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<SysCompany> getEntityJPAQuery() {
         return null;
@@ -160,7 +164,7 @@ public class SysCompanyQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<BaseView> getVMJPAQuery() {
         return null;
@@ -172,7 +176,7 @@ public class SysCompanyQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<SysCompanyDTO> getDTOJPAQuery() {
         return null;
@@ -184,7 +188,7 @@ public class SysCompanyQueryService
      * @author 刘东奇
      * @date 2019/9/26
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<Tuple> getTupleJPAQuery() {
         return null;

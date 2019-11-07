@@ -1,12 +1,11 @@
 package com.ruowei.modules.sys.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
-import com.ruowei.modules.sys.domain.Authority;
-import com.ruowei.modules.sys.domain.SysUser;
+import com.ruowei.modules.sys.domain.table.Authority;
+import com.ruowei.modules.sys.domain.table.SysUser;
 import com.ruowei.modules.sys.pojo.SysUserDTO;
 import com.ruowei.modules.sys.pojo.user.SysUserRegisterDTO;
 import org.mapstruct.*;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;

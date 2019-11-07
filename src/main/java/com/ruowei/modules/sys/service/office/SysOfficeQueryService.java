@@ -13,9 +13,9 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.error.exception.DataInvalidException;
 import com.ruowei.common.pojo.BaseTree;
 import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.QSysOffice;
-import com.ruowei.modules.sys.domain.SysOffice_;
+import com.ruowei.common.service.query.simple.QueryService;
+import com.ruowei.modules.sys.domain.table.QSysOffice;
+import com.ruowei.modules.sys.domain.table.SysOffice_;
 import com.ruowei.modules.sys.pojo.SysOfficeTree;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ruowei.modules.sys.domain.SysOffice;
+import com.ruowei.modules.sys.domain.table.SysOffice;
 import com.ruowei.modules.sys.repository.SysOfficeRepository;
 import com.ruowei.modules.sys.pojo.SysOfficeCriteria;
 import com.ruowei.modules.sys.pojo.SysOfficeDTO;
@@ -41,7 +41,10 @@ import com.ruowei.modules.sys.mapper.SysOfficeMapper;
 @Service
 @Transactional(readOnly = true)
 public class SysOfficeQueryService
-    extends QueryBaseService<SysOffice,Long,SysOfficeDTO,BaseView,SysOfficeRepository> {
+    extends QueryService<
+    SysOffice,
+    QSysOffice,
+    SysOfficeRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysOfficeQueryService.class);
 
@@ -97,7 +100,7 @@ public class SysOfficeQueryService
      * @param superCriteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
      */
-    @Override
+//    @Override
     public Specification<SysOffice> createSpecification(Criteria superCriteria) {
         SysOfficeCriteria criteria= (SysOfficeCriteria) superCriteria;
         Specification<SysOffice> specification = Specification.where(null);
@@ -173,7 +176,7 @@ public class SysOfficeQueryService
      * @param criteriaArray
      * @return
      */
-    @Override
+//    @Override
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
         SysOfficeCriteria sysOfficeCriteria = (SysOfficeCriteria) criteriaArray[0];
         BooleanBuilder sysOfficeBooleanBuilder = createBooleanBuilder(sysOfficeCriteria);
@@ -187,7 +190,7 @@ public class SysOfficeQueryService
      * @param criteriaArray
      * @author 刘东奇
      */
-    @Override
+//    @Override
     @Deprecated
     public QueryResults<BaseView> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
         return null;
@@ -199,7 +202,7 @@ public class SysOfficeQueryService
      * @param id
      * @return
      */
-    @Override
+//    @Override
     public Optional<SysOfficeDTO> getDTOById(Long id) {
         QSysOffice qSysOffice = QSysOffice.sysOffice;
         JPAQuery<SysOfficeDTO> jpaQuery =  getDTOJPAQuery();
@@ -215,7 +218,7 @@ public class SysOfficeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<SysOffice> getEntityJPAQuery() {
         return null;
@@ -227,7 +230,7 @@ public class SysOfficeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<BaseView> getVMJPAQuery() {
         return null;
@@ -239,7 +242,7 @@ public class SysOfficeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysOfficeDTO> getDTOJPAQuery() {
         QSysOffice qSysOffice = QSysOffice.sysOffice;
         JPAQuery<SysOfficeDTO> jpaQuery = this.queryFactory.select(
@@ -276,7 +279,7 @@ public class SysOfficeQueryService
      * @author 刘东奇
      * @date 2019/9/26
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<Tuple> getTupleJPAQuery() {
         return null;

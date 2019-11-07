@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.web.rest;
 
-import com.ruowei.modules.sys.domain.SysRole;
+import com.ruowei.modules.sys.domain.table.SysRole;
 
 import org.springframework.web.bind.annotation.*;
 

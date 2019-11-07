@@ -2,7 +2,7 @@ package com.ruowei.config;
 
 import java.time.Duration;
 
-import com.ruowei.modules.sys.domain.*;
+import com.ruowei.modules.sys.domain.table.*;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import org.ehcache.config.builders.*;
 import org.ehcache.jsr107.Eh107Configuration;
@@ -42,7 +42,7 @@ public class CacheConfiguration {
         return cm -> {
             createCache(cm, SysUserRepository.USERS_BY_LOGIN_CODE_CACHE);
             createCache(cm, SysUserRepository.USERS_BY_EMAIL_CACHE);
-            createCache(cm, com.ruowei.modules.sys.domain.SysUser.class.getName());
+            createCache(cm, SysUser.class.getName());
             createCache(cm, SysRole.class.getName());
             createCache(cm, SysUserRole.class.getName());
             createCache(cm, SysCompany.class.getName());

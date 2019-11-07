@@ -1,6 +1,6 @@
 package com.ruowei.service.impl;
 
-import com.ruowei.modules.sys.domain.SysMenu;
+import com.ruowei.modules.sys.domain.table.SysMenu;
 import com.ruowei.modules.sys.repository.SysMenuRepository;
 import com.ruowei.service.SysMenuService;
 import com.ruowei.modules.sys.pojo.SysMenuDTO;

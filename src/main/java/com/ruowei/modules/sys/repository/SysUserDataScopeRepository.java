@@ -1,7 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.SysUserDataScope;
+import com.ruowei.modules.sys.domain.table.QSysUserDataScope;
+import com.ruowei.modules.sys.domain.table.SysUserDataScope;
 import org.springframework.stereotype.Repository;
 
 
@@ -11,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface SysUserDataScopeRepository
-    extends BaseRepository<SysUserDataScope, Long> {
+    extends BaseRepository<Long,SysUserDataScope, QSysUserDataScope> {
 
 }

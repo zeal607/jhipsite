@@ -8,9 +8,10 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.SysCompanyOffice;
-import com.ruowei.modules.sys.domain.SysCompanyOffice_;
+import com.ruowei.common.service.query.simple.QueryService;
+import com.ruowei.modules.sys.domain.table.QSysCompanyOffice;
+import com.ruowei.modules.sys.domain.table.SysCompanyOffice;
+import com.ruowei.modules.sys.domain.table.SysCompanyOffice_;
 import com.ruowei.modules.sys.repository.SysCompanyOfficeRepository;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
@@ -30,11 +31,15 @@ import com.ruowei.service.mapper.SysCompanyOfficeMapper;
  * The main input is a {@link SysCompanyOfficeCriteria} which gets converted to {@link Specification},
  * in a way that all the filters must apply.
  * It returns a {@link List} of {@link SysCompanyOfficeDTO} or a {@link Page} of {@link SysCompanyOfficeDTO} which fulfills the criteria.
+ * @author 刘东奇
  */
 @Service
 @Transactional(readOnly = true)
 public class SysCompanyOfficeQueryService
-    extends QueryBaseService<SysCompanyOffice,Long,SysCompanyOfficeDTO, BaseView, SysCompanyOfficeRepository> {
+    extends QueryService<
+        SysCompanyOffice,
+        QSysCompanyOffice,
+        SysCompanyOfficeRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysCompanyOfficeQueryService.class);
 
@@ -113,7 +118,7 @@ public class SysCompanyOfficeQueryService
      * @param criteria
      * @return
      */
-    @Override
+//    @Override
     public Specification<SysCompanyOffice> createSpecification(Criteria criteria) {
         return null;
     }
@@ -125,7 +130,7 @@ public class SysCompanyOfficeQueryService
      * @param criteriaArray
      * @return
      */
-    @Override
+//    @Override
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
         return null;
     }
@@ -137,7 +142,7 @@ public class SysCompanyOfficeQueryService
      * @param criteriaArray
      * @author 刘东奇
      */
-    @Override
+//    @Override
     public QueryResults<BaseView> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
         return null;
     }
@@ -148,7 +153,7 @@ public class SysCompanyOfficeQueryService
      * @param id
      * @return
      */
-    @Override
+//    @Override
     public Optional<SysCompanyOfficeDTO> getDTOById(Long id) {
         return Optional.empty();
     }
@@ -159,7 +164,7 @@ public class SysCompanyOfficeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysCompanyOffice> getEntityJPAQuery() {
         return null;
     }
@@ -170,7 +175,7 @@ public class SysCompanyOfficeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<BaseView> getVMJPAQuery() {
         return null;
     }
@@ -181,7 +186,7 @@ public class SysCompanyOfficeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysCompanyOfficeDTO> getDTOJPAQuery() {
         return null;
     }
@@ -192,7 +197,7 @@ public class SysCompanyOfficeQueryService
      * @author 刘东奇
      * @date 2019/9/26
      */
-    @Override
+//    @Override
     public JPAQuery<Tuple> getTupleJPAQuery() {
         return null;
     }

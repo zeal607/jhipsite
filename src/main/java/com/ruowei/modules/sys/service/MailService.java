@@ -1,6 +1,5 @@
 package com.ruowei.modules.sys.service;
 
-import com.ruowei.modules.sys.domain.SysUser;
 import com.ruowei.modules.sys.pojo.SysUserDTO;
 import io.github.jhipster.config.JHipsterProperties;
 

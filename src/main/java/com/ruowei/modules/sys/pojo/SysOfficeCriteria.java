@@ -3,7 +3,7 @@ package com.ruowei.modules.sys.pojo;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.ruowei.modules.sys.domain.SysOffice;
+import com.ruowei.modules.sys.domain.table.SysOffice;
 import com.ruowei.modules.sys.domain.enumeration.OfficeType;
 import com.ruowei.modules.sys.web.rest.SysOfficeResource;
 import io.github.jhipster.service.Criteria;

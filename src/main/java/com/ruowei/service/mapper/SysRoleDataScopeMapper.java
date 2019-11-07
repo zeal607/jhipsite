@@ -1,7 +1,7 @@
 package com.ruowei.service.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
-import com.ruowei.modules.sys.domain.SysRoleDataScope;
+import com.ruowei.modules.sys.domain.table.SysRoleDataScope;
 import com.ruowei.modules.sys.pojo.SysRoleDataScopeDTO;
 
 import org.mapstruct.*;

@@ -9,8 +9,11 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.*;
+import com.ruowei.common.service.query.simple.QueryService;
+import com.ruowei.modules.sys.domain.table.QSysRole;
+import com.ruowei.modules.sys.domain.table.QSysUserRole;
+import com.ruowei.modules.sys.domain.table.SysRole;
+import com.ruowei.modules.sys.domain.table.SysRole_;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +37,10 @@ import com.ruowei.modules.sys.mapper.SysRoleMapper;
 @Service
 @Transactional(readOnly = true)
 public class SysRoleQueryService
-    extends QueryBaseService<SysRole,Long,SysRoleDTO, BaseView,SysRoleRepository> {
+    extends QueryService<
+    SysRole,
+    QSysRole,
+    SysRoleRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysRoleQueryService.class);
 
@@ -90,7 +96,7 @@ public class SysRoleQueryService
      * @param superCriteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
      */
-    @Override
+//    @Override
     public Specification<SysRole> createSpecification(Criteria superCriteria) {
         SysRoleCriteria criteria= (SysRoleCriteria) superCriteria;
         Specification<SysRole> specification = Specification.where(null);
@@ -130,35 +136,35 @@ public class SysRoleQueryService
     }
 
 
-    @Override
+//    @Override
     @Deprecated
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
         return null;
     }
 
-    @Override
+//    @Override
     @Deprecated
     public QueryResults<BaseView> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
         return null;
     }
 
-    @Override
+//    @Override
     @Deprecated
     public Optional<SysRoleDTO> getDTOById(Long id) {
         return Optional.empty();
     }
 
-    @Override
+//    @Override
     public JPAQuery<SysRole> getEntityJPAQuery() {
         return null;
     }
 
-    @Override
+//    @Override
     public JPAQuery<BaseView> getVMJPAQuery() {
         return null;
     }
 
-    @Override
+//    @Override
     public JPAQuery<SysRoleDTO> getDTOJPAQuery() {
         QSysRole qSysRole = QSysRole.sysRole;
         JPAQuery<SysRoleDTO> jpaQuery = this.queryFactory.select(
@@ -179,7 +185,7 @@ public class SysRoleQueryService
         return jpaQuery;
     }
 
-    @Override
+//    @Override
     public JPAQuery<Tuple> getTupleJPAQuery() {
         return null;
     }

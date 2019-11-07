@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.SysPost;
-import org.springframework.data.jpa.repository.*;
+import com.ruowei.modules.sys.domain.table.QSysPost;
+import com.ruowei.modules.sys.domain.table.SysPost;
 import org.springframework.stereotype.Repository;
 
 
@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface SysPostRepository
-    extends BaseRepository<SysPost, Long> {
+    extends BaseRepository<Long, SysPost, QSysPost> {
 
 }

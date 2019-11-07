@@ -2,15 +2,18 @@ package com.ruowei.modules.sys.service.user.impl;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.Predicate;
 import com.ruowei.common.error.ErrorMessageUtils;
 import com.ruowei.common.error.exception.DataAlreadyExistException;
-import com.ruowei.common.error.exception.DataInvalidException;
 import com.ruowei.common.error.exception.DataNotFoundException;
-import com.ruowei.common.service.CrudBaseService;
+import com.ruowei.common.service.crud.CrudBaseService;
 import com.ruowei.config.Constants;
-import com.ruowei.modules.sys.domain.*;
 import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
+import com.ruowei.modules.sys.domain.table.Authority;
+import com.ruowei.modules.sys.domain.table.QSysUser;
+import com.ruowei.modules.sys.domain.table.SysEmployee;
+import com.ruowei.modules.sys.domain.table.SysUser;
 import com.ruowei.modules.sys.mapper.SysUserEmployeeMapper;
 import com.ruowei.modules.sys.mapper.SysUserMapper;
 import com.ruowei.modules.sys.pojo.*;
@@ -45,7 +48,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -54,7 +56,10 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class SysUserServiceImpl
-    extends CrudBaseService<SysUser, Long, SysUserRepository>
+    extends CrudBaseService<
+    SysUser,
+    QSysUser,
+    SysUserRepository>
     implements SysUserService {
 
     private final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
@@ -135,6 +140,22 @@ public class SysUserServiceImpl
     public QueryResults<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(SysUserCriteria userCriteria, SysEmployeeCriteria employeeCriteria, Pageable page) {
         QueryResults<SysUserEmployeeVM> results = sysUserQueryService.findPageVMByCriteriaArray(page,userCriteria,employeeCriteria);
         return results;
+    }
+
+    /**
+     * 通过条件分页查询员工信息
+     *
+     * @param sysUserPredicate
+     * @param sysEmployeePredicate
+     * @param pageable
+     * @return
+     * @author 刘东奇
+     * @date 2019/11/4
+     */
+    @Override
+    public QueryResults<SysUserEmployeeVM> findSysUserEmployeeVMPageByPredicate(Predicate sysUserPredicate, Predicate sysEmployeePredicate, Pageable pageable) {
+        BooleanBuilder booleanBuilder =new BooleanBuilder(sysUserPredicate).and(sysEmployeePredicate);
+       return null;
     }
 
     /**

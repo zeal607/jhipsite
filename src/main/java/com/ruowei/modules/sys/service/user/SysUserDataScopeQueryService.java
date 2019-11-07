@@ -8,13 +8,11 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.SysUserDataScope;
-import com.ruowei.modules.sys.domain.SysUserDataScope_;
-import com.ruowei.modules.sys.domain.SysUserRole;
-import com.ruowei.modules.sys.pojo.SysUserRoleDTO;
+import com.ruowei.common.service.query.simple.QueryService;
+import com.ruowei.modules.sys.domain.table.QSysUserDataScope;
+import com.ruowei.modules.sys.domain.table.SysUserDataScope;
+import com.ruowei.modules.sys.domain.table.SysUserDataScope_;
 import com.ruowei.modules.sys.repository.SysUserDataScopeRepository;
-import com.ruowei.modules.sys.repository.SysUserRoleRepository;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +34,10 @@ import com.ruowei.service.mapper.SysUserDataScopeMapper;
 @Service
 @Transactional(readOnly = true)
 public class SysUserDataScopeQueryService
-    extends QueryBaseService<SysUserDataScope,Long,SysUserDataScopeDTO, BaseView, SysUserDataScopeRepository> {
+    extends QueryService<
+    SysUserDataScope,
+    QSysUserDataScope,
+    SysUserDataScopeRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysUserDataScopeQueryService.class);
 
@@ -121,7 +122,7 @@ public class SysUserDataScopeQueryService
      * @param criteria
      * @return
      */
-    @Override
+//    @Override
     public Specification<SysUserDataScope> createSpecification(Criteria criteria) {
         return null;
     }
@@ -133,7 +134,7 @@ public class SysUserDataScopeQueryService
      * @param criteriaArray
      * @return
      */
-    @Override
+//    @Override
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
         return null;
     }
@@ -145,7 +146,7 @@ public class SysUserDataScopeQueryService
      * @param criteriaArray
      * @author 刘东奇
      */
-    @Override
+//    @Override
     public QueryResults<BaseView> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
         return null;
     }
@@ -156,7 +157,7 @@ public class SysUserDataScopeQueryService
      * @param id
      * @return
      */
-    @Override
+//    @Override
     public Optional<SysUserDataScopeDTO> getDTOById(Long id) {
         return Optional.empty();
     }
@@ -167,7 +168,7 @@ public class SysUserDataScopeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysUserDataScope> getEntityJPAQuery() {
         return null;
     }
@@ -178,7 +179,7 @@ public class SysUserDataScopeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<BaseView> getVMJPAQuery() {
         return null;
     }
@@ -189,7 +190,7 @@ public class SysUserDataScopeQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysUserDataScopeDTO> getDTOJPAQuery() {
         return null;
     }
@@ -200,7 +201,7 @@ public class SysUserDataScopeQueryService
      * @author 刘东奇
      * @date 2019/9/26
      */
-    @Override
+//    @Override
     public JPAQuery<Tuple> getTupleJPAQuery() {
         return null;
     }

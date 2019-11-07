@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.SysRole;
-import org.springframework.data.jpa.repository.*;
+import com.ruowei.modules.sys.domain.table.QSysRole;
+import com.ruowei.modules.sys.domain.table.SysRole;
 import org.springframework.stereotype.Repository;
 
 
@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface SysRoleRepository
-    extends BaseRepository<SysRole, Long> {
+    extends BaseRepository<Long,SysRole, QSysRole> {
 
 }

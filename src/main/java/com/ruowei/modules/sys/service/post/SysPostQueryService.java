@@ -9,8 +9,8 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.*;
+import com.ruowei.common.service.query.simple.QueryService;
+import com.ruowei.modules.sys.domain.table.*;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,10 @@ import com.ruowei.modules.sys.mapper.SysPostMapper;
 @Service
 @Transactional(readOnly = true)
 public class SysPostQueryService
-    extends QueryBaseService<SysPost,Long,SysPostDTO, BaseView,SysPostRepository> {
+    extends QueryService<
+    SysPost,
+    QSysPost,
+    SysPostRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysPostQueryService.class);
 
@@ -91,7 +94,7 @@ public class SysPostQueryService
      * @param superCriteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
      */
-    @Override
+//    @Override
     public Specification<SysPost> createSpecification(Criteria superCriteria) {
         SysPostCriteria criteria= (SysPostCriteria) superCriteria;
         Specification<SysPost> specification = Specification.where(null);
@@ -125,7 +128,7 @@ public class SysPostQueryService
      * @param criteriaArray
      * @return
      */
-    @Override
+//    @Override
     @Deprecated
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
         return null;
@@ -138,7 +141,7 @@ public class SysPostQueryService
      * @param criteriaArray
      * @author 刘东奇
      */
-    @Override
+//    @Override
     @Deprecated
     public QueryResults<BaseView> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
         return null;
@@ -150,7 +153,7 @@ public class SysPostQueryService
      * @param id
      * @return
      */
-    @Override
+//    @Override
     @Deprecated
     public Optional<SysPostDTO> getDTOById(Long id) {
         return Optional.empty();
@@ -162,7 +165,7 @@ public class SysPostQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<SysPost> getEntityJPAQuery() {
         return null;
@@ -174,7 +177,7 @@ public class SysPostQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<BaseView> getVMJPAQuery() {
         return null;
@@ -186,7 +189,7 @@ public class SysPostQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysPostDTO> getDTOJPAQuery() {
         QSysPost qSysPost = QSysPost.sysPost;
         JPAQuery<SysPostDTO> jpaQuery = this.queryFactory.select(
@@ -209,7 +212,7 @@ public class SysPostQueryService
      * @author 刘东奇
      * @date 2019/9/26
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<Tuple> getTupleJPAQuery() {
         return null;
@@ -234,4 +237,5 @@ public class SysPostQueryService
         List<SysPostDTO> postDTOList=sysPostDTOJPAQuery.where(qSysUser.id.eq(sysUserId)).fetch();
         return postDTOList;
     }
+
 }

@@ -3,7 +3,7 @@ package com.ruowei.modules.sys.pojo;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.ruowei.modules.sys.domain.SysEmployee;
+import com.ruowei.modules.sys.domain.table.SysEmployee;
 import io.github.jhipster.service.Criteria;
 import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 import io.github.jhipster.service.filter.Filter;

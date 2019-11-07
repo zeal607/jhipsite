@@ -1,7 +1,7 @@
 package com.ruowei.service.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
-import com.ruowei.modules.sys.domain.SysMenu;
+import com.ruowei.modules.sys.domain.table.SysMenu;
 import com.ruowei.modules.sys.pojo.SysMenuDTO;
 
 import org.mapstruct.*;

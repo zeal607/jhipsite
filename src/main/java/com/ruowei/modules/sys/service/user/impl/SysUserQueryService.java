@@ -9,9 +9,12 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.querydsl.OrderByUtils;
-import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.*;
+import com.ruowei.common.service.query.simple.QueryService;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
+import com.ruowei.modules.sys.domain.table.QSysEmployee;
+import com.ruowei.modules.sys.domain.table.QSysUser;
+import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.table.SysUser_;
 import com.ruowei.modules.sys.pojo.*;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import com.ruowei.modules.sys.service.employee.impl.SysEmployeeOfficeQueryService;
@@ -38,7 +41,10 @@ import com.ruowei.modules.sys.mapper.SysUserMapper;
 @Service
 @Transactional(readOnly = true)
 public class SysUserQueryService
-    extends QueryBaseService<SysUser,Long,SysUserEmployeeDTO,SysUserEmployeeVM,SysUserRepository> {
+    extends QueryService<
+    SysUser,
+    QSysUser,
+    SysUserRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysUserQueryService.class);
 
@@ -106,8 +112,8 @@ public class SysUserQueryService
      * Function to convert ConsumerCriteria to a {@link Specification}
      * @param superCriteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
-     */    
-    @Override
+     */
+//    @Override
     public Specification<SysUser> createSpecification(Criteria superCriteria) {
         SysUserCriteria criteria= (SysUserCriteria) superCriteria;
         Specification<SysUser> specification = Specification.where(null);
@@ -192,7 +198,7 @@ public class SysUserQueryService
      * @param criteriaArray
      * @return
      */
-    @Override
+//    @Override
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
         SysUserCriteria userCriteria = (SysUserCriteria) criteriaArray[0];
         BooleanBuilder userBooleanBuilder = createBooleanBuilder(userCriteria);
@@ -208,7 +214,7 @@ public class SysUserQueryService
      * @param criteriaArray
      * @author 刘东奇
      */
-    @Override
+//    @Override
     public QueryResults<SysUserEmployeeVM> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
 
         QSysUser qSysUser =  QSysUser.sysUser;
@@ -233,7 +239,7 @@ public class SysUserQueryService
      * @param id
      * @return
      */
-    @Override
+//    @Override
     public Optional<SysUserEmployeeDTO> getDTOById(Long id) {
         QSysUser qSysUser =  QSysUser.sysUser;
 
@@ -266,7 +272,7 @@ public class SysUserQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<SysUser> getEntityJPAQuery() {
         return null;
@@ -278,7 +284,7 @@ public class SysUserQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysUserEmployeeVM> getVMJPAQuery() {
         QSysUser qSysUser =  QSysUser.sysUser;
         QSysEmployee qSysEmployee = QSysEmployee.sysEmployee;
@@ -312,7 +318,7 @@ public class SysUserQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysUserEmployeeDTO> getDTOJPAQuery() {
         QSysUser qSysUser =  QSysUser.sysUser;
         QSysEmployee qSysEmployee = QSysEmployee.sysEmployee;
@@ -346,7 +352,7 @@ public class SysUserQueryService
      * @author 刘东奇
      * @date 2019/9/26
      */
-    @Override
+//    @Override
     @Deprecated
     public JPAQuery<Tuple> getTupleJPAQuery() {
         return null;

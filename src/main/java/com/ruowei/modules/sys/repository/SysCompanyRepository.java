@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.SysCompany;
-import org.springframework.data.jpa.repository.*;
+import com.ruowei.modules.sys.domain.table.QSysCompany;
+import com.ruowei.modules.sys.domain.table.SysCompany;
 import org.springframework.stereotype.Repository;
 
 
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface SysCompanyRepository
-    extends BaseRepository<SysCompany, Long> {
+    extends BaseRepository<Long, SysCompany, QSysCompany> {
 
 }

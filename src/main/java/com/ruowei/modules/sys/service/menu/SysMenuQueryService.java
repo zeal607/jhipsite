@@ -8,9 +8,10 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.ruowei.common.pojo.BaseView;
-import com.ruowei.common.service.QueryBaseService;
-import com.ruowei.modules.sys.domain.SysMenu;
-import com.ruowei.modules.sys.domain.SysMenu_;
+import com.ruowei.common.service.query.simple.QueryService;
+import com.ruowei.modules.sys.domain.table.QSysMenu;
+import com.ruowei.modules.sys.domain.table.SysMenu;
+import com.ruowei.modules.sys.domain.table.SysMenu_;
 import com.ruowei.modules.sys.repository.SysMenuRepository;
 import io.github.jhipster.service.Criteria;
 import org.slf4j.Logger;
@@ -33,7 +34,10 @@ import com.ruowei.service.mapper.SysMenuMapper;
 @Service
 @Transactional(readOnly = true)
 public class SysMenuQueryService
-    extends QueryBaseService<SysMenu,Long, SysMenuDTO, BaseView, SysMenuRepository> {
+    extends QueryService<
+    SysMenu,
+    QSysMenu,
+    SysMenuRepository> {
 
     private final Logger log = LoggerFactory.getLogger(SysMenuQueryService.class);
 
@@ -163,7 +167,7 @@ public class SysMenuQueryService
      * @param criteria
      * @return
      */
-    @Override
+//    @Override
     public Specification<SysMenu> createSpecification(Criteria criteria) {
         return null;
     }
@@ -175,7 +179,7 @@ public class SysMenuQueryService
      * @param criteriaArray
      * @return
      */
-    @Override
+//    @Override
     public BooleanBuilder createBooleanBuilder(Criteria... criteriaArray) {
         return null;
     }
@@ -187,7 +191,7 @@ public class SysMenuQueryService
      * @param criteriaArray
      * @author 刘东奇
      */
-    @Override
+//    @Override
     public QueryResults<BaseView> findPageVMByCriteriaArray(Pageable pageable, Criteria... criteriaArray) {
         return null;
     }
@@ -198,7 +202,7 @@ public class SysMenuQueryService
      * @param id
      * @return
      */
-    @Override
+//    @Override
     public Optional<SysMenuDTO> getDTOById(Long id) {
         return Optional.empty();
     }
@@ -209,7 +213,7 @@ public class SysMenuQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysMenu> getEntityJPAQuery() {
         return null;
     }
@@ -220,7 +224,7 @@ public class SysMenuQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<BaseView> getVMJPAQuery() {
         return null;
     }
@@ -231,7 +235,7 @@ public class SysMenuQueryService
      * @author 刘东奇
      * @date 2019/9/25
      */
-    @Override
+//    @Override
     public JPAQuery<SysMenuDTO> getDTOJPAQuery() {
         return null;
     }
@@ -242,7 +246,7 @@ public class SysMenuQueryService
      * @author 刘东奇
      * @date 2019/9/26
      */
-    @Override
+//    @Override
     public JPAQuery<Tuple> getTupleJPAQuery() {
         return null;
     }

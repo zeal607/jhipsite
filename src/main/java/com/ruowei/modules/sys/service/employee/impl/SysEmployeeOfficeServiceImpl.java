@@ -1,10 +1,12 @@
 package com.ruowei.modules.sys.service.employee.impl;
 
+import com.ruowei.common.entity.BaseEntity;
 import com.ruowei.common.error.ErrorMessageUtils;
 import com.ruowei.common.error.exception.DataNotFoundException;
-import com.ruowei.common.service.CrudBaseService;
-import com.ruowei.modules.sys.domain.SysEmployee;
-import com.ruowei.modules.sys.domain.SysEmployeeOffice;
+import com.ruowei.common.service.crud.CrudBaseService;
+import com.ruowei.modules.sys.domain.table.QSysEmployeeOffice;
+import com.ruowei.modules.sys.domain.table.SysEmployee;
+import com.ruowei.modules.sys.domain.table.SysEmployeeOffice;
 
 import com.ruowei.modules.sys.mapper.SysEmployeeOfficeMapper;
 import com.ruowei.modules.sys.pojo.SysEmployeeOfficeDTO;
@@ -21,11 +23,15 @@ import java.util.List;
 
 /**
  * Service Interface for managing {@link SysEmployeeOffice}.
+ * @author 刘东奇
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class SysEmployeeOfficeServiceImpl
-    extends CrudBaseService<SysEmployeeOffice, Long, SysEmployeeOfficeRepository>
+    extends CrudBaseService<
+    SysEmployeeOffice,
+    QSysEmployeeOffice,
+    SysEmployeeOfficeRepository>
     implements SysEmployeeOfficeService {
 
     private final Logger log = LoggerFactory.getLogger(SysEmployeeOfficeServiceImpl.class);
@@ -72,4 +78,6 @@ public class SysEmployeeOfficeServiceImpl
             }
         }
     }
+
+
 }

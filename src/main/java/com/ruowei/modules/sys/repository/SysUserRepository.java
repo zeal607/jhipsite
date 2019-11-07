@@ -1,9 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.SysUser;
-import com.ruowei.modules.sys.pojo.SysUserDTO;
-import jdk.nashorn.internal.runtime.options.Option;
+import com.ruowei.modules.sys.domain.table.QSysUser;
+import com.ruowei.modules.sys.domain.table.SysUser;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +19,8 @@ import java.util.Optional;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface SysUserRepository extends BaseRepository<SysUser,Long> {
+public interface SysUserRepository
+    extends BaseRepository<Long,SysUser, QSysUser> {
     String USERS_BY_LOGIN_CODE_CACHE = "usersByLoginCode";
 
     String USERS_BY_EMAIL_CACHE = "usersByEmail";

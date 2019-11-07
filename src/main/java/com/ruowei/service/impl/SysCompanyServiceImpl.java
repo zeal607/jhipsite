@@ -1,7 +1,7 @@
 package com.ruowei.service.impl;
 
 import com.ruowei.modules.sys.service.company.SysCompanyService;
-import com.ruowei.modules.sys.domain.SysCompany;
+import com.ruowei.modules.sys.domain.table.SysCompany;
 import com.ruowei.modules.sys.repository.SysCompanyRepository;
 import com.ruowei.modules.sys.pojo.SysCompanyDTO;
 import com.ruowei.service.mapper.SysCompanyMapper;

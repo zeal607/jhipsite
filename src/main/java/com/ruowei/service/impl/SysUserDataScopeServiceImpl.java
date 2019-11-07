@@ -1,6 +1,6 @@
 package com.ruowei.service.impl;
 
-import com.ruowei.modules.sys.domain.SysUserDataScope;
+import com.ruowei.modules.sys.domain.table.SysUserDataScope;
 import com.ruowei.modules.sys.repository.SysUserDataScopeRepository;
 import com.ruowei.modules.sys.service.user.SysUserDataScopeService;
 import com.ruowei.modules.sys.pojo.SysUserDataScopeDTO;

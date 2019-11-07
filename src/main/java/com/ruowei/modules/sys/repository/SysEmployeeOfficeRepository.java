@@ -1,9 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.SysEmployeeOffice;
-import com.ruowei.modules.sys.domain.SysEmployeePost;
-import org.springframework.data.jpa.repository.*;
+import com.ruowei.modules.sys.domain.table.QSysEmployeeOffice;
+import com.ruowei.modules.sys.domain.table.SysEmployeeOffice;
 import org.springframework.stereotype.Repository;
 
 
@@ -13,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface SysEmployeeOfficeRepository
-    extends BaseRepository<SysEmployeeOffice, Long> {
+    extends BaseRepository<Long, SysEmployeeOffice, QSysEmployeeOffice> {
 
 }

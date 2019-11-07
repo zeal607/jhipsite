@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.service.post;
 
-import com.ruowei.modules.sys.domain.SysPost;
+import com.ruowei.modules.sys.domain.table.SysPost;
 import com.ruowei.modules.sys.pojo.SysPostDTO;
 
 import org.springframework.data.domain.Page;
