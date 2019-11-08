@@ -11,6 +11,8 @@ import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
+import java.util.Optional;
+
 /**
  * repository扩展接口类
  * 继承了JPA的CrudRepository、JpaRepository
@@ -41,8 +43,6 @@ public interface BaseRepository<ID,Entity,QEntity extends EntityPath<Entity>>
         querydslBindings.bind(String.class)
             .first(
                 (StringPath path, String value) -> {
-                    System.out.println(path);
-                    System.out.println(value);
                     return path.containsIgnoreCase(value);
                 }
             );
@@ -76,5 +76,14 @@ public interface BaseRepository<ID,Entity,QEntity extends EntityPath<Entity>>
      * @return
      */
     Entity insertOrUpdate(Entity entity);
+
+    /**
+     * 根据ID查
+     * @author 刘东奇
+     * @date 2019/11/8
+     * @param id
+     * @return
+     */
+    Optional<Entity> findOne(ID id);
 
 }

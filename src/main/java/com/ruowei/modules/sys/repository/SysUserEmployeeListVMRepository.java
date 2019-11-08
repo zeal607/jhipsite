@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.QSysUserEmployeeLVM;
-import com.ruowei.modules.sys.domain.SysUserEmployeeLVM;
+import com.ruowei.modules.sys.domain.QSysUserEmployeeListVM;
+import com.ruowei.modules.sys.domain.SysUserEmployeeListVM;
 import org.springframework.stereotype.Repository;
 
 
@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface SysUserEmployeeLVMRepository
-    extends BaseRepository<Long,SysUserEmployeeLVM, QSysUserEmployeeLVM> {
+public interface SysUserEmployeeListVMRepository
+    extends BaseRepository<Long, SysUserEmployeeListVM, QSysUserEmployeeListVM> {
 }

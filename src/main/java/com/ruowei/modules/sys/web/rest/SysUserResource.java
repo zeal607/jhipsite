@@ -4,14 +4,18 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Predicate;
 import com.ruowei.common.response.PaginationUtil;
 import com.ruowei.config.Constants;
-import com.ruowei.modules.sys.domain.SysUserEmployeeLVM;
+import com.ruowei.modules.sys.domain.SysUserEmployeeDetailVM;
+import com.ruowei.modules.sys.domain.SysUserEmployeeListVM;
 import com.ruowei.modules.sys.domain.table.SysEmployee;
 import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.mapper.SysUserEmployeeMapper;
 import com.ruowei.modules.sys.pojo.*;
 
 import com.ruowei.modules.sys.pojo.user.SysUserRegisterDTO;
-import com.ruowei.modules.sys.repository.SysUserEmployeeLVMRepository;
+import com.ruowei.modules.sys.repository.SysUserEmployeeDetailVMRepository;
+import com.ruowei.modules.sys.repository.SysUserEmployeeListVMRepository;
 import com.ruowei.modules.sys.service.MailService;
+import com.ruowei.modules.sys.service.alpha.SysUserEmployeeService;
 import com.ruowei.modules.sys.service.user.SysUserService;
 import com.ruowei.security.AuthoritiesConstants;
 import com.ruowei.security.SecurityUtils;
@@ -21,11 +25,12 @@ import com.ruowei.web.rest.vm.KeyAndPasswordVM;
 import com.ruowei.web.rest.vm.ManagedUserVM;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -69,14 +74,26 @@ public class SysUserResource {
     private final SysUserService sysUserService;
     private final MailService mailService;
 
-    private final SysUserEmployeeLVMRepository sysUserEmployeeLVMRepository;
+    private final SysUserEmployeeListVMRepository sysUserEmployeeListVMRepository;
 
-    public SysUserResource( SysUserService sysUserService,
-                            MailService mailService,
-                            SysUserEmployeeLVMRepository sysUserEmployeeLVMRepository) {
+    private final SysUserEmployeeDetailVMRepository sysUserEmployeeDetailVMRepository;
+
+    private final SysUserEmployeeService sysUserEmployeeService;
+
+    private final SysUserEmployeeMapper sysUserEmployeeMapper;
+
+    public SysUserResource(SysUserService sysUserService,
+                           MailService mailService,
+                           SysUserEmployeeListVMRepository sysUserEmployeeListVMRepository,
+                           SysUserEmployeeDetailVMRepository sysUserEmployeeDetailVMRepository,
+                           SysUserEmployeeService sysUserEmployeeService,
+                           SysUserEmployeeMapper sysUserEmployeeMapper) {
         this.sysUserService = sysUserService;
         this.mailService = mailService;
-        this.sysUserEmployeeLVMRepository = sysUserEmployeeLVMRepository;
+        this.sysUserEmployeeListVMRepository = sysUserEmployeeListVMRepository;
+        this.sysUserEmployeeDetailVMRepository = sysUserEmployeeDetailVMRepository;
+        this.sysUserEmployeeService = sysUserEmployeeService;
+        this.sysUserEmployeeMapper = sysUserEmployeeMapper;
     }
 
     /**
@@ -87,9 +104,10 @@ public class SysUserResource {
      * @param employeeCriteria
      * @param pageable
      */
-    @ApiOperation(value = "查询员工分页")
-    @GetMapping("/sys-user-employees")
-    public ResponseEntity<List<SysUserEmployeeVM>> getAllSysUserEmployees(SysUserCriteria sysUserCriteria, SysEmployeeCriteria employeeCriteria, Pageable pageable) {
+    @ApiOperation(value = "查询员工分页2")
+    @Deprecated
+    @GetMapping("/sys-user-employees2")
+    public ResponseEntity<List<SysUserEmployeeVM>> getAllSysUserEmployees2(SysUserCriteria sysUserCriteria, SysEmployeeCriteria employeeCriteria, Pageable pageable) {
         log.debug("REST request to get SysUsers by criteria: {}", sysUserCriteria);
         QueryResults<SysUserEmployeeVM> queryResults = sysUserService.findSysUserEmployeeVMPageByCriteria(sysUserCriteria,employeeCriteria,pageable);
 
@@ -105,9 +123,10 @@ public class SysUserResource {
      * @param sysEmployeePredicate
      * @param pageable
      */
-    @ApiOperation(value = "查询员工分页2")
-    @GetMapping("/sys-user-employees2")
-    public ResponseEntity<List<SysUserEmployeeVM>> getAllSysUserEmployees2(
+    @ApiOperation(value = "查询员工分页3")
+    @Deprecated
+    @GetMapping("/sys-user-employees3")
+    public ResponseEntity<List<SysUserEmployeeVM>> getAllSysUserEmployees3(
         @QuerydslPredicate(root = SysUser.class) Predicate sysUserPredicate,
         @QuerydslPredicate(root = SysEmployee.class) Predicate sysEmployeePredicate,
         Pageable pageable) {
@@ -125,14 +144,29 @@ public class SysUserResource {
      * @date 2019/11/5
      * @param pageable
      */
-    @ApiOperation(value = "查询员工分页3")
-    @GetMapping("/sys-user-employees3")
-    public ResponseEntity<List<SysUserEmployeeLVM>> getAllSysUserEmployees3(
-        @QuerydslPredicate(root = SysUserEmployeeLVM.class) Predicate sysUserEmployeeLVMPredicate,
+    @ApiOperation(value = "查询员工分页")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="id", value = "主键", paramType = "query", dataType="Long"),
+        @ApiImplicitParam(name="loginCode", value = "登录账号", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="userName", value = "用户昵称", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="email", value = "电子邮箱", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="mobile", value = "手机号码", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="phone", value = "办公电话", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="userType", value = "用户类型", paramType = "query", dataType="UserType"),
+        @ApiImplicitParam(name="lastModifiedDate", value = "更新时间", paramType = "query", dataType="Instant"),
+        @ApiImplicitParam(name="status", value = "用户状态", paramType = "query", dataType="UserStatusType"),
+        @ApiImplicitParam(name="empName", value = "员工姓名", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="sysOfficeId", value = "机构ID", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="sysCompanyId", value = "公司ID", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="sysPostList", value = "岗位ID", paramType = "query", dataType="String")
+    })
+    @GetMapping("/sys-user-employees")
+    public ResponseEntity<List<SysUserEmployeeListVM>> getAllSysUserEmployees(
+        @QuerydslPredicate(root = SysUserEmployeeListVM.class) Predicate sysUserEmployeeLVMPredicate,
         Pageable pageable) {
-        log.debug("REST request 查询员工分页3 by 参数: {}", sysUserEmployeeLVMPredicate);
+        log.debug("REST request to 查询员工分页 by : {}", sysUserEmployeeLVMPredicate);
 
-        Page<SysUserEmployeeLVM> page = sysUserEmployeeLVMRepository.findAll(sysUserEmployeeLVMPredicate,pageable);
+        Page<SysUserEmployeeListVM> page = sysUserEmployeeListVMRepository.findAll(sysUserEmployeeLVMPredicate,pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page,"");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -140,12 +174,27 @@ public class SysUserResource {
     /**
      * 获取单个员工
      * @author 刘东奇
-     * @date 2019/9/17
+     * @date 2019/11/8
      * @param id
      */
     @ApiOperation(value = "获取单个员工")
     @GetMapping("/sys-user-employee/{id}")
-    public ResponseEntity<SysUserEmployeeDTO> getSysUserEmployee(@PathVariable Long id) {
+    public ResponseEntity<SysUserEmployeeDetailVM> getSysUserEmployee(@PathVariable Long id) {
+        log.debug("REST request to 获取单个员工 : {}", id);
+        Optional<SysUserEmployeeDetailVM> one = sysUserEmployeeDetailVMRepository.findOne(id);
+        return ResponseUtil.wrapOrNotFound(one);
+    }
+
+    /**
+     * 获取单个员工2
+     * @author 刘东奇
+     * @date 2019/9/17
+     * @param id
+     */
+    @ApiOperation(value = "获取单个员工2")
+    @Deprecated
+    @GetMapping("/sys-user-employee2/{id}")
+    public ResponseEntity<SysUserEmployeeDTO> getSysUserEmployee2(@PathVariable Long id) {
         log.debug("REST request to get SysUser : {}", id);
         Optional<SysUserEmployeeDTO> sysUserEmployeeDTO = sysUserService.getSysUserEmployeeById(id);
         return ResponseUtil.wrapOrNotFound(sysUserEmployeeDTO);
@@ -154,11 +203,30 @@ public class SysUserResource {
     /**
      * 新增员工
      * @author 刘东奇
-     * @date 2019/9/22
+     * @date 2019/11/8
      */
     @ApiOperation(value = "新增员工")
     @PostMapping("/sys-user-employees")
-    public ResponseEntity<SysUserEmployeeDTO> createSysUserEmployee(@Valid @RequestBody SysUserEmployeeDTO sysUserEmployeeDTO) throws URISyntaxException {
+    public ResponseEntity<SysUserEmployeeDTO> createSysUserEmployee(@Valid @RequestBody SysUserEmployeeDetailVM sysUserEmployeeDetailVM) throws URISyntaxException {
+        log.debug("REST request to 新增员工 : {}", sysUserEmployeeDetailVM);
+
+        SysUserEmployeeDTO sysUserEmployeeDTO = sysUserEmployeeMapper.projectIntoSysUserEmployeeDTO(sysUserEmployeeDetailVM);
+        sysUserEmployeeService.createSysUserEmployee(sysUserEmployeeDTO);
+
+        return ResponseEntity.created(new URI("/api/sys-user-employees/" + sysUserEmployeeDTO.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, sysUserEmployeeDTO.getId().toString()))
+            .body(sysUserEmployeeDTO);
+    }
+
+    /**
+     * 新增员工2
+     * @author 刘东奇
+     * @date 2019/9/22
+     */
+    @ApiOperation(value = "新增员工2")
+    @Deprecated
+    @PostMapping("/sys-user-employees2")
+    public ResponseEntity<SysUserEmployeeDTO> createSysUserEmployee2(@Valid @RequestBody SysUserEmployeeDTO sysUserEmployeeDTO) throws URISyntaxException {
         log.debug("REST request to save SysUserEmployee : {}", sysUserEmployeeDTO);
         if (sysUserEmployeeDTO.getId() != null) {
             throw new BadRequestAlertException("A new sysEmployee cannot already have an ID", ENTITY_NAME, "idexists");

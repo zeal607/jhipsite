@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.service.user.util;
+package com.ruowei.modules.sys.service.util;
 
 import com.ruowei.common.error.ErrorMessageUtils;
 import com.ruowei.common.error.exception.DataInvalidException;

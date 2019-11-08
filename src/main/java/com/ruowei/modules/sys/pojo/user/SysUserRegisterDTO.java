@@ -2,7 +2,7 @@ package com.ruowei.modules.sys.pojo.user;
 
 import com.ruowei.config.Constants;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
-import com.ruowei.modules.sys.service.user.util.SysUserUtil;
+import com.ruowei.modules.sys.service.util.SysUserUtil;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;

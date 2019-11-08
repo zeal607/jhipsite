@@ -1,5 +1,6 @@
 package com.ruowei.modules.sys.mapper;
 
+import com.ruowei.modules.sys.domain.SysUserEmployeeDetailVM;
 import com.ruowei.modules.sys.domain.table.SysEmployee;
 import com.ruowei.modules.sys.domain.table.SysUser;
 import com.ruowei.modules.sys.pojo.SysUserDTO;
@@ -36,6 +37,9 @@ public interface SysUserEmployeeMapper{
      * @param sysUserEmployeeDTO
      * @return
      */
+    @Mappings({
+        @Mapping(source = "sysRoleDTOList", target = "sysRoleList")
+    })
     SysUser projectIntoUser(SysUserEmployeeDTO sysUserEmployeeDTO);
 
     /**
@@ -43,5 +47,38 @@ public interface SysUserEmployeeMapper{
      * @param sysUserEmployeeDTO
      * @return
      */
+    @Mappings({
+        @Mapping(source = "sysPostDTOList", target = "sysPostList"),
+        @Mapping(source = "sysEmployeeOfficeDTOList", target = "sysEmployeeOfficeList")
+    })
     SysEmployee projectIntoEmployee(SysUserEmployeeDTO sysUserEmployeeDTO);
+
+    /**
+     * 组装SysUserEmployeeDTO
+     * @param sysUser
+     * @param sysEmployee
+     * @return
+     */
+    @Mappings({
+        @Mapping(source = "sysUser.id", target = "id"),
+        @Mapping(source = "sysUser.remarks", target = "remarks"),
+        @Mapping(source = "sysEmployee.sysPostList", target = "sysPostDTOList"),
+        @Mapping(source = "sysEmployee.sysEmployeeOfficeList", target = "sysEmployeeOfficeDTOList"),
+        @Mapping(source = "sysUser.sysRoleList", target = "sysRoleDTOList")
+    })
+    SysUserEmployeeDTO assembleSysUserEmployeeDTO(SysUser sysUser, SysEmployee sysEmployee);
+
+    /**
+     * 投影到SysUserEmployeeDTO
+     * @param sysUserEmployeeDetailVM
+     * @return
+     */
+    @Mappings({
+        @Mapping(source = "sysPostList", target = "sysPostDTOList"),
+        @Mapping(source = "sysEmployeeOfficeList", target = "sysEmployeeOfficeDTOList"),
+        @Mapping(source = "sysRoleList", target = "sysRoleDTOList")
+    })
+    SysUserEmployeeDTO projectIntoSysUserEmployeeDTO(SysUserEmployeeDetailVM sysUserEmployeeDetailVM);
+
+
 }

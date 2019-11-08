@@ -1,5 +1,9 @@
 package com.ruowei.modules.sys.domain.table;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.ruowei.common.entity.BaseEntity;
+import com.ruowei.common.json.LongJsonDeserializer;
+import com.ruowei.common.json.LongJsonSerializer;
 import com.ruowei.modules.sys.domain.enumeration.PostStatusType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -19,6 +23,14 @@ import com.ruowei.modules.sys.domain.enumeration.PostType;
 @Table(name = "sys_post")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class SysPost extends BaseEntity implements Serializable {
+
+    public SysPost(){}
+
+    public SysPost( @JsonSerialize(using = LongJsonSerializer.class)
+                    @JsonDeserialize(using = LongJsonDeserializer.class)
+                        Long id) {
+        this.id = id;
+    }
 
     private static final long serialVersionUID = 1L;
 

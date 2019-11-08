@@ -40,13 +40,13 @@ import com.ruowei.modules.sys.mapper.SysUserMapper;
  */
 @Service
 @Transactional(readOnly = true)
-public class SysUserQueryService
+public class SysUserQueryBackupService
     extends QueryService<
     SysUser,
     QSysUser,
     SysUserRepository> {
 
-    private final Logger log = LoggerFactory.getLogger(SysUserQueryService.class);
+    private final Logger log = LoggerFactory.getLogger(SysUserQueryBackupService.class);
 
     /**
      * service依赖
@@ -59,10 +59,10 @@ public class SysUserQueryService
      */
     private final SysUserMapper sysUserMapper;
 
-    public SysUserQueryService(SysPostQueryService sysPostQueryService,
-                               SysEmployeeOfficeQueryService sysEmployeeOfficeQueryService,
-                               SysRoleQueryService sysRoleQueryService,
-                               SysUserMapper sysUserMapper) {
+    public SysUserQueryBackupService(SysPostQueryService sysPostQueryService,
+                                     SysEmployeeOfficeQueryService sysEmployeeOfficeQueryService,
+                                     SysRoleQueryService sysRoleQueryService,
+                                     SysUserMapper sysUserMapper) {
         this.sysPostQueryService = sysPostQueryService;
         this.sysEmployeeOfficeQueryService = sysEmployeeOfficeQueryService;
         this.sysRoleQueryService = sysRoleQueryService;

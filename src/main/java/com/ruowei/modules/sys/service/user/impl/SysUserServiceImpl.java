@@ -28,7 +28,7 @@ import com.ruowei.modules.sys.service.user.SysUserRoleService;
 import com.ruowei.modules.sys.service.user.SysUserService;
 import com.ruowei.modules.sys.service.company.SysCompanyQueryService;
 import com.ruowei.modules.sys.service.MailService;
-import com.ruowei.modules.sys.service.user.util.SysUserUtil;
+import com.ruowei.modules.sys.service.util.SysUserUtil;
 import com.ruowei.security.AuthoritiesConstants;
 import com.ruowei.security.SecurityUtils;
 import com.ruowei.service.util.RandomUtil;
@@ -67,7 +67,7 @@ public class SysUserServiceImpl
     /**
      * service依赖
      */
-    private final SysUserQueryService sysUserQueryService;
+    private final SysUserQueryBackupService sysUserQueryBackupService;
     private final SysOfficeQueryService sysOfficeQueryService;
     private final SysCompanyQueryService sysCompanyQueryService;
     private final SysEmployeeService sysEmployeeService;
@@ -95,7 +95,7 @@ public class SysUserServiceImpl
 
     private final static String DEFAULT_PASSWORD = "123456";
 
-    public SysUserServiceImpl(SysUserQueryService sysUserQueryService,
+    public SysUserServiceImpl(SysUserQueryBackupService sysUserQueryBackupService,
                               SysOfficeQueryService sysOfficeQueryService,
                               SysCompanyQueryService sysCompanyQueryService,
                               SysEmployeeService sysEmployeeService,
@@ -108,7 +108,7 @@ public class SysUserServiceImpl
                               SysUserMapper sysUserMapper,
                               PasswordEncoder passwordEncoder,
                               CacheManager cacheManager) {
-        this.sysUserQueryService = sysUserQueryService;
+        this.sysUserQueryBackupService = sysUserQueryBackupService;
         this.sysOfficeQueryService = sysOfficeQueryService;
         this.sysCompanyQueryService = sysCompanyQueryService;
         this.sysEmployeeService = sysEmployeeService;
@@ -138,7 +138,7 @@ public class SysUserServiceImpl
      */
     @Override
     public QueryResults<SysUserEmployeeVM> findSysUserEmployeeVMPageByCriteria(SysUserCriteria userCriteria, SysEmployeeCriteria employeeCriteria, Pageable page) {
-        QueryResults<SysUserEmployeeVM> results = sysUserQueryService.findPageVMByCriteriaArray(page,userCriteria,employeeCriteria);
+        QueryResults<SysUserEmployeeVM> results = sysUserQueryBackupService.findPageVMByCriteriaArray(page,userCriteria,employeeCriteria);
         return results;
     }
 
@@ -167,7 +167,7 @@ public class SysUserServiceImpl
      */
     @Override
     public Optional<SysUserEmployeeDTO> getSysUserEmployeeById(Long id) {
-        return sysUserQueryService.getDTOById(id);
+        return sysUserQueryBackupService.getDTOById(id);
     }
 
     /**
@@ -210,7 +210,7 @@ public class SysUserServiceImpl
             booleanBuilder.or(qSysUser.mobile.eq(sysUserEmployeeDTO.getMobile()));
             map.put("电话", sysUserEmployeeDTO.getMobile());
         }
-        if(this.sysUserQueryService.exists(booleanBuilder)){
+        if(this.sysUserQueryBackupService.exists(booleanBuilder)){
             throw new DataAlreadyExistException(ErrorMessageUtils.getAlreadyExistMessageByOrMap("用户",map));
         }
         SysUser sysUser = sysUserEmployeeMapper.projectIntoUser(sysUserEmployeeDTO);

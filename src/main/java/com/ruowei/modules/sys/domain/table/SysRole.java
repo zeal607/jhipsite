@@ -1,5 +1,9 @@
 package com.ruowei.modules.sys.domain.table;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.ruowei.common.entity.BaseEntity;
+import com.ruowei.common.json.LongJsonDeserializer;
+import com.ruowei.common.json.LongJsonSerializer;
 import com.ruowei.modules.sys.domain.enumeration.DataScopeType;
 import com.ruowei.modules.sys.domain.enumeration.RoleStatusType;
 import com.ruowei.modules.sys.domain.enumeration.RoleType;
@@ -19,6 +23,14 @@ import java.io.Serializable;
 @Table(name = "sys_role")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class SysRole extends BaseEntity implements Serializable {
+
+    public SysRole(){};
+
+    public SysRole( @JsonSerialize(using = LongJsonSerializer.class)
+                    @JsonDeserialize(using = LongJsonDeserializer.class)
+                        Long id) {
+        this.id = id;
+    }
 
     private static final long serialVersionUID = 1L;
 

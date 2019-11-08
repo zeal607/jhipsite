@@ -9,10 +9,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.QuerydslJpaRepository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * @author 刘东奇
@@ -42,14 +44,13 @@ public class BaseRepositoryImpl<ID extends Serializable,Entity,QEntity extends E
     @Override
     @Transactional
     public Entity insert(Entity entity) {
-        if (this.entityInformation.isNew(entity)) {
-            this.em.persist(entity);
-            return entity;
-        } else {
-            throw new DataAlreadyExistException(
-                ErrorMessageUtils.getAlreadyExistMessage(
-                    entityInformation.getEntityName(),entityInformation.getId(entity).toString()));
-        }
+        Assert.isTrue(this.entityInformation.getId(entity) == null
+                || this.getOne(this.entityInformation.getId(entity)) == null,
+            ErrorMessageUtils.getAlreadyExistMessage(
+                entityInformation.getEntityName(),entityInformation.getId(entity).toString())
+            );
+        this.em.persist(entity);
+        return entity;
     }
 
     /**
@@ -95,5 +96,19 @@ public class BaseRepositoryImpl<ID extends Serializable,Entity,QEntity extends E
         } else {
             return this.updateIgnoreNull(entity);
         }
+    }
+
+    /**
+     * 根据ID查
+     *
+     * @param id
+     * @return
+     * @author 刘东奇
+     * @date 2019/11/8
+     */
+    @Override
+    public Optional<Entity> findOne(ID id) {
+        Entity entity = this.getOne(id);
+        return Optional.ofNullable(entity);
     }
 }

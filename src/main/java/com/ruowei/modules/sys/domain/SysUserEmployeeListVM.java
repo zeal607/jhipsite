@@ -10,6 +10,8 @@ import com.ruowei.modules.sys.domain.enumeration.UserType;
 import com.ruowei.modules.sys.domain.table.SysPost;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
@@ -21,7 +23,8 @@ import java.util.List;
 
 
 /**
- * 用户表
+ * 用户员工实体-列表模型
+ * sys_user、sys_employee两个表主键相同，组成主从表
  * @author 刘东奇
  */
 @Entity
@@ -29,7 +32,7 @@ import java.util.List;
 @SecondaryTable(name = "sys_employee", pkJoinColumns = {
     @PrimaryKeyJoinColumn(name = "id",referencedColumnName = "id")})
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUserEmployeeLVM implements Serializable {
+public class SysUserEmployeeListVM implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
@@ -129,11 +132,12 @@ public class SysUserEmployeeLVM implements Serializable {
     @Column(name = "sys_company_id", length = 200, table="sys_employee")
     private String sysCompanyId;
 
-    //JoinTable的name是中间表的名字
+    //实体间的关系
     /**
      * 岗位
      */
     @OneToMany(fetch=FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name="sys_employee_post",joinColumns={@JoinColumn(name="sys_employee_id",referencedColumnName="id")}
         ,inverseJoinColumns={@JoinColumn(name="sys_post_id",referencedColumnName="id")})
     private List<SysPost> sysPostList;
@@ -145,7 +149,7 @@ public class SysUserEmployeeLVM implements Serializable {
         return loginCode;
     }
 
-    public SysUserEmployeeLVM loginCode(String loginCode) {
+    public SysUserEmployeeListVM loginCode(String loginCode) {
         this.loginCode = loginCode;
         return this;
     }
@@ -158,7 +162,7 @@ public class SysUserEmployeeLVM implements Serializable {
         return userName;
     }
 
-    public SysUserEmployeeLVM userName(String userName) {
+    public SysUserEmployeeListVM userName(String userName) {
         this.userName = userName;
         return this;
     }
@@ -172,7 +176,7 @@ public class SysUserEmployeeLVM implements Serializable {
         return email;
     }
 
-    public SysUserEmployeeLVM email(String email) {
+    public SysUserEmployeeListVM email(String email) {
         this.email = email;
         return this;
     }
@@ -185,7 +189,7 @@ public class SysUserEmployeeLVM implements Serializable {
         return mobile;
     }
 
-    public SysUserEmployeeLVM mobile(String mobile) {
+    public SysUserEmployeeListVM mobile(String mobile) {
         this.mobile = mobile;
         return this;
     }
@@ -198,7 +202,7 @@ public class SysUserEmployeeLVM implements Serializable {
         return phone;
     }
 
-    public SysUserEmployeeLVM phone(String phone) {
+    public SysUserEmployeeListVM phone(String phone) {
         this.phone = phone;
         return this;
     }
@@ -211,7 +215,7 @@ public class SysUserEmployeeLVM implements Serializable {
         return userType;
     }
 
-    public SysUserEmployeeLVM userType(UserType userType) {
+    public SysUserEmployeeListVM userType(UserType userType) {
         this.userType = userType;
         return this;
     }
@@ -225,10 +229,10 @@ public class SysUserEmployeeLVM implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SysUserEmployeeLVM)) {
+        if (!(o instanceof SysUserEmployeeListVM)) {
             return false;
         }
-        return id != null && id.equals(((SysUserEmployeeLVM) o).id);
+        return id != null && id.equals(((SysUserEmployeeListVM) o).id);
     }
 
     public Long getId() {

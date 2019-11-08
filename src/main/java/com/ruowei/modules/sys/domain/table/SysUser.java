@@ -4,16 +4,20 @@ import com.ruowei.common.entity.AbstractAuditingEntity;
 import com.ruowei.modules.sys.domain.enumeration.GenderType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
-import org.hibernate.annotations.BatchSize;
+import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -212,6 +216,15 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
+
+    /**
+     * 分配角色
+     */
+    @ApiModelProperty(value = "分配角色")
+    @ManyToMany
+    @JoinTable(name="sys_user_role",joinColumns={@JoinColumn(name="sys_user_id",referencedColumnName="id")}
+        ,inverseJoinColumns={@JoinColumn(name="sys_role_id",referencedColumnName="id")})
+    private List<SysRole> sysRoleList;
 
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -503,22 +516,6 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof SysUser)) {
-            return false;
-        }
-        return id != null && id.equals(((SysUser) o).id);
-    }
-
-    @Override
-    public int hashCode() {
-        return 31;
-    }
-
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -563,6 +560,54 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         this.authorities = authorities;
     }
 
+    public List<SysRole> getSysRoleList() {
+        return sysRoleList;
+    }
+
+    public void setSysRoleList(List<SysRole> sysRoleList) {
+        this.sysRoleList = sysRoleList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SysUser sysUser = (SysUser) o;
+        return activated == sysUser.activated &&
+            Objects.equals(userCode, sysUser.userCode) &&
+            Objects.equals(loginCode, sysUser.loginCode) &&
+            Objects.equals(userName, sysUser.userName) &&
+            Objects.equals(password, sysUser.password) &&
+            Objects.equals(email, sysUser.email) &&
+            Objects.equals(mobile, sysUser.mobile) &&
+            Objects.equals(phone, sysUser.phone) &&
+            sex == sysUser.sex &&
+            Objects.equals(avatar, sysUser.avatar) &&
+            Objects.equals(sign, sysUser.sign) &&
+            Objects.equals(wxOpenid, sysUser.wxOpenid) &&
+            Objects.equals(mobileImei, sysUser.mobileImei) &&
+            userType == sysUser.userType &&
+            Objects.equals(refCode, sysUser.refCode) &&
+            Objects.equals(refName, sysUser.refName) &&
+            Objects.equals(lastLoginIp, sysUser.lastLoginIp) &&
+            Objects.equals(lastLoginDate, sysUser.lastLoginDate) &&
+            Objects.equals(freezeDate, sysUser.freezeDate) &&
+            Objects.equals(freezeCause, sysUser.freezeCause) &&
+            Objects.equals(userSort, sysUser.userSort) &&
+            status == sysUser.status &&
+            Objects.equals(remarks, sysUser.remarks) &&
+            Objects.equals(activationKey, sysUser.activationKey) &&
+            Objects.equals(resetKey, sysUser.resetKey) &&
+            Objects.equals(resetDate, sysUser.resetDate) &&
+            Objects.equals(authorities, sysUser.authorities) &&
+            Objects.equals(sysRoleList, sysUser.sysRoleList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userCode, loginCode, userName, password, email, mobile, phone, sex, avatar, sign, wxOpenid, mobileImei, userType, refCode, refName, lastLoginIp, lastLoginDate, freezeDate, freezeCause, userSort, status, remarks, activated, activationKey, resetKey, resetDate, authorities, sysRoleList);
+    }
+
     @Override
     public String toString() {
         return "SysUser{" +
@@ -593,6 +638,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
             ", resetKey='" + resetKey + '\'' +
             ", resetDate=" + resetDate +
             ", authorities=" + authorities +
+            ", sysRoleList=" + sysRoleList +
             '}';
     }
 }

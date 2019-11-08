@@ -1,5 +1,6 @@
 package com.ruowei.modules.sys.domain.table;
 import com.ruowei.common.entity.BaseEntity;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -7,8 +8,12 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
 
 import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * 员工表
@@ -86,6 +91,26 @@ public class SysEmployee extends BaseEntity implements Serializable {
     @Size(max = 500)
     @Column(name = "remarks", length = 500)
     private String remarks;
+
+    /**
+     * 所在岗位
+     */
+    @ApiModelProperty(value = "所在岗位")
+    @OneToMany(fetch=FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinTable(name="sys_employee_post",joinColumns={@JoinColumn(name="sys_employee_id", referencedColumnName="id")}
+        ,inverseJoinColumns={@JoinColumn(name="sys_post_id", referencedColumnName="id")})
+    private List<SysPost> sysPostList;
+
+    /**
+     * 附属机构及岗位
+     */
+    @ApiModelProperty(value = "附属机构及岗位")
+    @OneToMany(fetch=FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name="sys_employee_id", referencedColumnName="id")
+    private List<SysEmployeeOffice> sysEmployeeOfficeList;
+
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -207,35 +232,67 @@ public class SysEmployee extends BaseEntity implements Serializable {
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public List<SysPost> getSysPostList() {
+        return sysPostList;
+    }
+
+    public void setSysPostList(List<SysPost> sysPostList) {
+        this.sysPostList = sysPostList;
+    }
+
+    public List<SysEmployeeOffice> getSysEmployeeOfficeList() {
+        return sysEmployeeOfficeList;
+    }
+
+    public void setSysEmployeeOfficeList(List<SysEmployeeOffice> sysEmployeeOfficeList) {
+        this.sysEmployeeOfficeList = sysEmployeeOfficeList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SysEmployee)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        return id != null && id.equals(((SysEmployee) o).id);
+        SysEmployee that = (SysEmployee) o;
+        return Objects.equals(empCode, that.empCode) &&
+            Objects.equals(empName, that.empName) &&
+            Objects.equals(empNameEn, that.empNameEn) &&
+            Objects.equals(sysOfficeId, that.sysOfficeId) &&
+            Objects.equals(officeName, that.officeName) &&
+            Objects.equals(sysCompanyId, that.sysCompanyId) &&
+            Objects.equals(companyName, that.companyName) &&
+            status == that.status &&
+            Objects.equals(remarks, that.remarks) &&
+            Objects.equals(sysPostList, that.sysPostList) &&
+            Objects.equals(sysEmployeeOfficeList, that.sysEmployeeOfficeList);
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hash(empCode, empName, empNameEn, sysOfficeId, officeName, sysCompanyId, companyName, status, remarks, sysPostList, sysEmployeeOfficeList);
     }
 
     @Override
     public String toString() {
         return "SysEmployee{" +
-            "id=" + getId() +
-            ", empCode='" + getEmpCode() + "'" +
-            ", empName='" + getEmpName() + "'" +
-            ", empNameEn='" + getEmpNameEn() + "'" +
-            ", sysOfficeId='" + getSysOfficeId() + "'" +
-            ", officeName='" + getOfficeName() + "'" +
-            ", sysCompanyId='" + getSysCompanyId() + "'" +
-            ", companyName='" + getCompanyName() + "'" +
-            ", status='" + getStatus() + "'" +
-            ", remarks='" + getRemarks() + "'" +
-            "}";
+            "empCode='" + empCode + '\'' +
+            ", empName='" + empName + '\'' +
+            ", empNameEn='" + empNameEn + '\'' +
+            ", sysOfficeId='" + sysOfficeId + '\'' +
+            ", officeName='" + officeName + '\'' +
+            ", sysCompanyId='" + sysCompanyId + '\'' +
+            ", companyName='" + companyName + '\'' +
+            ", status=" + status +
+            ", remarks='" + remarks + '\'' +
+            ", sysPostList=" + sysPostList +
+            ", sysEmployeeOfficeList=" + sysEmployeeOfficeList +
+            '}';
     }
 }
