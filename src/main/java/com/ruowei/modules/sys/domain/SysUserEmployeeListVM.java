@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.ruowei.common.json.LongJsonDeserializer;
 import com.ruowei.common.json.LongJsonSerializer;
+import com.ruowei.common.json.SysPostListJsonSerializer;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
 import com.ruowei.modules.sys.domain.table.SysPost;
@@ -28,9 +29,9 @@ import java.util.List;
  * @author 刘东奇
  */
 @Entity
-@Table(name = "sys_user")
-@SecondaryTable(name = "sys_employee", pkJoinColumns = {
-    @PrimaryKeyJoinColumn(name = "id",referencedColumnName = "id")})
+@Table(name = "sys_employee")
+@SecondaryTable(name = "sys_user", pkJoinColumns = {
+    @PrimaryKeyJoinColumn(name = "ref_code",referencedColumnName = "id")})
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class SysUserEmployeeListVM implements Serializable {
 
@@ -52,49 +53,49 @@ public class SysUserEmployeeListVM implements Serializable {
      */
     @NotNull
     @Size(max = 100)
-    @Column(name = "login_code", length = 100, nullable = false, unique = true)
+    @Column(name = "login_code", length = 100, nullable = false, unique = true, table="sys_user")
     private String loginCode;
 
     /**
      * 用户昵称
      */
     @Size(max = 100)
-    @Column(name = "user_name", length = 100)
+    @Column(name = "user_name", length = 100, table="sys_user")
     private String userName;
 
     /**
      * 电子邮箱
      */
     @Size(max = 300)
-    @Column(name = "email", length = 300, unique = true)
+    @Column(name = "email", length = 300, unique = true, table="sys_user")
     private String email;
 
     /**
      * 手机号码
      */
     @Size(max = 100)
-    @Column(name = "mobile", length = 100, unique = true)
+    @Column(name = "mobile", length = 100, unique = true, table="sys_user")
     private String mobile;
 
     /**
      * 办公电话
      */
     @Size(max = 100)
-    @Column(name = "phone", length = 100)
+    @Column(name = "phone", length = 100, table="sys_user")
     private String phone;
 
     /**
      * 用户类型
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_type")
+    @Column(name = "user_type", table="sys_user")
     private UserType userType = UserType.EMPLOYEE;
 
     /**
      * 更新时间
      */
     @LastModifiedDate
-    @Column(name = "last_modified_date")
+    @Column(name = "last_modified_date", table="sys_user")
     @JsonIgnore
     private Instant lastModifiedDate;
 
@@ -103,7 +104,7 @@ public class SysUserEmployeeListVM implements Serializable {
      */
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false, table="sys_user")
     private UserStatusType status;
 
     /**
@@ -115,21 +116,21 @@ public class SysUserEmployeeListVM implements Serializable {
      */
     @NotNull
     @Size(max = 100)
-    @Column(name = "emp_name", length = 100, nullable = false, table="sys_employee")
+    @Column(name = "emp_name", length = 100, nullable = false)
     private String empName;
 
     /**
      * 机构ID
      */
     @Size(max = 100)
-    @Column(name = "sys_office_id", length = 100, table="sys_employee")
+    @Column(name = "sys_office_id", length = 100)
     private String sysOfficeId;
 
     /**
      * 公司ID
      */
     @Size(max = 200)
-    @Column(name = "sys_company_id", length = 200, table="sys_employee")
+    @Column(name = "sys_company_id", length = 200)
     private String sysCompanyId;
 
     //实体间的关系
@@ -140,6 +141,7 @@ public class SysUserEmployeeListVM implements Serializable {
     @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name="sys_employee_post",joinColumns={@JoinColumn(name="sys_employee_id",referencedColumnName="id")}
         ,inverseJoinColumns={@JoinColumn(name="sys_post_id",referencedColumnName="id")})
+    @JsonSerialize(using = SysPostListJsonSerializer.class)
     private List<SysPost> sysPostList;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

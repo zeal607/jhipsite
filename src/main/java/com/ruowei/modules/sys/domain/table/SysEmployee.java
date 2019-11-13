@@ -1,4 +1,5 @@
 package com.ruowei.modules.sys.domain.table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ruowei.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
@@ -8,8 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 import org.hibernate.annotations.Fetch;
@@ -105,11 +105,35 @@ public class SysEmployee extends BaseEntity implements Serializable {
     /**
      * 附属机构及岗位
      */
+    /**
+     * 员工和附属机构、岗位的映射关系的配置方法：
+     * 方案1（当前方案）：使用Map，SysOffice作为KEY,SysPost作为Value
+     * 优点：没有引入中间表实体（sys_employee_office），比较优雅易理解
+     * 缺点：由于Map的原因，不支持一个员工在一个机构中有多个岗位
+     * @author 刘东奇
+     * @date 2019/11/12
+     */
+    /**
+     * 员工和附属机构、岗位的映射关系的配置方法：
+     * 方案2：引入中间表实体SysEmployeeOffice，
+     * SysEmployee-OneToMany-SysEmployeeOffice，
+     * SysEmployeeOffice-ManyToOne-SysEmployee、
+     * SysEmployeeOffice-ManyToOne-SysOffice、
+     * SysEmployeeOffice-ManyToOne-SysPost、
+     * 优点：支持一个员工在一个机构中有多个岗位
+     * 缺点：引入了中间表实体（sys_employee_office）不够优雅，查询时存在无限嵌套bug
+     * @author 刘东奇
+     * @date 2019/11/12
+     */
     @ApiModelProperty(value = "附属机构及岗位")
-    @OneToMany(fetch=FetchType.EAGER)
+    @ManyToMany
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name="sys_employee_id", referencedColumnName="id")
-    private List<SysEmployeeOffice> sysEmployeeOfficeList;
+    @JoinTable(name = "sys_employee_office",
+        joinColumns = @JoinColumn(name = "sys_employee_id", referencedColumnName="id"),
+        inverseJoinColumns = @JoinColumn(name="sys_post_id", referencedColumnName="id"))
+    @MapKeyJoinColumn(name = "sys_office_id")
+    @ElementCollection
+    private Map<SysOffice,SysPost> sysOfficeSysPostMap;
 
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -244,12 +268,12 @@ public class SysEmployee extends BaseEntity implements Serializable {
         this.sysPostList = sysPostList;
     }
 
-    public List<SysEmployeeOffice> getSysEmployeeOfficeList() {
-        return sysEmployeeOfficeList;
+    public Map<SysOffice, SysPost> getSysOfficeSysPostMap() {
+        return sysOfficeSysPostMap;
     }
 
-    public void setSysEmployeeOfficeList(List<SysEmployeeOffice> sysEmployeeOfficeList) {
-        this.sysEmployeeOfficeList = sysEmployeeOfficeList;
+    public void setSysOfficeSysPostMap(Map<SysOffice, SysPost> sysOfficeSysPostMap) {
+        this.sysOfficeSysPostMap = sysOfficeSysPostMap;
     }
 
     @Override
@@ -271,28 +295,11 @@ public class SysEmployee extends BaseEntity implements Serializable {
             status == that.status &&
             Objects.equals(remarks, that.remarks) &&
             Objects.equals(sysPostList, that.sysPostList) &&
-            Objects.equals(sysEmployeeOfficeList, that.sysEmployeeOfficeList);
+            Objects.equals(sysOfficeSysPostMap, that.sysOfficeSysPostMap);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(empCode, empName, empNameEn, sysOfficeId, officeName, sysCompanyId, companyName, status, remarks, sysPostList, sysEmployeeOfficeList);
-    }
-
-    @Override
-    public String toString() {
-        return "SysEmployee{" +
-            "empCode='" + empCode + '\'' +
-            ", empName='" + empName + '\'' +
-            ", empNameEn='" + empNameEn + '\'' +
-            ", sysOfficeId='" + sysOfficeId + '\'' +
-            ", officeName='" + officeName + '\'' +
-            ", sysCompanyId='" + sysCompanyId + '\'' +
-            ", companyName='" + companyName + '\'' +
-            ", status=" + status +
-            ", remarks='" + remarks + '\'' +
-            ", sysPostList=" + sysPostList +
-            ", sysEmployeeOfficeList=" + sysEmployeeOfficeList +
-            '}';
+        return Objects.hash(empCode, empName, empNameEn, sysOfficeId, officeName, sysCompanyId, companyName, status, remarks, sysPostList, sysOfficeSysPostMap);
     }
 }

@@ -21,7 +21,7 @@ public class BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "idGenerator")
     @JsonSerialize(using = LongJsonSerializer.class)
     @JsonDeserialize(using = LongJsonDeserializer.class)
-    protected Long id;
+    public Long id;
 
     @Transient
     protected String entityName;

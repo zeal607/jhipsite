@@ -139,53 +139,6 @@ public class SysUserResource {
     }
 
     /**
-     * 查询员工分页3
-     * @author 刘东奇
-     * @date 2019/11/5
-     * @param pageable
-     */
-    @ApiOperation(value = "查询员工分页")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name="id", value = "主键", paramType = "query", dataType="Long"),
-        @ApiImplicitParam(name="loginCode", value = "登录账号", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="userName", value = "用户昵称", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="email", value = "电子邮箱", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="mobile", value = "手机号码", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="phone", value = "办公电话", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="userType", value = "用户类型", paramType = "query", dataType="UserType"),
-        @ApiImplicitParam(name="lastModifiedDate", value = "更新时间", paramType = "query", dataType="Instant"),
-        @ApiImplicitParam(name="status", value = "用户状态", paramType = "query", dataType="UserStatusType"),
-        @ApiImplicitParam(name="empName", value = "员工姓名", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="sysOfficeId", value = "机构ID", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="sysCompanyId", value = "公司ID", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="sysPostList", value = "岗位ID", paramType = "query", dataType="String")
-    })
-    @GetMapping("/sys-user-employees")
-    public ResponseEntity<List<SysUserEmployeeListVM>> getAllSysUserEmployees(
-        @QuerydslPredicate(root = SysUserEmployeeListVM.class) Predicate sysUserEmployeeLVMPredicate,
-        Pageable pageable) {
-        log.debug("REST request to 查询员工分页 by : {}", sysUserEmployeeLVMPredicate);
-
-        Page<SysUserEmployeeListVM> page = sysUserEmployeeListVMRepository.findAll(sysUserEmployeeLVMPredicate,pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page,"");
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-    /**
-     * 获取单个员工
-     * @author 刘东奇
-     * @date 2019/11/8
-     * @param id
-     */
-    @ApiOperation(value = "获取单个员工")
-    @GetMapping("/sys-user-employee/{id}")
-    public ResponseEntity<SysUserEmployeeDetailVM> getSysUserEmployee(@PathVariable Long id) {
-        log.debug("REST request to 获取单个员工 : {}", id);
-        Optional<SysUserEmployeeDetailVM> one = sysUserEmployeeDetailVMRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(one);
-    }
-
-    /**
      * 获取单个员工2
      * @author 刘东奇
      * @date 2019/9/17
@@ -198,24 +151,6 @@ public class SysUserResource {
         log.debug("REST request to get SysUser : {}", id);
         Optional<SysUserEmployeeDTO> sysUserEmployeeDTO = sysUserService.getSysUserEmployeeById(id);
         return ResponseUtil.wrapOrNotFound(sysUserEmployeeDTO);
-    }
-
-    /**
-     * 新增员工
-     * @author 刘东奇
-     * @date 2019/11/8
-     */
-    @ApiOperation(value = "新增员工")
-    @PostMapping("/sys-user-employees")
-    public ResponseEntity<SysUserEmployeeDTO> createSysUserEmployee(@Valid @RequestBody SysUserEmployeeDetailVM sysUserEmployeeDetailVM) throws URISyntaxException {
-        log.debug("REST request to 新增员工 : {}", sysUserEmployeeDetailVM);
-
-        SysUserEmployeeDTO sysUserEmployeeDTO = sysUserEmployeeMapper.projectIntoSysUserEmployeeDTO(sysUserEmployeeDetailVM);
-        sysUserEmployeeService.createSysUserEmployee(sysUserEmployeeDTO);
-
-        return ResponseEntity.created(new URI("/api/sys-user-employees/" + sysUserEmployeeDTO.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, sysUserEmployeeDTO.getId().toString()))
-            .body(sysUserEmployeeDTO);
     }
 
     /**

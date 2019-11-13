@@ -111,9 +111,6 @@ public class SysEmployeeOfficeQueryService
             if (criteria.getId() != null) {
                 specification = specification.and(buildSpecification(criteria.getId(), SysEmployeeOffice_.id));
             }
-            if (criteria.getSysEmployeeId() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getSysEmployeeId(), SysEmployeeOffice_.sysEmployeeId));
-            }
             if (criteria.getSysOfficeId() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getSysOfficeId(), SysEmployeeOffice_.sysOfficeId));
             }
@@ -232,7 +229,7 @@ public class SysEmployeeOfficeQueryService
 
         JPAQuery<Tuple> tupleJPAQuery = getTupleJPAQuery();
         tupleJPAQuery
-            .leftJoin(qSysEmployee).on(qSysEmployeeOffice.sysEmployeeId.eq(qSysEmployee.empCode))
+            .leftJoin(qSysEmployee).on(qSysEmployeeOffice.sysEmployee.eq(qSysEmployee))
             .leftJoin(qSysUser).on(qSysEmployee.empCode.eq(qSysUser.refCode));
         List<SysEmployeeOfficeDTO> sysEmployeeOfficeDTOList=tupleJPAQuery.where(qSysUser.id.eq(sysUserId)).fetch()
             .stream().map(

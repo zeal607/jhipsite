@@ -120,7 +120,7 @@ public class SysUserEmployeeDTO extends BaseDTO implements Serializable {
      * 附属机构及岗位
      */
     @ApiModelProperty(value = "所在岗位")
-    private List<SysEmployeeOfficeDTO> sysEmployeeOfficeDTOList;
+    private List<SysOfficeDTO> sysOfficeDTOList;
 
     /**
      * 备注信息
@@ -263,11 +263,11 @@ public class SysUserEmployeeDTO extends BaseDTO implements Serializable {
         this.sysRoleDTOList = sysRoleDTOList;
     }
 
-    public List<SysEmployeeOfficeDTO> getSysEmployeeOfficeDTOList() {
-        return sysEmployeeOfficeDTOList;
+    public List<SysOfficeDTO> getSysOfficeDTOList() {
+        return sysOfficeDTOList;
     }
 
-    public void setSysEmployeeOfficeDTOList(List<SysEmployeeOfficeDTO> sysEmployeeOfficeDTOList) {
-        this.sysEmployeeOfficeDTOList = sysEmployeeOfficeDTOList;
+    public void setSysOfficeDTOList(List<SysOfficeDTO> sysOfficeDTOList) {
+        this.sysOfficeDTOList = sysOfficeDTOList;
     }
 }

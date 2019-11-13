@@ -44,21 +44,21 @@ public class SysEmployeeUtil {
         if(sysEmployeeOptional.isPresent()){
             SysEmployee sysEmployee = sysEmployeeOptional.get();
             String existEmpCode=sysEmployee.getEmpCode();
-            if( Pattern.matches(EMP_CODE_REGEX, existEmpCode)){
+//            if( Pattern.matches(EMP_CODE_REGEX, existEmpCode)){
                 //符合规则，则
                 String code = existEmpCode.replaceAll("emp"+officeCode,"");
                 Integer codeNum = new Integer(code);
                 String newCode = String.format("%05d",codeNum+1);
                 return "emp" + officeCode + newCode;
-            }else{
-                //不符合规则
-                //抛异常
-                throw new DataInvalidException(ErrorMessageUtils.getDataInvalidMessage(
-                    sysEmployee.getEntityName(),
-                    sysEmployee.getId().toString(),
-                    EMP_CODE_REGEX,
-                    existEmpCode));
-            }
+//            }else{
+//                //不符合规则
+//                //抛异常
+//                throw new DataInvalidException(ErrorMessageUtils.getDataInvalidMessage(
+//                    sysEmployee.getEntityName(),
+//                    sysEmployee.getId().toString(),
+//                    EMP_CODE_REGEX,
+//                    existEmpCode));
+//            }
         }else{
             //不存在
             return "emp"+officeCode+"00001";

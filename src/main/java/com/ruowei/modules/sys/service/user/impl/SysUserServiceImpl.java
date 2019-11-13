@@ -220,7 +220,8 @@ public class SysUserServiceImpl
         sysUser = this.insert(sysUser);
 
         //创建员工
-        SysEmployee sysEmployee = sysUserEmployeeMapper.projectIntoEmployee(sysUserEmployeeDTO);
+        //todo
+        SysEmployee sysEmployee =new SysEmployee();
         sysEmployee.setStatus(EmployeeStatusType.NORMAL);
         // 生成员工编号
         sysEmployee.setEmpCode(sysEmployeeService.generateEmpCode(sysUserEmployeeDTO.getSysOfficeId(),officeCode));
@@ -232,7 +233,8 @@ public class SysUserServiceImpl
 
         // 保存附属机构及岗位
         // 判断附属机构及岗位是否存在
-        sysEmployeeOfficeService.saveEmployeeOfficePostRelationship(sysEmployee,sysUserEmployeeDTO.getSysEmployeeOfficeDTOList());
+        //TODO
+//        sysEmployeeOfficeService.saveEmployeeOfficePostRelationship(sysEmployee,sysUserEmployeeDTO.getSysEmployeeOfficeDTOList());
 
         // 保存角色关系
         sysUserRoleService.saveUserRoleRelationship(sysUser,sysUserEmployeeDTO.getSysRoleDTOList());

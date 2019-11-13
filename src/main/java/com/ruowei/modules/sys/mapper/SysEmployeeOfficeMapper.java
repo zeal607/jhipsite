@@ -32,7 +32,6 @@ public interface SysEmployeeOfficeMapper extends EntityMapper<SysEmployeeOfficeD
      */
     @Mappings({
         @Mapping(target = "id" ,ignore=true),
-        @Mapping(source = "sysEmployee.empCode", target = "sysEmployeeId"),
         @Mapping(source = "sysEmployeeOfficeDTO.sysOfficeId", target = "sysOfficeId")
     })
     SysEmployeeOffice assembleEntity(SysEmployeeOfficeDTO sysEmployeeOfficeDTO, SysEmployee sysEmployee);

@@ -23,7 +23,6 @@ public interface SysEmployeeOfficePostMapper {
      */
     @Mappings({
         @Mapping(target = "id" ,ignore=true),
-        @Mapping(source = "sysEmployee.empCode", target = "sysEmployeeId"),
         @Mapping(source = "sysOfficeDTO.officeCode", target = "sysOfficeId"),
         @Mapping(source = "sysPostDTO.postCode", target = "sysPostId")
     })

@@ -5,6 +5,7 @@ import com.ruowei.common.error.ErrorMessageUtils;
 import com.ruowei.common.error.exception.DataAlreadyExistException;
 import com.ruowei.common.error.exception.DataNotFoundException;
 import com.ruowei.common.lang.ObjectUtils;
+import com.ruowei.common.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.QuerydslJpaRepository;
@@ -45,9 +46,9 @@ public class BaseRepositoryImpl<ID extends Serializable,Entity,QEntity extends E
     @Transactional
     public Entity insert(Entity entity) {
         Assert.isTrue(this.entityInformation.getId(entity) == null
-                || this.getOne(this.entityInformation.getId(entity)) == null,
+                || !this.findById(this.entityInformation.getId(entity)).isPresent(),
             ErrorMessageUtils.getAlreadyExistMessage(
-                entityInformation.getEntityName(),entityInformation.getId(entity).toString())
+                entityInformation.getEntityName(), ObjectUtils.toString(entityInformation.getId(entity)))
             );
         this.em.persist(entity);
         return entity;
@@ -98,17 +99,4 @@ public class BaseRepositoryImpl<ID extends Serializable,Entity,QEntity extends E
         }
     }
 
-    /**
-     * 根据ID查
-     *
-     * @param id
-     * @return
-     * @author 刘东奇
-     * @date 2019/11/8
-     */
-    @Override
-    public Optional<Entity> findOne(ID id) {
-        Entity entity = this.getOne(id);
-        return Optional.ofNullable(entity);
-    }
 }

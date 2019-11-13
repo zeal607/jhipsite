@@ -1,11 +1,8 @@
 package com.ruowei.modules.sys.service.alpha;
 
 import com.ruowei.modules.sys.domain.table.SysCompany;
-import com.ruowei.modules.sys.domain.table.SysOffice;
 import com.ruowei.modules.sys.repository.SysCompanyRepository;
-import com.ruowei.modules.sys.repository.SysOfficeRepository;
 import com.ruowei.modules.sys.service.api.SysCompanyApi;
-import com.ruowei.modules.sys.service.api.SysOfficeApi;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -38,7 +35,7 @@ public class SysCompanyService implements SysCompanyApi {
     @Override
     public SysCompany checkCompanyExistsById(Long id) {
         Assert.notNull(id,"公司ID不能为空");
-        Optional<SysCompany> sysCompany = sysCompanyRepository.findOne(id);
+        Optional<SysCompany> sysCompany = sysCompanyRepository.findById(id);
         Assert.isTrue(sysCompany.isPresent(),"公司不存在");
         return sysCompany.get();
     }

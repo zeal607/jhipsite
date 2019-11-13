@@ -37,7 +37,7 @@ public class SysOfficeService implements SysOfficeApi {
     @Override
     public SysOffice checkOfficeExistsById(Long id) {
         Assert.notNull(id,"机构ID不能为空");
-        Optional<SysOffice> sysOffice = sysOfficeRepository.findOne(id);
+        Optional<SysOffice> sysOffice = sysOfficeRepository.findById(id);
         Assert.isTrue(sysOffice.isPresent(),"机构不存在");
         return sysOffice.get();
     }

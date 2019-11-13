@@ -1,29 +1,40 @@
 package com.ruowei.modules.sys.service.alpha;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ruowei.common.error.ErrorMessageUtils;
 import com.ruowei.common.error.exception.DataAlreadyExistException;
 import com.ruowei.common.error.exception.DataNotFoundException;
+import com.ruowei.modules.sys.domain.SysUserEmployeeDetailVM;
 import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
 import com.ruowei.modules.sys.domain.table.*;
 import com.ruowei.modules.sys.mapper.SysUserEmployeeMapper;
+import com.ruowei.modules.sys.pojo.SysEmployeeOfficeDTO;
 import com.ruowei.modules.sys.pojo.SysOfficeDTO;
+import com.ruowei.modules.sys.pojo.SysRoleDTO;
 import com.ruowei.modules.sys.pojo.SysUserEmployeeDTO;
 import com.ruowei.modules.sys.repository.SysEmployeeRepository;
+import com.ruowei.modules.sys.repository.SysRoleRepository;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import com.ruowei.modules.sys.service.api.SysUserEmployeeApi;
 import com.ruowei.modules.sys.service.query.SysUserQueryService;
 import com.ruowei.modules.sys.service.util.SysEmployeeUtil;
 import com.ruowei.modules.sys.service.util.SysUserUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author 刘东奇
@@ -32,6 +43,16 @@ import java.util.HashMap;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class SysUserEmployeeService implements SysUserEmployeeApi {
+    @Autowired
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    protected JPAQueryFactory queryFactory;
+
+    @PostConstruct
+    public void init() {
+        queryFactory = new JPAQueryFactory(entityManager);
+    }
 
     private final SysCompanyService sysCompanyService;
     private final SysOfficeService sysOfficeService;
@@ -71,32 +92,31 @@ public class SysUserEmployeeService implements SysUserEmployeeApi {
     /**
      * 新增员工
      *
-     * @param sysUserEmployeeDTO
+     * @param sysUserEmployeeDetailVM
      * @return
      * @author 刘东奇
      * @date 2019/11/8
      */
     @Override
-    public SysUserEmployeeDTO createSysUserEmployee(SysUserEmployeeDTO sysUserEmployeeDTO) {
+    public SysUserEmployeeDetailVM createSysUserEmployee(SysUserEmployeeDetailVM sysUserEmployeeDetailVM) {
 
         // 判断机构是否有效存在
-        SysOffice sysOffice = sysOfficeService.checkOfficeExistsById(Long.valueOf(sysUserEmployeeDTO.getSysOfficeId()));
+        SysOffice sysOffice = sysOfficeService.checkOfficeExistsById(Long.valueOf(sysUserEmployeeDetailVM.getSysOfficeId()));
         // 判断公司是否有效存在
-        SysCompany sysCompany = sysCompanyService.checkCompanyExistsById(Long.valueOf(sysUserEmployeeDTO.getSysCompanyId()));
+        SysCompany sysCompany = sysCompanyService.checkCompanyExistsById(Long.valueOf(sysUserEmployeeDetailVM.getSysCompanyId()));
         // 判断登录ID、手机号是否重复
-        this.checkSysUserExists(sysUserEmployeeDTO.getLoginCode(),sysUserEmployeeDTO.getMobile());
+        this.checkSysUserExists(sysUserEmployeeDetailVM.getLoginCode(),sysUserEmployeeDetailVM.getMobile());
 
         //先创建员工
-        SysEmployee sysEmployee = sysUserEmployeeMapper.projectIntoEmployee(sysUserEmployeeDTO);
+        SysEmployee sysEmployee = sysUserEmployeeMapper.SysUserEmployeeDetailVMToSysEmployee(sysUserEmployeeDetailVM);
         sysEmployee.setOfficeName(sysOffice.getOfficeName());
         sysEmployee.setCompanyName(sysCompany.getCompanyName());
         sysEmployee.setStatus(EmployeeStatusType.NORMAL);
-        sysEmployee.setEmpCode(SysEmployeeUtil.generateEmpCode(sysUserEmployeeDTO.getSysOfficeId(),sysOffice.getOfficeCode()));
+        sysEmployee.setEmpCode(SysEmployeeUtil.generateEmpCode(sysUserEmployeeDetailVM.getSysOfficeId(),sysOffice.getOfficeCode()));
         sysEmployee = sysEmployeeRepository.insert(sysEmployee);
 
         //再创建用户
-        SysUser sysUser = sysUserEmployeeMapper.projectIntoUser(sysUserEmployeeDTO);
-        sysUser.setId(sysEmployee.getId());
+        SysUser sysUser = sysUserEmployeeMapper.SysUserEmployeeDetailVMToSysUser(sysUserEmployeeDetailVM);
         sysUser.setUserType(UserType.EMPLOYEE);
         sysUser.setRefCode(sysEmployee.getId().toString());
         sysUser.setRefName(sysEmployee.getEmpName());
@@ -104,8 +124,9 @@ public class SysUserEmployeeService implements SysUserEmployeeApi {
         sysUser.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
         sysUser.setUserCode(SysUserUtil.generateUserCode());
         sysUser = sysUserRepository.insert(sysUser);
-        sysUserEmployeeDTO.setId(sysUser.getId());
-        return sysUserEmployeeDTO;
+        //返回员工表主键
+        sysUserEmployeeDetailVM.setId(sysEmployee.getId());
+        return sysUserEmployeeDetailVM;
     }
 
     /**
@@ -132,5 +153,24 @@ public class SysUserEmployeeService implements SysUserEmployeeApi {
         }
         Assert.isTrue(!this.sysUserQueryService.exists(booleanBuilder),
             ErrorMessageUtils.getAlreadyExistMessageByOrMap("用户",map));
+    }
+
+    /**
+     * 获取员工的角色列表
+     *
+     * @param id
+     * @return
+     * @author 刘东奇
+     * @date 2019/11/13
+     */
+    @Override
+    public List<SysRole> getSysRoleListBySysEmployeeId(Long id) {
+        QSysRole qSysRole = QSysRole.sysRole;
+        QSysUserRole qSysUserRole = QSysUserRole.sysUserRole;
+        QSysUser qSysUser = QSysUser.sysUser;
+        JPAQuery<SysRole> jpaQuery = this.queryFactory.selectFrom(qSysRole).leftJoin(qSysUserRole).on(qSysRole.id.eq(qSysUserRole.sysRoleId.castToNum(Long.class)))
+            .leftJoin(qSysUser).on(qSysUser.id.eq(qSysUserRole.sysUserId.castToNum(Long.class)))
+        .where(qSysUser.refCode.castToNum(Long.class).eq(id));
+        return jpaQuery.fetch();
     }
 }

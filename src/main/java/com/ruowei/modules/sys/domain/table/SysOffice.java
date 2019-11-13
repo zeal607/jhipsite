@@ -1,6 +1,7 @@
 package com.ruowei.modules.sys.domain.table;
 import com.ruowei.common.entity.AbstractAuditingEntity;
 import com.ruowei.modules.sys.domain.enumeration.OfficeType;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,9 +9,13 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
 
 
 import com.ruowei.modules.sys.domain.enumeration.OfficeStatusType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * 组织机构表
@@ -159,6 +164,16 @@ public class SysOffice extends AbstractAuditingEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private OfficeStatusType status;
+
+    /**
+     * 附属机构及岗位
+     */
+    @ApiModelProperty(value = "附属机构及岗位")
+    @ManyToMany
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinTable(name="sys_employee_office",joinColumns={@JoinColumn(name="sys_office_id", referencedColumnName="id")}
+        ,inverseJoinColumns={@JoinColumn(name="sys_post_id", referencedColumnName="id")})
+    private List<SysPost> sysPostList;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -410,45 +425,57 @@ public class SysOffice extends AbstractAuditingEntity implements Serializable {
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Boolean getTreeLeaf() {
+        return treeLeaf;
+    }
+
+    public List<SysPost> getSysPostList() {
+        return sysPostList;
+    }
+
+    public void setSysPostList(List<SysPost> sysPostList) {
+        this.sysPostList = sysPostList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SysOffice)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        return id != null && id.equals(((SysOffice) o).id);
+        SysOffice sysOffice = (SysOffice) o;
+        return  Objects.equals(id, sysOffice.id) &&
+            Objects.equals(officeCode, sysOffice.officeCode) &&
+            Objects.equals(parentCode, sysOffice.parentCode) &&
+            Objects.equals(parentCodes, sysOffice.parentCodes) &&
+            Objects.equals(treeSort, sysOffice.treeSort) &&
+            Objects.equals(treeSorts, sysOffice.treeSorts) &&
+            Objects.equals(treeLeaf, sysOffice.treeLeaf) &&
+            Objects.equals(treeLevel, sysOffice.treeLevel) &&
+            Objects.equals(treeNames, sysOffice.treeNames) &&
+            Objects.equals(viewCode, sysOffice.viewCode) &&
+            Objects.equals(officeName, sysOffice.officeName) &&
+            Objects.equals(fullName, sysOffice.fullName) &&
+            officeType == sysOffice.officeType &&
+            Objects.equals(leader, sysOffice.leader) &&
+            Objects.equals(phone, sysOffice.phone) &&
+            Objects.equals(address, sysOffice.address) &&
+            Objects.equals(zipCode, sysOffice.zipCode) &&
+            Objects.equals(email, sysOffice.email) &&
+            Objects.equals(remarks, sysOffice.remarks) &&
+            status == sysOffice.status &&
+            Objects.equals(sysPostList, sysOffice.sysPostList);
     }
 
     @Override
     public int hashCode() {
-        return 31;
-    }
-
-    @Override
-    public String toString() {
-        return "SysOffice{" +
-            "id=" + getId() +
-            ", officeCode='" + getOfficeCode() + "'" +
-            ", parentCode='" + getParentCode() + "'" +
-            ", parentCodes='" + getParentCodes() + "'" +
-            ", treeSort=" + getTreeSort() +
-            ", treeSorts=" + getTreeSorts() +
-            ", treeLeaf='" + isTreeLeaf() + "'" +
-            ", treeLevel=" + getTreeLevel() +
-            ", treeNames='" + getTreeNames() + "'" +
-            ", viewCode='" + getViewCode() + "'" +
-            ", officeName='" + getOfficeName() + "'" +
-            ", fullName='" + getFullName() + "'" +
-            ", officeType='" + getOfficeType() + "'" +
-            ", leader='" + getLeader() + "'" +
-            ", phone='" + getPhone() + "'" +
-            ", address='" + getAddress() + "'" +
-            ", zipCode='" + getZipCode() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", remarks='" + getRemarks() + "'" +
-            ", status='" + getStatus() + "'" +
-            "}";
+        return Objects.hash(officeCode, parentCode, parentCodes, treeSort, treeSorts, treeLeaf, treeLevel, treeNames, viewCode, officeName, fullName, officeType, leader, phone, address, zipCode, email, remarks, status, sysPostList);
     }
 }

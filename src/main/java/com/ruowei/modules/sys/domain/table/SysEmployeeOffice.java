@@ -1,4 +1,5 @@
 package com.ruowei.modules.sys.domain.table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ruowei.common.entity.BaseEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 员工附属机构关系表
@@ -22,10 +24,13 @@ public class SysEmployeeOffice extends BaseEntity implements Serializable {
     /**
      * 员工ID
      */
-    @NotNull
-    @Size(max = 100)
-    @Column(name = "sys_employee_id", length = 100, nullable = false)
-    private String sysEmployeeId;
+//    @Size(max = 100)
+//    @Column(name = "sys_employee_id", length = 100, nullable = false)
+//    private String sysEmployeeId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    private SysEmployee sysEmployee;
 
     /**
      * 机构ID
@@ -44,19 +49,6 @@ public class SysEmployeeOffice extends BaseEntity implements Serializable {
     private String sysPostId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-
-    public String getSysEmployeeId() {
-        return sysEmployeeId;
-    }
-
-    public SysEmployeeOffice sysEmployeeId(String sysEmployeeId) {
-        this.sysEmployeeId = sysEmployeeId;
-        return this;
-    }
-
-    public void setSysEmployeeId(String sysEmployeeId) {
-        this.sysEmployeeId = sysEmployeeId;
-    }
 
     public String getSysOfficeId() {
         return sysOfficeId;
@@ -80,34 +72,31 @@ public class SysEmployeeOffice extends BaseEntity implements Serializable {
         return this;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+
     public void setSysPostId(String sysPostId) {
         this.sysPostId = sysPostId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof SysEmployeeOffice)) {
-            return false;
-        }
-        return id != null && id.equals(((SysEmployeeOffice) o).id);
+
+//    public String getSysEmployeeId() {
+//        return sysEmployeeId;
+//    }
+//
+//    public void setSysEmployeeId(String sysEmployeeId) {
+//        this.sysEmployeeId = sysEmployeeId;
+//    }
+
+
+    public SysEmployee getSysEmployee() {
+        return sysEmployee;
     }
 
-    @Override
-    public int hashCode() {
-        return 31;
-    }
-
-    @Override
-    public String toString() {
-        return "SysEmployeeOffice{" +
-            "id=" + getId() +
-            ", sysEmployeeId='" + getSysEmployeeId() + "'" +
-            ", sysOfficeId='" + getSysOfficeId() + "'" +
-            ", sysPostId='" + getSysPostId() + "'" +
-            "}";
+    public void setSysEmployee(SysEmployee sysEmployee) {
+        this.sysEmployee = sysEmployee;
     }
 }

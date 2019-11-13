@@ -253,9 +253,9 @@ public class SysUserQueryBackupService
             List<SysPostDTO> postDTOList = sysPostQueryService.getSysPostDTOListBySysUserId(id);
             sysUserEmployeeDTO.setSysPostDTOList(postDTOList);
 
-            // 获取员工附属机构及岗位信息
-            List<SysEmployeeOfficeDTO> sysEmployeeOfficeDTOList = sysEmployeeOfficeQueryService.getSysEmployeeOfficeDTOListBySysUserId(id);
-            sysUserEmployeeDTO.setSysEmployeeOfficeDTOList(sysEmployeeOfficeDTOList);
+            // 获取员工附属机构及岗位信息 TODO
+//            List<SysEmployeeOfficeDTO> sysEmployeeOfficeDTOList = sysEmployeeOfficeQueryService.getSysEmployeeOfficeDTOListBySysUserId(id);
+//            sysUserEmployeeDTO.setSysEmployeeOfficeDTOList(sysEmployeeOfficeDTOList);
 
             // 获取用户角色信息
             List<SysRoleDTO> sysRoleDTOList = sysRoleQueryService.getSysRoleDTOListBySysUserId(id);

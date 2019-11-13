@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import com.ruowei.modules.sys.domain.enumeration.OfficeStatusType;
 
@@ -148,6 +149,8 @@ public class SysOfficeDTO extends BaseDTO implements Serializable {
     @NotNull
     @ApiModelProperty(value = "状态", required = true)
     private OfficeStatusType status;
+
+    private List<SysPostDTO> sysPostDTOList;
 
     public String getOfficeCode() {
         return officeCode;
@@ -299,6 +302,18 @@ public class SysOfficeDTO extends BaseDTO implements Serializable {
 
     public void setStatus(OfficeStatusType status) {
         this.status = status;
+    }
+
+    public Boolean getTreeLeaf() {
+        return treeLeaf;
+    }
+
+    public List<SysPostDTO> getSysPostDTOList() {
+        return sysPostDTOList;
+    }
+
+    public void setSysPostDTOList(List<SysPostDTO> sysPostDTOList) {
+        this.sysPostDTOList = sysPostDTOList;
     }
 
     @Override

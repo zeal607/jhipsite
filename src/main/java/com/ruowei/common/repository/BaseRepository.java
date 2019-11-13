@@ -77,13 +77,5 @@ public interface BaseRepository<ID,Entity,QEntity extends EntityPath<Entity>>
      */
     Entity insertOrUpdate(Entity entity);
 
-    /**
-     * 根据ID查
-     * @author 刘东奇
-     * @date 2019/11/8
-     * @param id
-     * @return
-     */
-    Optional<Entity> findOne(ID id);
 
 }
