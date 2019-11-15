@@ -55,5 +55,4 @@ public interface SysUserRepository
     Optional<SysUser> findOneWithAuthoritiesByEmailIgnoreCase(String email);
 
     Page<SysUser> findAllByLoginCodeNot(Pageable pageable, String loginCode);
-
 }

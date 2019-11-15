@@ -71,13 +71,17 @@ public class BaseRepositoryImpl<ID extends Serializable,Entity,QEntity extends E
                 ErrorMessageUtils.getNotFoundMessage(
                     entityInformation.getEntityName(),entityInformation.getId(entity).toString()));
         } else {
-            //获取当前已存在的实体
-            Entity exist = super.getOne(entityInformation.getId(entity));
-            //获取空属性并处理成null
-            String[] nullProperties = ObjectUtils.getNullProperties(entity);
-            //更新非空属性
-            BeanUtils.copyProperties(entity, exist, nullProperties);
-            return this.em.merge(exist);
+            if(ObjectUtils.isUpdatable(entity)){
+                //获取当前已存在的实体
+                Entity exist = super.getOne(entityInformation.getId(entity));
+                //获取空属性并处理成null
+                String[] nullProperties = ObjectUtils.getNullProperties(entity);
+                //更新非空属性
+                BeanUtils.copyProperties(entity, exist, nullProperties);
+                return this.em.merge(exist);
+            }else {
+                return entity;
+            }
         }
     }
 

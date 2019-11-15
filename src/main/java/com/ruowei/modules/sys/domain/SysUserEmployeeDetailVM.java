@@ -85,7 +85,6 @@ public class SysUserEmployeeDetailVM implements Serializable {
     /**
      * 登录账号
      */
-    @NotNull
     @Size(max = 100)
     @ApiModelProperty(value = "登录账号")
     @Column(name = "login_code", length = 100, nullable = false, unique = true, table="sys_user")

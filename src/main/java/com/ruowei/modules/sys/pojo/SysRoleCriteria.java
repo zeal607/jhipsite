@@ -7,7 +7,6 @@ import com.ruowei.modules.sys.domain.table.SysRole;
 import com.ruowei.modules.sys.domain.enumeration.DataScopeType;
 import com.ruowei.modules.sys.domain.enumeration.RoleStatusType;
 import com.ruowei.modules.sys.domain.enumeration.RoleType;
-import com.ruowei.modules.sys.web.rest.SysRoleResource;
 import io.github.jhipster.service.Criteria;
 import io.github.jhipster.service.filter.BooleanFilter;
 import io.github.jhipster.service.filter.Filter;

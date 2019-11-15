@@ -1,16 +1,15 @@
 package com.ruowei.modules.sys.web.rest;
 
 import com.querydsl.core.types.Predicate;
-import com.ruowei.common.response.PaginationUtil;
 import com.ruowei.modules.sys.domain.SysUserEmployeeDetailVM;
 import com.ruowei.modules.sys.domain.SysUserEmployeeListVM;
-import com.ruowei.modules.sys.domain.table.SysUser;
 import com.ruowei.modules.sys.repository.SysUserEmployeeDetailVMRepository;
 import com.ruowei.modules.sys.repository.SysUserEmployeeListVMRepository;
-import com.ruowei.modules.sys.service.alpha.SysUserEmployeeService;
+import com.ruowei.modules.sys.service.SysUserEmployeeService;
 import com.ruowei.modules.sys.web.api.SysUserEmployeeApi;
-import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -28,14 +28,13 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
-
 /**
- * REST controller for managing {@link SysUser}.
+ * REST controller for 员工相关
  * @author 刘东奇
  */
 @RestController
 @RequestMapping("/api")
+@Api(value = "员工相关" ,tags = "员工相关")
 public class SysUserEmployeeResource implements SysUserEmployeeApi {
 
     private final Logger log = LoggerFactory.getLogger(SysUserEmployeeResource.class);
@@ -66,8 +65,8 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
         log.debug("REST request to 获取单个员工 : {}", id);
         Optional<SysUserEmployeeDetailVM> one = sysUserEmployeeDetailVMRepository.findById(id);
 
-        one.ifPresent(sysUserEmployeeDetailVM->{            ;
-            sysUserEmployeeDetailVM.setSysRoleList(sysUserEmployeeService.getSysRoleListBySysEmployeeId(id));
+        one.ifPresent(userEmployee->{            ;
+            userEmployee.setSysRoleList(sysUserEmployeeService.getSysRoleListBySysEmployeeId(id));
         });
 
         return ResponseUtil.wrapOrNotFound(one);
@@ -104,7 +103,7 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
         log.debug("REST request to 查询员工分页 by : {}", sysUserEmployeeLVMPredicate);
 
         Page<SysUserEmployeeListVM> page = sysUserEmployeeListVMRepository.findAll(sysUserEmployeeLVMPredicate,pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page,"");
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(),page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
@@ -123,7 +122,24 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
         log.debug("REST request to 创建员工 : {}", sysUserEmployeeDetailVM);
         sysUserEmployeeService.createSysUserEmployee(sysUserEmployeeDetailVM);
         return ResponseEntity.created(new URI("/api/sys-user-employees/" + sysUserEmployeeDetailVM.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("系统内置功能", true, "创建员工", sysUserEmployeeDetailVM.getId().toString()))
+           .body(sysUserEmployeeDetailVM);
+    }
+
+    /**
+     * 修改员工
+     *
+     * @param sysUserEmployeeDetailVM
+     * @return
+     * @author 刘东奇
+     * @date 2019/11/14
+     */
+    @Override
+    @ApiOperation(value = "修改员工")
+    @PutMapping("/sys-user-employees")
+    public ResponseEntity<SysUserEmployeeDetailVM> modifySysUserEmployee(@Valid SysUserEmployeeDetailVM sysUserEmployeeDetailVM) {
+        log.debug("REST request to 修改员工 : {}", sysUserEmployeeDetailVM);
+        sysUserEmployeeService.modifySysUserEmployee(sysUserEmployeeDetailVM);
+        return ResponseEntity.ok()
             .body(sysUserEmployeeDetailVM);
     }
 

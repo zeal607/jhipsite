@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
@@ -226,5 +227,37 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
             }
         }
         return properties.toArray(new String[0]);
+    }
+
+    /**
+     * 是否允许更新
+     * 如果非ID字段有非空值，那么可更新，否则不可更新
+     * @author 刘东奇
+     * @date 2019/11/14
+     * @param obj
+     * @return
+     */
+    public static Boolean isUpdatable(Object obj){
+        //查询出对象所有的属性
+        Field[] fields = obj.getClass().getDeclaredFields();
+        //用于判断所有属性是否为空,如果参数为空则不查询
+        boolean flag = false;
+        for (Field field : fields) {
+            //不检查 直接取值
+            field.setAccessible(true);
+            try {
+                if (null != field.get(obj) && !"id".equals(field.getName())) {
+                    //不为空
+                    flag = true;
+                    //当有任何一个参数不为空的时候则跳出判断直接查询
+                    break;
+                }
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return flag;
     }
 }

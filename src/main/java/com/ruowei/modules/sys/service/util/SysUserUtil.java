@@ -15,8 +15,6 @@ import java.util.regex.Pattern;
  * @date 2019/10/22
  */
 public class SysUserUtil {
-
-    private final static String DEFAULT_PASSWORD = "123456";
     private final static String USER_CODE_REGEX = "^user\\d{5}$";
     private final static Pattern USER_CODE_PATTERN = Pattern.compile("^user");
 

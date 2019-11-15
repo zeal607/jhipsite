@@ -7,7 +7,6 @@ import com.ruowei.modules.sys.domain.enumeration.GenderType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
 import com.ruowei.modules.sys.domain.table.SysUser;
-import com.ruowei.modules.sys.web.rest.SysUserResource;
 import io.github.jhipster.service.Criteria;
 import io.github.jhipster.service.filter.Filter;
 import io.github.jhipster.service.filter.IntegerFilter;

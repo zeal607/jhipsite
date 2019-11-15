@@ -1,7 +1,5 @@
 package com.ruowei.common.error.exception;
 
-import com.ruowei.web.rest.errors.BadRequestAlertException;
-import com.ruowei.web.rest.errors.ErrorConstants;
 
 /**
  * 数据已存在

@@ -1,6 +1,13 @@
 package com.ruowei.modules.sys.service.api;
 
+import com.ruowei.common.pojo.BaseTree;
 import com.ruowei.modules.sys.domain.table.SysOffice;
+import com.ruowei.modules.sys.pojo.SysOfficeCriteria;
+import com.ruowei.modules.sys.pojo.SysOfficeDTO;
+import com.ruowei.modules.sys.pojo.SysOfficeTree;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author 刘东奇

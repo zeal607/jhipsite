@@ -208,7 +208,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
     private Instant resetDate = null;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(
         name = "jhi_user_authority",
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
@@ -221,7 +221,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
      * 分配角色
      */
     @ApiModelProperty(value = "分配角色")
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="sys_user_role",joinColumns={@JoinColumn(name="sys_user_id",referencedColumnName="id")}
         ,inverseJoinColumns={@JoinColumn(name="sys_role_id",referencedColumnName="id")})
     private List<SysRole> sysRoleList;

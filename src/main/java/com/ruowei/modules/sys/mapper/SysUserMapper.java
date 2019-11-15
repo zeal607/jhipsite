@@ -2,7 +2,9 @@ package com.ruowei.modules.sys.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
 import com.ruowei.modules.sys.domain.table.Authority;
+import com.ruowei.modules.sys.domain.table.SysOffice;
 import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.pojo.SysOfficeDTO;
 import com.ruowei.modules.sys.pojo.SysUserDTO;
 import com.ruowei.modules.sys.pojo.user.SysUserRegisterDTO;
 import org.mapstruct.*;
@@ -57,4 +59,5 @@ public interface SysUserMapper extends EntityMapper<SysUserDTO, SysUser> {
         }
         return authorities;
     }
+
 }
