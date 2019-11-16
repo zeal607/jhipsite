@@ -1,8 +1,7 @@
 package com.ruowei.modules.sys.service.api;
 
-import com.ruowei.modules.sys.domain.SysUserEmployeeDetailVM;
+import com.ruowei.modules.sys.domain.SysUserEmployeeDetail;
 import com.ruowei.modules.sys.domain.table.SysRole;
-import com.ruowei.modules.sys.pojo.SysUserEmployeeDTO;
 
 import java.util.List;
 
@@ -16,19 +15,19 @@ public interface SysUserEmployeeApi {
      * 新增员工
      * @author 刘东奇
      * @date 2019/11/8
-     * @param sysUserEmployeeDetailVM
+     * @param sysUserEmployeeDetail
      * @return
      */
-    SysUserEmployeeDetailVM createSysUserEmployee(SysUserEmployeeDetailVM sysUserEmployeeDetailVM);
+    SysUserEmployeeDetail createSysUserEmployee(SysUserEmployeeDetail sysUserEmployeeDetail);
 
     /**
      * 修改员工
      * @author 刘东奇
      * @date 2019/11/14
-     * @param sysUserEmployeeDetailVM
+     * @param sysUserEmployeeDetail
      * @return
      */
-    SysUserEmployeeDetailVM modifySysUserEmployee(SysUserEmployeeDetailVM sysUserEmployeeDetailVM);
+    SysUserEmployeeDetail modifySysUserEmployee(SysUserEmployeeDetail sysUserEmployeeDetail);
 
     /**
      * 判断用户是否已存在（登录ID、手机号是否被占用）
@@ -60,4 +59,48 @@ public interface SysUserEmployeeApi {
      */
     Long getSysUserIdBySysEmployeeId(Long id);
 
+    /**
+     * 停用员工
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param sysEmployeeId
+     */
+    void disableSysEmployee(Long sysEmployeeId);
+
+    /**
+     * 启用用户
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param sysEmployeeId
+     * @return
+     */
+    void enableSysEmployee(Long sysEmployeeId);
+
+    /**
+     * 删除员工
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param sysEmployeeId
+     * @return
+     */
+    void deleteSysEmployee(Long sysEmployeeId);
+
+    /**
+     * 重置员工密码
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param sysEmployeeId
+     * @return
+     */
+    void resetSysEmployeePassword(Long sysEmployeeId);
+
+    /**
+     * 给员工分配角色
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param sysEmployeeId
+     * @param roleIdList
+     * @return
+     */
+    void assignRoleToSysEmployee(Long sysEmployeeId, List<Long> roleIdList);
 }

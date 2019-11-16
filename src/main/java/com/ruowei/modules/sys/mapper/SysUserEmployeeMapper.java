@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.mapper;
 
-import com.ruowei.modules.sys.domain.SysUserEmployeeDetailVM;
+import com.ruowei.modules.sys.domain.SysUserEmployeeDetail;
 import com.ruowei.modules.sys.domain.table.SysEmployee;
 import com.ruowei.modules.sys.domain.table.SysOffice;
 import com.ruowei.modules.sys.domain.table.SysUser;
@@ -42,21 +42,21 @@ public interface SysUserEmployeeMapper{
 
     /**
      * 投影到SysEmployee
-     * @param sysUserEmployeeDetailVM
+     * @param sysUserEmployeeDetail
      * @return
      */
-    SysEmployee SysUserEmployeeDetailVMToSysEmployee(SysUserEmployeeDetailVM sysUserEmployeeDetailVM);
+    SysEmployee SysUserEmployeeDetailVMToSysEmployee(SysUserEmployeeDetail sysUserEmployeeDetail);
 
     /**
      * 投影到SysUser
      * id忽略，因为ID是SysEmployee的ID
-     * @param sysUserEmployeeDetailVM
+     * @param sysUserEmployeeDetail
      * @return
      */
     @Mappings({
         @Mapping(target = "id" ,ignore=true)
     })
-    SysUser SysUserEmployeeDetailVMToSysUser(SysUserEmployeeDetailVM sysUserEmployeeDetailVM);
+    SysUser SysUserEmployeeDetailVMToSysUser(SysUserEmployeeDetail sysUserEmployeeDetail);
 
     /**
      * 组装SysUserEmployeeDTO

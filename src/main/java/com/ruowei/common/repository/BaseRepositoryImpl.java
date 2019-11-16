@@ -1,6 +1,7 @@
 package com.ruowei.common.repository;
 
 import com.querydsl.core.types.EntityPath;
+import com.querydsl.core.types.Predicate;
 import com.ruowei.common.error.ErrorMessageUtils;
 import com.ruowei.common.error.exception.DataAlreadyExistException;
 import com.ruowei.common.error.exception.DataNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.util.Assert;
 import javax.persistence.EntityManager;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -101,6 +103,18 @@ public class BaseRepositoryImpl<ID extends Serializable,Entity,QEntity extends E
         } else {
             return this.updateIgnoreNull(entity);
         }
+    }
+
+    /**
+     * 批量删除
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param predicate
+     */
+    @Override
+    public void deleteAll(Predicate predicate) {
+        List<Entity> list= super.findAll(predicate);
+        this.deleteAll(list);
     }
 
 }

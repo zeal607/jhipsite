@@ -1,6 +1,7 @@
 package com.ruowei.common.repository;
 
 import com.querydsl.core.types.EntityPath;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.StringPath;
 import com.ruowei.common.entity.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -77,5 +78,11 @@ public interface BaseRepository<ID,Entity,QEntity extends EntityPath<Entity>>
      */
     Entity insertOrUpdate(Entity entity);
 
-
+    /**
+     * 批量删除
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param predicate
+     */
+    void deleteAll(Predicate predicate);
 }

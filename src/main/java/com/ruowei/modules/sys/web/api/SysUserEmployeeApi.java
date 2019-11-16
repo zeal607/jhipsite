@@ -1,8 +1,9 @@
 package com.ruowei.modules.sys.web.api;
 
 import com.querydsl.core.types.Predicate;
-import com.ruowei.modules.sys.domain.SysUserEmployeeDetailVM;
-import com.ruowei.modules.sys.domain.SysUserEmployeeListVM;
+import com.ruowei.modules.sys.domain.SysUserEmployeeDetail;
+import com.ruowei.modules.sys.domain.SysUserEmployeeList;
+import com.ruowei.modules.sys.web.vm.AssignRoleVM;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
@@ -25,37 +26,80 @@ public interface SysUserEmployeeApi {
      * @param id
      * @return
      */
-    ResponseEntity<SysUserEmployeeDetailVM> getSysUserEmployee(@PathVariable Long id);
+    ResponseEntity<SysUserEmployeeDetail> getSysUserEmployee(@PathVariable Long id);
 
     /**
      * 分页查询员工数据
      * @author 刘东奇
      * @date 2019/11/13
-     * @param sysUserEmployeeLVMPredicate
+     * @param sysUserEmployeeListPredicate
      * @param pageable
      * @return
      */
-    ResponseEntity<List<SysUserEmployeeListVM>> getAllSysUserEmployees(
-        @QuerydslPredicate(root = SysUserEmployeeListVM.class) Predicate sysUserEmployeeLVMPredicate,
+    ResponseEntity<List<SysUserEmployeeList>> getAllSysUserEmployees(
+        @QuerydslPredicate(root = SysUserEmployeeList.class) Predicate sysUserEmployeeListPredicate,
         Pageable pageable);
 
     /**
      * 创建员工
      * @author 刘东奇
      * @date 2019/11/13
-     * @param sysUserEmployeeDetailVM
+     * @param sysUserEmployeeDetail
      * @return
      */
-    ResponseEntity<SysUserEmployeeDetailVM> createSysUserEmployee(@Valid @RequestBody SysUserEmployeeDetailVM sysUserEmployeeDetailVM) throws URISyntaxException;
+    ResponseEntity<SysUserEmployeeDetail> createSysUserEmployee(@Valid @RequestBody SysUserEmployeeDetail sysUserEmployeeDetail) throws URISyntaxException;
 
     /**
      * 修改员工
      * @author 刘东奇
      * @date 2019/11/14
-     * @param sysUserEmployeeDetailVM
+     * @param sysUserEmployeeDetail
      * @return
      */
-    ResponseEntity<SysUserEmployeeDetailVM> modifySysUserEmployee(@Valid @RequestBody SysUserEmployeeDetailVM sysUserEmployeeDetailVM);
+    ResponseEntity<SysUserEmployeeDetail> modifySysUserEmployee(@Valid @RequestBody SysUserEmployeeDetail sysUserEmployeeDetail);
 
+    /**
+     * 停用员工
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param sysEmployeeId
+     * @return
+     */
+    ResponseEntity disableSysEmployee(Long sysEmployeeId);
 
+    /**
+     * 启用用户
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param sysEmployeeId
+     * @return
+     */
+    ResponseEntity enableSysEmployee(Long sysEmployeeId);
+
+    /**
+     * 删除员工
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param sysEmployeeId
+     * @return
+     */
+    ResponseEntity deleteSysEmployee(Long sysEmployeeId);
+
+    /**
+     * 重置员工密码
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param sysEmployeeId
+     * @return
+     */
+    ResponseEntity resetSysEmployeePassword(Long sysEmployeeId);
+
+    /**
+     * 给员工分配角色
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param assignRoleVM
+     * @return
+     */
+    ResponseEntity assignRoleToSysEmployee(@Valid @RequestBody AssignRoleVM assignRoleVM);
 }

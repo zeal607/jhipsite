@@ -33,7 +33,7 @@ import java.util.List;
 @SecondaryTable(name = "sys_user", pkJoinColumns = {
     @PrimaryKeyJoinColumn(name = "ref_code",referencedColumnName = "id")})
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUserEmployeeListVM implements Serializable {
+public class SysUserEmployeeList implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
@@ -151,7 +151,7 @@ public class SysUserEmployeeListVM implements Serializable {
         return loginCode;
     }
 
-    public SysUserEmployeeListVM loginCode(String loginCode) {
+    public SysUserEmployeeList loginCode(String loginCode) {
         this.loginCode = loginCode;
         return this;
     }
@@ -164,7 +164,7 @@ public class SysUserEmployeeListVM implements Serializable {
         return userName;
     }
 
-    public SysUserEmployeeListVM userName(String userName) {
+    public SysUserEmployeeList userName(String userName) {
         this.userName = userName;
         return this;
     }
@@ -178,7 +178,7 @@ public class SysUserEmployeeListVM implements Serializable {
         return email;
     }
 
-    public SysUserEmployeeListVM email(String email) {
+    public SysUserEmployeeList email(String email) {
         this.email = email;
         return this;
     }
@@ -191,7 +191,7 @@ public class SysUserEmployeeListVM implements Serializable {
         return mobile;
     }
 
-    public SysUserEmployeeListVM mobile(String mobile) {
+    public SysUserEmployeeList mobile(String mobile) {
         this.mobile = mobile;
         return this;
     }
@@ -204,7 +204,7 @@ public class SysUserEmployeeListVM implements Serializable {
         return phone;
     }
 
-    public SysUserEmployeeListVM phone(String phone) {
+    public SysUserEmployeeList phone(String phone) {
         this.phone = phone;
         return this;
     }
@@ -217,7 +217,7 @@ public class SysUserEmployeeListVM implements Serializable {
         return userType;
     }
 
-    public SysUserEmployeeListVM userType(UserType userType) {
+    public SysUserEmployeeList userType(UserType userType) {
         this.userType = userType;
         return this;
     }
@@ -231,10 +231,10 @@ public class SysUserEmployeeListVM implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SysUserEmployeeListVM)) {
+        if (!(o instanceof SysUserEmployeeList)) {
             return false;
         }
-        return id != null && id.equals(((SysUserEmployeeListVM) o).id);
+        return id != null && id.equals(((SysUserEmployeeList) o).id);
     }
 
     public Long getId() {

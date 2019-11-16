@@ -1,14 +1,12 @@
 package com.ruowei.modules.sys.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.ruowei.common.json.*;
 import com.ruowei.modules.sys.domain.table.SysOffice;
 import com.ruowei.modules.sys.domain.table.SysPost;
 import com.ruowei.modules.sys.domain.table.SysRole;
-import com.ruowei.modules.sys.domain.table.SysUser;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -19,7 +17,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -35,7 +32,7 @@ import java.util.Objects;
 @SecondaryTable(name = "sys_user", pkJoinColumns = {
     @PrimaryKeyJoinColumn(name = "ref_code",referencedColumnName = "id")})
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUserEmployeeDetailVM implements Serializable {
+public class SysUserEmployeeDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
@@ -372,7 +369,7 @@ public class SysUserEmployeeDetailVM implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        SysUserEmployeeDetailVM that = (SysUserEmployeeDetailVM) o;
+        SysUserEmployeeDetail that = (SysUserEmployeeDetail) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(sysOfficeId, that.sysOfficeId) &&
             Objects.equals(officeName, that.officeName) &&
