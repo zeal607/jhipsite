@@ -1,13 +1,9 @@
 package com.ruowei.modules.sys.service.api;
 
-import com.ruowei.common.pojo.BaseTree;
+import com.ruowei.common.pojo.TreeDTO;
 import com.ruowei.modules.sys.domain.table.SysOffice;
-import com.ruowei.modules.sys.pojo.SysOfficeCriteria;
-import com.ruowei.modules.sys.pojo.SysOfficeDTO;
-import com.ruowei.modules.sys.pojo.SysOfficeTree;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * @author 刘东奇
@@ -23,4 +19,22 @@ public interface SysOfficeApi {
      * @return SysOffice
      */
     SysOffice checkOfficeExistsById(Long id);
+
+    /**
+     * 根据根节点获取全部节点
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param rootId
+     * @return
+     */
+    TreeDTO getSysOfficeAllNodesByRoot(@PathVariable Long rootId);
+
+    /**
+     * 根据根节点获取直接子节点
+     * @author 刘东奇
+     * @date 2019/11/16
+     * @param rootId
+     * @return
+     */
+    TreeDTO getSysOfficeDirectNodesByRoot(@PathVariable Long rootId);
 }

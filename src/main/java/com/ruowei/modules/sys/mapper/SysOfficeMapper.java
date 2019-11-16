@@ -1,12 +1,14 @@
 package com.ruowei.modules.sys.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
-import com.ruowei.common.pojo.BaseTree;
+import com.ruowei.common.pojo.TreeDTO;
 import com.ruowei.modules.sys.domain.table.SysOffice;
 import com.ruowei.modules.sys.pojo.SysOfficeDTO;
 
-import com.ruowei.modules.sys.pojo.SysOfficeTree;
+import com.ruowei.modules.sys.pojo.SysOfficeTreeDTO;
 import org.mapstruct.*;
+
+import java.util.List;
 
 /**
  * Mapper for the entity {@link SysOffice} and its DTO {@link SysOfficeDTO}.
@@ -34,7 +36,14 @@ public interface SysOfficeMapper extends EntityMapper<SysOfficeDTO, SysOffice> {
         @Mapping(source = "sysOffice.officeCode", target = "code"),
         @Mapping(source = "sysOffice.parentCode", target = "parentCode")
     })
-    BaseTree toBaseTree(SysOffice sysOffice);
+    TreeDTO toTreeDTO(SysOffice sysOffice);
+
+    /**
+     * 组装TreeDTO
+     * @param sysOfficeList
+     * @return List<TreeDTO>
+     */
+    List<TreeDTO> toTreeDTO( List<SysOffice> sysOfficeList);
 
     /**
      * 组装TreeDTO
@@ -46,5 +55,5 @@ public interface SysOfficeMapper extends EntityMapper<SysOfficeDTO, SysOffice> {
         @Mapping(source = "sysOffice.officeCode", target = "code"),
         @Mapping(source = "sysOffice.parentCode", target = "parentCode")
     })
-    SysOfficeTree toSysOfficeTree(SysOffice sysOffice);
+    SysOfficeTreeDTO toSysOfficeTree(SysOffice sysOffice);
 }

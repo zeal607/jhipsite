@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.pojo;
 
-import com.ruowei.common.pojo.BaseAuditingTree;
+import com.ruowei.common.pojo.AuditingTreeDTO;
 import com.ruowei.modules.sys.domain.enumeration.OfficeStatusType;
 import com.ruowei.modules.sys.domain.enumeration.OfficeType;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 /**
  * @author 刘东奇
  */
-public class SysOfficeTree extends BaseAuditingTree<SysOfficeTree> {
+public class SysOfficeTreeDTO extends AuditingTreeDTO<SysOfficeTreeDTO> {
     /**
      * 机构编码
      */

@@ -3,14 +3,13 @@ package com.ruowei.common.pojo;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.time.Instant;
-import java.util.List;
 
 /**
  * 基于审计的树形数据结构
  * @author 刘东奇
  * @date 2019/10/19
  */
-public class BaseAuditingTree<T> extends BaseTree<T> {
+public class AuditingTreeDTO<T> extends TreeDTO<T> {
 
     @ApiModelProperty(value = "创建人")
     private String createdBy;

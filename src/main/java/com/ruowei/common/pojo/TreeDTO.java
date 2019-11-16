@@ -7,7 +7,7 @@ import java.util.List;
  * @author 刘东奇
  * @date 2019/9/30
  */
-public class BaseTree<T> {
+public class TreeDTO<T> {
     /**
      * 自身ID
      */
@@ -31,7 +31,7 @@ public class BaseTree<T> {
     /**
      * 子节点
      */
-    protected List<T> childrenList;
+    protected List<T> children;
 
     public String getId() {
         return id;
@@ -57,12 +57,12 @@ public class BaseTree<T> {
         this.name = name;
     }
 
-    public List<T> getChildrenList() {
-        return childrenList;
+    public List<T> getChildren() {
+        return children;
     }
 
-    public void setChildrenList(List<T> childrenList) {
-        this.childrenList = childrenList;
+    public void setChildren(List<T> children) {
+        this.children = children;
     }
 
     public String getCode() {
@@ -89,7 +89,7 @@ public class BaseTree<T> {
             ", pid='" + pid + '\'' +
             ", parentCode='" + parentCode + '\'' +
             ", name='" + name + '\'' +
-            ", childrenList=" + childrenList +
+            ", children=" + children +
             '}';
     }
 }
