@@ -127,7 +127,7 @@ public class SysOfficeService extends BaseService implements SysOfficeApi {
             TreeDTO result = sysOfficeMapper.toTreeDTO(root);
             //找到该节点下的直接子节点
             List<SysOffice> sysOfficeList = sysOfficeRepository.findAllByParentCodeOrderByTreeSortAsc(root.getOfficeCode());
-            List<TreeDTO> treeDTOList = sysOfficeMapper.toTreeDTO(sysOfficeList);
+            List<TreeDTO> treeDTOList = sysOfficeMapper.toTreeDTOs(sysOfficeList);
             result.setChildren(treeDTOList);
             return result;
         }

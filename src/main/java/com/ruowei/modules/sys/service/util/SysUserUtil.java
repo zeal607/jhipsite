@@ -40,12 +40,13 @@ public class SysUserUtil {
                 return "user"+newCode;
             }else{
                 //不符合规则
+                return "user10001";
                 //抛异常
-                throw new DataInvalidException(ErrorMessageUtils.getDataInvalidMessage(
-                    user.getEntityName(),
-                    user.getId().toString(),
-                    USER_CODE_REGEX,
-                    existUserCode));
+//                throw new DataInvalidException(ErrorMessageUtils.getDataInvalidMessage(
+//                    user.getEntityName(),
+//                    user.getId().toString(),
+//                    USER_CODE_REGEX,
+//                    existUserCode));
             }
         }else{
             return "user00001";

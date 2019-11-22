@@ -43,17 +43,6 @@ public interface SysOfficeMapper extends EntityMapper<SysOfficeDTO, SysOffice> {
      * @param sysOfficeList
      * @return List<TreeDTO>
      */
-    List<TreeDTO> toTreeDTO( List<SysOffice> sysOfficeList);
+    List<TreeDTO> toTreeDTOs( List<SysOffice> sysOfficeList);
 
-    /**
-     * 组装TreeDTO
-     * @param sysOffice
-     * @return TreeDTO
-     */
-    @Mappings({
-        @Mapping(source = "sysOffice.officeName", target = "name"),
-        @Mapping(source = "sysOffice.officeCode", target = "code"),
-        @Mapping(source = "sysOffice.parentCode", target = "parentCode")
-    })
-    SysOfficeTreeDTO toSysOfficeTree(SysOffice sysOffice);
 }

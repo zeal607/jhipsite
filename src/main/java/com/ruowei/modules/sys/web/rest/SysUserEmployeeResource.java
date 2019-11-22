@@ -3,6 +3,7 @@ package com.ruowei.modules.sys.web.rest;
 import com.querydsl.core.types.Predicate;
 import com.ruowei.modules.sys.domain.SysUserEmployeeDetail;
 import com.ruowei.modules.sys.domain.SysUserEmployeeList;
+import com.ruowei.modules.sys.domain.enumeration.TestEnum;
 import com.ruowei.modules.sys.repository.SysUserEmployeeDetailRepository;
 import com.ruowei.modules.sys.repository.SysUserEmployeeListRepository;
 import com.ruowei.modules.sys.service.SysUserEmployeeService;
@@ -211,6 +212,21 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
     public ResponseEntity assignRoleToSysEmployee(@Valid @RequestBody AssignRoleVM assignRoleVM) {
         sysUserEmployeeService.assignRoleToSysEmployee(assignRoleVM.getSysEmployeeId(),assignRoleVM.getRoleIdList());
         return ResponseEntity.ok(null);
+    }
+
+    /**
+     * 通过员工主键获取员工详情
+     *
+     * @param id
+     * @return
+     * @author 刘东奇
+     * @date 2019/11/13
+     */
+    @ApiOperation(value = "测试")
+    @GetMapping("/test")
+    public ResponseEntity getSysUserEmployee( Test2 test2) {
+        log.debug("REST request to \"测试\" : {}", test2.getTestEnum());
+        return ResponseEntity.ok(test2);
     }
 
 
