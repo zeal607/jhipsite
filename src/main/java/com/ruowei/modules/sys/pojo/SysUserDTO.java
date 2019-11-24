@@ -4,7 +4,7 @@ import com.ruowei.common.pojo.BaseDTO;
 import com.ruowei.modules.sys.domain.enumeration.GenderType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.entity.SysUser;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.Instant;
@@ -15,6 +15,7 @@ import java.util.Set;
 
 /**
  * A DTO for the {@link SysUser} entity.
+ * @author 刘东奇
  */
 @ApiModel(description = "用户表 @author 刘东奇")
 public class SysUserDTO extends BaseDTO {
@@ -114,9 +115,8 @@ public class SysUserDTO extends BaseDTO {
     /**
      * 用户类型引用编号（雇员表或会员表的ID）
      */
-    @Size(max = 100)
     @ApiModelProperty(value = "用户类型引用编号（雇员表或会员表的ID）")
-    private String refCode;
+    private Long refCode;
 
     /**
      * 用户类型引用姓名
@@ -173,7 +173,7 @@ public class SysUserDTO extends BaseDTO {
 
     @NotNull
     @Column(nullable = false)
-    private boolean activated;
+    private Boolean activated;
 
     @Size(max = 20)
     @Column(name = "activation_key", length = 20)
@@ -294,11 +294,11 @@ public class SysUserDTO extends BaseDTO {
         this.userType = userType;
     }
 
-    public String getRefCode() {
+    public Long getRefCode() {
         return refCode;
     }
 
-    public void setRefCode(String refCode) {
+    public void setRefCode(Long refCode) {
         this.refCode = refCode;
     }
 

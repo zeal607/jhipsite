@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.service.query;
 
 import com.ruowei.common.service.query.simple.QueryService;
-import com.ruowei.modules.sys.domain.table.QSysUser;
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.entity.QSysUser;
+import com.ruowei.modules.sys.domain.entity.SysUser;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

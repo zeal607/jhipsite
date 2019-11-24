@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.domain.table;
+package com.ruowei.modules.sys.domain.entity;
 import com.ruowei.common.entity.AbstractAuditingEntity;
 import com.ruowei.modules.sys.domain.enumeration.OfficeType;
 import io.swagger.annotations.ApiModelProperty;

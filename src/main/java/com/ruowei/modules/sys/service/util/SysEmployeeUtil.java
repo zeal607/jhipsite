@@ -1,17 +1,11 @@
 package com.ruowei.modules.sys.service.util;
 
-import com.ruowei.common.error.ErrorMessageUtils;
-import com.ruowei.common.error.exception.DataInvalidException;
 import com.ruowei.config.SpringUtil;
-import com.ruowei.modules.sys.domain.table.SysEmployee;
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.entity.SysEmployee;
 import com.ruowei.modules.sys.repository.SysEmployeeRepository;
-import com.ruowei.modules.sys.repository.SysUserRepository;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 /**
  * @author 刘东奇

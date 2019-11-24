@@ -2,7 +2,7 @@ package com.ruowei.modules.sys.repository;
 
 import com.ruowei.config.Constants;
 import com.ruowei.config.audit.AuditEventConverter;
-import com.ruowei.modules.sys.domain.table.PersistentAuditEvent;
+import com.ruowei.modules.sys.domain.entity.PersistentAuditEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.audit.AuditEvent;

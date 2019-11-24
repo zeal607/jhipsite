@@ -2,7 +2,7 @@ package com.ruowei.modules.sys.service;
 
 import com.ruowei.common.pojo.TreeDTO;
 import com.ruowei.common.service.BaseService;
-import com.ruowei.modules.sys.domain.table.SysOffice;
+import com.ruowei.modules.sys.domain.entity.SysOffice;
 import com.ruowei.modules.sys.mapper.SysOfficeMapper;
 import com.ruowei.modules.sys.repository.SysOfficeRepository;
 import com.ruowei.modules.sys.service.api.SysOfficeApi;

@@ -1,7 +1,7 @@
 package com.ruowei.modules.sys.service.api;
 
 import com.ruowei.modules.sys.domain.SysUserEmployeeDetail;
-import com.ruowei.modules.sys.domain.table.SysRole;
+import com.ruowei.modules.sys.domain.entity.SysRole;
 
 import java.util.List;
 

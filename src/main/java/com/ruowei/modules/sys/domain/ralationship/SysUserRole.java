@@ -1,5 +1,5 @@
-package com.ruowei.modules.sys.domain.table;
-import com.ruowei.common.entity.BaseEntity;
+package com.ruowei.modules.sys.domain.ralationship;
+import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_user_role")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUserRole extends BaseEntity implements Serializable {
+public class SysUserRole extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,41 +25,41 @@ public class SysUserRole extends BaseEntity implements Serializable {
     @NotNull
     @Size(max = 100)
     @Column(name = "sys_user_id", length = 100, nullable = false)
-    private String sysUserId;
+    private Long sysUserId;
 
     /**
      * 角色外键
      */
     @NotNull
     @Size(max = 100)
-    @Column(name = "sys_role_id", length = 100, nullable = false)
-    private String sysRoleId;
+    @Column(name = "sys_role_id", length = 20, nullable = false)
+    private Long sysRoleId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
-    public String getSysUserId() {
+    public Long getSysUserId() {
         return sysUserId;
     }
 
-    public SysUserRole sysUserId(String sysUserId) {
+    public SysUserRole sysUserId(Long sysUserId) {
         this.sysUserId = sysUserId;
         return this;
     }
 
-    public void setSysUserId(String sysUserId) {
+    public void setSysUserId(Long sysUserId) {
         this.sysUserId = sysUserId;
     }
 
-    public String getSysRoleId() {
+    public Long getSysRoleId() {
         return sysRoleId;
     }
 
-    public SysUserRole sysRoleId(String sysRoleId) {
+    public SysUserRole sysRoleId(Long sysRoleId) {
         this.sysRoleId = sysRoleId;
         return this;
     }
 
-    public void setSysRoleId(String sysRoleId) {
+    public void setSysRoleId(Long sysRoleId) {
         this.sysRoleId = sysRoleId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove

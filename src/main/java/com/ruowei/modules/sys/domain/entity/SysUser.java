@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.domain.table;
+package com.ruowei.modules.sys.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ruowei.common.entity.AbstractAuditingEntity;
 import com.ruowei.modules.sys.domain.enumeration.GenderType;
@@ -129,9 +129,8 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
     /**
      * 用户类型引用编号（雇员表或会员表的ID）
      */
-    @Size(max = 100)
     @Column(name = "ref_code", length = 100)
-    private String refCode;
+    private Long refCode;
 
     /**
      * 用户类型引用姓名
@@ -398,16 +397,16 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         this.userType = userType;
     }
 
-    public String getRefCode() {
+    public Long getRefCode() {
         return refCode;
     }
 
-    public SysUser refCode(String refCode) {
+    public SysUser refCode(Long refCode) {
         this.refCode = refCode;
         return this;
     }
 
-    public void setRefCode(String refCode) {
+    public void setRefCode(Long refCode) {
         this.refCode = refCode;
     }
 

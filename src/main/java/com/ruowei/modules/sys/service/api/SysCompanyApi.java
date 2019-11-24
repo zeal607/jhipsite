@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.service.api;
 
-import com.ruowei.modules.sys.domain.table.SysCompany;
+import com.ruowei.modules.sys.domain.entity.SysCompany;
 
 /**
  * @author 刘东奇

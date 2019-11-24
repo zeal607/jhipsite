@@ -3,16 +3,10 @@ package com.ruowei.common.service.crud;
 
 import com.querydsl.core.types.EntityPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ruowei.common.entity.BaseEntity;
-import com.ruowei.common.error.ErrorMessageUtils;
-import com.ruowei.common.error.exception.DataAlreadyExistException;
-import com.ruowei.common.error.exception.DataNotFoundException;
-import com.ruowei.common.lang.ObjectUtils;
 import com.ruowei.common.log.LogMessageUtils;
 import com.ruowei.common.repository.BaseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +15,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 增删改 通用服务层

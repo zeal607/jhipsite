@@ -9,7 +9,8 @@ import com.ruowei.modules.sys.domain.SysUserEmployeeDetail;
 import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
-import com.ruowei.modules.sys.domain.table.*;
+import com.ruowei.modules.sys.domain.entity.*;
+import com.ruowei.modules.sys.domain.ralationship.QSysUserRole;
 import com.ruowei.modules.sys.mapper.SysUserEmployeeMapper;
 import com.ruowei.modules.sys.repository.SysEmployeeRepository;
 import com.ruowei.modules.sys.repository.SysUserRepository;
@@ -102,7 +103,7 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
         //再创建用户
         SysUser sysUser = sysUserEmployeeMapper.SysUserEmployeeDetailVMToSysUser(sysUserEmployeeDetail);
         sysUser.setUserType(UserType.EMPLOYEE);
-        sysUser.setRefCode(sysEmployee.getId().toString());
+        sysUser.setRefCode(sysEmployee.getId());
         sysUser.setRefName(sysEmployee.getEmpName());
         sysUser.setStatus(UserStatusType.NORMAL);
         sysUser.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
@@ -149,7 +150,7 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
         sysUser.setId(this.getSysUserIdBySysEmployeeId(sysEmployee.getId()));
         sysUser = sysUserRepository.updateIgnoreNull(sysUser);
         //返回员工表主键
-        sysUserEmployeeDetail.setId(sysEmployee.getId());
+        sysUserEmployeeDetail = sysUserEmployeeMapper.assembleSysUserEmployeeDetail(sysUser,sysEmployee);
         return sysUserEmployeeDetail;
     }
 

@@ -1,19 +1,19 @@
-package com.ruowei.modules.sys.domain.table;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ruowei.common.entity.BaseEntity;
+package com.ruowei.modules.sys.domain.entity;
+import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
+import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import java.io.Serializable;
-import java.util.*;
-
-import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * 员工表
@@ -22,7 +22,7 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 @Table(name = "sys_employee")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployee extends BaseEntity implements Serializable {
+public class SysEmployee extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -52,9 +52,8 @@ public class SysEmployee extends BaseEntity implements Serializable {
     /**
      * 机构ID
      */
-    @Size(max = 100)
-    @Column(name = "sys_office_id", length = 100)
-    private String sysOfficeId;
+    @Column(name = "sys_office_id", length = 20)
+    private Long sysOfficeId;
 
     /**
      * 机构名称
@@ -67,8 +66,8 @@ public class SysEmployee extends BaseEntity implements Serializable {
      * 公司ID
      */
     @Size(max = 200)
-    @Column(name = "sys_company_id", length = 200)
-    private String sysCompanyId;
+    @Column(name = "sys_company_id", length = 20)
+    private Long sysCompanyId;
 
     /**
      * 公司名称
@@ -177,16 +176,16 @@ public class SysEmployee extends BaseEntity implements Serializable {
         this.empNameEn = empNameEn;
     }
 
-    public String getSysOfficeId() {
+    public Long getSysOfficeId() {
         return sysOfficeId;
     }
 
-    public SysEmployee sysOfficeId(String sysOfficeId) {
+    public SysEmployee sysOfficeId(Long sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
         return this;
     }
 
-    public void setSysOfficeId(String sysOfficeId) {
+    public void setSysOfficeId(Long sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
     }
 
@@ -203,16 +202,16 @@ public class SysEmployee extends BaseEntity implements Serializable {
         this.officeName = officeName;
     }
 
-    public String getSysCompanyId() {
+    public Long getSysCompanyId() {
         return sysCompanyId;
     }
 
-    public SysEmployee sysCompanyId(String sysCompanyId) {
+    public SysEmployee sysCompanyId(Long sysCompanyId) {
         this.sysCompanyId = sysCompanyId;
         return this;
     }
 
-    public void setSysCompanyId(String sysCompanyId) {
+    public void setSysCompanyId(Long sysCompanyId) {
         this.sysCompanyId = sysCompanyId;
     }
 

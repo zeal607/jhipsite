@@ -2,9 +2,9 @@ package com.ruowei.modules.sys.repository;
 
 
 import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
-import com.ruowei.modules.sys.domain.table.SysEmployee;
-import com.ruowei.modules.sys.domain.table.SysOffice;
-import com.ruowei.modules.sys.domain.table.SysPost;
+import com.ruowei.modules.sys.domain.entity.SysEmployee;
+import com.ruowei.modules.sys.domain.entity.SysOffice;
+import com.ruowei.modules.sys.domain.entity.SysPost;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

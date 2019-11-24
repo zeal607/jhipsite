@@ -1,11 +1,14 @@
-package com.ruowei.modules.sys.domain.table;
-import com.ruowei.common.entity.BaseEntity;
+package com.ruowei.modules.sys.domain.ralationship;
+
+import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -15,7 +18,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_employee_post")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployeePost extends BaseEntity implements Serializable {
+public class SysEmployeePost extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,42 +27,42 @@ public class SysEmployeePost extends BaseEntity implements Serializable {
      */
     @NotNull
     @Size(max = 100)
-    @Column(name = "sys_employee_id", length = 100, nullable = false)
-    private String sysEmployeeId;
+    @Column(name = "sys_employee_id", length = 20, nullable = false)
+    private Long sysEmployeeId;
 
     /**
      * 岗位ID
      */
     @NotNull
     @Size(max = 100)
-    @Column(name = "sys_post_id", length = 100, nullable = false)
-    private String sysPostId;
+    @Column(name = "sys_post_id", length = 20, nullable = false)
+    private Long sysPostId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
-    public String getSysEmployeeId() {
+    public Long getSysEmployeeId() {
         return sysEmployeeId;
     }
 
-    public SysEmployeePost sysEmployeeId(String sysEmployeeId) {
+    public SysEmployeePost sysEmployeeId(Long sysEmployeeId) {
         this.sysEmployeeId = sysEmployeeId;
         return this;
     }
 
-    public void setSysEmployeeId(String sysEmployeeId) {
+    public void setSysEmployeeId(Long sysEmployeeId) {
         this.sysEmployeeId = sysEmployeeId;
     }
 
-    public String getSysPostId() {
+    public Long getSysPostId() {
         return sysPostId;
     }
 
-    public SysEmployeePost sysPostId(String sysPostId) {
+    public SysEmployeePost sysPostId(Long sysPostId) {
         this.sysPostId = sysPostId;
         return this;
     }
 
-    public void setSysPostId(String sysPostId) {
+    public void setSysPostId(Long sysPostId) {
         this.sysPostId = sysPostId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove

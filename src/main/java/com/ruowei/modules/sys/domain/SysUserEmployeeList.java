@@ -8,7 +8,7 @@ import com.ruowei.common.json.LongJsonSerializer;
 import com.ruowei.common.json.SysPostListJsonSerializer;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
-import com.ruowei.modules.sys.domain.table.SysPost;
+import com.ruowei.modules.sys.domain.entity.SysPost;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;

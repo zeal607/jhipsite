@@ -1,11 +1,9 @@
 package com.ruowei.common.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.ruowei.modules.sys.domain.table.SysPost;
-import com.ruowei.modules.sys.domain.table.SysRole;
+import com.ruowei.modules.sys.domain.entity.SysRole;
 
 import java.io.IOException;
 import java.util.ArrayList;

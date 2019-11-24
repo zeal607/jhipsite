@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @date 2019/9/8
  */
 @MappedSuperclass
-public class BaseEntity implements Serializable {
+public class PrimaryKeyAutoIncrementEntity implements Serializable {
     @Id
     @GenericGenerator(name="idGenerator", strategy = "com.ruowei.common.entity.idgen.IdGenerator")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "idGenerator")
@@ -23,22 +23,11 @@ public class BaseEntity implements Serializable {
     @JsonDeserialize(using = LongJsonDeserializer.class)
     public Long id;
 
-    @Transient
-    protected String entityName;
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEntityName() {
-        return entityName;
-    }
-
-    public void setEntityName(String entityName) {
-        this.entityName = entityName;
     }
 }

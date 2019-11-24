@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.service.api;
 
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.entity.SysUser;
 import com.ruowei.modules.sys.pojo.SysUserDTO;
 import com.ruowei.modules.sys.pojo.UserDTO;
 import com.ruowei.modules.sys.pojo.user.SysUserRegisterDTO;

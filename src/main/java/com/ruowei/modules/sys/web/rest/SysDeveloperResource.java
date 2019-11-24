@@ -5,7 +5,7 @@ import com.ruowei.common.error.exception.EmailAlreadyUsedException;
 import com.ruowei.common.error.exception.InvalidPasswordException;
 import com.ruowei.common.error.exception.LoginAlreadyUsedException;
 import com.ruowei.config.Constants;
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.entity.SysUser;
 import com.ruowei.modules.sys.mapper.SysUserMapper;
 import com.ruowei.modules.sys.pojo.PasswordChangeDTO;
 import com.ruowei.modules.sys.pojo.SysUserDTO;

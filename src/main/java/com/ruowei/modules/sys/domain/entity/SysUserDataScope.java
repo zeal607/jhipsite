@@ -1,6 +1,6 @@
-package com.ruowei.modules.sys.domain.table;
+package com.ruowei.modules.sys.domain.entity;
 
-import com.ruowei.common.entity.BaseEntity;
+import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import com.ruowei.modules.sys.domain.enumeration.ControlType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -11,23 +11,27 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * 角色数据权限表
+ * 用户数据权限表
  * @author 刘东奇
  */
 @Entity
-@Table(name = "sys_role_data_scope")
+@Table(name = "sys_user_data_scope")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysRoleDataScope extends BaseEntity implements Serializable {
+public class SysUserDataScope extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     /**
-     * 控制角色ID
+     * 控制用户ID
      */
     @NotNull
     @Size(max = 100)
-    @Column(name = "sys_role_id", length = 100, nullable = false)
-    private String sysRoleId;
+    @Column(name = "sys_user_id", length = 100, nullable = false)
+    private String sysUserId;
 
     /**
      * 控制类型
@@ -53,24 +57,24 @@ public class SysRoleDataScope extends BaseEntity implements Serializable {
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
-    public String getSysRoleId() {
-        return sysRoleId;
+    public String getSysUserId() {
+        return sysUserId;
     }
 
-    public SysRoleDataScope sysRoleId(String sysRoleId) {
-        this.sysRoleId = sysRoleId;
+    public SysUserDataScope sysUserId(String sysUserId) {
+        this.sysUserId = sysUserId;
         return this;
     }
 
-    public void setSysRoleId(String sysRoleId) {
-        this.sysRoleId = sysRoleId;
+    public void setSysUserId(String sysUserId) {
+        this.sysUserId = sysUserId;
     }
 
     public ControlType getCtrlType() {
         return ctrlType;
     }
 
-    public SysRoleDataScope ctrlType(ControlType ctrlType) {
+    public SysUserDataScope ctrlType(ControlType ctrlType) {
         this.ctrlType = ctrlType;
         return this;
     }
@@ -83,7 +87,7 @@ public class SysRoleDataScope extends BaseEntity implements Serializable {
         return ctrlData;
     }
 
-    public SysRoleDataScope ctrlData(String ctrlData) {
+    public SysUserDataScope ctrlData(String ctrlData) {
         this.ctrlData = ctrlData;
         return this;
     }
@@ -96,7 +100,7 @@ public class SysRoleDataScope extends BaseEntity implements Serializable {
         return ctrlPermi;
     }
 
-    public SysRoleDataScope ctrlPermi(String ctrlPermi) {
+    public SysUserDataScope ctrlPermi(String ctrlPermi) {
         this.ctrlPermi = ctrlPermi;
         return this;
     }
@@ -111,10 +115,10 @@ public class SysRoleDataScope extends BaseEntity implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SysRoleDataScope)) {
+        if (!(o instanceof SysUserDataScope)) {
             return false;
         }
-        return id != null && id.equals(((SysRoleDataScope) o).id);
+        return id != null && id.equals(((SysUserDataScope) o).id);
     }
 
     @Override
@@ -124,9 +128,9 @@ public class SysRoleDataScope extends BaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "SysRoleDataScope{" +
+        return "SysUserDataScope{" +
             "id=" + getId() +
-            ", sysRoleId='" + getSysRoleId() + "'" +
+            ", sysUserId='" + getSysUserId() + "'" +
             ", ctrlType='" + getCtrlType() + "'" +
             ", ctrlData='" + getCtrlData() + "'" +
             ", ctrlPermi='" + getCtrlPermi() + "'" +

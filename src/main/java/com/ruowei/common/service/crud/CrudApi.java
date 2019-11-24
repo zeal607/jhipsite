@@ -1,9 +1,5 @@
 package com.ruowei.common.service.crud;
 
-import com.querydsl.core.types.Predicate;
-import com.ruowei.common.entity.BaseEntity;
-import com.ruowei.common.pojo.BaseView;
-
 import java.util.List;
 
 /**

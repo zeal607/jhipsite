@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.table.QSysUserDataScope;
-import com.ruowei.modules.sys.domain.table.SysUserDataScope;
+import com.ruowei.modules.sys.domain.entity.QSysUserDataScope;
+import com.ruowei.modules.sys.domain.entity.SysUserDataScope;
 import org.springframework.stereotype.Repository;
 
 

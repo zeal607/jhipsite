@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.table.QSysEmployee;
-import com.ruowei.modules.sys.domain.table.SysEmployee;
+import com.ruowei.modules.sys.domain.entity.QSysEmployee;
+import com.ruowei.modules.sys.domain.entity.SysEmployee;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.Size;

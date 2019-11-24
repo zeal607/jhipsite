@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.table.QSysMenu;
-import com.ruowei.modules.sys.domain.table.SysMenu;
+import com.ruowei.modules.sys.domain.entity.QSysMenu;
+import com.ruowei.modules.sys.domain.entity.SysMenu;
 import org.springframework.stereotype.Repository;
 
 

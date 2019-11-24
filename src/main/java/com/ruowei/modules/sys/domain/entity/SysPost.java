@@ -1,7 +1,7 @@
-package com.ruowei.modules.sys.domain.table;
+package com.ruowei.modules.sys.domain.entity;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.ruowei.common.entity.BaseEntity;
+import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import com.ruowei.common.json.LongJsonDeserializer;
 import com.ruowei.common.json.LongJsonSerializer;
 import com.ruowei.modules.sys.domain.enumeration.PostStatusType;
@@ -22,7 +22,7 @@ import com.ruowei.modules.sys.domain.enumeration.PostType;
 @Entity
 @Table(name = "sys_post")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysPost extends BaseEntity implements Serializable {
+public class SysPost extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     public SysPost(){}
 

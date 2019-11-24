@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.table.QSysCompany;
-import com.ruowei.modules.sys.domain.table.SysCompany;
+import com.ruowei.modules.sys.domain.entity.QSysCompany;
+import com.ruowei.modules.sys.domain.entity.SysCompany;
 import org.springframework.stereotype.Repository;
 
 

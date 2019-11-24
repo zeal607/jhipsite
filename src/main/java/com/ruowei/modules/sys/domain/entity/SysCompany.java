@@ -1,5 +1,5 @@
-package com.ruowei.modules.sys.domain.table;
-import com.ruowei.common.entity.BaseEntity;
+package com.ruowei.modules.sys.domain.entity;
+import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import com.ruowei.modules.sys.domain.enumeration.CompanyStatusType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_company")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysCompany extends BaseEntity implements Serializable {
+public class SysCompany extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

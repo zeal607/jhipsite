@@ -1,6 +1,6 @@
-package com.ruowei.modules.sys.domain.table;
+package com.ruowei.modules.sys.domain.entity;
 
-import com.ruowei.common.entity.BaseEntity;
+import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import com.ruowei.modules.sys.domain.enumeration.MenuStatusType;
 import com.ruowei.modules.sys.domain.enumeration.MenuType;
 import com.ruowei.modules.sys.domain.enumeration.SysType;
@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_menu")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysMenu extends BaseEntity implements Serializable {
+public class SysMenu extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

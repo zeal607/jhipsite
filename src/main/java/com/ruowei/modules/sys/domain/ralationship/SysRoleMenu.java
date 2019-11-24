@@ -1,68 +1,67 @@
-package com.ruowei.modules.sys.domain.table;
+package com.ruowei.modules.sys.domain.ralationship;
 
-import com.ruowei.common.entity.BaseEntity;
+import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
  * 角色与菜单关联表
- * @author 刘东奇
+ * @author JeeSite
  */
 @ApiModel(description = "角色与菜单关联表 @author JeeSite")
 @Entity
 @Table(name = "sys_role_menu")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysRoleMenu extends BaseEntity implements Serializable {
+public class SysRoleMenu extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 角色外键
      */
-    @NotNull
-    @Size(max = 100)
-    @Column(name = "sys_role_id", length = 100, nullable = false)
-    private String sysRoleId;
+    @ApiModelProperty(value = "角色外键")
+    @Column(name = "sys_role_id")
+    private Long sysRoleId;
 
     /**
      * 菜单外键
      */
-    @NotNull
-    @Size(max = 100)
-    @Column(name = "sys_menu_id", length = 100, nullable = false)
-    private String sysMenuId;
+    @ApiModelProperty(value = "菜单外键")
+    @Column(name = "sys_menu_id")
+    private Long sysMenuId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
-    public String getSysRoleId() {
+    public Long getSysRoleId() {
         return sysRoleId;
     }
 
-    public SysRoleMenu sysRoleId(String sysRoleId) {
+    public SysRoleMenu sysRoleId(Long sysRoleId) {
         this.sysRoleId = sysRoleId;
         return this;
     }
 
-    public void setSysRoleId(String sysRoleId) {
+    public void setSysRoleId(Long sysRoleId) {
         this.sysRoleId = sysRoleId;
     }
 
-    public String getSysMenuId() {
+    public Long getSysMenuId() {
         return sysMenuId;
     }
 
-    public SysRoleMenu sysMenuId(String sysMenuId) {
+    public SysRoleMenu sysMenuId(Long sysMenuId) {
         this.sysMenuId = sysMenuId;
         return this;
     }
 
-    public void setSysMenuId(String sysMenuId) {
+    public void setSysMenuId(Long sysMenuId) {
         this.sysMenuId = sysMenuId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove

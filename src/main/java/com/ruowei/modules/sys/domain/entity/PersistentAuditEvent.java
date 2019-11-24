@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.domain.table;
+package com.ruowei.modules.sys.domain.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

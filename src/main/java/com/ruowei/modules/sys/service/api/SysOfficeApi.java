@@ -1,8 +1,7 @@
 package com.ruowei.modules.sys.service.api;
 
 import com.ruowei.common.pojo.TreeDTO;
-import com.ruowei.modules.sys.domain.table.SysOffice;
-import org.springframework.http.ResponseEntity;
+import com.ruowei.modules.sys.domain.entity.SysOffice;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /**

@@ -1,15 +1,14 @@
 package com.ruowei.common.enumeration;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * @author 刘东奇
  */
 public interface BaseEnum {
 
-    /**
-     *
-     * 值，数据库中，以及程序中一般传递的都是这个值
-     */
-    public String getCode();
+    @JsonValue
+    String getMessage();
 
-    public String getMessage();
+    String getCode();
 }

@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.repository;
 
-import com.ruowei.modules.sys.domain.table.PersistentAuditEvent;
+import com.ruowei.modules.sys.domain.entity.PersistentAuditEvent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,17 +1,13 @@
 package com.ruowei.common.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.ruowei.modules.sys.domain.table.SysOffice;
-import com.ruowei.modules.sys.domain.table.SysPost;
+import com.ruowei.modules.sys.domain.entity.SysPost;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 把map<SysOffice,SysPost>序列化成

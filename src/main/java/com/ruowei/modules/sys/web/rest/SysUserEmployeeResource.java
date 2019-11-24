@@ -3,7 +3,6 @@ package com.ruowei.modules.sys.web.rest;
 import com.querydsl.core.types.Predicate;
 import com.ruowei.modules.sys.domain.SysUserEmployeeDetail;
 import com.ruowei.modules.sys.domain.SysUserEmployeeList;
-import com.ruowei.modules.sys.domain.enumeration.TestEnum;
 import com.ruowei.modules.sys.repository.SysUserEmployeeDetailRepository;
 import com.ruowei.modules.sys.repository.SysUserEmployeeListRepository;
 import com.ruowei.modules.sys.service.SysUserEmployeeService;
@@ -36,7 +35,7 @@ import java.util.Optional;
  * @author 刘东奇
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/sys")
 @Api(value = "员工相关" ,tags = "员工相关")
 public class SysUserEmployeeResource implements SysUserEmployeeApi {
 
@@ -54,28 +53,6 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
     }
 
     /**
-     * 通过员工主键获取员工详情
-     *
-     * @param id
-     * @return
-     * @author 刘东奇
-     * @date 2019/11/13
-     */
-    @Override
-    @ApiOperation(value = "获取单个员工")
-    @GetMapping("/sys-user-employee/{id}")
-    public ResponseEntity<SysUserEmployeeDetail> getSysUserEmployee(@PathVariable Long id) {
-        log.debug("REST request to 获取单个员工 : {}", id);
-        Optional<SysUserEmployeeDetail> one = sysUserEmployeeDetailRepository.findById(id);
-
-        one.ifPresent(userEmployee->{            ;
-            userEmployee.setSysRoleList(sysUserEmployeeService.getSysRoleListBySysEmployeeId(id));
-        });
-
-        return ResponseUtil.wrapOrNotFound(one);
-    }
-
-    /**
      * 分页查询员工数据
      *
      * @param sysUserEmployeePredicate
@@ -85,7 +62,8 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
      * @date 2019/11/13
      */
     @Override
-    @ApiOperation(value = "查询员工分页")
+    @ApiOperation(value = "查询员工分页", notes = "作者：刘东奇</br>"+
+        "详细描述：该接口为前端的【用户管理页】提供分页查询员工数据功能")
     @ApiImplicitParams({
         @ApiImplicitParam(name="id", value = "主键", paramType = "query", dataType="Long"),
         @ApiImplicitParam(name="loginCode", value = "登录账号", paramType = "query", dataType="String"),
@@ -101,7 +79,7 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
         @ApiImplicitParam(name="sysCompanyId", value = "公司ID", paramType = "query", dataType="String"),
         @ApiImplicitParam(name="sysPostList", value = "岗位ID", paramType = "query", dataType="String")
     })
-    @GetMapping("/sys-user-employees")
+    @GetMapping("/user-employees")
     public ResponseEntity<List<SysUserEmployeeList>> getAllSysUserEmployees(
         @QuerydslPredicate(root = SysUserEmployeeList.class) Predicate sysUserEmployeePredicate, Pageable pageable) {
         log.debug("REST request to 查询员工分页 by : {}", sysUserEmployeePredicate);
@@ -109,6 +87,29 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
         Page<SysUserEmployeeList> page = sysUserEmployeeListRepository.findAll(sysUserEmployeePredicate,pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(),page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * 通过员工主键获取员工详情
+     *
+     * @param id
+     * @return
+     * @author 刘东奇
+     * @date 2019/11/13
+     */
+    @Override
+    @ApiOperation(value = "获取单个员工", notes = "作者：刘东奇</br>"+
+        "详细描述：该接口为前端的【用户管理页-用户详情页、用户修改页】提供获取单个员工数据功能")
+    @GetMapping("/user-employee/{id}")
+    public ResponseEntity<SysUserEmployeeDetail> getSysUserEmployee(@PathVariable Long id) {
+        log.debug("REST request to 获取单个员工 : {}", id);
+        Optional<SysUserEmployeeDetail> one = sysUserEmployeeDetailRepository.findById(id);
+
+        one.ifPresent(userEmployee->{            ;
+            userEmployee.setSysRoleList(sysUserEmployeeService.getSysRoleListBySysEmployeeId(id));
+        });
+
+        return ResponseUtil.wrapOrNotFound(one);
     }
 
     /**
@@ -120,8 +121,9 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
      * @date 2019/11/13
      */
     @Override
-    @ApiOperation(value = "创建员工")
-    @PostMapping("/sys-user-employees")
+    @ApiOperation(value = "创建员工", notes = "作者：刘东奇</br>"+
+        "详细描述：该接口为前端的【用户管理页-用户新增页】提供保存单个员工数据功能")
+    @PostMapping("/user-employees")
     public ResponseEntity<SysUserEmployeeDetail> createSysUserEmployee(@Valid @RequestBody SysUserEmployeeDetail sysUserEmployeeDetail) throws URISyntaxException {
         log.debug("REST request to 创建员工 : {}", sysUserEmployeeDetail);
         sysUserEmployeeService.createSysUserEmployee(sysUserEmployeeDetail);
@@ -138,11 +140,12 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
      * @date 2019/11/14
      */
     @Override
-    @ApiOperation(value = "修改员工")
-    @PutMapping("/sys-user-employees")
-    public ResponseEntity<SysUserEmployeeDetail> modifySysUserEmployee(@Valid SysUserEmployeeDetail sysUserEmployeeDetail) {
+    @ApiOperation(value = "修改员工", notes = "作者：刘东奇</br>"+
+        "详细描述：该接口为前端的【用户管理页-用户修改页】提供修改单个员工数据功能")
+    @PutMapping("/user-employees")
+    public ResponseEntity<SysUserEmployeeDetail> modifySysUserEmployee(@Valid @RequestBody SysUserEmployeeDetail sysUserEmployeeDetail) {
         log.debug("REST request to 修改员工 : {}", sysUserEmployeeDetail);
-        sysUserEmployeeService.modifySysUserEmployee(sysUserEmployeeDetail);
+        sysUserEmployeeDetail = sysUserEmployeeService.modifySysUserEmployee(sysUserEmployeeDetail);
         return ResponseEntity.ok()
             .body(sysUserEmployeeDetail);
     }
@@ -154,10 +157,11 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
      * @date 2019/11/16
      */
     @Override
-    @ApiOperation(value = "停用员工")
-    @PutMapping("/sys-user-employees/disable")
+    @ApiOperation(value = "停用员工", notes = "作者：刘东奇</br>"+
+        "详细描述：该接口为前端的【用户管理页】提供停用单个员工账号功能")
+    @PutMapping("/user-employees/disable")
     public ResponseEntity disableSysEmployee(@Valid @RequestBody Long sysEmployeeId) {
-        log.debug("REST request to 停用用户 : {}", sysEmployeeId);
+        log.debug("REST request to 停用员工 : {}", sysEmployeeId);
         sysUserEmployeeService.disableSysEmployee(sysEmployeeId);
         return ResponseEntity.ok(null);
     }
@@ -168,9 +172,11 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
      * @date 2019/11/9
      */
     @Override
-    @ApiOperation(value = "启用员工")
-    @PutMapping("/sys-user-employees/enable")
+    @ApiOperation(value = "启用员工", notes = "作者：刘东奇</br>"+
+        "详细描述：该接口为前端的【用户管理页】提供启用单个员工账号功能")
+    @PutMapping("/user-employees/enable")
     public ResponseEntity enableSysEmployee(@Valid @RequestBody Long sysEmployeeId) {
+        log.debug("REST request to 启用员工 : {}", sysEmployeeId);
         sysUserEmployeeService.enableSysEmployee(sysEmployeeId);
         return ResponseEntity.ok(null);
     }
@@ -181,9 +187,11 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
      * @date 2019/11/2
      */
     @Override
-    @ApiOperation(value = "删除员工")
-    @PutMapping("/sys-user-employees/delete")
+    @ApiOperation(value = "删除员工", notes = "作者：刘东奇</br>"+
+        "详细描述：该接口为前端的【用户管理页】提供删除单个员工功能")
+    @DeleteMapping("/user-employees/delete")
     public ResponseEntity deleteSysEmployee(@Valid @RequestBody Long sysEmployeeId) {
+        log.debug("REST request to 删除员工 : {}", sysEmployeeId);
         sysUserEmployeeService.deleteSysEmployee(sysEmployeeId);
         return ResponseEntity.ok(null);
     }
@@ -194,9 +202,11 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
      * @date 2019/11/9
      */
     @Override
-    @ApiOperation(value = "重置员工密码")
-    @PutMapping("/sys-user-employees/reset-password")
+    @ApiOperation(value = "重置员工密码", notes = "作者：刘东奇</br>"+
+        "详细描述：该接口为前端的【用户管理页】提供重置单个员工密码功能")
+    @PutMapping("/user-employees/reset-password")
     public ResponseEntity resetSysEmployeePassword(@Valid @RequestBody Long sysEmployeeId) {
+        log.debug("REST request to 重置员工密码 : {}", sysEmployeeId);
         sysUserEmployeeService.resetSysEmployeePassword(sysEmployeeId);
         return ResponseEntity.ok(null);
     }
@@ -207,27 +217,12 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
      * @date 2019/9/22
      */
     @Override
-    @ApiOperation(value = "员工分配角色")
-    @PostMapping("/sys-user-employees/assign-role")
+    @ApiOperation(value = "员工分配角色", notes = "作者：刘东奇</br>"+
+        "详细描述：该接口为前端的【用户管理页】提供分配单个员工角色功能")
+    @PostMapping("/user-employees/assign-role")
     public ResponseEntity assignRoleToSysEmployee(@Valid @RequestBody AssignRoleVM assignRoleVM) {
+        log.debug("REST request to 员工分配角色 : {}", assignRoleVM);
         sysUserEmployeeService.assignRoleToSysEmployee(assignRoleVM.getSysEmployeeId(),assignRoleVM.getRoleIdList());
         return ResponseEntity.ok(null);
     }
-
-    /**
-     * 通过员工主键获取员工详情
-     *
-     * @param id
-     * @return
-     * @author 刘东奇
-     * @date 2019/11/13
-     */
-    @ApiOperation(value = "测试")
-    @GetMapping("/test")
-    public ResponseEntity getSysUserEmployee( Test2 test2) {
-        log.debug("REST request to \"测试\" : {}", test2.getTestEnum());
-        return ResponseEntity.ok(test2);
-    }
-
-
 }

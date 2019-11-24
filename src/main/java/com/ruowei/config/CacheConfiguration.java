@@ -2,7 +2,8 @@ package com.ruowei.config;
 
 import java.time.Duration;
 
-import com.ruowei.modules.sys.domain.table.*;
+import com.ruowei.modules.sys.domain.ralationship.SysUserRole;
+import com.ruowei.modules.sys.domain.entity.*;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import org.ehcache.config.builders.*;
 import org.ehcache.jsr107.Eh107Configuration;
@@ -48,9 +49,7 @@ public class CacheConfiguration {
             createCache(cm, SysCompany.class.getName());
             createCache(cm, SysOffice.class.getName());
             createCache(cm, SysEmployee.class.getName());
-            createCache(cm, SysEmployeeOffice.class.getName());
             createCache(cm, SysPost.class.getName());
-            createCache(cm, SysEmployeePost.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
