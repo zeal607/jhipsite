@@ -1,9 +1,8 @@
 package com.ruowei.modules.sys.service.api;
 
-import com.ruowei.modules.sys.domain.entity.SysUser;
-import com.ruowei.modules.sys.pojo.SysUserDTO;
+import com.ruowei.modules.sys.domain.entity.SysDeveloperUser;
+import com.ruowei.modules.sys.domain.table.SysUser;
 import com.ruowei.modules.sys.pojo.UserDTO;
-import com.ruowei.modules.sys.pojo.user.SysUserRegisterDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -46,10 +45,11 @@ public interface SysDeveloperApi {
      * 注册用户
      * @author 刘东奇
      * @date 2019/10/21
-     * @param sysUserRegisterDTO 从注册页面传来的数据
+     * @param userDTO
+     * @param password
      * @return
      */
-    SysUserDTO registerUser(SysUserRegisterDTO sysUserRegisterDTO);
+    SysDeveloperUser registerUser(UserDTO userDTO, String password);
 
 
     /**
@@ -76,15 +76,16 @@ public interface SysDeveloperApi {
      * @param loginCode
      * @return
      */
-    Optional<SysUserDTO> findOneByLoginCode(String loginCode);
+    Optional<SysDeveloperUser> findOneByLoginCode(String loginCode);
 
     /**
      * 通过email查询用户
      * @author 刘东奇
      * @date 2019/10/21
      * @param email
+     * @return
      */
-    Optional<SysUserDTO> findOneByEmailIgnoreCase(String email);
+    Optional<SysDeveloperUser> findOneByEmailIgnoreCase(String email);
 
     /**
      * 更新用户
@@ -151,6 +152,6 @@ public interface SysDeveloperApi {
      * @param userDTO
      * @return
      */
-    SysUser createUser(UserDTO userDTO);
+    SysDeveloperUser createUser(UserDTO userDTO);
 
 }

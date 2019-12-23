@@ -1,6 +1,6 @@
 package com.ruowei.security;
 
-import com.ruowei.modules.sys.domain.entity.SysUser;
+import com.ruowei.modules.sys.domain.table.SysUser;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;

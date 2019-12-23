@@ -9,7 +9,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 
 /**
- * 用户与角色关联表
+ * 用户与角色关系表
  * @author 刘东奇
  */
 @Entity
@@ -20,19 +20,17 @@ public class SysUserRole extends PrimaryKeyAutoIncrementEntity implements Serial
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户外键
+     * 用户ID
      */
     @NotNull
-    @Size(max = 100)
-    @Column(name = "sys_user_id", length = 100, nullable = false)
+    @Column(name = "sys_user_id", nullable = false)
     private Long sysUserId;
 
     /**
-     * 角色外键
+     * 角色ID
      */
     @NotNull
-    @Size(max = 100)
-    @Column(name = "sys_role_id", length = 20, nullable = false)
+    @Column(name = "sys_role_id",nullable = false)
     private Long sysRoleId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

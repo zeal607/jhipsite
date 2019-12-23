@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.entity.QSysRoleDataScope;
-import com.ruowei.modules.sys.domain.entity.SysRoleDataScope;
+import com.ruowei.modules.sys.domain.table.QSysRoleDataScope;
+import com.ruowei.modules.sys.domain.table.SysRoleDataScope;
 import org.springframework.stereotype.Repository;
 
 

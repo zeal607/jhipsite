@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * 员工与岗位关联表
+ * 员工与岗位关系表
  * @author 刘东奇
  */
 @Entity

@@ -12,10 +12,10 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * 公司部门关联表
+ * 公司机构关系表
  * @author JeeSite
  */
-@ApiModel(description = "公司部门关联表 @author JeeSite")
+@ApiModel(description = "公司机构关系表 @author JeeSite")
 @Entity
 @Table(name = "sys_company_office")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

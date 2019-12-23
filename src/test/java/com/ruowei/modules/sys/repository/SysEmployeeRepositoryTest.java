@@ -1,18 +1,12 @@
 package com.ruowei.modules.sys.repository;
 
 
-import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
-import com.ruowei.modules.sys.domain.entity.SysEmployee;
-import com.ruowei.modules.sys.domain.entity.SysOffice;
-import com.ruowei.modules.sys.domain.entity.SysPost;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.HashMap;
 
 
 /**
@@ -29,18 +23,6 @@ class SysEmployeeRepositoryTest {
 
     @Test
     void testSaveEmployee(){
-        SysEmployee sysEmployee = new SysEmployee();
-        sysEmployee.setEmpName("测试");
-        sysEmployee.setStatus(EmployeeStatusType.NORMAL);
-        sysEmployee.setEmpCode("asdsad");
-        HashMap<SysOffice, SysPost> sysOfficeSysPostHashMap =new HashMap<SysOffice, SysPost>();
-        SysOffice sysOffice = new SysOffice();
-        sysOffice.setId(1l);
-        SysPost sysPost = new SysPost();
-        sysPost.setId(2l);
-        sysOfficeSysPostHashMap.put(sysOffice,sysPost);
-        sysEmployee.setSysOfficeSysPostMap(sysOfficeSysPostHashMap);
-        sysEmployeeRepository.save(sysEmployee);
     }
 
 }

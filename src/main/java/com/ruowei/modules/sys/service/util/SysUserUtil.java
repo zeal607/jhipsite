@@ -1,7 +1,7 @@
 package com.ruowei.modules.sys.service.util;
 
 import com.ruowei.config.SpringUtil;
-import com.ruowei.modules.sys.domain.entity.SysUser;
+import com.ruowei.modules.sys.domain.table.SysUser;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 

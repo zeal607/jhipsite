@@ -4,7 +4,6 @@ import com.ruowei.config.Constants;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.service.util.SysUserUtil;
 
-import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.*;
@@ -33,7 +32,6 @@ public class SysUserRegisterDTO {
      */
     @NotNull
     @Size(max = 100)
-    @Column(name = "password", length = 100, nullable = false)
     private String password;
 
     /**
@@ -41,21 +39,17 @@ public class SysUserRegisterDTO {
      */
     @Size(max = 300)
     @Email
-    @Column(name = "email", length = 300, unique = true)
     private String email;
 
     /**
      * 是否激活
      */
-    @NotNull
-    @Column(nullable = false)
-    private boolean activated = false;
+    private Boolean activated = false;
 
     /**
      * 用户状态
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
     private UserStatusType status = UserStatusType.FREEZE;
 
     public String getUserCode() {
@@ -82,11 +76,11 @@ public class SysUserRegisterDTO {
         this.password = password;
     }
 
-    public boolean isActivated() {
+    public Boolean isActivated() {
         return activated;
     }
 
-    public void setActivated(boolean activated) {
+    public void setActivated(Boolean activated) {
         this.activated = activated;
     }
 

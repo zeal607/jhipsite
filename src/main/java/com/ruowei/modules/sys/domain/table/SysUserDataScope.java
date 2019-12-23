@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.domain.entity;
+package com.ruowei.modules.sys.domain.table;
 
 import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import com.ruowei.modules.sys.domain.enumeration.ControlType;
@@ -29,9 +29,8 @@ public class SysUserDataScope extends PrimaryKeyAutoIncrementEntity implements S
      * 控制用户ID
      */
     @NotNull
-    @Size(max = 100)
-    @Column(name = "sys_user_id", length = 100, nullable = false)
-    private String sysUserId;
+    @Column(name = "sys_user_id", nullable = false)
+    private Long sysUserId;
 
     /**
      * 控制类型
@@ -57,16 +56,16 @@ public class SysUserDataScope extends PrimaryKeyAutoIncrementEntity implements S
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
-    public String getSysUserId() {
+    public Long getSysUserId() {
         return sysUserId;
     }
 
-    public SysUserDataScope sysUserId(String sysUserId) {
+    public SysUserDataScope sysUserId(Long sysUserId) {
         this.sysUserId = sysUserId;
         return this;
     }
 
-    public void setSysUserId(String sysUserId) {
+    public void setSysUserId(Long sysUserId) {
         this.sysUserId = sysUserId;
     }
 

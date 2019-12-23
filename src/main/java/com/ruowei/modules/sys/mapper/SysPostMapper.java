@@ -1,7 +1,7 @@
 package com.ruowei.modules.sys.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
-import com.ruowei.modules.sys.domain.entity.SysPost;
+import com.ruowei.modules.sys.domain.table.SysPost;
 import com.ruowei.modules.sys.pojo.SysPostDTO;
 
 import org.mapstruct.*;

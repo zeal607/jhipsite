@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.web.api;
 
 import com.querydsl.core.types.Predicate;
-import com.ruowei.modules.sys.domain.SysUserEmployeeDetail;
-import com.ruowei.modules.sys.domain.SysUserEmployeeList;
+import com.ruowei.modules.sys.domain.entity.SysEmployeeDetail;
+import com.ruowei.modules.sys.domain.entity.SysEmployeeList;
 import com.ruowei.modules.sys.web.vm.AssignRoleVM;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -26,7 +26,7 @@ public interface SysUserEmployeeApi {
      * @param id
      * @return
      */
-    ResponseEntity<SysUserEmployeeDetail> getSysUserEmployee(@PathVariable Long id);
+    ResponseEntity<SysEmployeeDetail> getSysUserEmployee(@PathVariable Long id);
 
     /**
      * 分页查询员工数据
@@ -36,27 +36,27 @@ public interface SysUserEmployeeApi {
      * @param pageable
      * @return
      */
-    ResponseEntity<List<SysUserEmployeeList>> getAllSysUserEmployees(
-        @QuerydslPredicate(root = SysUserEmployeeList.class) Predicate sysUserEmployeeListPredicate,
+    ResponseEntity<List<SysEmployeeList>> getAllSysUserEmployees(
+        @QuerydslPredicate(root = SysEmployeeList.class) Predicate sysUserEmployeeListPredicate,
         Pageable pageable);
 
     /**
      * 创建员工
      * @author 刘东奇
      * @date 2019/11/13
-     * @param sysUserEmployeeDetail
+     * @param sysEmployeeDetail
      * @return
      */
-    ResponseEntity<SysUserEmployeeDetail> createSysUserEmployee(@Valid @RequestBody SysUserEmployeeDetail sysUserEmployeeDetail) throws URISyntaxException;
+    ResponseEntity<SysEmployeeDetail> createSysUserEmployee(@Valid @RequestBody SysEmployeeDetail sysEmployeeDetail) throws URISyntaxException;
 
     /**
      * 修改员工
      * @author 刘东奇
      * @date 2019/11/14
-     * @param sysUserEmployeeDetail
+     * @param sysEmployeeDetail
      * @return
      */
-    ResponseEntity<SysUserEmployeeDetail> modifySysUserEmployee(@Valid @RequestBody SysUserEmployeeDetail sysUserEmployeeDetail);
+    ResponseEntity<SysEmployeeDetail> modifySysUserEmployee(@Valid @RequestBody SysEmployeeDetail sysEmployeeDetail);
 
     /**
      * 停用员工

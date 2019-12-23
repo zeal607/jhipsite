@@ -1,11 +1,11 @@
-package com.ruowei.common.json;
+package com.ruowei.modules.sys.domain.serializable;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.ruowei.modules.sys.domain.entity.SysOffice;
-import com.ruowei.modules.sys.domain.entity.SysPost;
+import com.ruowei.modules.sys.domain.table.SysOffice;
+import com.ruowei.modules.sys.domain.table.SysPost;
 
 import java.io.IOException;
 import java.util.*;
@@ -26,9 +26,6 @@ public class SysOfficeSysPostMapJsonSerializer extends JsonSerializer<Map<SysOff
             SysPost sysPost = entry.getValue();
             map.put(sysOffice.getId().toString(),sysPost.getId().toString());
         }
-        String text = map.toString();
-        if (text != null) {
-            jsonGenerator.writeString(text);
-        }
+        jsonGenerator.writeObject(map);
     }
 }

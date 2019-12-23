@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.QSysUserEmployeeList;
-import com.ruowei.modules.sys.domain.SysUserEmployeeList;
+import com.ruowei.modules.sys.domain.entity.QSysEmployeeList;
+import com.ruowei.modules.sys.domain.entity.SysEmployeeList;
 import org.springframework.stereotype.Repository;
 
 
@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface SysUserEmployeeListRepository
-    extends BaseRepository<Long, SysUserEmployeeList, QSysUserEmployeeList> {
+public interface SysEmployeeListRepository
+    extends BaseRepository<Long, SysEmployeeList, QSysEmployeeList> {
 }

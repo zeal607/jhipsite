@@ -1,15 +1,15 @@
-package com.ruowei.modules.sys.domain;
+package com.ruowei.modules.sys.web.vm;
 
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.ruowei.common.json.*;
-import com.ruowei.modules.sys.domain.entity.SysOffice;
-import com.ruowei.modules.sys.domain.entity.SysPost;
-import com.ruowei.modules.sys.domain.entity.SysRole;
+import com.ruowei.common.json.LongJsonDeserializer;
+import com.ruowei.common.json.LongJsonSerializer;
+import com.ruowei.modules.sys.domain.serializable.SysPostListJsonSerializer;
+import com.ruowei.modules.sys.domain.serializable.SysRoleListJsonSerializer;
+import com.ruowei.modules.sys.domain.table.SysPost;
+import com.ruowei.modules.sys.domain.table.SysRole;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -18,27 +18,20 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 
 /**
- * 用户员工实体-详情模型
- * sys_user、sys_employee两个表主键相同，组成主从表
+ * 用户员工详情 视图模型
  * @author 刘东奇
  */
-@Entity
-@Table(name = "sys_employee")
-@SecondaryTable(name = "sys_user", pkJoinColumns = {
-    @PrimaryKeyJoinColumn(name = "ref_code",referencedColumnName = "id")})
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUserEmployeeDetail implements Serializable {
+public class SysUserEmployeeDetailVM implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
      * sys_employee表主键
      */
-    @Id
+    @ApiModelProperty(value = "主键")
     @JsonSerialize(using = LongJsonSerializer.class)
     @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
@@ -47,28 +40,22 @@ public class SysUserEmployeeDetail implements Serializable {
      * 归属
      * 机构ID
      */
-    @Size(max = 100)
     @ApiModelProperty(value = "机构ID")
-    @Column(name = "sys_office_id", length = 100)
-    private String sysOfficeId;
+    private Long sysOfficeId;
 
     /**
      * 归属
      * 机构名称
      */
-    @Size(max = 100)
     @ApiModelProperty(value = "机构名称")
-    @Column(name = "office_name", length = 100)
     private String officeName;
 
     /**
      * 归属
      * 公司ID
      */
-    @Size(max = 200)
     @ApiModelProperty(value = "公司ID")
-    @Column(name = "sys_company_id", length = 200)
-    private String sysCompanyId;
+    private Long sysCompanyId;
 
     /**
      * 归属
@@ -147,7 +134,7 @@ public class SysUserEmployeeDetail implements Serializable {
      * 所在岗位
      */
     @ApiModelProperty(value = "所在岗位")
-    @OneToMany(fetch=FetchType.EAGER)
+    @ManyToMany(fetch=FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name="sys_employee_post",joinColumns={@JoinColumn(name="sys_employee_id", referencedColumnName="id")}
         ,inverseJoinColumns={@JoinColumn(name="sys_post_id", referencedColumnName="id")})
@@ -185,17 +172,6 @@ public class SysUserEmployeeDetail implements Serializable {
      * @author 刘东奇
      * @date 2019/11/12
      */
-    @ApiModelProperty(value = "附属机构及岗位")
-    @ManyToMany(fetch=FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinTable(name = "sys_employee_office",
-        joinColumns = @JoinColumn(name = "sys_employee_id", referencedColumnName="id"),
-        inverseJoinColumns = @JoinColumn(name="sys_post_id", referencedColumnName="id"))
-    @MapKeyJoinColumn(name = "sys_office_id")
-    @ElementCollection
-    @JsonSerialize(using = SysOfficeSysPostMapJsonSerializer.class)
-    @JsonDeserialize(using = SysOfficeSysPostMapJsonDeserializer.class)
-    private Map<SysOffice,SysPost> sysOfficeSysPostMap;
 
     /**
      * 备注信息
@@ -225,11 +201,11 @@ public class SysUserEmployeeDetail implements Serializable {
         this.id = id;
     }
 
-    public String getSysOfficeId() {
+    public Long getSysOfficeId() {
         return sysOfficeId;
     }
 
-    public void setSysOfficeId(String sysOfficeId) {
+    public void setSysOfficeId(Long sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
     }
 
@@ -241,11 +217,11 @@ public class SysUserEmployeeDetail implements Serializable {
         this.officeName = officeName;
     }
 
-    public String getSysCompanyId() {
+    public Long getSysCompanyId() {
         return sysCompanyId;
     }
 
-    public void setSysCompanyId(String sysCompanyId) {
+    public void setSysCompanyId(Long sysCompanyId) {
         this.sysCompanyId = sysCompanyId;
     }
 
@@ -353,13 +329,6 @@ public class SysUserEmployeeDetail implements Serializable {
         this.sysRoleList = sysRoleList;
     }
 
-    public Map<SysOffice, SysPost> getSysOfficeSysPostMap() {
-        return sysOfficeSysPostMap;
-    }
-
-    public void setSysOfficeSysPostMap(Map<SysOffice, SysPost> sysOfficeSysPostMap) {
-        this.sysOfficeSysPostMap = sysOfficeSysPostMap;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -369,7 +338,7 @@ public class SysUserEmployeeDetail implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        SysUserEmployeeDetail that = (SysUserEmployeeDetail) o;
+        SysUserEmployeeDetailVM that = (SysUserEmployeeDetailVM) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(sysOfficeId, that.sysOfficeId) &&
             Objects.equals(officeName, that.officeName) &&
@@ -385,14 +354,13 @@ public class SysUserEmployeeDetail implements Serializable {
             Objects.equals(empName, that.empName) &&
             Objects.equals(sysPostList, that.sysPostList) &&
             Objects.equals(empNameEn, that.empNameEn) &&
-            Objects.equals(sysOfficeSysPostMap, that.sysOfficeSysPostMap) &&
             Objects.equals(remarks, that.remarks) &&
             Objects.equals(sysRoleList, that.sysRoleList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, sysOfficeId, officeName, sysCompanyId, companyName, loginCode, userName, email, mobile, phone, userSort, empCode, empName, sysPostList, empNameEn, sysOfficeSysPostMap, remarks, sysRoleList);
+        return Objects.hash(id, sysOfficeId, officeName, sysCompanyId, companyName, loginCode, userName, email, mobile, phone, userSort, empCode, empName, sysPostList, empNameEn, remarks, sysRoleList);
     }
 
     @Override
@@ -413,7 +381,6 @@ public class SysUserEmployeeDetail implements Serializable {
             ", empName='" + empName + '\'' +
             ", sysPostList=" + sysPostList +
             ", empNameEn='" + empNameEn + '\'' +
-            ", sysOfficeSysPostMap=" + sysOfficeSysPostMap +
             ", remarks='" + remarks + '\'' +
             ", sysRoleList=" + sysRoleList +
             '}';

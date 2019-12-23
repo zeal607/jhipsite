@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.pojo;
 import com.ruowei.common.pojo.BaseDTO;
-import com.ruowei.modules.sys.domain.entity.SysCompany;
+import com.ruowei.modules.sys.domain.table.SysCompany;
 import com.ruowei.modules.sys.domain.enumeration.CompanyStatusType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,12 +1,14 @@
 package com.ruowei.modules.sys.pojo;
 import com.ruowei.common.pojo.BaseDTO;
-import com.ruowei.modules.sys.domain.entity.SysEmployee;
+import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
+import com.ruowei.modules.sys.domain.table.SysEmployee;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
-import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 
 /**
  * A DTO for the {@link SysEmployee} entity.
@@ -40,9 +42,8 @@ public class SysEmployeeDTO extends BaseDTO implements Serializable {
     /**
      * 机构ID
      */
-    @Size(max = 100)
     @ApiModelProperty(value = "机构ID")
-    private String sysOfficeId;
+    private Long sysOfficeId;
 
     /**
      * 机构名称
@@ -54,9 +55,8 @@ public class SysEmployeeDTO extends BaseDTO implements Serializable {
     /**
      * 公司ID
      */
-    @Size(max = 200)
     @ApiModelProperty(value = "公司ID")
-    private String sysCompanyId;
+    private Long sysCompanyId;
 
     /**
      * 公司名称
@@ -103,11 +103,11 @@ public class SysEmployeeDTO extends BaseDTO implements Serializable {
         this.empNameEn = empNameEn;
     }
 
-    public String getSysOfficeId() {
+    public Long getSysOfficeId() {
         return sysOfficeId;
     }
 
-    public void setSysOfficeId(String sysOfficeId) {
+    public void setSysOfficeId(Long sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
     }
 
@@ -119,11 +119,11 @@ public class SysEmployeeDTO extends BaseDTO implements Serializable {
         this.officeName = officeName;
     }
 
-    public String getSysCompanyId() {
+    public Long getSysCompanyId() {
         return sysCompanyId;
     }
 
-    public void setSysCompanyId(String sysCompanyId) {
+    public void setSysCompanyId(Long sysCompanyId) {
         this.sysCompanyId = sysCompanyId;
     }
 

@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.domain.entity;
+package com.ruowei.modules.sys.domain.table;
 
 import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import com.ruowei.modules.sys.domain.enumeration.MenuStatusType;

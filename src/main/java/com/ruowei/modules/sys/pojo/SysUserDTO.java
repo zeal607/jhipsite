@@ -4,12 +4,13 @@ import com.ruowei.common.pojo.BaseDTO;
 import com.ruowei.modules.sys.domain.enumeration.GenderType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
-import com.ruowei.modules.sys.domain.entity.SysUser;
+import com.ruowei.modules.sys.domain.table.SysUser;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.Instant;
-import javax.persistence.Column;
-import javax.validation.constraints.*;
 import java.util.Objects;
 import java.util.Set;
 
@@ -171,21 +172,16 @@ public class SysUserDTO extends BaseDTO {
     @ApiModelProperty(value = "备注信息")
     private String remarks;
 
-    @NotNull
-    @Column(nullable = false)
     private Boolean activated;
 
     @Size(max = 20)
-    @Column(name = "activation_key", length = 20)
     @JsonIgnore
     private String activationKey;
 
     @Size(max = 20)
-    @Column(name = "reset_key", length = 20)
     @JsonIgnore
     private String resetKey;
 
-    @Column(name = "reset_date")
     private Instant resetDate = null;
 
     private Set<String> authorities;
@@ -382,11 +378,11 @@ public class SysUserDTO extends BaseDTO {
         return Objects.equals(getId(), sysUserDTO.getId());
     }
 
-    public boolean isActivated() {
+    public Boolean isActivated() {
         return activated;
     }
 
-    public void setActivated(boolean activated) {
+    public void setActivated(Boolean activated) {
         this.activated = activated;
     }
 

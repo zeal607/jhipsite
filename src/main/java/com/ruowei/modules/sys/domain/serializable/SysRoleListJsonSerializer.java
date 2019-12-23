@@ -1,12 +1,11 @@
-package com.ruowei.common.json;
+package com.ruowei.modules.sys.domain.serializable;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.ruowei.modules.sys.domain.entity.SysRole;
+import com.ruowei.modules.sys.domain.table.SysRole;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,13 +18,14 @@ public class SysRoleListJsonSerializer extends JsonSerializer<List<SysRole>> {
     @Override
     public void serialize(List<SysRole> value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException{
 
-        List<String> list = new ArrayList<>();
-        for(SysRole sysRole:value){
-            list.add(sysRole.getId().toString());
-        }
-        String text = list.toString();
-        if (text != null) {
-            jsonGenerator.writeString(text);
+        if(value!=null && value.size()>0){
+            String [] list = new String[value.size()];
+            for(int i=0;i<value.size();i++){
+                list[i]=value.get(i).getId().toString();
+            }
+            jsonGenerator.writeObject(list);
+        }else{
+            jsonGenerator.writeObject(null);
         }
     }
 }

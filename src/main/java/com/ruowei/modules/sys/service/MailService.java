@@ -1,12 +1,7 @@
 package com.ruowei.modules.sys.service;
 
-import com.ruowei.modules.sys.pojo.SysUserDTO;
+import com.ruowei.modules.sys.domain.entity.SysDeveloperUser;
 import io.github.jhipster.config.JHipsterProperties;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
-import javax.mail.internet.MimeMessage;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -16,6 +11,10 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import javax.mail.internet.MimeMessage;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 /**
  * Service for sending emails.
@@ -73,7 +72,7 @@ public class MailService {
     }
 
     @Async
-    public void sendEmailFromTemplate(SysUserDTO user, String templateName, String titleKey) {
+    public void sendEmailFromTemplate(SysDeveloperUser user, String templateName, String titleKey) {
         Locale locale = Locale.forLanguageTag("zh-cn");
         Context context = new Context(locale);
         context.setVariable(USER, user);
@@ -84,19 +83,19 @@ public class MailService {
     }
 
     @Async
-    public void sendActivationEmail(SysUserDTO user) {
+    public void sendActivationEmail(SysDeveloperUser user) {
         log.debug("Sending activation email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/activationEmail", "email.activation.title");
     }
 
     @Async
-    public void sendCreationEmail(SysUserDTO user) {
+    public void sendCreationEmail(SysDeveloperUser user) {
         log.debug("Sending creation email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/creationEmail", "email.activation.title");
     }
 
     @Async
-    public void sendPasswordResetMail(SysUserDTO user) {
+    public void sendPasswordResetMail(SysDeveloperUser user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
     }

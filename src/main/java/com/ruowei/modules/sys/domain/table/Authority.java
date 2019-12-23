@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.domain.entity;
+package com.ruowei.modules.sys.domain.table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

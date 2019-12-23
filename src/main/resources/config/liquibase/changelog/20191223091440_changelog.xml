@@ -1,0 +1,472 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="Administrator (generated)" id="1577092489803-1">
+        <createTable tableName="jhi_authority">
+            <column name="name" type="VARCHAR(50)">
+                <constraints primaryKey="true" primaryKeyName="jhi_authorityPK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-2">
+        <createTable tableName="jhi_persistent_audit_event">
+            <column autoIncrement="true" name="event_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_persistent_audit_eventPK"/>
+            </column>
+            <column name="event_date" type="datetime"/>
+            <column name="event_type" type="VARCHAR(255)"/>
+            <column name="principal" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-3">
+        <createTable tableName="jhi_persistent_audit_evt_data">
+            <column name="event_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="value" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-4">
+        <createTable tableName="jhi_user_authority">
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="authority_name" type="VARCHAR(50)">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-5">
+        <createTable tableName="sys_company" remarks="公司表">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_companyPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="area_code" type="VARCHAR(100)" remarks="区域编码"/>
+            <column name="company_code" type="VARCHAR(100)" remarks="公司编码">
+                <constraints nullable="false"/>
+            </column>
+            <column name="company_name" type="VARCHAR(200)" remarks="公司名称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="full_name" type="VARCHAR(200)" remarks="公司全称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_code" type="VARCHAR(100)" remarks="父级编号"/>
+            <column name="parent_codes" type="VARCHAR(1000)" remarks="所有父级编号"/>
+            <column name="remarks" type="VARCHAR(500)" remarks="备注信息"/>
+            <column name="status" type="VARCHAR(255)" remarks="状态">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_leaf" type="BIT" remarks="是否最末级">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_level" type="INT" remarks="层次级别">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_names" type="VARCHAR(1000)" remarks="全节点名">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_sort" type="INT" remarks="本级排序号（升序）"/>
+            <column name="tree_sorts" type="INT" remarks="所有级别排序号"/>
+            <column name="view_code" type="VARCHAR(100)" remarks="公司代码"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-6">
+        <createTable tableName="sys_company_office">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_company_officePK"/>
+            </column>
+            <column name="sys_company_id" type="BIGINT" remarks="公司ID"/>
+            <column name="sys_office_id" type="BIGINT" remarks="机构ID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-7">
+        <createTable tableName="sys_employee" remarks="员工表">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_employeePK"/>
+            </column>
+            <column name="emp_name" type="VARCHAR(100)" remarks="员工姓名">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="company_name" type="VARCHAR(100)" remarks="公司名称"/>
+            <column name="emp_code" type="VARCHAR(100)" remarks="员工编码">
+                <constraints nullable="false"/>
+            </column>
+            <column name="emp_name_en" type="VARCHAR(1000)" remarks="英文名"/>
+            <column name="office_name" type="VARCHAR(100)" remarks="机构名称"/>
+            <column name="remarks" type="VARCHAR(500)" remarks="备注信息"/>
+            <column name="status" type="VARCHAR(255)" remarks="状态">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sys_company_id" type="BIGINT" remarks="公司ID"/>
+            <column name="sys_office_id" type="BIGINT" remarks="机构ID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-8">
+        <createTable tableName="sys_employee_office" remarks="员工附属机构关系表">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_employee_officePK"/>
+            </column>
+            <column name="sys_employee_id" type="BIGINT" remarks="员工ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sys_office_id" type="BIGINT" remarks="机构ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sys_post_id" type="BIGINT" remarks="岗位ID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-9">
+        <createTable tableName="sys_employee_post" remarks="员工与岗位关系表">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_employee_postPK"/>
+            </column>
+            <column name="sys_employee_id" type="BIGINT" remarks="员工ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sys_post_id" type="BIGINT" remarks="岗位ID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-10">
+        <createTable tableName="sys_menu" remarks="菜单表">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_menuPK"/>
+            </column>
+            <column name="is_show" type="BIT" remarks="是否显示">
+                <constraints nullable="false"/>
+            </column>
+            <column name="menu_code" type="VARCHAR(100)" remarks="菜单编码">
+                <constraints nullable="false"/>
+            </column>
+            <column name="menu_href" type="VARCHAR(1000)" remarks="链接"/>
+            <column name="menu_icon" type="VARCHAR(100)" remarks="图标"/>
+            <column name="menu_name" type="VARCHAR(100)" remarks="菜单名称"/>
+            <column name="menu_sort" type="INT" remarks="菜单排序（升序）"/>
+            <column name="menu_title" type="VARCHAR(100)" remarks="菜单标题"/>
+            <column name="menu_type" type="VARCHAR(255)" remarks="菜单类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_code" type="VARCHAR(100)" remarks="父级编号"/>
+            <column name="parent_codes" type="VARCHAR(1000)" remarks="所有父级编号"/>
+            <column name="permission" type="VARCHAR(1000)" remarks="权限标识"/>
+            <column name="remarks" type="VARCHAR(500)" remarks="备注信息"/>
+            <column name="status" type="VARCHAR(255)" remarks="状态">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sys_code" type="VARCHAR(255)" remarks="归属系统（default:主导航菜单、mobileApp:APP菜单）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_leaf" type="BIT" remarks="是否最末级">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_level" type="INT" remarks="层次级别">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_names" type="VARCHAR(1000)" remarks="全节点名">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_sort" type="INT" remarks="本级排序号（升序）"/>
+            <column name="tree_sorts" type="INT" remarks="所有级别排序号"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-11">
+        <createTable tableName="sys_office" remarks="组织机构表">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_officePK"/>
+            </column>
+            <column name="full_name" type="VARCHAR(200)" remarks="机构全称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="office_code" type="VARCHAR(100)" remarks="机构编码">
+                <constraints nullable="false"/>
+            </column>
+            <column name="office_name" type="VARCHAR(200)" remarks="机构名称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="view_code" type="VARCHAR(100)" remarks="机构代码"/>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="address" type="VARCHAR(255)" remarks="联系地址"/>
+            <column name="email" type="VARCHAR(300)"  remarks="电子邮箱"/>
+            <column name="leader" type="VARCHAR(100)" remarks="负责人"/>
+            <column name="office_type" type="VARCHAR(255)" remarks="机构类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_code" type="VARCHAR(100)" remarks="父级编号"/>
+            <column name="parent_codes" type="VARCHAR(1000)" remarks="所有父级编号"/>
+            <column name="phone" type="VARCHAR(100)" remarks="办公电话"/>
+            <column name="remarks" type="VARCHAR(500)" remarks="备注信息"/>
+            <column name="status" type="VARCHAR(255)" remarks="状态">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_leaf" type="BIT" remarks="是否最末级">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_level" type="INT" remarks="层次级别">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_names" type="VARCHAR(1000)" remarks="全节点名">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_sort" type="INT" remarks="本级排序号（升序）"/>
+            <column name="tree_sorts" type="INT" remarks="所有级别排序号"/>
+            <column name="zip_code" type="VARCHAR(100)" remarks="邮政编码"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-12">
+        <createTable tableName="sys_post" remarks="岗位表">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_postPK"/>
+            </column>
+            <column name="post_code" type="VARCHAR(100)" remarks="岗位编码">
+                <constraints nullable="false"/>
+            </column>
+            <column name="post_name" type="VARCHAR(100)" remarks="岗位名称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="post_type" type="VARCHAR(255)" remarks="岗位分类（高管、中层、基层）"/>
+            <column name="remarks" type="VARCHAR(500)" remarks="备注信息"/>
+            <column name="status" type="VARCHAR(255)" remarks="状态">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-13">
+        <createTable tableName="sys_role" remarks="角色表">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_rolePK"/>
+            </column>
+            <column name="biz_scope" type="VARCHAR(255)" remarks="适应业务范围"/>
+            <column name="data_scope" type="VARCHAR(255)" remarks="数据范围设置"/>
+            <column name="is_sys" type="BIT" remarks="是否系统内置">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remarks" type="VARCHAR(500)" remarks="备注信息"/>
+            <column name="role_code" type="VARCHAR(100)" remarks="角色编码">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_name" type="VARCHAR(100)" remarks="角色名称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_sort" type="INT" remarks="角色排序（升序）"/>
+            <column name="role_type" type="VARCHAR(255)" remarks="角色类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(255)" remarks="状态">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-14">
+        <createTable tableName="sys_role_data_scope" remarks="角色数据权限表">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_role_data_scopePK"/>
+            </column>
+            <column name="ctrl_data" type="VARCHAR(100)" remarks="控制数据，如控制类型为公司，那么这里就是公司编号"/>
+            <column name="ctrl_permi" type="VARCHAR(100)" remarks="控制权限"/>
+            <column name="ctrl_type" type="VARCHAR(255)" remarks="控制类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sys_role_id" type="BIGINT" remarks="控制角色ID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-15">
+        <createTable tableName="sys_role_menu" remarks="角色与菜单关系表">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_role_menuPK"/>
+            </column>
+            <column name="sys_menu_id" type="BIGINT" remarks="角色ID"/>
+            <column name="sys_role_id" type="BIGINT" remarks="菜单ID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-16">
+        <createTable tableName="sys_user" remarks="用户表">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_userPK"/>
+            </column>
+            <column name="activated" type="BIT" remarks="是否激活"/>
+            <column name="activation_key" type="VARCHAR(20)" remarks="激活秘钥"/>
+            <column name="created_date" type="datetime"/>
+            <column name="email" type="VARCHAR(300)" remarks="电子邮箱"/>
+            <column name="avatar" type="VARCHAR(1000)" remarks="头像相对路径"/>
+            <column name="login_code" type="VARCHAR(100)" remarks="登录账号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(100)" remarks="登录密码">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reset_date" type="datetime" remarks="重置时间"/>
+            <column name="reset_key" type="VARCHAR(20)" remarks="重置秘钥"/>
+            <column name="user_name" type="VARCHAR(100)" remarks="用户昵称"/>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="freeze_cause" type="VARCHAR(200)" remarks="冻结原因"/>
+            <column name="freeze_date" type="datetime" remarks="冻结时间"/>
+            <column name="last_login_date" type="datetime" remarks="最后登录时间"/>
+            <column name="last_login_ip" type="VARCHAR(100)" remarks="最后登录IP"/>
+            <column name="mobile" type="VARCHAR(100)" remarks="手机号码"/>
+            <column name="mobile_imei" type="VARCHAR(100)" remarks="绑定的手机MID"/>
+            <column name="phone" type="VARCHAR(100)" remarks="办公电话"/>
+            <column name="ref_code" type="BIGINT" remarks="用户类型引用编号（雇员表或会员表的ID）"/>
+            <column name="ref_name" type="VARCHAR(100)" remarks="用户类型引用姓名"/>
+            <column name="remarks" type="VARCHAR(500)" remarks="备注信息"/>
+            <column name="sex" type="VARCHAR(255)" remarks="用户性别"/>
+            <column name="sign" type="VARCHAR(200)" remarks="个性签名"/>
+            <column name="status" type="VARCHAR(255)" remarks="用户状态"/>
+            <column name="user_code" type="VARCHAR(100)" remarks="用户编码"/>
+            <column name="user_sort" type="INT" remarks=" 用户权重，用于排序（降序）"/>
+            <column name="user_type" type="VARCHAR(255)" remarks="用户类型"/>
+            <column name="wx_openid" type="VARCHAR(1000)" remarks="绑定的微信号"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-17">
+        <createTable tableName="sys_user_data_scope" remarks="用户数据权限表">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_user_data_scopePK"/>
+            </column>
+            <column name="ctrl_data" type="VARCHAR(100)" remarks="控制数据，如控制类型为公司，那么这里就是公司编号"/>
+            <column name="ctrl_permi" type="VARCHAR(100)" remarks="控制权限"/>
+            <column name="ctrl_type" type="VARCHAR(255)" remarks="控制类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sys_user_id" type="BIGINT" remarks="控制用户ID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-18">
+        <createTable tableName="sys_user_role" remarks="用户与角色关系表">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sys_user_rolePK"/>
+            </column>
+            <column name="sys_role_id" type="BIGINT" remarks="角色ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sys_user_id" type="BIGINT" remarks="用户ID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-19">
+        <addUniqueConstraint columnNames="company_code" constraintName="UC_SYS_COMPANYCOMPANY_CODE_COL" tableName="sys_company"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-20">
+        <addUniqueConstraint columnNames="full_name" constraintName="UC_SYS_COMPANYFULL_NAME_COL" tableName="sys_company"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-21">
+        <addUniqueConstraint columnNames="emp_code" constraintName="UC_SYS_EMPLOYEEEMP_CODE_COL" tableName="sys_employee"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-22">
+        <addUniqueConstraint columnNames="menu_code" constraintName="UC_SYS_MENUMENU_CODE_COL" tableName="sys_menu"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-23">
+        <addUniqueConstraint columnNames="full_name" constraintName="UC_SYS_OFFICEFULL_NAME_COL" tableName="sys_office"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-24">
+        <addUniqueConstraint columnNames="office_code" constraintName="UC_SYS_OFFICEOFFICE_CODE_COL" tableName="sys_office"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-25">
+        <addUniqueConstraint columnNames="post_code" constraintName="UC_SYS_POSTPOST_CODE_COL" tableName="sys_post"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-26">
+        <addUniqueConstraint columnNames="role_code" constraintName="UC_SYS_ROLEROLE_CODE_COL" tableName="sys_role"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-27">
+        <addUniqueConstraint columnNames="role_name" constraintName="UC_SYS_ROLEROLE_NAME_COL" tableName="sys_role"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-28">
+        <addUniqueConstraint columnNames="email" constraintName="UC_SYS_USEREMAIL_COL" tableName="sys_user"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-29">
+        <addUniqueConstraint columnNames="login_code" constraintName="UC_SYS_USERLOGIN_CODE_COL" tableName="sys_user"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-30">
+        <addUniqueConstraint columnNames="mobile" constraintName="UC_SYS_USERMOBILE_COL" tableName="sys_user"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-31">
+        <addUniqueConstraint columnNames="mobile_imei" constraintName="UC_SYS_USERMOBILE_IMEI_COL" tableName="sys_user"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-32">
+        <addUniqueConstraint columnNames="user_code" constraintName="UC_SYS_USERUSER_CODE_COL" tableName="sys_user"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-33">
+        <addUniqueConstraint columnNames="wx_openid" constraintName="UC_SYS_USERWX_OPENID_COL" tableName="sys_user"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-34">
+        <addUniqueConstraint columnNames="id, company_name" constraintName="UK_6o2jknibqj6wlf3ybxa3tay9h" tableName="sys_company"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-35">
+        <addUniqueConstraint columnNames="id, office_name" constraintName="UK_efgu2h35t6hjrfn582ympd4hh" tableName="sys_office"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-36">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="jhi_persistent_audit_evt_data" constraintName="FK2ehnyx2si4tjd2nt4q7y40v8m" deferrable="false" initiallyDeferred="false" referencedColumnNames="event_id" referencedTableName="jhi_persistent_audit_event" validate="true"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-37">
+        <addForeignKeyConstraint baseColumnNames="sys_employee_id" baseTableName="sys_employee_office" constraintName="FK2wvcgk0npe9gr3b7w3m3jml8y" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sys_employee" validate="true"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-38">
+        <addForeignKeyConstraint baseColumnNames="sys_office_id" baseTableName="sys_employee_office" constraintName="FK2xxcj0hxaon05sj18qhpq1w44" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sys_office" validate="true"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-39">
+        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="jhi_user_authority" constraintName="FK4psxl0jtx6nr7rhqbynr6itoc" deferrable="false" initiallyDeferred="false" referencedColumnNames="name" referencedTableName="jhi_authority" validate="true"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-40">
+        <addForeignKeyConstraint baseColumnNames="ref_code" baseTableName="sys_user" constraintName="FK6dmx6gfxadpylbopxm2am443p" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sys_employee" validate="true"/>
+    </changeSet>
+<!--    <changeSet author="刘东奇" id="1577092489803-41">-->
+<!--        <addForeignKeyConstraint baseColumnNames="id" baseTableName="sys_employee_office" constraintName="FK9d07t1davse6poly7rbdasb91" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sys_employee_office" validate="true"/>-->
+<!--    </changeSet>-->
+    <changeSet author="刘东奇" id="1577092489803-42">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_authority" constraintName="FKa8pk9y2othep7btqhe1au7uyf" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sys_user" validate="true"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-43">
+        <addForeignKeyConstraint baseColumnNames="sys_employee_id" baseTableName="sys_employee_post" constraintName="FKai45g34cqbdvabsw758ewmaxu" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sys_employee" validate="true"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-44">
+        <addForeignKeyConstraint baseColumnNames="sys_office_id,office_name" baseTableName="sys_employee" constraintName="FKb34jl7c4qjjb2mlp4sle18ff9" deferrable="false" initiallyDeferred="false" referencedColumnNames="id,office_name" referencedTableName="sys_office" validate="true"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-45">
+        <addForeignKeyConstraint baseColumnNames="sys_post_id" baseTableName="sys_employee_post" constraintName="FKinalwg1g6qkyhd0efevxrr8bt" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sys_post" validate="true"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-46">
+        <addForeignKeyConstraint baseColumnNames="sys_company_id,company_name" baseTableName="sys_employee" constraintName="FKmx609c286quemg4agnugfdii6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id,company_name" referencedTableName="sys_company" validate="true"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-47">
+        <addForeignKeyConstraint baseColumnNames="sys_post_id" baseTableName="sys_employee_office" constraintName="FKwgrcro22yla4qdgdn2r1o2jd" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sys_post" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

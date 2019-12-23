@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.pojo;
 import com.ruowei.common.pojo.BaseDTO;
-import com.ruowei.modules.sys.domain.entity.SysPost;
+import com.ruowei.modules.sys.domain.table.SysPost;
 import com.ruowei.modules.sys.domain.enumeration.PostStatusType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

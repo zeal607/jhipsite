@@ -1,28 +1,27 @@
-package com.ruowei.modules.sys.domain.entity;
+package com.ruowei.modules.sys.domain.table;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
+import com.ruowei.common.entity.AbstractAuditingEntity;
 import com.ruowei.common.json.LongJsonDeserializer;
 import com.ruowei.common.json.LongJsonSerializer;
 import com.ruowei.modules.sys.domain.enumeration.PostStatusType;
+import com.ruowei.modules.sys.domain.enumeration.PostType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-import com.ruowei.modules.sys.domain.enumeration.PostType;
-
 /**
- * 员工岗位
+ * 岗位表
  * @author 刘东奇
  */
 @Entity
 @Table(name = "sys_post")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysPost extends PrimaryKeyAutoIncrementEntity implements Serializable {
+public class SysPost extends AbstractAuditingEntity implements Serializable {
 
     public SysPost(){}
 

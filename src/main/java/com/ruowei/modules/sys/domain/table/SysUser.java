@@ -1,22 +1,20 @@
-package com.ruowei.modules.sys.domain.entity;
+package com.ruowei.modules.sys.domain.table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ruowei.common.entity.AbstractAuditingEntity;
 import com.ruowei.modules.sys.domain.enumeration.GenderType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
-import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -35,9 +33,8 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
     /**
      * 用户编码 ，该字段不作为表的关联外键，仅供展示
      */
-    @NotNull
     @Size(max = 100)
-    @Column(name = "user_code", length = 100, nullable = false, unique = true)
+    @Column(name = "user_code", length = 100, nullable = true, unique = true)
     private String userCode;
 
     /**
@@ -66,6 +63,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
     /**
      * 电子邮箱
      */
+    @Email
     @Size(max = 300)
     @Column(name = "email", length = 300, unique = true)
     private String email;
@@ -174,9 +172,8 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
     /**
      * 用户状态
      */
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = true)
     private UserStatusType status;
 
     /**
@@ -189,20 +186,28 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
     /**
      * 是否激活
      */
-    @NotNull
-    @Column(nullable = false)
-    private boolean activated;
+    @Column(nullable = true)
+    private Boolean activated;
 
+    /**
+     * 激活秘钥
+     */
     @Size(max = 20)
     @Column(name = "activation_key", length = 20)
     @JsonIgnore
     private String activationKey;
 
+    /**
+     * 重置秘钥
+     */
     @Size(max = 20)
     @Column(name = "reset_key", length = 20)
     @JsonIgnore
     private String resetKey;
 
+    /**
+     * 重置时间
+     */
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
@@ -215,16 +220,6 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
-
-    /**
-     * 分配角色
-     */
-    @ApiModelProperty(value = "分配角色")
-    @ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(name="sys_user_role",joinColumns={@JoinColumn(name="sys_user_id",referencedColumnName="id")}
-        ,inverseJoinColumns={@JoinColumn(name="sys_role_id",referencedColumnName="id")})
-    private List<SysRole> sysRoleList;
-
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -519,11 +514,11 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return serialVersionUID;
     }
 
-    public boolean isActivated() {
+    public Boolean isActivated() {
         return activated;
     }
 
-    public void setActivated(boolean activated) {
+    public void setActivated(Boolean activated) {
         this.activated = activated;
     }
 
@@ -559,14 +554,6 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         this.authorities = authorities;
     }
 
-    public List<SysRole> getSysRoleList() {
-        return sysRoleList;
-    }
-
-    public void setSysRoleList(List<SysRole> sysRoleList) {
-        this.sysRoleList = sysRoleList;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -598,13 +585,12 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
             Objects.equals(activationKey, sysUser.activationKey) &&
             Objects.equals(resetKey, sysUser.resetKey) &&
             Objects.equals(resetDate, sysUser.resetDate) &&
-            Objects.equals(authorities, sysUser.authorities) &&
-            Objects.equals(sysRoleList, sysUser.sysRoleList);
+            Objects.equals(authorities, sysUser.authorities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userCode, loginCode, userName, password, email, mobile, phone, sex, avatar, sign, wxOpenid, mobileImei, userType, refCode, refName, lastLoginIp, lastLoginDate, freezeDate, freezeCause, userSort, status, remarks, activated, activationKey, resetKey, resetDate, authorities, sysRoleList);
+        return Objects.hash(userCode, loginCode, userName, password, email, mobile, phone, sex, avatar, sign, wxOpenid, mobileImei, userType, refCode, refName, lastLoginIp, lastLoginDate, freezeDate, freezeCause, userSort, status, remarks, activated, activationKey, resetKey, resetDate, authorities);
     }
 
     @Override
@@ -623,7 +609,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
             ", wxOpenid='" + wxOpenid + '\'' +
             ", mobileImei='" + mobileImei + '\'' +
             ", userType=" + userType +
-            ", refCode='" + refCode + '\'' +
+            ", refCode=" + refCode +
             ", refName='" + refName + '\'' +
             ", lastLoginIp='" + lastLoginIp + '\'' +
             ", lastLoginDate=" + lastLoginDate +
@@ -637,7 +623,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
             ", resetKey='" + resetKey + '\'' +
             ", resetDate=" + resetDate +
             ", authorities=" + authorities +
-            ", sysRoleList=" + sysRoleList +
+            ", id=" + id +
             '}';
     }
 }

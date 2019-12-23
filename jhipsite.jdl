@@ -11,7 +11,7 @@ application{
         buildTool maven
 
         //数据库类型
-        databaseType sql        
+        databaseType sql
         devDatabaseType mysql
         prodDatabaseType mysql
         //缓存框架
@@ -30,7 +30,7 @@ application{
 		clientPackageManager npm
 		//前端框架
  		clientFramework react
- 		//是否国际化        
+ 		//是否国际化
         enableTranslation true
         //支持语言
         languages [zh-cn,en]
@@ -38,8 +38,8 @@ application{
         nativeLanguage zh-cn
 
         //是否开启API驱动开发
-        enableSwaggerCodegen true 
-        //消息队列：kafka|false      
+        enableSwaggerCodegen true
+        //消息队列：kafka|false
 		messageBroker false
         //搜索引擎：elasticsearch|false
         searchEngine false
@@ -50,23 +50,13 @@ application{
 
         //跳过前端
         skipClient false
-        //跳过后端		
+        //跳过后端
 		skipServer false
 		//跳过用户管理
         skipUserManagement false
     }
     entities *
 }
-
-
-/** 启用DTO，并自带实体转换器 */
-dto all with mapstruct
-
-/** 启用服务接口及其实现 */
-service all with serviceImpl
-
-/** 启用前端查询参数转换器 */
-filter all
 
 /** 启用分页 */
 paginate all with pagination
@@ -83,48 +73,48 @@ paginate all with pagination
 entity SysUser {
 	/** 用户编码 ，该字段不作为表的关联外键，仅供展示*/
     userCode                String			required maxlength(100) unique
-    /** 登录账号 */          
+    /** 登录账号 */
     loginCode	            String 			required maxlength(100) unique
-   	/** 用户昵称 */      
-    userName	            String 			maxlength(100)	
-    /** 登录密码 */        
+   	/** 用户昵称 */
+    userName	            String 			maxlength(100)
+    /** 登录密码 */
     password	            String 			required maxlength(100)
     /** 电子邮箱 */
     email                   String 			maxlength(300) unique
-    /** 手机号码 */        
+    /** 手机号码 */
     mobile                  String 			maxlength(100) unique
-    /** 办公电话 */        
+    /** 办公电话 */
     phone                   String 			maxlength(100)
-    /** 用户性别 */	        
+    /** 用户性别 */
     sex                     GenderType
-    /** 头像相对路径 */                    
+    /** 头像相对路径 */
     avatar                  String 			maxlength(1000)
-    /** 个性签名 */          
+    /** 个性签名 */
     sign                    String 			maxlength(200)
-    /** 绑定的微信号 */          
+    /** 绑定的微信号 */
     wxOpenid                String 			maxlength(1000)	unique
-    /** 绑定的手机MID */     
+    /** 绑定的手机MID */
     mobileImei              String 			maxlength(100) unique
     /** 用户类型 */
-    userType                UserType 
-    /** 用户类型引用编号（雇员表或会员表的ID） */                       
-    refCode                 String 			maxlength(100) 
-    /** 用户类型引用姓名 */         
+    userType                UserType
+    /** 用户类型引用编号（雇员表或会员表的ID） */
+    refCode                 String 			maxlength(100)
+    /** 用户类型引用姓名 */
     refName                 String 			maxlength(100)
     /** 最后登录IP */
     lastLoginIp             String 			maxlength(100)
-    /** 最后登录时间 */         
+    /** 最后登录时间 */
     lastLoginDate           Instant
-    /** 冻结时间 */                        
+    /** 冻结时间 */
     freezeDate              Instant
-    /** 冻结原因 */                        
+    /** 冻结原因 */
     freezeCause             String 			maxlength(200)
-    /** 用户权重，用于排序（降序）*/           
-    userSort                Integer 
- 	/** 用户状态 */                         
+    /** 用户权重，用于排序（降序）*/
+    userSort                Integer
+ 	/** 用户状态 */
     status                  UserStatusType 	required
-    /** 备注信息 */                 
-    remarks                 String 			maxlength(500)           
+    /** 备注信息 */
+    remarks                 String 			maxlength(500)
 }
 
 /**
@@ -189,23 +179,23 @@ enum UserStatusType {
  */
 entity SysRole {
 	/** 角色编码 ，该字段不作为表的关联外键，仅供展示*/
-    roleCode                String 			required maxlength(100) unique 
-    /** 角色名称 */         
+    roleCode                String 			required maxlength(100) unique
+    /** 角色名称 */
     roleName	            String 			required maxlength(100) unique
-    /** 角色类型 */        
+    /** 角色类型 */
     roleType	            RoleType		required
-    /** 角色排序（升序） */                  
+    /** 角色排序（升序） */
     roleSort	            Integer
-    /** 是否系统内置 */	                        
+    /** 是否系统内置 */
     isSys                   Boolean	 		required
-    /** 数据范围设置 */                  
+    /** 数据范围设置 */
     dataScope               DataScopeType
-    /** 适应业务范围 */                  
-    bizScope                String 			maxlength(255) 
-    /** 状态 */          
+    /** 适应业务范围 */
+    bizScope                String 			maxlength(255)
+    /** 状态 */
     status                  RoleStatusType	required
-    /** 备注信息 */	                
-    remarks                 String 			maxlength(500)           
+    /** 备注信息 */
+    remarks                 String 			maxlength(500)
 }
 
 /**
@@ -247,42 +237,42 @@ enum RoleStatusType {
 entity SysMenu {
 	/** 菜单编码 */
     menuCode                String 			required maxlength(100) unique
-    /** 父级编号 */          
+    /** 父级编号 */
     parentCode 	            String			maxlength(100)
-    /** 所有父级编号 */                          
+    /** 所有父级编号 */
     parentCodes	            String 			maxlength(1000)
- 	/** 本级排序号（升序） */ 	       
+ 	/** 本级排序号（升序） */
     treeSort	            Integer
- 	/** 所有级别排序号 */	                       
+ 	/** 所有级别排序号 */
     treeSorts               Integer
-    /** 是否最末级 */	                       
+    /** 是否最末级 */
     treeLeaf                Boolean   		required
-    /** 层次级别 */                      
+    /** 层次级别 */
     treeLevel               Integer  		required
-    /** 全节点名 */                      
-    treeNames               String 			required maxlength(1000) 
-    /** 菜单名称 */         
+    /** 全节点名 */
+    treeNames               String 			required maxlength(1000)
+    /** 菜单名称 */
     menuName                String 			maxlength(100)
-    /** 菜单类型 */           
+    /** 菜单类型 */
     menuType                MenuType   		required
-    /** 链接 */	                        
+    /** 链接 */
     menuHref                String 			maxlength(1000)
-    /** 图标 */          
+    /** 图标 */
     menuIcon                String 			maxlength(100)
-    /** 菜单标题 */           
+    /** 菜单标题 */
     menuTitle               String 			maxlength(100)
-    /** 权限标识 */           
+    /** 权限标识 */
     permission              String 			maxlength(1000)
-    /** 菜单排序（升序） */          
+    /** 菜单排序（升序） */
     menuSort	            Integer
-    /** 是否显示 */	                        
+    /** 是否显示 */
     isShow                  Boolean			required
-    /** 归属系统（default:主导航菜单、mobileApp:APP菜单） */                         
-    sysCode                 SysType 		required 
-    /** 状态 */                       
+    /** 归属系统（default:主导航菜单、mobileApp:APP菜单） */
+    sysCode                 SysType 		required
+    /** 状态 */
     status                  MenuStatusType	required
-    /** 备注信息 */	                
-    remarks                 String 			maxlength(500)           
+    /** 备注信息 */
+    remarks                 String 			maxlength(500)
 }
 
 /**
@@ -323,9 +313,9 @@ enum MenuStatusType {
  */
 entity SysUserRole {
 	/** 用户外键 */
-    sysUserId         	String 		required maxlength(100) 
-     /** 角色外键 */           
-    sysRoleId  	       	String 		required maxlength(100)           
+    sysUserId         	String 		required maxlength(100)
+     /** 角色外键 */
+    sysRoleId  	       	String 		required maxlength(100)
 }
 
 /**
@@ -334,9 +324,9 @@ entity SysUserRole {
  */
 entity SysRoleMenu {
 	/** 角色外键 */
-    sysRoleId  	       	String 		required maxlength(100) 
-    /** 菜单外键 */           
-    sysMenuId         	String 		required maxlength(100)            
+    sysRoleId  	       	String 		required maxlength(100)
+    /** 菜单外键 */
+    sysMenuId         	String 		required maxlength(100)
 }
 
 /**
@@ -346,32 +336,32 @@ entity SysRoleMenu {
 entity SysCompany {
 	/** 公司编码 */
     companyCode             String 				required maxlength(100) unique
-    /** 父级编号 */         
+    /** 父级编号 */
     parentCode 	            String 				maxlength(100)
-    /** 所有父级编号 */          
+    /** 所有父级编号 */
     parentCodes	            String 				maxlength(1000)
-    /** 本级排序号（升序） */ 	        
+    /** 本级排序号（升序） */
     treeSort	            Integer
-    /** 所有级别排序号 */                        
+    /** 所有级别排序号 */
     treeSorts               Integer
-    /** 是否最末级 */	                        
+    /** 是否最末级 */
     treeLeaf                Boolean  			required
-    /** 层次级别 */                      
+    /** 层次级别 */
     treeLevel               Integer  			required
-    /** 全节点名 */                       
-    treeNames               String 				required maxlength(1000) 
-    /** 公司代码 */        
-    viewCode                String 				maxlength(100) 
-    /** 公司名称 */          
-    companyName             String 				required maxlength(200) 
-    /** 公司全称 */          
+    /** 全节点名 */
+    treeNames               String 				required maxlength(1000)
+    /** 公司代码 */
+    viewCode                String 				maxlength(100)
+    /** 公司名称 */
+    companyName             String 				required maxlength(200)
+    /** 公司全称 */
     fullName                String 				required maxlength(200) unique
-    /** 区域编码 */          
-    areaCode                String 				maxlength(100)  
-    /** 状态 */         
+    /** 区域编码 */
+    areaCode                String 				maxlength(100)
+    /** 状态 */
     status                  CompanyStatusType	required
-  	/** 备注信息 */	            
-    remarks                 String 				maxlength(500)          
+  	/** 备注信息 */
+    remarks                 String 				maxlength(500)
 }
 
 /**
@@ -392,44 +382,44 @@ enum CompanyStatusType {
 entity SysOffice {
 	/** 机构编码 */
     officeCode             	String 				required maxlength(100) unique
-     /** 父级编号 */         
-    parentCode 	            String 				maxlength(100) 
-    /** 所有父级编号 */         
-    parentCodes	            String 				maxlength(1000) 
-    /** 本级排序号（升序） */	        
-    treeSort	            Integer	
-    /** 所有级别排序号 */                        
+     /** 父级编号 */
+    parentCode 	            String 				maxlength(100)
+    /** 所有父级编号 */
+    parentCodes	            String 				maxlength(1000)
+    /** 本级排序号（升序） */
+    treeSort	            Integer
+    /** 所有级别排序号 */
     treeSorts               Integer
-    /** 是否最末级 */	                        
+    /** 是否最末级 */
     treeLeaf                Boolean  			required
-    /** 层次级别 */                      
-    treeLevel               Integer    			required 
-    /** 全节点名 */                    
+    /** 层次级别 */
+    treeLevel               Integer    			required
+    /** 全节点名 */
     treeNames               String 				required maxlength(1000)
-    /** 机构代码 */          
+    /** 机构代码 */
     viewCode                String 				maxlength(100)
-    /** 机构名称 */         
-    officeName              String 				required maxlength(200) 
-    /** 机构全称 */          
+    /** 机构名称 */
+    officeName              String 				required maxlength(200)
+    /** 机构全称 */
     fullName                String 				required maxlength(200) unique
-    /** 机构类型 */          
+    /** 机构类型 */
     officeType              OfficeType 			required
-    /** 负责人 */                     
+    /** 负责人 */
     leader                  String 				maxlength(100)
-    /** 办公电话 */           
+    /** 办公电话 */
     phone                   String 				maxlength(100)
-	/** 联系地址 */           
+	/** 联系地址 */
     address                 String 				maxlength(255)
-    /** 邮政编码 */          
-    zipCode                 String 				maxlength(100) 
-    /** 电子邮箱 */          
-    email                   String 				maxlength(300) 
-    /** 备注信息 */          
-    remarks                 String 				maxlength(500) 
-    /** 状态 */          
+    /** 邮政编码 */
+    zipCode                 String 				maxlength(100)
+    /** 电子邮箱 */
+    email                   String 				maxlength(300)
+    /** 备注信息 */
+    remarks                 String 				maxlength(500)
+    /** 状态 */
     status                  OfficeStatusType	required
-    /** 备注信息 */	            
-    remarks                 String 				maxlength(500)           
+    /** 备注信息 */
+    remarks                 String 				maxlength(500)
 }
 
 /**
@@ -460,22 +450,22 @@ enum OfficeStatusType {
 entity SysEmployee {
 	/** 员工编码 */
     empCode                 String 				required maxlength(100) unique
-    /** 员工姓名 */         
+    /** 员工姓名 */
     empName	                String 				required maxlength(100)
-   	/** 英文名 */           
-    empNameEn	            String 				maxlength(1000) 
-    /** 机构ID */	       
-    sysOfficeId             String 				maxlength(100) 
-    /** 机构名称 */          
-    officeName              String 				maxlength(100) 
-    /** 公司ID */          
+   	/** 英文名 */
+    empNameEn	            String 				maxlength(1000)
+    /** 机构ID */
+    sysOfficeId             String 				maxlength(100)
+    /** 机构名称 */
+    officeName              String 				maxlength(100)
+    /** 公司ID */
     sysCompanyId            String 				maxlength(200)
-    /** 公司名称 */           
-    companyName             String 				maxlength(100) 
-    /** 状态 */          
+    /** 公司名称 */
+    companyName             String 				maxlength(100)
+    /** 状态 */
     status                  EmployeeStatusType	required
-    /** 备注信息 */	            
-    remarks                 String 				maxlength(500)           
+    /** 备注信息 */
+    remarks                 String 				maxlength(500)
 }
 
 /**
@@ -495,11 +485,11 @@ enum EmployeeStatusType {
  */
 entity SysEmployeeOffice {
 	/** 员工ID */
-    sysEmployeeId  	        String 			required maxlength(100) 
-    /** 机构ID */           
-    sysOfficeId             String 			required maxlength(100) 
-    /** 岗位ID */           
-    sysPostId               String 			required maxlength(100) 
+    sysEmployeeId  	        String 			required maxlength(100)
+    /** 机构ID */
+    sysOfficeId             String 			required maxlength(100)
+    /** 岗位ID */
+    sysPostId               String 			required maxlength(100)
 }
 
 /**
@@ -508,9 +498,9 @@ entity SysEmployeeOffice {
  */
 entity SysCompanyOffice {
 	/** 公司ID */
-    sysCompanyId  	        String 			required maxlength(100)  
-    /** 机构ID */          
-    sysOfficeId             String 			required maxlength(100)            
+    sysCompanyId  	        String 			required maxlength(100)
+    /** 机构ID */
+    sysOfficeId             String 			required maxlength(100)
 }
 
 /**
@@ -520,14 +510,14 @@ entity SysCompanyOffice {
 entity SysPost {
 	/** 岗位编码 */
     postCode                String 			required maxlength(100) unique
-    /** 岗位名称 */         
-    postName	            String 			required maxlength(100) 
-    /** 岗位分类（高管、中层、基层） */          
-    postType	            PostType 	  	
-    /** 状态 */                 
+    /** 岗位名称 */
+    postName	            String 			required maxlength(100)
+    /** 岗位分类（高管、中层、基层） */
+    postType	            PostType
+    /** 状态 */
     status                  PostStatusType	required
-    /** 备注信息 */	                
-    remarks                 String 			maxlength(500)           
+    /** 备注信息 */
+    remarks                 String 			maxlength(500)
 }
 
 /**
@@ -558,9 +548,9 @@ enum PostStatusType {
  */
 entity SysEmployeePost {
 	/** 员工ID */
-    sysEmployeeId  	        String 		required maxlength(100) 
-    /** 岗位ID */           
-    sysPostId               String 		required maxlength(100)            
+    sysEmployeeId  	        String 		required maxlength(100)
+    /** 岗位ID */
+    sysPostId               String 		required maxlength(100)
 }
 
 /**
@@ -570,12 +560,12 @@ entity SysEmployeePost {
 entity SysRoleDataScope {
 	/** 控制角色ID */
     sysRoleId  	            String 			required maxlength(100)
-   	/** 控制类型 */           
+   	/** 控制类型 */
     ctrlType                ControlType		required
-    /** 控制数据，如控制类型为公司，那么这里就是公司编号 */                    
+    /** 控制数据，如控制类型为公司，那么这里就是公司编号 */
     ctrlData                String 			maxlength(100)
-    /** 控制权限 ??????????????????? */           
-    ctrlPermi               String 			maxlength(100)            
+    /** 控制权限 ??????????????????? */
+    ctrlPermi               String 			maxlength(100)
 }
 
 /**
@@ -594,11 +584,11 @@ enum ControlType {
  */
 entity SysUserDataScope {
 	/** 控制用户ID */
-    sysUserId  	            String 			required maxlength(100) 
-    /** 控制类型 */          
+    sysUserId  	            String 			required maxlength(100)
+    /** 控制类型 */
     ctrlType                ControlType 	required
-    /** 控制数据，如控制类型为公司，那么这里就是公司编号 */                   
-    ctrlData                String 			maxlength(100) 
-    /** 控制权限 ???????????????????*/           
-    ctrlPermi               String 			maxlength(100)            
+    /** 控制数据，如控制类型为公司，那么这里就是公司编号 */
+    ctrlData                String 			maxlength(100)
+    /** 控制权限 ???????????????????*/
+    ctrlPermi               String 			maxlength(100)
 }

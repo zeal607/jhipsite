@@ -51,9 +51,8 @@ public class SysUserEmployeeVM extends BaseView {
      * 归属
      * 机构ID
      */
-    @Size(max = 100)
     @ApiModelProperty(value = "机构ID")
-    private String sysOfficeId;
+    private Long sysOfficeId;
 
     /**
      * 归属
@@ -67,9 +66,8 @@ public class SysUserEmployeeVM extends BaseView {
      * 归属
      * 公司ID
      */
-    @Size(max = 200)
     @ApiModelProperty(value = "公司ID")
-    private String sysCompanyId;
+    private Long sysCompanyId;
 
     /**
      * 归属
@@ -154,11 +152,11 @@ public class SysUserEmployeeVM extends BaseView {
         this.empNameEn = empNameEn;
     }
 
-    public String getSysOfficeId() {
+    public Long getSysOfficeId() {
         return sysOfficeId;
     }
 
-    public void setSysOfficeId(String sysOfficeId) {
+    public void setSysOfficeId(Long sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
     }
 
@@ -170,11 +168,11 @@ public class SysUserEmployeeVM extends BaseView {
         this.officeName = officeName;
     }
 
-    public String getSysCompanyId() {
+    public Long getSysCompanyId() {
         return sysCompanyId;
     }
 
-    public void setSysCompanyId(String sysCompanyId) {
+    public void setSysCompanyId(Long sysCompanyId) {
         this.sysCompanyId = sysCompanyId;
     }
 

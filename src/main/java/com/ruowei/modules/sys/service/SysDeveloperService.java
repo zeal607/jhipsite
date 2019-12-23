@@ -6,17 +6,16 @@ import com.ruowei.common.error.exception.InvalidPasswordException;
 import com.ruowei.common.error.exception.LoginAlreadyUsedException;
 import com.ruowei.common.service.BaseService;
 import com.ruowei.config.Constants;
-import com.ruowei.modules.sys.domain.entity.Authority;
-import com.ruowei.modules.sys.domain.entity.SysUser;
+import com.ruowei.modules.sys.domain.entity.SysDeveloperUser;
+import com.ruowei.modules.sys.domain.table.Authority;
+import com.ruowei.modules.sys.domain.table.SysUser;
 import com.ruowei.modules.sys.mapper.SysUserMapper;
-import com.ruowei.modules.sys.pojo.SysUserDTO;
 import com.ruowei.modules.sys.pojo.UserDTO;
-import com.ruowei.modules.sys.pojo.user.SysUserRegisterDTO;
 import com.ruowei.modules.sys.repository.AuthorityRepository;
+import com.ruowei.modules.sys.repository.SysDeveloperUserRepository;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import com.ruowei.modules.sys.service.api.SysDeveloperApi;
 import com.ruowei.modules.sys.service.util.RandomUtil;
-import com.ruowei.modules.sys.service.util.SysUserUtil;
 import com.ruowei.security.AuthoritiesConstants;
 import com.ruowei.security.SecurityUtils;
 import org.slf4j.Logger;
@@ -47,6 +46,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
 
     private final AuthorityRepository authorityRepository;
     private final SysUserRepository sysUserRepository;
+    private final SysDeveloperUserRepository sysDeveloperUserRepository;
 
     private final SysUserMapper sysUserMapper;
 
@@ -54,10 +54,11 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
 
     private final CacheManager cacheManager;
 
-    public SysDeveloperService(MailService mailService, AuthorityRepository authorityRepository, SysUserRepository sysUserRepository, SysUserMapper sysUserMapper, PasswordEncoder passwordEncoder, CacheManager cacheManager) {
+    public SysDeveloperService(MailService mailService, AuthorityRepository authorityRepository, SysUserRepository sysUserRepository, SysDeveloperUserRepository sysDeveloperUserRepository, SysUserMapper sysUserMapper, PasswordEncoder passwordEncoder, CacheManager cacheManager) {
         this.mailService = mailService;
         this.authorityRepository = authorityRepository;
         this.sysUserRepository = sysUserRepository;
+        this.sysDeveloperUserRepository = sysDeveloperUserRepository;
         this.sysUserMapper = sysUserMapper;
         this.passwordEncoder = passwordEncoder;
         this.cacheManager = cacheManager;
@@ -107,32 +108,56 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
 
     /**
      * 注册用户
-     *
-     * @param sysUserRegisterDTO 从注册页面传来的数据
-     * @return
      * @author 刘东奇
      * @date 2019/10/21
+     * @param userDTO
+     * @param password
+     * @return
      */
     @Override
-    public SysUserDTO registerUser(SysUserRegisterDTO sysUserRegisterDTO) {
-        //TODO 注册用户 ？？？
-        sysUserRepository.findOneByLoginCode(sysUserRegisterDTO.getLogin().toLowerCase()).ifPresent(existingUser -> {
-            throw new LoginAlreadyUsedException();
+    public SysDeveloperUser registerUser(UserDTO userDTO, String password) {
+        sysDeveloperUserRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).ifPresent(existingUser -> {
+            boolean removed = removeNonActivatedUser(existingUser);
+            if (!removed) {
+                throw new LoginAlreadyUsedException();
+            }
         });
-        sysUserRepository.findOneByEmailIgnoreCase(sysUserRegisterDTO.getEmail()).ifPresent(existingUser -> {
-            throw new EmailAlreadyUsedException();
+        sysDeveloperUserRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).ifPresent(existingUser -> {
+            boolean removed = removeNonActivatedUser(existingUser);
+            if (!removed) {
+                throw new EmailAlreadyUsedException();
+            }
         });
-        SysUser user = sysUserMapper.assembleEntity(sysUserRegisterDTO);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setLoginCode(user.getLoginCode().toLowerCase());
-        user.setActivationKey(SysUserUtil.generateActivationKey());
+
+        SysDeveloperUser newUser = new SysDeveloperUser();
+        String encryptedPassword = passwordEncoder.encode(password);
+        newUser.setLogin(userDTO.getLogin().toLowerCase());
+        // new user gets initially a generated password
+        newUser.setPassword(encryptedPassword);
+        newUser.setUserName(userDTO.getFirstName()+userDTO.getLastName());
+        newUser.setEmail(userDTO.getEmail().toLowerCase());
+        newUser.setImageUrl(userDTO.getImageUrl());
+        // new user is not active
+        newUser.setActivated(false);
+        // new user gets registration key
+        newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
-        user.setAuthorities(authorities);
-        sysUserRepository.save(user);
-        this.clearUserCaches(user.getLoginCode(),user.getEmail());
-        log.debug("Created Information for User: {}", user);
-        return sysUserMapper.toDto(user);
+        newUser.setAuthorities(authorities);
+        sysDeveloperUserRepository.save(newUser);
+        this.clearUserCaches(newUser);
+        log.debug("Created Information for User: {}", newUser);
+        return newUser;
+    }
+
+    private boolean removeNonActivatedUser(SysDeveloperUser existingUser){
+        if (existingUser.getActivated()) {
+            return false;
+        }
+        sysDeveloperUserRepository.delete(existingUser);
+        sysDeveloperUserRepository.flush();
+        this.clearUserCaches(existingUser);
+        return true;
     }
 
     /**
@@ -178,13 +203,8 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
      * @date 2019/10/21
      */
     @Override
-    public Optional<SysUserDTO> findOneByLoginCode(String loginCode) {
-        return this.sysUserRepository.findOneByLoginCode(loginCode).map(
-            user->{
-                SysUserDTO sysUserDTO = sysUserMapper.toDto(user);
-                return sysUserDTO;
-            }
-        );
+    public Optional<SysDeveloperUser> findOneByLoginCode(String loginCode) {
+        return this.sysDeveloperUserRepository.findOneByLogin(loginCode);
     }
 
     /**
@@ -193,15 +213,11 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
      * @param email
      * @author 刘东奇
      * @date 2019/10/21
+     * @return
      */
     @Override
-    public Optional<SysUserDTO> findOneByEmailIgnoreCase(String email) {
-        return this.sysUserRepository.findOneByEmailIgnoreCase(email).map(
-            user->{
-                SysUserDTO sysUserDTO = sysUserMapper.toDto(user);
-                return sysUserDTO;
-            }
-        );
+    public Optional<SysDeveloperUser> findOneByEmailIgnoreCase(String email) {
+        return this.sysDeveloperUserRepository.findOneByEmailIgnoreCase(email);
     }
 
     /**
@@ -306,11 +322,11 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
         // 生成重置码
         // 发送对方邮箱
         mailService.sendPasswordResetMail(findOneByEmailIgnoreCase(mail)
-            .filter(SysUserDTO::isActivated)
+            .filter(SysDeveloperUser::isActivated)
             .map(user -> {
                 user.setResetKey(RandomUtil.generateResetKey());
                 user.setResetDate(Instant.now());
-                this.clearUserCaches(user.getLoginCode(),user.getEmail());
+                this.clearUserCaches(user.getLogin(),user.getEmail());
                 return user;
             }).orElseThrow(EmailNotFoundException::new));
         return;
@@ -376,13 +392,12 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
      * @return
      */
     @Override
-    public SysUser createUser(UserDTO userDTO) {
-        SysUser user = new SysUser();
-        user.setLoginCode(userDTO.getLogin().toLowerCase());
-        user.setUserName(userDTO.getFirstName());
-        user.setRefName(userDTO.getLastName());
+    public SysDeveloperUser createUser(UserDTO userDTO) {
+        SysDeveloperUser user = new SysDeveloperUser();
+        user.setLogin(userDTO.getLogin().toLowerCase());
+        user.setUserName(userDTO.getFirstName()+userDTO.getLastName());
         user.setEmail(userDTO.getEmail().toLowerCase());
-//        user.setImageUrl(userDTO.getImageUrl());
+        user.setImageUrl(userDTO.getImageUrl());
 //        if (userDTO.getLangKey() == null) {
 //            user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
 //        } else {
@@ -401,7 +416,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
                 .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
-        this.sysUserRepository.save(user);
+        this.sysDeveloperUserRepository.save(user);
         this.clearUserCaches(user);
         log.debug("Created Information for User: {}", user);
         return user;
@@ -422,6 +437,11 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
     private void clearUserCaches(SysUser user) {
         Objects.requireNonNull(cacheManager.getCache(SysUserRepository.USERS_BY_LOGIN_CODE_CACHE)).evict(user.getLoginCode());
         Objects.requireNonNull(cacheManager.getCache(SysUserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
+    }
+
+    private void clearUserCaches(SysDeveloperUser user) {
+        Objects.requireNonNull(cacheManager.getCache(SysDeveloperUserRepository.USERS_BY_LOGIN_CACHE)).evict(user.getLogin());
+        Objects.requireNonNull(cacheManager.getCache(SysDeveloperUserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
     }
 
 }

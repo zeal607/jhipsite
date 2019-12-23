@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.web.rest;
 
-import com.ruowei.modules.sys.domain.entity.SysOffice;
+import com.ruowei.modules.sys.domain.table.SysOffice;
 
 import com.ruowei.modules.sys.web.api.SysOfficeApi;
 import org.slf4j.Logger;

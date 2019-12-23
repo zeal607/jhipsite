@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.domain.entity;
+package com.ruowei.modules.sys.domain.table;
 
 import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import com.ruowei.modules.sys.domain.enumeration.ControlType;
@@ -25,9 +25,8 @@ public class SysRoleDataScope extends PrimaryKeyAutoIncrementEntity implements S
      * 控制角色ID
      */
     @NotNull
-    @Size(max = 100)
-    @Column(name = "sys_role_id", length = 100, nullable = false)
-    private String sysRoleId;
+    @Column(name = "sys_role_id", nullable = false)
+    private Long sysRoleId;
 
     /**
      * 控制类型
@@ -53,16 +52,16 @@ public class SysRoleDataScope extends PrimaryKeyAutoIncrementEntity implements S
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
-    public String getSysRoleId() {
+    public Long getSysRoleId() {
         return sysRoleId;
     }
 
-    public SysRoleDataScope sysRoleId(String sysRoleId) {
+    public SysRoleDataScope sysRoleId(Long sysRoleId) {
         this.sysRoleId = sysRoleId;
         return this;
     }
 
-    public void setSysRoleId(String sysRoleId) {
+    public void setSysRoleId(Long sysRoleId) {
         this.sysRoleId = sysRoleId;
     }
 

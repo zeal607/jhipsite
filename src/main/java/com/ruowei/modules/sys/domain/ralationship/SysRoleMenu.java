@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * 角色与菜单关联表
+ * 角色与菜单关系表
  * @author JeeSite
  */
 @ApiModel(description = "角色与菜单关联表 @author JeeSite")

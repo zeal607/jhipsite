@@ -1,21 +1,15 @@
-package com.ruowei.modules.sys.domain.entity;
+package com.ruowei.modules.sys.domain.table;
 import com.ruowei.common.entity.AbstractAuditingEntity;
+import com.ruowei.modules.sys.domain.enumeration.OfficeStatusType;
 import com.ruowei.modules.sys.domain.enumeration.OfficeType;
-import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
-
-
-import com.ruowei.modules.sys.domain.enumeration.OfficeStatusType;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 /**
  * 组织机构表
@@ -164,16 +158,6 @@ public class SysOffice extends AbstractAuditingEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private OfficeStatusType status;
-
-    /**
-     * 附属机构及岗位
-     */
-    @ApiModelProperty(value = "附属机构及岗位")
-    @ManyToMany
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinTable(name="sys_employee_office",joinColumns={@JoinColumn(name="sys_office_id", referencedColumnName="id")}
-        ,inverseJoinColumns={@JoinColumn(name="sys_post_id", referencedColumnName="id")})
-    private List<SysPost> sysPostList;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -434,14 +418,6 @@ public class SysOffice extends AbstractAuditingEntity implements Serializable {
         return treeLeaf;
     }
 
-    public List<SysPost> getSysPostList() {
-        return sysPostList;
-    }
-
-    public void setSysPostList(List<SysPost> sysPostList) {
-        this.sysPostList = sysPostList;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -470,12 +446,11 @@ public class SysOffice extends AbstractAuditingEntity implements Serializable {
             Objects.equals(zipCode, sysOffice.zipCode) &&
             Objects.equals(email, sysOffice.email) &&
             Objects.equals(remarks, sysOffice.remarks) &&
-            status == sysOffice.status &&
-            Objects.equals(sysPostList, sysOffice.sysPostList);
+            status == sysOffice.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(officeCode, parentCode, parentCodes, treeSort, treeSorts, treeLeaf, treeLevel, treeNames, viewCode, officeName, fullName, officeType, leader, phone, address, zipCode, email, remarks, status, sysPostList);
+        return Objects.hash(officeCode, parentCode, parentCodes, treeSort, treeSorts, treeLeaf, treeLevel, treeNames, viewCode, officeName, fullName, officeType, leader, phone, address, zipCode, email, remarks, status);
     }
 }

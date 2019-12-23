@@ -2,7 +2,7 @@ package com.ruowei.modules.sys.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
 import com.ruowei.common.pojo.TreeDTO;
-import com.ruowei.modules.sys.domain.entity.SysOffice;
+import com.ruowei.modules.sys.domain.table.SysOffice;
 import com.ruowei.modules.sys.pojo.SysOfficeDTO;
 
 import org.mapstruct.*;

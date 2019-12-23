@@ -1,9 +1,10 @@
 package com.ruowei.modules.sys.web.api;
 
+import com.ruowei.modules.sys.domain.entity.SysDeveloperUser;
 import com.ruowei.modules.sys.pojo.PasswordChangeDTO;
 import com.ruowei.modules.sys.pojo.UserDTO;
-import com.ruowei.modules.sys.pojo.user.SysUserRegisterDTO;
 import com.ruowei.modules.sys.web.vm.KeyAndPasswordVM;
+import com.ruowei.modules.sys.web.vm.ManagedUserVM;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
@@ -53,10 +54,10 @@ public interface SysDeveloperApi {
      * 注册用户
      * @author 刘东奇
      * @date 2019/11/14
-     * @param sysUserRegisterDTO
+     * @param managedUserVM
      * @return
      */
-    void registerAccount(@Valid @RequestBody SysUserRegisterDTO sysUserRegisterDTO);
+    void registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM);
 
     /**
      * 激活用户
@@ -147,5 +148,5 @@ public interface SysDeveloperApi {
      * @return
      * @throws URISyntaxException
      */
-    ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) throws URISyntaxException;
+    ResponseEntity<SysDeveloperUser> createUser(@Valid @RequestBody UserDTO userDTO) throws URISyntaxException;
 }

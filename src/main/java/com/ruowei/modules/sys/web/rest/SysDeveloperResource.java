@@ -5,15 +5,16 @@ import com.ruowei.common.error.exception.EmailAlreadyUsedException;
 import com.ruowei.common.error.exception.InvalidPasswordException;
 import com.ruowei.common.error.exception.LoginAlreadyUsedException;
 import com.ruowei.config.Constants;
-import com.ruowei.modules.sys.domain.entity.SysUser;
+import com.ruowei.modules.sys.domain.entity.SysDeveloperUser;
+import com.ruowei.modules.sys.domain.enumeration.Renyuanleixing;
+import com.ruowei.modules.sys.domain.table.SysUser;
 import com.ruowei.modules.sys.mapper.SysUserMapper;
 import com.ruowei.modules.sys.pojo.PasswordChangeDTO;
-import com.ruowei.modules.sys.pojo.SysUserDTO;
 import com.ruowei.modules.sys.pojo.UserDTO;
-import com.ruowei.modules.sys.pojo.user.SysUserRegisterDTO;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import com.ruowei.modules.sys.service.MailService;
 import com.ruowei.modules.sys.service.SysDeveloperService;
+import com.ruowei.modules.sys.web.MeijuBody;
 import com.ruowei.modules.sys.web.api.SysDeveloperApi;
 import com.ruowei.modules.sys.web.vm.KeyAndPasswordVM;
 import com.ruowei.modules.sys.web.vm.ManagedUserVM;
@@ -127,7 +128,7 @@ public class SysDeveloperResource implements SysDeveloperApi {
     /**
      * 注册用户
      *
-     * @param sysUserRegisterDTO
+     * @param managedUserVM
      * @return
      * @author 刘东奇
      * @date 2019/11/14
@@ -135,11 +136,11 @@ public class SysDeveloperResource implements SysDeveloperApi {
     @Override
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerAccount(@Valid @RequestBody SysUserRegisterDTO sysUserRegisterDTO) {
-        if (!checkPasswordLength(sysUserRegisterDTO.getPassword())) {
+    public void registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM ) {
+        if (!checkPasswordLength(managedUserVM.getPassword())) {
             throw new InvalidPasswordException();
         }
-        SysUserDTO user = sysDeveloperService.registerUser(sysUserRegisterDTO);
+        SysDeveloperUser user = sysDeveloperService.registerUser(managedUserVM,managedUserVM.getPassword());
         mailService.sendActivationEmail(user);
     }
 
@@ -314,7 +315,7 @@ public class SysDeveloperResource implements SysDeveloperApi {
     @Override
     @PostMapping("/users")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<UserDTO> createUser(@Valid UserDTO userDTO) throws URISyntaxException {
+    public ResponseEntity<SysDeveloperUser> createUser(@Valid UserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
 
         if (userDTO.getId() != null) {
@@ -325,11 +326,11 @@ public class SysDeveloperResource implements SysDeveloperApi {
         } else if (sysDeveloperService.findOneByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
             throw new EmailAlreadyUsedException();
         } else {
-            SysUser newUser = sysDeveloperService.createUser(userDTO);
-            mailService.sendCreationEmail(sysUserMapper.toDto(newUser));
-            return ResponseEntity.created(new URI("/api/users/" + newUser.getLoginCode()))
-                .headers(HeaderUtil.createAlert(applicationName,  "userManagement.created", newUser.getLoginCode()))
-                .body(new UserDTO(newUser));
+            SysDeveloperUser newUser = sysDeveloperService.createUser(userDTO);
+            mailService.sendCreationEmail(newUser);
+            return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
+                .headers(HeaderUtil.createAlert(applicationName,  "userManagement.created", newUser.getLogin()))
+                .body(newUser);
         }
     }
 
@@ -340,4 +341,21 @@ public class SysDeveloperResource implements SysDeveloperApi {
             password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
     }
 
+    @GetMapping("/test/meiju")
+    public ResponseEntity<Renyuanleixing> getMeiju(Renyuanleixing renyuanleixing) {
+        System.out.println(renyuanleixing);
+        return ResponseEntity.ok(renyuanleixing);
+    }
+
+    @GetMapping("/test/meijus")
+    public ResponseEntity<Renyuanleixing[]> getMeijus() {
+        System.out.println(Renyuanleixing.values());
+        return ResponseEntity.ok(Renyuanleixing.values());
+    }
+
+    @PostMapping("/test/meiju")
+    public ResponseEntity<MeijuBody> posttMeiju(@RequestBody MeijuBody meijuBody) {
+        System.out.println(meijuBody);
+        return ResponseEntity.ok(meijuBody);
+    }
 }

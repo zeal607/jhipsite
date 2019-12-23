@@ -1,7 +1,7 @@
 package com.ruowei.modules.sys.service;
 
 import com.ruowei.common.service.BaseService;
-import com.ruowei.modules.sys.domain.entity.SysCompany;
+import com.ruowei.modules.sys.domain.table.SysCompany;
 import com.ruowei.modules.sys.repository.SysCompanyRepository;
 import com.ruowei.modules.sys.service.api.SysCompanyApi;
 import org.springframework.stereotype.Service;

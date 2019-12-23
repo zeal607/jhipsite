@@ -1,7 +1,7 @@
 package com.ruowei.modules.sys.service.util;
 
 import com.ruowei.config.SpringUtil;
-import com.ruowei.modules.sys.domain.entity.SysEmployee;
+import com.ruowei.modules.sys.domain.table.SysEmployee;
 import com.ruowei.modules.sys.repository.SysEmployeeRepository;
 import org.apache.commons.lang3.StringUtils;
 

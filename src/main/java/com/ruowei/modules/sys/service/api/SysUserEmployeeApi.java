@@ -1,7 +1,7 @@
 package com.ruowei.modules.sys.service.api;
 
-import com.ruowei.modules.sys.domain.SysUserEmployeeDetail;
-import com.ruowei.modules.sys.domain.entity.SysRole;
+import com.ruowei.modules.sys.domain.entity.SysEmployeeDetail;
+import com.ruowei.modules.sys.domain.table.SysRole;
 
 import java.util.List;
 
@@ -15,31 +15,32 @@ public interface SysUserEmployeeApi {
      * 新增员工
      * @author 刘东奇
      * @date 2019/11/8
-     * @param sysUserEmployeeDetail
+     * @param sysEmployeeDetail
      * @return
      */
-    SysUserEmployeeDetail createSysUserEmployee(SysUserEmployeeDetail sysUserEmployeeDetail);
+    SysEmployeeDetail createSysUserEmployee(SysEmployeeDetail sysEmployeeDetail);
 
     /**
      * 修改员工
      * @author 刘东奇
      * @date 2019/11/14
-     * @param sysUserEmployeeDetail
+     * @param sysEmployeeDetail
      * @return
      */
-    SysUserEmployeeDetail modifySysUserEmployee(SysUserEmployeeDetail sysUserEmployeeDetail);
+    SysEmployeeDetail modifySysUserEmployee(SysEmployeeDetail sysEmployeeDetail);
 
     /**
-     * 判断用户是否已存在（登录ID、手机号是否被占用）
+     * 判断用户是否已存在（登录ID、手机号、邮箱是否被占用）
      * 如果存在，抛异常
      * @author 刘东奇
      * @date 2019/11/8
      * @param loginCode
      * @param mobile
+     * @param email
      * @param employeeId 所更新员工的主键，如果传表示是更新操作，否则是新增操作
      * @return
      */
-    void checkSysUserExists(String loginCode, String mobile, Long employeeId);
+    void checkSysUserExists(String loginCode, String mobile,String email, Long employeeId);
 
     /**
      * 获取员工的角色列表

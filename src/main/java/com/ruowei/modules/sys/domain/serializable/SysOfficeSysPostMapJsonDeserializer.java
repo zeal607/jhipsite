@@ -1,11 +1,11 @@
-package com.ruowei.common.json;
+package com.ruowei.modules.sys.domain.serializable;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ruowei.modules.sys.domain.entity.SysOffice;
-import com.ruowei.modules.sys.domain.entity.SysPost;
+import com.ruowei.modules.sys.domain.table.SysOffice;
+import com.ruowei.modules.sys.domain.table.SysPost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 把[{"sysOfficeId":1,"sysPostId":2},{"sysOfficeId":3,"sysPostId":4}]反序列化成map<SysOffice,SysPost>
- *     把{1:2,3:4}反序列化成map<SysOffice,SysPost>
+ * 把{"1":"2","3":"4"}反序列化成map<SysOffice,SysPost>
  * @author 刘东奇
  * @date 2019/9/24
  */

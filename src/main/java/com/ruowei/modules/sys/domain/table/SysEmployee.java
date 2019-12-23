@@ -1,18 +1,14 @@
-package com.ruowei.modules.sys.domain.entity;
-import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
+package com.ruowei.modules.sys.domain.table;
+
+import com.ruowei.common.entity.AbstractAuditingEntity;
 import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
-import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -22,7 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "sys_employee")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployee extends PrimaryKeyAutoIncrementEntity implements Serializable {
+public class SysEmployee extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -65,8 +61,7 @@ public class SysEmployee extends PrimaryKeyAutoIncrementEntity implements Serial
     /**
      * 公司ID
      */
-    @Size(max = 200)
-    @Column(name = "sys_company_id", length = 20)
+    @Column(name = "sys_company_id")
     private Long sysCompanyId;
 
     /**
@@ -90,50 +85,6 @@ public class SysEmployee extends PrimaryKeyAutoIncrementEntity implements Serial
     @Size(max = 500)
     @Column(name = "remarks", length = 500)
     private String remarks;
-
-    /**
-     * 所在岗位
-     */
-    @ApiModelProperty(value = "所在岗位")
-    @OneToMany(fetch=FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinTable(name="sys_employee_post",joinColumns={@JoinColumn(name="sys_employee_id", referencedColumnName="id")}
-        ,inverseJoinColumns={@JoinColumn(name="sys_post_id", referencedColumnName="id")})
-    private List<SysPost> sysPostList;
-
-    /**
-     * 附属机构及岗位
-     */
-    /**
-     * 员工和附属机构、岗位的映射关系的配置方法：
-     * 方案1（当前方案）：使用Map，SysOffice作为KEY,SysPost作为Value
-     * 优点：没有引入中间表实体（sys_employee_office），比较优雅易理解
-     * 缺点：由于Map的原因，不支持一个员工在一个机构中有多个岗位
-     * @author 刘东奇
-     * @date 2019/11/12
-     */
-    /**
-     * 员工和附属机构、岗位的映射关系的配置方法：
-     * 方案2：引入中间表实体SysEmployeeOffice，
-     * SysEmployee-OneToMany-SysEmployeeOffice，
-     * SysEmployeeOffice-ManyToOne-SysEmployee、
-     * SysEmployeeOffice-ManyToOne-SysOffice、
-     * SysEmployeeOffice-ManyToOne-SysPost、
-     * 优点：支持一个员工在一个机构中有多个岗位
-     * 缺点：引入了中间表实体（sys_employee_office）不够优雅，查询时存在无限嵌套bug
-     * @author 刘东奇
-     * @date 2019/11/12
-     */
-    @ApiModelProperty(value = "附属机构及岗位")
-    @ManyToMany
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinTable(name = "sys_employee_office",
-        joinColumns = @JoinColumn(name = "sys_employee_id", referencedColumnName="id"),
-        inverseJoinColumns = @JoinColumn(name="sys_post_id", referencedColumnName="id"))
-    @MapKeyJoinColumn(name = "sys_office_id")
-    @ElementCollection
-    private Map<SysOffice,SysPost> sysOfficeSysPostMap;
-
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -259,30 +210,10 @@ public class SysEmployee extends PrimaryKeyAutoIncrementEntity implements Serial
         return serialVersionUID;
     }
 
-    public List<SysPost> getSysPostList() {
-        return sysPostList;
-    }
-
-    public void setSysPostList(List<SysPost> sysPostList) {
-        this.sysPostList = sysPostList;
-    }
-
-    public Map<SysOffice, SysPost> getSysOfficeSysPostMap() {
-        return sysOfficeSysPostMap;
-    }
-
-    public void setSysOfficeSysPostMap(Map<SysOffice, SysPost> sysOfficeSysPostMap) {
-        this.sysOfficeSysPostMap = sysOfficeSysPostMap;
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         SysEmployee that = (SysEmployee) o;
         return Objects.equals(empCode, that.empCode) &&
             Objects.equals(empName, that.empName) &&
@@ -292,13 +223,27 @@ public class SysEmployee extends PrimaryKeyAutoIncrementEntity implements Serial
             Objects.equals(sysCompanyId, that.sysCompanyId) &&
             Objects.equals(companyName, that.companyName) &&
             status == that.status &&
-            Objects.equals(remarks, that.remarks) &&
-            Objects.equals(sysPostList, that.sysPostList) &&
-            Objects.equals(sysOfficeSysPostMap, that.sysOfficeSysPostMap);
+            Objects.equals(remarks, that.remarks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(empCode, empName, empNameEn, sysOfficeId, officeName, sysCompanyId, companyName, status, remarks, sysPostList, sysOfficeSysPostMap);
+        return Objects.hash(empCode, empName, empNameEn, sysOfficeId, officeName, sysCompanyId, companyName, status, remarks);
+    }
+
+    @Override
+    public String toString() {
+        return "SysEmployee{" +
+            "empCode='" + empCode + '\'' +
+            ", empName='" + empName + '\'' +
+            ", empNameEn='" + empNameEn + '\'' +
+            ", sysOfficeId=" + sysOfficeId +
+            ", officeName='" + officeName + '\'' +
+            ", sysCompanyId=" + sysCompanyId +
+            ", companyName='" + companyName + '\'' +
+            ", status=" + status +
+            ", remarks='" + remarks + '\'' +
+            ", id=" + id +
+            '}';
     }
 }
