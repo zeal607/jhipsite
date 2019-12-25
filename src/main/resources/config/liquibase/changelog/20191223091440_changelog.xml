@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
-    <changeSet author="Administrator (generated)" id="1577092489803-1">
+    <changeSet author="刘东奇" id="1577092489803-1">
         <createTable tableName="jhi_authority">
             <column name="name" type="VARCHAR(50)">
                 <constraints primaryKey="true" primaryKeyName="jhi_authorityPK"/>
@@ -468,5 +468,20 @@
     </changeSet>
     <changeSet author="刘东奇" id="1577092489803-47">
         <addForeignKeyConstraint baseColumnNames="sys_post_id" baseTableName="sys_employee_office" constraintName="FKwgrcro22yla4qdgdn2r1o2jd" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sys_post" validate="true"/>
+    </changeSet>
+    <changeSet author="刘东奇" id="1577092489803-48">
+        <loadData
+            file="config/liquibase/data/sys_user.csv"
+            separator=","
+            tableName="sys_user">
+        </loadData>
+        <loadData
+            file="config/liquibase/data/authority.csv"
+            separator=";"
+            tableName="jhi_authority"/>
+        <loadData
+            file="config/liquibase/data/user_authority.csv"
+            separator=";"
+            tableName="jhi_user_authority"/>
     </changeSet>
 </databaseChangeLog>

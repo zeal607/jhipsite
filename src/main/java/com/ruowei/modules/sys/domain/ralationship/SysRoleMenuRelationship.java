@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_role_menu")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysRoleMenu extends PrimaryKeyAutoIncrementEntity implements Serializable {
+public class SysRoleMenuRelationship extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,7 @@ public class SysRoleMenu extends PrimaryKeyAutoIncrementEntity implements Serial
         return sysRoleId;
     }
 
-    public SysRoleMenu sysRoleId(Long sysRoleId) {
+    public SysRoleMenuRelationship sysRoleId(Long sysRoleId) {
         this.sysRoleId = sysRoleId;
         return this;
     }
@@ -56,7 +56,7 @@ public class SysRoleMenu extends PrimaryKeyAutoIncrementEntity implements Serial
         return sysMenuId;
     }
 
-    public SysRoleMenu sysMenuId(Long sysMenuId) {
+    public SysRoleMenuRelationship sysMenuId(Long sysMenuId) {
         this.sysMenuId = sysMenuId;
         return this;
     }
@@ -71,10 +71,10 @@ public class SysRoleMenu extends PrimaryKeyAutoIncrementEntity implements Serial
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SysRoleMenu)) {
+        if (!(o instanceof SysRoleMenuRelationship)) {
             return false;
         }
-        return id != null && id.equals(((SysRoleMenu) o).id);
+        return id != null && id.equals(((SysRoleMenuRelationship) o).id);
     }
 
     @Override

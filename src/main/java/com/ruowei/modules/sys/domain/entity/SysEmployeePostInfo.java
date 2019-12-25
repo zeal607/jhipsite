@@ -1,14 +1,13 @@
 package com.ruowei.modules.sys.domain.entity;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -43,6 +42,10 @@ public class SysEmployeePostInfo implements Serializable {
     @Size(max = 100)
     @Column(name = "post_name", length = 100, nullable = false)
     private String postName;
+
+    @ManyToMany(mappedBy="officePostInfoList")
+    private List<SysEmployee> employeeList;
+
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -82,6 +85,14 @@ public class SysEmployeePostInfo implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<SysEmployee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<SysEmployee> employeeList) {
+        this.employeeList = employeeList;
     }
 
     @Override

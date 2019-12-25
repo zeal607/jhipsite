@@ -1,12 +1,9 @@
 package com.ruowei.modules.sys.domain.ralationship;
 
-import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -18,9 +15,12 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_employee_post")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployeePost extends PrimaryKeyAutoIncrementEntity implements Serializable {
-
+public class SysEmployeePostRelationship implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    public Long id;
 
     /**
      * 员工ID
@@ -44,7 +44,7 @@ public class SysEmployeePost extends PrimaryKeyAutoIncrementEntity implements Se
         return sysEmployeeId;
     }
 
-    public SysEmployeePost sysEmployeeId(Long sysEmployeeId) {
+    public SysEmployeePostRelationship sysEmployeeId(Long sysEmployeeId) {
         this.sysEmployeeId = sysEmployeeId;
         return this;
     }
@@ -57,7 +57,7 @@ public class SysEmployeePost extends PrimaryKeyAutoIncrementEntity implements Se
         return sysPostId;
     }
 
-    public SysEmployeePost sysPostId(Long sysPostId) {
+    public SysEmployeePostRelationship sysPostId(Long sysPostId) {
         this.sysPostId = sysPostId;
         return this;
     }
@@ -72,10 +72,10 @@ public class SysEmployeePost extends PrimaryKeyAutoIncrementEntity implements Se
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SysEmployeePost)) {
+        if (!(o instanceof SysEmployeePostRelationship)) {
             return false;
         }
-        return id != null && id.equals(((SysEmployeePost) o).id);
+        return id != null && id.equals(((SysEmployeePostRelationship) o).id);
     }
 
     @Override
@@ -86,7 +86,6 @@ public class SysEmployeePost extends PrimaryKeyAutoIncrementEntity implements Se
     @Override
     public String toString() {
         return "SysEmployeePost{" +
-            "id=" + getId() +
             ", sysEmployeeId='" + getSysEmployeeId() + "'" +
             ", sysPostId='" + getSysPostId() + "'" +
             "}";

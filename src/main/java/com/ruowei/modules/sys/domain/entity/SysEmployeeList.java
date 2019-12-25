@@ -2,6 +2,7 @@ package com.ruowei.modules.sys.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
+import com.ruowei.modules.sys.web.vm.SysEmployeeUserVM;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
@@ -33,7 +34,7 @@ public class SysEmployeeList extends PrimaryKeyAutoIncrementEntity implements Se
      */
     @OneToOne(mappedBy = "employeeDetail")
     @JsonIgnoreProperties("employeeDetail")
-    private SysEmployeeUserInfo userInfo;
+    private SysEmployeeUserVM userInfo;
 
     /**
      * 更新时间
@@ -89,11 +90,11 @@ public class SysEmployeeList extends PrimaryKeyAutoIncrementEntity implements Se
         return serialVersionUID;
     }
 
-    public SysEmployeeUserInfo getUserInfo() {
+    public SysEmployeeUserVM getUserInfo() {
         return userInfo;
     }
 
-    public void setUserInfo(SysEmployeeUserInfo userInfo) {
+    public void setUserInfo(SysEmployeeUserVM userInfo) {
         this.userInfo = userInfo;
     }
 

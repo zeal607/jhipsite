@@ -13,22 +13,5 @@
     <property name="clobType" value="clob" dbms="mysql, oracle, mssql, mariadb, postgresql"/>
     <property name="uuidType" value="varchar(36)" dbms="h2, mysql, mariadb"/>
 
-<!--    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024940_added_entity_SysUser.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024941_added_entity_SysRole.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024942_added_entity_SysMenu.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024943_added_entity_SysUserRole.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024944_added_entity_SysRoleMenu.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024945_added_entity_SysCompany.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024946_added_entity_SysOffice.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024947_added_entity_SysEmployee.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024948_added_entity_SysEmployeeOffice.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024949_added_entity_SysCompanyOffice.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024950_added_entity_SysPost.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024951_added_entity_SysEmployeePost.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024952_added_entity_SysRoleDataScope.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190908024953_added_entity_SysUserDataScope.xml" relativeToChangelogFile="false"/>-->
-    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <include file="config/liquibase/changelog/20191223091440_changelog.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

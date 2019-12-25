@@ -1,9 +1,10 @@
 package com.ruowei.modules.sys.web.api;
 
 import com.querydsl.core.types.Predicate;
-import com.ruowei.modules.sys.domain.entity.SysEmployeeDetail;
+import com.ruowei.modules.sys.domain.entity.SysEmployee;
 import com.ruowei.modules.sys.domain.entity.SysEmployeeList;
 import com.ruowei.modules.sys.web.vm.AssignRoleVM;
+import com.ruowei.modules.sys.web.vm.SysEmployeeDetailVM;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public interface SysUserEmployeeApi {
      * @param id
      * @return
      */
-    ResponseEntity<SysEmployeeDetail> getSysUserEmployee(@PathVariable Long id);
+    ResponseEntity<SysEmployee> getSysUserEmployee(@PathVariable Long id);
 
     /**
      * 分页查询员工数据
@@ -47,16 +48,16 @@ public interface SysUserEmployeeApi {
      * @param sysEmployeeDetail
      * @return
      */
-    ResponseEntity<SysEmployeeDetail> createSysUserEmployee(@Valid @RequestBody SysEmployeeDetail sysEmployeeDetail) throws URISyntaxException;
+    ResponseEntity<SysEmployee> createSysUserEmployee(@Valid @RequestBody SysEmployeeDetailVM sysEmployeeDetail) throws URISyntaxException;
 
     /**
      * 修改员工
      * @author 刘东奇
      * @date 2019/11/14
-     * @param sysEmployeeDetail
+     * @param sysEmployee
      * @return
      */
-    ResponseEntity<SysEmployeeDetail> modifySysUserEmployee(@Valid @RequestBody SysEmployeeDetail sysEmployeeDetail);
+    ResponseEntity<SysEmployee> modifySysUserEmployee(@Valid @RequestBody SysEmployee sysEmployee);
 
     /**
      * 停用员工

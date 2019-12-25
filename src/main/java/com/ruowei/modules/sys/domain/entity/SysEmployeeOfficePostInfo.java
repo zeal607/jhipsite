@@ -1,5 +1,6 @@
 package com.ruowei.modules.sys.domain.entity;
 
+import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -14,22 +15,16 @@ import java.util.Objects;
 @Entity
 @Table(name = "sys_employee_office")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployeeOfficePostInfo implements Serializable {
+public class SysEmployeeOfficePostInfo extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * sys_employee_office表主键
-     */
-    @Id
-    private Long id;
 
     /**
      * 员工
      */
     @ManyToOne
     @JoinColumn(name="sys_employee_id",referencedColumnName ="id")
-    private SysEmployeeDetail employeeDetail;
+    private SysEmployee employeeDetail;
 
     /**
      * 机构
@@ -52,19 +47,11 @@ public class SysEmployeeOfficePostInfo implements Serializable {
         return serialVersionUID;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public SysEmployeeDetail getEmployeeDetail() {
+    public SysEmployee getEmployeeDetail() {
         return employeeDetail;
     }
 
-    public void setEmployeeDetail(SysEmployeeDetail employeeDetail) {
+    public void setEmployeeDetail(SysEmployee employeeDetail) {
         this.employeeDetail = employeeDetail;
     }
 

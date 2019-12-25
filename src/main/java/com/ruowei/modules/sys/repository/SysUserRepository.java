@@ -21,10 +21,9 @@ import java.util.Optional;
 @Repository
 public interface SysUserRepository
     extends BaseRepository<Long,SysUser, QSysUser> {
+
     String USERS_BY_LOGIN_CODE_CACHE = "usersByLoginCode";
-
     String USERS_BY_EMAIL_CACHE = "usersByEmail";
-
 
     /**
      * 通过usercode倒叙找第一个Sysuser

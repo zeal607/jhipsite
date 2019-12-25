@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.service.api;
 
-import com.ruowei.modules.sys.domain.entity.SysEmployeeDetail;
+import com.ruowei.modules.sys.domain.entity.SysEmployee;
 import com.ruowei.modules.sys.domain.table.SysRole;
 
 import java.util.List;
@@ -15,19 +15,19 @@ public interface SysUserEmployeeApi {
      * 新增员工
      * @author 刘东奇
      * @date 2019/11/8
-     * @param sysEmployeeDetail
+     * @param sysEmployee
      * @return
      */
-    SysEmployeeDetail createSysUserEmployee(SysEmployeeDetail sysEmployeeDetail);
+    SysEmployee createSysUserEmployee(SysEmployee sysEmployee);
 
     /**
      * 修改员工
      * @author 刘东奇
      * @date 2019/11/14
-     * @param sysEmployeeDetail
+     * @param sysEmployee
      * @return
      */
-    SysEmployeeDetail modifySysUserEmployee(SysEmployeeDetail sysEmployeeDetail);
+    SysEmployee modifySysUserEmployee(SysEmployee sysEmployee);
 
     /**
      * 判断用户是否已存在（登录ID、手机号、邮箱是否被占用）

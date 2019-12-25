@@ -1,10 +1,12 @@
 package com.ruowei.modules.sys.mapper;
 
-import com.ruowei.modules.sys.domain.entity.SysEmployeeDetail;
-import com.ruowei.modules.sys.domain.table.SysEmployee;
+import com.ruowei.modules.sys.domain.entity.SysEmployee;
 import com.ruowei.modules.sys.domain.table.SysOffice;
 import com.ruowei.modules.sys.domain.table.SysUser;
-import com.ruowei.modules.sys.pojo.*;
+import com.ruowei.modules.sys.pojo.SysOfficeDTO;
+import com.ruowei.modules.sys.pojo.SysUserDTO;
+import com.ruowei.modules.sys.pojo.SysUserEmployeeDTO;
+import com.ruowei.modules.sys.web.vm.SysEmployeeDetailVM;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -17,21 +19,29 @@ public interface SysUserEmployeeMapper{
 
     /**
      * 投影到SysEmployee
-     * @param sysEmployeeDetail
+     * @param sysEmployee
      * @return
      */
-    SysEmployee SysUserEmployeeDetailVMToSysEmployee(SysEmployeeDetail sysEmployeeDetail);
+    com.ruowei.modules.sys.domain.table.SysEmployee SysUserEmployeeDetailVMToSysEmployee(SysEmployee sysEmployee);
+
+    @Mappings({
+        @Mapping(source = "sysEmployeeDetailVM.userInfo", target = "user"),
+        @Mapping(source = "sysEmployeeDetailVM.officeInfo", target = "office"),
+        @Mapping(source = "sysEmployeeDetailVM.companyInfo", target = "company"),
+        @Mapping(source = "sysEmployeeDetailVM.postInfoList", target = "postList")
+    })
+    SysEmployee sysUserEmployeeDetailVMToSysEmployeeDetail(SysEmployeeDetailVM sysEmployeeDetailVM);
 
     /**
      * 投影到SysUser
      * id忽略，因为ID是SysEmployee的ID
-     * @param sysEmployeeDetail
+     * @param sysEmployee
      * @return
      */
-    @Mappings({
-        @Mapping(target = "id" ,ignore=true)
-    })
-    SysUser SysUserEmployeeDetailVMToSysUser(SysEmployeeDetail sysEmployeeDetail);
+//    @Mappings({
+//        @Mapping(target = "id" ,ignore=true)
+//    })
+//    SysUser SysUserEmployeeDetailVMToSysUser(SysEmployee sysEmployee);
 
     /**
      * 组装SysUserEmployeeDTO
@@ -44,15 +54,19 @@ public interface SysUserEmployeeMapper{
         @Mapping(source = "sysUser.id", target = "id"),
         @Mapping(source = "sysUser.remarks", target = "remarks")
     })
-    SysUserEmployeeDTO assembleSysUserEmployeeDTO(SysUser sysUser, SysEmployee sysEmployee);
+    SysUserEmployeeDTO assembleSysUserEmployeeDTO(SysUser sysUser, com.ruowei.modules.sys.domain.table.SysEmployee sysEmployee);
 
     SysOfficeDTO sysOfficeToSysOfficeDTO(SysOffice sysOffice);
 
     SysOffice sysOfficeDTOToSysOffice(SysOfficeDTO sysOfficeDTO);
 
-    @Mappings({
-        @Mapping(source = "sysEmployee.id", target = "id"),
-        @Mapping(source = "sysEmployee.remarks", target = "remarks")
-    })
-    SysEmployeeDetail assembleSysUserEmployeeDetail(SysUser sysUser, SysEmployee sysEmployee);
+//    @Mappings({
+//        @Mapping(source = "sysEmployee.id", target = "id"),
+//        @Mapping(source = "sysEmployee.remarks", target = "remarks"),
+//        @Mapping(source = "sysEmployee.createdBy", target = "createdBy"),
+//        @Mapping(source = "sysEmployee.createdDate", target = "createdDate"),
+//        @Mapping(source = "sysEmployee.lastModifiedBy", target = "lastModifiedBy"),
+//        @Mapping(source = "sysEmployee.lastModifiedDate", target = "lastModifiedDate")
+//    })
+//    SysEmployee assembleSysUserEmployeeDetail(SysUser sysUser, com.ruowei.modules.sys.domain.table.SysEmployee sysEmployee);
 }

@@ -1,13 +1,15 @@
 package com.ruowei.modules.sys.web.rest;
 
 import com.querydsl.core.types.Predicate;
-import com.ruowei.modules.sys.domain.entity.SysEmployeeDetail;
+import com.ruowei.modules.sys.domain.entity.SysEmployee;
 import com.ruowei.modules.sys.domain.entity.SysEmployeeList;
-import com.ruowei.modules.sys.repository.SysEmployeeDetailRepository;
+import com.ruowei.modules.sys.mapper.SysUserEmployeeMapper;
+import com.ruowei.modules.sys.repository.entity.SysEmployeeDetailRepository;
 import com.ruowei.modules.sys.repository.SysEmployeeListRepository;
 import com.ruowei.modules.sys.service.SysUserEmployeeService;
 import com.ruowei.modules.sys.web.api.SysUserEmployeeApi;
 import com.ruowei.modules.sys.web.vm.AssignRoleVM;
+import com.ruowei.modules.sys.web.vm.SysEmployeeDetailVM;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.Api;
@@ -46,10 +48,13 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
     private final SysEmployeeDetailRepository sysEmployeeDetailRepository;
     private final SysEmployeeListRepository sysEmployeeListRepository;
 
-    public SysUserEmployeeResource(SysUserEmployeeService sysUserEmployeeService, SysEmployeeDetailRepository sysEmployeeDetailRepository, SysEmployeeListRepository sysEmployeeListRepository) {
+    private final SysUserEmployeeMapper sysUserEmployeeMapper;
+
+    public SysUserEmployeeResource(SysUserEmployeeService sysUserEmployeeService, SysEmployeeDetailRepository sysEmployeeDetailRepository, SysEmployeeListRepository sysEmployeeListRepository, SysUserEmployeeMapper sysUserEmployeeMapper) {
         this.sysUserEmployeeService = sysUserEmployeeService;
         this.sysEmployeeDetailRepository = sysEmployeeDetailRepository;
         this.sysEmployeeListRepository = sysEmployeeListRepository;
+        this.sysUserEmployeeMapper = sysUserEmployeeMapper;
     }
 
     /**
@@ -101,9 +106,9 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
     @ApiOperation(value = "获取单个员工", notes = "作者：刘东奇</br>"+
         "详细描述：该接口为前端的【用户管理页-用户详情页、用户修改页】提供获取单个员工数据功能")
     @GetMapping("/user-employee/{id}")
-    public ResponseEntity<SysEmployeeDetail> getSysUserEmployee(@PathVariable Long id) {
+    public ResponseEntity<SysEmployee> getSysUserEmployee(@PathVariable Long id) {
         log.debug("REST request to 获取单个员工 : {}", id);
-        Optional<SysEmployeeDetail> one = sysEmployeeDetailRepository.findById(id);
+        Optional<SysEmployee> one = sysEmployeeDetailRepository.findById(id);
 
 //        one.ifPresent(userEmployee->{            ;
 //            userEmployee.setSysRoleList(sysUserEmployeeService.getSysRoleListBySysEmployeeId(id));
@@ -115,7 +120,7 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
     /**
      * 创建员工
      *
-     * @param sysEmployeeDetail
+     * @param sysEmployeeDetailVM
      * @return
      * @author 刘东奇
      * @date 2019/11/13
@@ -124,17 +129,18 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
     @ApiOperation(value = "创建员工", notes = "作者：刘东奇</br>"+
         "详细描述：该接口为前端的【用户管理页-用户新增页】提供保存单个员工数据功能")
     @PostMapping("/user-employees")
-    public ResponseEntity<SysEmployeeDetail> createSysUserEmployee(@Valid @RequestBody SysEmployeeDetail sysEmployeeDetail) throws URISyntaxException {
-        log.debug("REST request to 创建员工 : {}", sysEmployeeDetail);
-        sysUserEmployeeService.createSysUserEmployee(sysEmployeeDetail);
-        return ResponseEntity.created(new URI("/api/sys-user-employees/" + sysEmployeeDetail.getId()))
-           .body(sysEmployeeDetail);
+    public ResponseEntity<SysEmployee> createSysUserEmployee(@Valid @RequestBody SysEmployeeDetailVM sysEmployeeDetailVM) throws URISyntaxException {
+        log.debug("REST request to 创建员工 : {}", sysEmployeeDetailVM);
+        SysEmployee sysEmployee = sysUserEmployeeMapper.sysUserEmployeeDetailVMToSysEmployeeDetail(sysEmployeeDetailVM);
+        sysEmployee = sysUserEmployeeService.createSysUserEmployee(sysEmployee);
+        return ResponseEntity.created(new URI("/api/sys-user-employees/" + sysEmployee.getId()))
+           .body(sysEmployee);
     }
 
     /**
      * 修改员工
      *
-     * @param sysEmployeeDetail
+     * @param sysEmployee
      * @return
      * @author 刘东奇
      * @date 2019/11/14
@@ -143,11 +149,11 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
     @ApiOperation(value = "修改员工", notes = "作者：刘东奇</br>"+
         "详细描述：该接口为前端的【用户管理页-用户修改页】提供修改单个员工数据功能")
     @PutMapping("/user-employees")
-    public ResponseEntity<SysEmployeeDetail> modifySysUserEmployee(@Valid @RequestBody SysEmployeeDetail sysEmployeeDetail) {
-        log.debug("REST request to 修改员工 : {}", sysEmployeeDetail);
-        sysEmployeeDetail = sysUserEmployeeService.modifySysUserEmployee(sysEmployeeDetail);
+    public ResponseEntity<SysEmployee> modifySysUserEmployee(@Valid @RequestBody SysEmployee sysEmployee) {
+        log.debug("REST request to 修改员工 : {}", sysEmployee);
+        sysEmployee = sysUserEmployeeService.modifySysUserEmployee(sysEmployee);
         return ResponseEntity.ok()
-            .body(sysEmployeeDetail);
+            .body(sysEmployee);
     }
 
 

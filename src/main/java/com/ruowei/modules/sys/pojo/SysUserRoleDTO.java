@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.pojo;
 import com.ruowei.common.pojo.BaseDTO;
-import com.ruowei.modules.sys.domain.ralationship.SysUserRole;
+import com.ruowei.modules.sys.domain.ralationship.SysUserRoleRelationship;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link SysUserRole} entity.
+ * A DTO for the {@link SysUserRoleRelationship} entity.
  */
 @ApiModel(description = "用户与角色关联表 @author 刘东奇")
 public class SysUserRoleDTO extends BaseDTO implements Serializable {

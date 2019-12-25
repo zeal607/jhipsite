@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_company_office")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysCompanyOffice extends PrimaryKeyAutoIncrementEntity implements Serializable {
+public class SysCompanyOfficeRelationship extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,7 +44,7 @@ public class SysCompanyOffice extends PrimaryKeyAutoIncrementEntity implements S
         return sysCompanyId;
     }
 
-    public SysCompanyOffice sysCompanyId(Long sysCompanyId) {
+    public SysCompanyOfficeRelationship sysCompanyId(Long sysCompanyId) {
         this.sysCompanyId = sysCompanyId;
         return this;
     }
@@ -57,7 +57,7 @@ public class SysCompanyOffice extends PrimaryKeyAutoIncrementEntity implements S
         return sysOfficeId;
     }
 
-    public SysCompanyOffice sysOfficeId(Long sysOfficeId) {
+    public SysCompanyOfficeRelationship sysOfficeId(Long sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
         return this;
     }
@@ -73,10 +73,10 @@ public class SysCompanyOffice extends PrimaryKeyAutoIncrementEntity implements S
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SysCompanyOffice)) {
+        if (!(o instanceof SysCompanyOfficeRelationship)) {
             return false;
         }
-        return id != null && id.equals(((SysCompanyOffice) o).id);
+        return id != null && id.equals(((SysCompanyOfficeRelationship) o).id);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.ruowei.config;
 
-import com.ruowei.modules.sys.domain.ralationship.SysUserRole;
+import com.ruowei.modules.sys.domain.ralationship.SysUserRoleRelationship;
 import com.ruowei.modules.sys.domain.table.*;
 import com.ruowei.modules.sys.repository.SysDeveloperUserRepository;
 import com.ruowei.modules.sys.repository.SysUserRepository;
@@ -49,7 +49,7 @@ public class CacheConfiguration {
             createCache(cm, SysDeveloperUserRepository.USERS_BY_EMAIL_CACHE);
             createCache(cm, SysUser.class.getName());
             createCache(cm, SysRole.class.getName());
-            createCache(cm, SysUserRole.class.getName());
+            createCache(cm, SysUserRoleRelationship.class.getName());
             createCache(cm, SysCompany.class.getName());
             createCache(cm, SysOffice.class.getName());
             createCache(cm, SysEmployee.class.getName());

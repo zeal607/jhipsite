@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_user_role")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUserRole extends PrimaryKeyAutoIncrementEntity implements Serializable {
+public class SysUserRoleRelationship extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,7 +39,7 @@ public class SysUserRole extends PrimaryKeyAutoIncrementEntity implements Serial
         return sysUserId;
     }
 
-    public SysUserRole sysUserId(Long sysUserId) {
+    public SysUserRoleRelationship sysUserId(Long sysUserId) {
         this.sysUserId = sysUserId;
         return this;
     }
@@ -52,7 +52,7 @@ public class SysUserRole extends PrimaryKeyAutoIncrementEntity implements Serial
         return sysRoleId;
     }
 
-    public SysUserRole sysRoleId(Long sysRoleId) {
+    public SysUserRoleRelationship sysRoleId(Long sysRoleId) {
         this.sysRoleId = sysRoleId;
         return this;
     }
@@ -67,10 +67,10 @@ public class SysUserRole extends PrimaryKeyAutoIncrementEntity implements Serial
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SysUserRole)) {
+        if (!(o instanceof SysUserRoleRelationship)) {
             return false;
         }
-        return id != null && id.equals(((SysUserRole) o).id);
+        return id != null && id.equals(((SysUserRoleRelationship) o).id);
     }
 
     @Override

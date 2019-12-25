@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_employee_office")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployeeOffice extends PrimaryKeyAutoIncrementEntity implements Serializable {
+public class SysEmployeeOfficeRelationship extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,7 +51,7 @@ public class SysEmployeeOffice extends PrimaryKeyAutoIncrementEntity implements 
         return sysEmployeeId;
     }
 
-    public SysEmployeeOffice sysEmployeeId(Long sysEmployeeId) {
+    public SysEmployeeOfficeRelationship sysEmployeeId(Long sysEmployeeId) {
         this.sysEmployeeId = sysEmployeeId;
         return this;
     }
@@ -64,7 +64,7 @@ public class SysEmployeeOffice extends PrimaryKeyAutoIncrementEntity implements 
         return sysOfficeId;
     }
 
-    public SysEmployeeOffice sysOfficeId(Long sysOfficeId) {
+    public SysEmployeeOfficeRelationship sysOfficeId(Long sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
         return this;
     }
@@ -77,7 +77,7 @@ public class SysEmployeeOffice extends PrimaryKeyAutoIncrementEntity implements 
         return sysPostId;
     }
 
-    public SysEmployeeOffice sysPostId(Long sysPostId) {
+    public SysEmployeeOfficeRelationship sysPostId(Long sysPostId) {
         this.sysPostId = sysPostId;
         return this;
     }
@@ -92,10 +92,10 @@ public class SysEmployeeOffice extends PrimaryKeyAutoIncrementEntity implements 
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SysEmployeeOffice)) {
+        if (!(o instanceof SysEmployeeOfficeRelationship)) {
             return false;
         }
-        return id != null && id.equals(((SysEmployeeOffice) o).id);
+        return id != null && id.equals(((SysEmployeeOfficeRelationship) o).id);
     }
 
     @Override

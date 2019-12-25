@@ -1,17 +1,12 @@
-package com.ruowei.modules.sys.domain.entity;
+package com.ruowei.modules.sys.web.vm;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
+import com.ruowei.modules.sys.domain.entity.*;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -19,92 +14,75 @@ import java.util.Objects;
 
 /**
  * 员工信息
- * sys_employee作为主表、sys_user作为从表，通过sys_user.ref_code进行关联
+ * 用于员工表单数据传递
  * @author 刘东奇
  */
-@Entity
-@Table(name = "sys_employee")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployeeDetail extends PrimaryKeyAutoIncrementEntity implements Serializable{
+@ApiModel(description = "员工信息 @author 刘东奇")
+public class SysEmployeeDetailVM implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
     /**
+     * 主键
+     */
+    @ApiModelProperty(value = "主键")
+    private Long id;
+
+    /**
      * 员工编码
      */
-    @Size(max = 100)
-    @Column(name = "emp_code", length = 100, nullable = false, unique = true)
+    @ApiModelProperty(value = "员工编码")
     private String empCode;
 
     /**
      * 员工姓名
      */
     @NotNull
-    @Size(max = 100)
-    @Column(name = "emp_name", length = 100, nullable = false)
+    @ApiModelProperty(value = "员工姓名", required = true)
     private String empName;
 
     /**
      * 英文名
      */
-    @Size(max = 1000)
-    @Column(name = "emp_name_en", length = 1000)
+    @ApiModelProperty(value = "英文名")
     private String empNameEn;
 
     /**
      * 备注信息
      * sys_user、sys_employee都有备注信息，这里默认取sys_employee的
      */
-    @Size(max = 500)
     @ApiModelProperty(value = "备注信息")
-    @Column(name = "remarks", length = 500)
     private String remarks;
 
     /**
      * 用户
      */
-    @OneToOne(mappedBy = "employeeDetail")
-    @JsonIgnoreProperties("employeeDetail")
-    private SysEmployeeUserInfo userInfo;
+    @ApiModelProperty(value = "用户")
+    private SysEmployeeUserVM userInfo;
 
     /**
      * 机构
      */
-    @ManyToOne
-    @JoinColumns(
-        {
-            @JoinColumn(name="sys_office_id",referencedColumnName ="id") ,
-            @JoinColumn(name="office_name",referencedColumnName ="office_name")
-        }
-    )
+    @ApiModelProperty(value = "机构")
     private SysEmployeeOfficeInfo officeInfo;
 
     /**
      * 公司
      */
-    @ManyToOne
-    @JoinColumns(
-        {
-            @JoinColumn(name="sys_company_id",referencedColumnName ="id") ,
-            @JoinColumn(name="company_name",referencedColumnName ="company_name")
-        }
-    )
+    @ApiModelProperty(value = "公司")
     private SysEmployeeCompanyInfo companyInfo;
 
     /**
      * 所在岗位
      */
-    @ManyToMany(fetch=FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinTable(name="sys_employee_post",joinColumns={@JoinColumn(name="sys_employee_id", referencedColumnName="id")}
-        ,inverseJoinColumns={@JoinColumn(name="sys_post_id", referencedColumnName="id")})
+    @ApiModelProperty(value = "所在岗位")
     private List<SysEmployeePostInfo> postInfoList;
 
     /**
      *  附属机构及岗位
      */
-    @OneToMany(fetch=FetchType.EAGER,mappedBy="employeeDetail")
     @JsonIgnoreProperties("employeeDetail")
+    @ApiModelProperty(value = "附属机构及岗位")
     private List<SysEmployeeOfficePostInfo> officePostInfoList;
 
 
@@ -144,11 +122,11 @@ public class SysEmployeeDetail extends PrimaryKeyAutoIncrementEntity implements 
         this.remarks = remarks;
     }
 
-    public SysEmployeeUserInfo getUserInfo() {
+    public SysEmployeeUserVM getUserInfo() {
         return userInfo;
     }
 
-    public void setUserInfo(SysEmployeeUserInfo userInfo) {
+    public void setUserInfo(SysEmployeeUserVM userInfo) {
         this.userInfo = userInfo;
     }
 
@@ -188,7 +166,7 @@ public class SysEmployeeDetail extends PrimaryKeyAutoIncrementEntity implements 
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SysEmployeeDetail that = (SysEmployeeDetail) o;
+        SysEmployeeDetailVM that = (SysEmployeeDetailVM) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(empCode, that.empCode) &&
             Objects.equals(empName, that.empName) &&
