@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.service.query;
 
 import com.ruowei.common.service.query.simple.QueryService;
-import com.ruowei.modules.sys.domain.table.QSysUser;
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.table.QSysUserTable;
+import com.ruowei.modules.sys.domain.table.SysUserTable;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,5 +13,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class SysUserQueryService extends QueryService<SysUser, QSysUser, SysUserRepository> {
+public class SysUserQueryService extends QueryService<SysUserTable, QSysUserTable, SysUserRepository> {
 }

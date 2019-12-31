@@ -1,50 +1,43 @@
-package com.ruowei.modules.sys.domain.entity;
+package com.ruowei.modules.sys.web.vm;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruowei.common.json.LongJsonDeserializer;
+import com.ruowei.common.json.LongJsonSerializer;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 /**
  * 员工的岗位信息
  * @author 刘东奇
  */
-@Entity
-@Table(name = "sys_post")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployeePostInfo implements Serializable {
+@ApiModel(description = "员工的岗位信息 @author 刘东奇")
+public class SysEmployeePostVM implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * sys_post表主键
+     * 主键
      */
-    @Id
+    @ApiModelProperty(value = "主键")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /**
      * 岗位编码
      */
-    @NotNull
-    @Size(max = 100)
-    @Column(name = "post_code", length = 100, nullable = false, unique = true)
+    @ApiModelProperty(value = "岗位编码")
     private String postCode;
 
     /**
      * 岗位名称
      */
-    @NotNull
-    @Size(max = 100)
-    @Column(name = "post_name", length = 100, nullable = false)
+    @ApiModelProperty(value = "岗位名称")
     private String postName;
-
-    @ManyToMany(mappedBy="officePostInfoList")
-    private List<SysEmployee> employeeList;
 
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -53,7 +46,7 @@ public class SysEmployeePostInfo implements Serializable {
         return postCode;
     }
 
-    public SysEmployeePostInfo postCode(String postCode) {
+    public SysEmployeePostVM postCode(String postCode) {
         this.postCode = postCode;
         return this;
     }
@@ -66,7 +59,7 @@ public class SysEmployeePostInfo implements Serializable {
         return postName;
     }
 
-    public SysEmployeePostInfo postName(String postName) {
+    public SysEmployeePostVM postName(String postName) {
         this.postName = postName;
         return this;
     }
@@ -87,19 +80,12 @@ public class SysEmployeePostInfo implements Serializable {
         this.id = id;
     }
 
-    public List<SysEmployee> getEmployeeList() {
-        return employeeList;
-    }
-
-    public void setEmployeeList(List<SysEmployee> employeeList) {
-        this.employeeList = employeeList;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SysEmployeePostInfo that = (SysEmployeePostInfo) o;
+        SysEmployeePostVM that = (SysEmployeePostVM) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(postCode, that.postCode) &&
             Objects.equals(postName, that.postName);

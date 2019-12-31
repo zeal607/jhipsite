@@ -7,7 +7,7 @@ import com.ruowei.common.json.LongJsonSerializer;
 import com.ruowei.common.json.StringSetJsonDeserializer;
 import com.ruowei.config.Constants;
 import com.ruowei.modules.sys.domain.table.Authority;
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.table.SysUserTable;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -66,7 +66,7 @@ public class UserDTO implements Serializable {
         // Empty constructor needed for Jackson.
     }
 
-    public UserDTO(SysUser user) {
+    public UserDTO(SysUserTable user) {
         this.id = user.getId();
         this.login = user.getLoginCode();
         this.firstName = user.getUserName();

@@ -81,4 +81,12 @@ public interface BaseRepository<ID,Entity,QEntity extends EntityPath<Entity>>
      * @param predicate
      */
     void deleteAll(Predicate predicate);
+
+    /**
+     * 从数据库更新实体
+     * @author 刘东奇
+     * @date 2019/12/26
+     * @param entity
+     */
+    void refresh(Entity entity);
 }

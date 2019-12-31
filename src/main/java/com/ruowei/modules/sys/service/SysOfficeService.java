@@ -45,7 +45,7 @@ public class SysOfficeService extends BaseService implements SysOfficeApi {
     public SysOffice checkOfficeExistsById(Long id) {
         Assert.notNull(id,"机构ID不能为空");
         Optional<SysOffice> sysOffice = sysOfficeRepository.findById(id);
-        Assert.isTrue(sysOffice.isPresent(),"机构不存在");
+        Assert.isTrue(sysOffice.isPresent(),"机构："+id+"不存在");
         return sysOffice.get();
     }
 

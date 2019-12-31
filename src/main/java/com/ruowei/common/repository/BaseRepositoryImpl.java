@@ -3,10 +3,8 @@ package com.ruowei.common.repository;
 import com.querydsl.core.types.EntityPath;
 import com.querydsl.core.types.Predicate;
 import com.ruowei.common.error.ErrorMessageUtils;
-import com.ruowei.common.error.exception.DataAlreadyExistException;
 import com.ruowei.common.error.exception.DataNotFoundException;
 import com.ruowei.common.lang.ObjectUtils;
-import com.ruowei.common.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.QuerydslJpaRepository;
@@ -14,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +56,7 @@ public class BaseRepositoryImpl<ID extends Serializable,Entity,QEntity extends E
     /**
      * 更新
      * 增量更新,忽略null属性
+     * 只支持单表更新
      *
      * @param entity
      * @return
@@ -75,12 +73,19 @@ public class BaseRepositoryImpl<ID extends Serializable,Entity,QEntity extends E
         } else {
             if(ObjectUtils.isUpdatable(entity)){
                 //获取当前已存在的实体
-                Entity exist = super.getOne(entityInformation.getId(entity));
-                //获取空属性并处理成null
-                String[] nullProperties = ObjectUtils.getNullProperties(entity);
-                //更新非空属性
-                BeanUtils.copyProperties(entity, exist, nullProperties);
-                return this.em.merge(exist);
+                Optional<Entity> existOptional = super.findById(entityInformation.getId(entity));
+                if(existOptional.isPresent()){
+                    Entity exsit = existOptional.get();
+                    //获取空属性并处理成null
+                    String[] nullProperties = ObjectUtils.getNullProperties(entity);
+                    //更新非空属性
+                    BeanUtils.copyProperties(entity, exsit, nullProperties);
+                    return this.em.merge(exsit);
+                }else {
+                    throw new DataNotFoundException(
+                        ErrorMessageUtils.getNotFoundMessage(
+                            entityInformation.getEntityName(),entityInformation.getId(entity).toString()));
+                }
             }else {
                 return entity;
             }
@@ -115,6 +120,17 @@ public class BaseRepositoryImpl<ID extends Serializable,Entity,QEntity extends E
     public void deleteAll(Predicate predicate) {
         List<Entity> list= super.findAll(predicate);
         this.deleteAll(list);
+    }
+
+    /**
+     * 从数据库更新实体
+     * @author 刘东奇
+     * @date 2019/12/26
+     * @param entity
+     */
+    @Override
+    public void refresh(Entity entity) {
+        this.em.refresh(entity);
     }
 
 }

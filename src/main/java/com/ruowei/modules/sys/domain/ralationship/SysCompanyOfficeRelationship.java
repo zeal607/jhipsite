@@ -1,14 +1,11 @@
 package com.ruowei.modules.sys.domain.ralationship;
 
-import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -19,9 +16,13 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_company_office")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysCompanyOfficeRelationship extends PrimaryKeyAutoIncrementEntity implements Serializable {
+public class SysCompanyOfficeRelationship implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    public Long id;
 
     /**
      * 公司ID
@@ -67,6 +68,19 @@ public class SysCompanyOfficeRelationship extends PrimaryKeyAutoIncrementEntity 
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(Object o) {

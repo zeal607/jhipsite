@@ -198,6 +198,14 @@ public class SysCompany extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Boolean getTreeLeaf() {
+        return treeLeaf;
+    }
+
     public void setTreeLeaf(Boolean treeLeaf) {
         this.treeLeaf = treeLeaf;
     }

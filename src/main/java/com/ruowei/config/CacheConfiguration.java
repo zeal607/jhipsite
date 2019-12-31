@@ -47,12 +47,12 @@ public class CacheConfiguration {
             createCache(cm, SysUserRepository.USERS_BY_EMAIL_CACHE);
             createCache(cm, SysDeveloperUserRepository.USERS_BY_LOGIN_CACHE);
             createCache(cm, SysDeveloperUserRepository.USERS_BY_EMAIL_CACHE);
-            createCache(cm, SysUser.class.getName());
+            createCache(cm, SysUserTable.class.getName());
             createCache(cm, SysRole.class.getName());
             createCache(cm, SysUserRoleRelationship.class.getName());
             createCache(cm, SysCompany.class.getName());
             createCache(cm, SysOffice.class.getName());
-            createCache(cm, SysEmployee.class.getName());
+            createCache(cm, SysEmployeeTable.class.getName());
             createCache(cm, SysPost.class.getName());
             // jhipster-needle-ehcache-add-entry
         };

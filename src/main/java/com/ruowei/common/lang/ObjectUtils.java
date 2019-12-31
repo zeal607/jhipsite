@@ -3,6 +3,13 @@
  */
 package com.ruowei.common.lang;
 
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+
 import java.beans.PropertyDescriptor;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,15 +17,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 
 /**
  * 对象操作工具类, 继承org.apache.commons.lang3.ObjectUtils类
@@ -212,6 +214,11 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
      * 获取对象的空属性
      */
     public static String[] getNullProperties(Object src) {
+        Set<String> properties = getNullPropertiesSet(src);
+        return properties.toArray(new String[0]);
+    }
+
+    public static Set<String> getNullPropertiesSet(Object src) {
         //1.获取Bean
         BeanWrapper srcBean = new BeanWrapperImpl(src);
         //2.获取Bean的属性描述
@@ -226,7 +233,29 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
                 properties.add(propertyName);
             }
         }
-        return properties.toArray(new String[0]);
+        return properties;
+    }
+
+    /**
+     * 判断object是否为基本类型
+     * @param object
+     * @return
+     */
+    public static boolean isBaseType(Object object) {
+        Class className = object.getClass();
+        if (className.equals(java.lang.Integer.class) ||
+            className.equals(java.lang.Byte.class) ||
+            className.equals(java.lang.Long.class) ||
+            className.equals(java.lang.Double.class) ||
+            className.equals(java.lang.Float.class) ||
+            className.equals(java.lang.Character.class) ||
+            className.equals(java.lang.Short.class) ||
+            className.equals(java.lang.Boolean.class)||
+            className.equals(Date.class)||
+            className.equals(Instant.class)) {
+            return true;
+        }
+        return false;
     }
 
     /**

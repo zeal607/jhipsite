@@ -7,6 +7,7 @@ import java.util.List;
  * @author 刘东奇
  */
 public class AssignRoleVM {
+
     private Long sysEmployeeId;
     private List<Long> roleIdList;
 

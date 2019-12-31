@@ -26,7 +26,7 @@ import java.util.Set;
 @Entity
 @Table(name = "sys_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUser extends AbstractAuditingEntity implements Serializable {
+public class SysUserTable extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -227,7 +227,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return userCode;
     }
 
-    public SysUser userCode(String userCode) {
+    public SysUserTable userCode(String userCode) {
         this.userCode = userCode;
         return this;
     }
@@ -240,7 +240,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return loginCode;
     }
 
-    public SysUser loginCode(String loginCode) {
+    public SysUserTable loginCode(String loginCode) {
         this.loginCode = loginCode;
         return this;
     }
@@ -253,7 +253,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return userName;
     }
 
-    public SysUser userName(String userName) {
+    public SysUserTable userName(String userName) {
         this.userName = userName;
         return this;
     }
@@ -266,7 +266,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return password;
     }
 
-    public SysUser password(String password) {
+    public SysUserTable password(String password) {
         this.password = password;
         return this;
     }
@@ -279,7 +279,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return email;
     }
 
-    public SysUser email(String email) {
+    public SysUserTable email(String email) {
         this.email = email;
         return this;
     }
@@ -292,7 +292,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return mobile;
     }
 
-    public SysUser mobile(String mobile) {
+    public SysUserTable mobile(String mobile) {
         this.mobile = mobile;
         return this;
     }
@@ -305,7 +305,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return phone;
     }
 
-    public SysUser phone(String phone) {
+    public SysUserTable phone(String phone) {
         this.phone = phone;
         return this;
     }
@@ -318,7 +318,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return sex;
     }
 
-    public SysUser sex(GenderType sex) {
+    public SysUserTable sex(GenderType sex) {
         this.sex = sex;
         return this;
     }
@@ -331,7 +331,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return avatar;
     }
 
-    public SysUser avatar(String avatar) {
+    public SysUserTable avatar(String avatar) {
         this.avatar = avatar;
         return this;
     }
@@ -344,7 +344,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return sign;
     }
 
-    public SysUser sign(String sign) {
+    public SysUserTable sign(String sign) {
         this.sign = sign;
         return this;
     }
@@ -357,7 +357,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return wxOpenid;
     }
 
-    public SysUser wxOpenid(String wxOpenid) {
+    public SysUserTable wxOpenid(String wxOpenid) {
         this.wxOpenid = wxOpenid;
         return this;
     }
@@ -370,7 +370,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return mobileImei;
     }
 
-    public SysUser mobileImei(String mobileImei) {
+    public SysUserTable mobileImei(String mobileImei) {
         this.mobileImei = mobileImei;
         return this;
     }
@@ -383,7 +383,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return userType;
     }
 
-    public SysUser userType(UserType userType) {
+    public SysUserTable userType(UserType userType) {
         this.userType = userType;
         return this;
     }
@@ -396,7 +396,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return refCode;
     }
 
-    public SysUser refCode(Long refCode) {
+    public SysUserTable refCode(Long refCode) {
         this.refCode = refCode;
         return this;
     }
@@ -409,7 +409,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return refName;
     }
 
-    public SysUser refName(String refName) {
+    public SysUserTable refName(String refName) {
         this.refName = refName;
         return this;
     }
@@ -422,7 +422,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return lastLoginIp;
     }
 
-    public SysUser lastLoginIp(String lastLoginIp) {
+    public SysUserTable lastLoginIp(String lastLoginIp) {
         this.lastLoginIp = lastLoginIp;
         return this;
     }
@@ -435,7 +435,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return lastLoginDate;
     }
 
-    public SysUser lastLoginDate(Instant lastLoginDate) {
+    public SysUserTable lastLoginDate(Instant lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
         return this;
     }
@@ -448,7 +448,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return freezeDate;
     }
 
-    public SysUser freezeDate(Instant freezeDate) {
+    public SysUserTable freezeDate(Instant freezeDate) {
         this.freezeDate = freezeDate;
         return this;
     }
@@ -461,7 +461,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return freezeCause;
     }
 
-    public SysUser freezeCause(String freezeCause) {
+    public SysUserTable freezeCause(String freezeCause) {
         this.freezeCause = freezeCause;
         return this;
     }
@@ -474,7 +474,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return userSort;
     }
 
-    public SysUser userSort(Integer userSort) {
+    public SysUserTable userSort(Integer userSort) {
         this.userSort = userSort;
         return this;
     }
@@ -487,7 +487,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return status;
     }
 
-    public SysUser status(UserStatusType status) {
+    public SysUserTable status(UserStatusType status) {
         this.status = status;
         return this;
     }
@@ -500,7 +500,7 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return remarks;
     }
 
-    public SysUser remarks(String remarks) {
+    public SysUserTable remarks(String remarks) {
         this.remarks = remarks;
         return this;
     }
@@ -558,34 +558,34 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SysUser sysUser = (SysUser) o;
-        return activated == sysUser.activated &&
-            Objects.equals(userCode, sysUser.userCode) &&
-            Objects.equals(loginCode, sysUser.loginCode) &&
-            Objects.equals(userName, sysUser.userName) &&
-            Objects.equals(password, sysUser.password) &&
-            Objects.equals(email, sysUser.email) &&
-            Objects.equals(mobile, sysUser.mobile) &&
-            Objects.equals(phone, sysUser.phone) &&
-            sex == sysUser.sex &&
-            Objects.equals(avatar, sysUser.avatar) &&
-            Objects.equals(sign, sysUser.sign) &&
-            Objects.equals(wxOpenid, sysUser.wxOpenid) &&
-            Objects.equals(mobileImei, sysUser.mobileImei) &&
-            userType == sysUser.userType &&
-            Objects.equals(refCode, sysUser.refCode) &&
-            Objects.equals(refName, sysUser.refName) &&
-            Objects.equals(lastLoginIp, sysUser.lastLoginIp) &&
-            Objects.equals(lastLoginDate, sysUser.lastLoginDate) &&
-            Objects.equals(freezeDate, sysUser.freezeDate) &&
-            Objects.equals(freezeCause, sysUser.freezeCause) &&
-            Objects.equals(userSort, sysUser.userSort) &&
-            status == sysUser.status &&
-            Objects.equals(remarks, sysUser.remarks) &&
-            Objects.equals(activationKey, sysUser.activationKey) &&
-            Objects.equals(resetKey, sysUser.resetKey) &&
-            Objects.equals(resetDate, sysUser.resetDate) &&
-            Objects.equals(authorities, sysUser.authorities);
+        SysUserTable sysUserTable = (SysUserTable) o;
+        return activated == sysUserTable.activated &&
+            Objects.equals(userCode, sysUserTable.userCode) &&
+            Objects.equals(loginCode, sysUserTable.loginCode) &&
+            Objects.equals(userName, sysUserTable.userName) &&
+            Objects.equals(password, sysUserTable.password) &&
+            Objects.equals(email, sysUserTable.email) &&
+            Objects.equals(mobile, sysUserTable.mobile) &&
+            Objects.equals(phone, sysUserTable.phone) &&
+            sex == sysUserTable.sex &&
+            Objects.equals(avatar, sysUserTable.avatar) &&
+            Objects.equals(sign, sysUserTable.sign) &&
+            Objects.equals(wxOpenid, sysUserTable.wxOpenid) &&
+            Objects.equals(mobileImei, sysUserTable.mobileImei) &&
+            userType == sysUserTable.userType &&
+            Objects.equals(refCode, sysUserTable.refCode) &&
+            Objects.equals(refName, sysUserTable.refName) &&
+            Objects.equals(lastLoginIp, sysUserTable.lastLoginIp) &&
+            Objects.equals(lastLoginDate, sysUserTable.lastLoginDate) &&
+            Objects.equals(freezeDate, sysUserTable.freezeDate) &&
+            Objects.equals(freezeCause, sysUserTable.freezeCause) &&
+            Objects.equals(userSort, sysUserTable.userSort) &&
+            status == sysUserTable.status &&
+            Objects.equals(remarks, sysUserTable.remarks) &&
+            Objects.equals(activationKey, sysUserTable.activationKey) &&
+            Objects.equals(resetKey, sysUserTable.resetKey) &&
+            Objects.equals(resetDate, sysUserTable.resetDate) &&
+            Objects.equals(authorities, sysUserTable.authorities);
     }
 
     @Override

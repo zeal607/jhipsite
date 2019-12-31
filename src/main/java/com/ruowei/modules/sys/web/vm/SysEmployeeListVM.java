@@ -1,16 +1,12 @@
-package com.ruowei.modules.sys.domain.entity;
+package com.ruowei.modules.sys.web.vm;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
-import com.ruowei.modules.sys.web.vm.SysEmployeeUserVM;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruowei.common.json.LongJsonDeserializer;
+import com.ruowei.common.json.LongJsonSerializer;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
@@ -22,66 +18,54 @@ import java.util.Objects;
  * sys_employee作为主表、sys_user作为从表，通过sys_user.ref_code进行关联
  * @author 刘东奇
  */
-@Entity
-@Table(name = "sys_employee")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployeeList extends PrimaryKeyAutoIncrementEntity implements Serializable {
+@ApiModel(description = "用户员工实体-列表模型 @author 刘东奇")
+public class SysEmployeeListVM implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
+     * 主键
+     */
+    @ApiModelProperty(value = "主键")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
+    private Long id;
+
+    /**
      * 用户
      */
-    @OneToOne(mappedBy = "employeeDetail")
-    @JsonIgnoreProperties("employeeDetail")
+    @ApiModelProperty(value = "用户")
     private SysEmployeeUserVM userInfo;
 
     /**
      * 更新时间
      */
-    @Column(name = "last_modified_date")
+    @ApiModelProperty(value = "更新时间")
     private Instant lastModifiedDate;
 
     /**
      * 员工姓名
      */
-    @NotNull
-    @Size(max = 100)
-    @Column(name = "emp_name", length = 100, nullable = false)
+    @ApiModelProperty(value = "员工姓名")
     private String empName;
 
     /**
      * 机构
      */
-    @ManyToOne
-    @JoinColumns(
-        {
-            @JoinColumn(name="sys_office_id",referencedColumnName ="id") ,
-            @JoinColumn(name="office_name",referencedColumnName ="office_name")
-        }
-    )
-    private SysEmployeeOfficeInfo officeInfo;
+    @ApiModelProperty(value = "机构")
+    private SysEmployeeOfficeVM officeInfo;
 
     /**
      * 公司
      */
-    @ManyToOne
-    @JoinColumns(
-        {
-            @JoinColumn(name="sys_company_id",referencedColumnName ="id") ,
-            @JoinColumn(name="company_name",referencedColumnName ="company_name")
-        }
-    )
-    private SysEmployeeCompanyInfo companyInfo;
+    @ApiModelProperty(value = "公司")
+    private SysEmployeeCompanyVM companyInfo;
 
     /**
      * 所在岗位
      */
-    @ManyToMany(fetch=FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinTable(name="sys_employee_post",joinColumns={@JoinColumn(name="sys_employee_id", referencedColumnName="id")}
-        ,inverseJoinColumns={@JoinColumn(name="sys_post_id", referencedColumnName="id")})
-    private List<SysEmployeePostInfo> postInfoList;
+    @ApiModelProperty(value = "所在岗位")
+    private List<SysEmployeePostVM> postInfoList;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -114,35 +98,43 @@ public class SysEmployeeList extends PrimaryKeyAutoIncrementEntity implements Se
         this.empName = empName;
     }
 
-    public SysEmployeeOfficeInfo getOfficeInfo() {
+    public SysEmployeeOfficeVM getOfficeInfo() {
         return officeInfo;
     }
 
-    public void setOfficeInfo(SysEmployeeOfficeInfo officeInfo) {
+    public void setOfficeInfo(SysEmployeeOfficeVM officeInfo) {
         this.officeInfo = officeInfo;
     }
 
-    public SysEmployeeCompanyInfo getCompanyInfo() {
+    public SysEmployeeCompanyVM getCompanyInfo() {
         return companyInfo;
     }
 
-    public void setCompanyInfo(SysEmployeeCompanyInfo companyInfo) {
+    public void setCompanyInfo(SysEmployeeCompanyVM companyInfo) {
         this.companyInfo = companyInfo;
     }
 
-    public List<SysEmployeePostInfo> getPostInfoList() {
+    public List<SysEmployeePostVM> getPostInfoList() {
         return postInfoList;
     }
 
-    public void setPostInfoList(List<SysEmployeePostInfo> postInfoList) {
+    public void setPostInfoList(List<SysEmployeePostVM> postInfoList) {
         this.postInfoList = postInfoList;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SysEmployeeList that = (SysEmployeeList) o;
+        SysEmployeeListVM that = (SysEmployeeListVM) o;
         return Objects.equals(userInfo, that.userInfo) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
             Objects.equals(empName, that.empName) &&

@@ -1,7 +1,7 @@
 package com.ruowei.modules.sys.pojo;
 import com.ruowei.common.pojo.BaseDTO;
 import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
-import com.ruowei.modules.sys.domain.table.SysEmployee;
+import com.ruowei.modules.sys.domain.table.SysEmployeeTable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link SysEmployee} entity.
+ * A DTO for the {@link SysEmployeeTable} entity.
  */
 @ApiModel(description = "员工表 @author 刘东奇")
 public class SysEmployeeDTO extends BaseDTO implements Serializable {

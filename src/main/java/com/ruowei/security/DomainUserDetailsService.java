@@ -1,6 +1,6 @@
 package com.ruowei.security;
 
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.table.SysUserTable;
 import com.ruowei.modules.sys.repository.SysUserRepository;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
@@ -42,13 +42,13 @@ public class DomainUserDetailsService implements UserDetailsService {
         }
 
         String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
-        return userRepository.findOneWithAuthoritiesByLoginCode(lowercaseLogin)
+         return userRepository.findOneWithAuthoritiesByLoginCode(lowercaseLogin)
             .map(user -> createSpringSecurityUser(lowercaseLogin, user))
             .orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database"));
 
     }
 
-    private org.springframework.security.core.userdetails.User createSpringSecurityUser(String lowercaseLogin, SysUser user) {
+    private org.springframework.security.core.userdetails.User createSpringSecurityUser(String lowercaseLogin, SysUserTable user) {
         if (!user.isActivated()) {
             throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
         }

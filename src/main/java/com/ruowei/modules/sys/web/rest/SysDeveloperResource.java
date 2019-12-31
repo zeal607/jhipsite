@@ -7,7 +7,7 @@ import com.ruowei.common.error.exception.LoginAlreadyUsedException;
 import com.ruowei.config.Constants;
 import com.ruowei.modules.sys.domain.entity.SysDeveloperUser;
 import com.ruowei.modules.sys.domain.enumeration.Renyuanleixing;
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.table.SysUserTable;
 import com.ruowei.modules.sys.mapper.SysUserMapper;
 import com.ruowei.modules.sys.pojo.PasswordChangeDTO;
 import com.ruowei.modules.sys.pojo.UserDTO;
@@ -155,7 +155,7 @@ public class SysDeveloperResource implements SysDeveloperApi {
     @Override
     @GetMapping("/activate")
     public void activateAccount(@RequestParam(value = "key") String key) {
-        Optional<SysUser> user = sysDeveloperService.activateRegistration(key);
+        Optional<SysUserTable> user = sysDeveloperService.activateRegistration(key);
         if (!user.isPresent()) {
             throw new AccountResourceException("No user was found for this activation key");
         }
@@ -202,11 +202,11 @@ public class SysDeveloperResource implements SysDeveloperApi {
     @PostMapping("/account")
     public void saveAccount(@Valid @RequestBody UserDTO userDTO) {
         String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("Current user login not found"));
-        Optional<SysUser> existingUser = this.sysUserRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
+        Optional<SysUserTable> existingUser = this.sysUserRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getLoginCode().equalsIgnoreCase(userLogin))) {
             throw new EmailAlreadyUsedException();
         }
-        Optional<SysUser> user = this.sysUserRepository.findOneByLoginCode(userLogin);
+        Optional<SysUserTable> user = this.sysUserRepository.findOneByLoginCode(userLogin);
         if (!user.isPresent()) {
             throw new AccountResourceException("User could not be found");
         }
@@ -259,7 +259,7 @@ public class SysDeveloperResource implements SysDeveloperApi {
         if (!checkPasswordLength(keyAndPassword.getNewPassword())) {
             throw new InvalidPasswordException();
         }
-        Optional<SysUser> user =
+        Optional<SysUserTable> user =
             sysDeveloperService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
 
         if (!user.isPresent()) {
@@ -281,7 +281,7 @@ public class SysDeveloperResource implements SysDeveloperApi {
     @Transactional
     public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UserDTO userDTO) {
         log.debug("REST request to update User : {}", userDTO);
-        Optional<SysUser> existingUser = this.sysUserRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
+        Optional<SysUserTable> existingUser = this.sysUserRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(userDTO.getId()))) {
             throw new EmailAlreadyUsedException();
         }

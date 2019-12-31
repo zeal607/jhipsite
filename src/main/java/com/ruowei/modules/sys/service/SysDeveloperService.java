@@ -8,7 +8,7 @@ import com.ruowei.common.service.BaseService;
 import com.ruowei.config.Constants;
 import com.ruowei.modules.sys.domain.entity.SysDeveloperUser;
 import com.ruowei.modules.sys.domain.table.Authority;
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.table.SysUserTable;
 import com.ruowei.modules.sys.mapper.SysUserMapper;
 import com.ruowei.modules.sys.pojo.UserDTO;
 import com.ruowei.modules.sys.repository.AuthorityRepository;
@@ -169,7 +169,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
      * @date 2019/10/21
      */
     @Override
-    public Optional<SysUser> activateRegistration(String key) {
+    public Optional<SysUserTable> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
         // 根据激活码找到SysUser并更新激活状态
         return sysUserRepository.findOneByActivationKey(key)
@@ -342,7 +342,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
      * @date 2019/10/21
      */
     @Override
-    public Optional<SysUser> completePasswordReset(String newPassword, String key) {
+    public Optional<SysUserTable> completePasswordReset(String newPassword, String key) {
         log.debug("Reset user password for reset key {}", key);
         return this.sysUserRepository.findOneByResetKey(key)
             .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
@@ -434,7 +434,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
         Objects.requireNonNull(cacheManager.getCache(SysUserRepository.USERS_BY_EMAIL_CACHE)).evict(email);
     }
 
-    private void clearUserCaches(SysUser user) {
+    private void clearUserCaches(SysUserTable user) {
         Objects.requireNonNull(cacheManager.getCache(SysUserRepository.USERS_BY_LOGIN_CODE_CACHE)).evict(user.getLoginCode());
         Objects.requireNonNull(cacheManager.getCache(SysUserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
     }

@@ -16,10 +16,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class SysEmployeeRepositoryTest {
+class SysEmployeeTableTableRepositoryTest {
 
     @Autowired
-    private SysEmployeeRepository sysEmployeeRepository;
+    private SysEmployeeTableRepository sysEmployeeTableRepository;
 
     @Test
     void testSaveEmployee(){

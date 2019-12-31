@@ -2,7 +2,7 @@ package com.ruowei.modules.sys.mapper;
 
 import com.ruowei.common.mapper.EntityMapper;
 import com.ruowei.modules.sys.domain.table.Authority;
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.table.SysUserTable;
 import com.ruowei.modules.sys.pojo.SysUserDTO;
 import com.ruowei.modules.sys.pojo.user.SysUserRegisterDTO;
 import org.mapstruct.*;
@@ -11,16 +11,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Mapper for the entity {@link SysUser} and its DTO {@link SysUserDTO}.
+ * Mapper for the entity {@link SysUserTable} and its DTO {@link SysUserDTO}.
  */
 @Mapper(componentModel = "spring", uses = {})
-public interface SysUserMapper extends EntityMapper<SysUserDTO, SysUser> {
+public interface SysUserMapper extends EntityMapper<SysUserDTO, SysUserTable> {
 
-    default SysUser fromId(Long id) {
+    default SysUserTable fromId(Long id) {
         if (id == null) {
             return null;
         }
-        SysUser sysPost = new SysUser();
+        SysUserTable sysPost = new SysUserTable();
         sysPost.setId(id);
         return sysPost;
     }
@@ -34,7 +34,7 @@ public interface SysUserMapper extends EntityMapper<SysUserDTO, SysUser> {
         @Mapping(target = "id" ,ignore=true),
         @Mapping(source = "login", target = "loginCode")
     })
-    SysUser assembleEntity(SysUserRegisterDTO sysUserRegisterDTO);
+    SysUserTable assembleEntity(SysUserRegisterDTO sysUserRegisterDTO);
 
     default Set<Authority> projectIntoAuthority(Set<String> value){
         Set<Authority> authorities = new HashSet<>();

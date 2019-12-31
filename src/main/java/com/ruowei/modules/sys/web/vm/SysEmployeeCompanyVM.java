@@ -1,14 +1,12 @@
-package com.ruowei.modules.sys.domain.entity;
+package com.ruowei.modules.sys.web.vm;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruowei.common.json.LongJsonDeserializer;
+import com.ruowei.common.json.LongJsonSerializer;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -17,48 +15,41 @@ import java.util.Objects;
  * 员工的所属公司信息
  * @author 刘东奇
  */
-@Entity
-@Table(name = "sys_company")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployeeCompanyInfo implements Serializable {
+@ApiModel(description = "员工的所属公司信息 @author 刘东奇")
+public class SysEmployeeCompanyVM implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * sys_company表主键
+     * 主键
      */
-    @Id
+    @ApiModelProperty(value = "主键")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /**
      * 公司编码
      */
-    @NotNull
-    @Size(max = 100)
-    @Column(name = "company_code", length = 100, nullable = false, unique = true)
+    @ApiModelProperty(value = "公司编码")
     private String companyCode;
 
     /**
      * 公司代码
      */
-    @Size(max = 100)
-    @Column(name = "view_code", length = 100)
+    @ApiModelProperty(value = "公司代码")
     private String viewCode;
 
     /**
      * 公司名称
      */
-    @NotNull
-    @Size(max = 200)
-    @Column(name = "company_name", length = 200, nullable = false)
+    @ApiModelProperty(value = "公司名称")
     private String companyName;
 
     /**
      * 公司全称
      */
-    @NotNull
-    @Size(max = 200)
-    @Column(name = "full_name", length = 200, nullable = false, unique = true)
+    @ApiModelProperty(value = "公司全称")
     private String fullName;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -67,7 +58,7 @@ public class SysEmployeeCompanyInfo implements Serializable {
         return companyCode;
     }
 
-    public SysEmployeeCompanyInfo companyCode(String companyCode) {
+    public SysEmployeeCompanyVM companyCode(String companyCode) {
         this.companyCode = companyCode;
         return this;
     }
@@ -80,7 +71,7 @@ public class SysEmployeeCompanyInfo implements Serializable {
         return viewCode;
     }
 
-    public SysEmployeeCompanyInfo viewCode(String viewCode) {
+    public SysEmployeeCompanyVM viewCode(String viewCode) {
         this.viewCode = viewCode;
         return this;
     }
@@ -93,7 +84,7 @@ public class SysEmployeeCompanyInfo implements Serializable {
         return companyName;
     }
 
-    public SysEmployeeCompanyInfo companyName(String companyName) {
+    public SysEmployeeCompanyVM companyName(String companyName) {
         this.companyName = companyName;
         return this;
     }
@@ -106,7 +97,7 @@ public class SysEmployeeCompanyInfo implements Serializable {
         return fullName;
     }
 
-    public SysEmployeeCompanyInfo fullName(String fullName) {
+    public SysEmployeeCompanyVM fullName(String fullName) {
         this.fullName = fullName;
         return this;
     }
@@ -131,7 +122,7 @@ public class SysEmployeeCompanyInfo implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SysEmployeeCompanyInfo that = (SysEmployeeCompanyInfo) o;
+        SysEmployeeCompanyVM that = (SysEmployeeCompanyVM) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(companyCode, that.companyCode) &&
             Objects.equals(viewCode, that.viewCode) &&

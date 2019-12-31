@@ -37,7 +37,7 @@ public class SysCompanyService extends BaseService implements SysCompanyApi {
     public SysCompany checkCompanyExistsById(Long id) {
         Assert.notNull(id,"公司ID不能为空");
         Optional<SysCompany> sysCompany = sysCompanyRepository.findById(id);
-        Assert.isTrue(sysCompany.isPresent(),"公司不存在");
+        Assert.isTrue(sysCompany.isPresent(),"公司："+id+"不存在");
         return sysCompany.get();
     }
 }

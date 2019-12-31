@@ -116,9 +116,9 @@ public class SysEmployee extends AbstractAuditingEntity implements Serializable{
     /**
      *  附属机构及岗位
      */
-    @OneToMany(fetch=FetchType.EAGER,mappedBy="employeeDetail",cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("employeeDetail")
-    private List<SysEmployeeOfficePostInfo> officePostInfoList;
+    @OneToMany(fetch=FetchType.EAGER,mappedBy="employee",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("employee")
+    private List<SysEmployeeOfficePost> officePostList;
 
 
     public static long getSerialVersionUID() {
@@ -174,12 +174,12 @@ public class SysEmployee extends AbstractAuditingEntity implements Serializable{
     }
 
 
-    public List<SysEmployeeOfficePostInfo> getOfficePostInfoList() {
-        return officePostInfoList;
+    public List<SysEmployeeOfficePost> getOfficePostList() {
+        return officePostList;
     }
 
-    public void setOfficePostInfoList(List<SysEmployeeOfficePostInfo> officePostInfoList) {
-        this.officePostInfoList = officePostInfoList;
+    public void setOfficePostList(List<SysEmployeeOfficePost> officePostList) {
+        this.officePostList = officePostList;
     }
 
     public SysOffice getOffice() {
@@ -238,29 +238,24 @@ public class SysEmployee extends AbstractAuditingEntity implements Serializable{
             Objects.equals(company, that.company) &&
             Objects.equals(companyName, that.companyName) &&
             Objects.equals(postList, that.postList) &&
-            Objects.equals(officePostInfoList, that.officePostInfoList);
+            Objects.equals(officePostList, that.officePostList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(empCode, empName, empNameEn, remarks, status, user, office, officeName, company, companyName, postList, officePostInfoList);
+        return Objects.hash(empCode, empName, empNameEn, remarks, status, user, office, officeName, company, companyName, postList, officePostList);
     }
 
     @Override
     public String toString() {
-        return "SysEmployee{" +
+         return "SysEmployee{" +
             "empCode='" + empCode + '\'' +
             ", empName='" + empName + '\'' +
             ", empNameEn='" + empNameEn + '\'' +
             ", remarks='" + remarks + '\'' +
             ", status=" + status +
-            ", user=" + user +
-            ", office=" + office +
             ", officeName='" + officeName + '\'' +
-            ", company=" + company +
             ", companyName='" + companyName + '\'' +
-            ", postList=" + postList +
-            ", officePostInfoList=" + officePostInfoList +
             ", id=" + id +
             '}';
     }

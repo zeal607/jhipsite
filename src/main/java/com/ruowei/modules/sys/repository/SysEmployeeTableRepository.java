@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.table.QSysEmployee;
-import com.ruowei.modules.sys.domain.table.SysEmployee;
+import com.ruowei.modules.sys.domain.table.QSysEmployeeTable;
+import com.ruowei.modules.sys.domain.table.SysEmployeeTable;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.Size;
@@ -14,18 +14,18 @@ import java.util.Optional;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface SysEmployeeRepository
-    extends BaseRepository<Long, SysEmployee, QSysEmployee> {
+public interface SysEmployeeTableRepository
+    extends BaseRepository<Long, SysEmployeeTable, QSysEmployeeTable> {
     /**
      * @author 刘东奇
      * @date 2019/9/25
      * @param sysOfficeId
      */
-    Optional<SysEmployee> findFirstByEmpCodeIsNotNullAndSysOfficeIdOrderByEmpCodeDesc(@Size(max = 100) String sysOfficeId);
+    Optional<SysEmployeeTable> findFirstByEmpCodeIsNotNullAndSysOfficeIdOrderByEmpCodeDesc(@Size(max = 100) String sysOfficeId);
 
     /**
      * @author 刘东奇
      * @date 2019/9/25
      */
-    Optional<SysEmployee> findFirstByEmpCodeNotNullAndSysOfficeIdIsNullOrderByEmpCodeDesc();
+    Optional<SysEmployeeTable> findFirstByEmpCodeNotNullAndSysOfficeIdIsNullOrderByEmpCodeDesc();
 }

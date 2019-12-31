@@ -1,7 +1,6 @@
 package com.ruowei.modules.sys.service.api;
 
 import com.ruowei.modules.sys.domain.entity.SysEmployee;
-import com.ruowei.modules.sys.domain.table.SysRole;
 
 import java.util.List;
 
@@ -41,15 +40,6 @@ public interface SysUserEmployeeApi {
      * @return
      */
     void checkSysUserExists(String loginCode, String mobile,String email, Long employeeId);
-
-    /**
-     * 获取员工的角色列表
-     * @author 刘东奇
-     * @date 2019/11/13
-     * @param id
-     * @return
-     */
-    List<SysRole> getSysRoleListBySysEmployeeId(Long id);
 
     /**
      * 根据员工ID获取用户ID

@@ -1,18 +1,19 @@
 package com.ruowei.modules.sys.mapper;
 
 import com.ruowei.modules.sys.domain.entity.SysEmployee;
-import com.ruowei.modules.sys.domain.table.SysOffice;
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.entity.SysUser;
+import com.ruowei.modules.sys.domain.table.*;
 import com.ruowei.modules.sys.pojo.SysOfficeDTO;
 import com.ruowei.modules.sys.pojo.SysUserDTO;
-import com.ruowei.modules.sys.pojo.SysUserEmployeeDTO;
-import com.ruowei.modules.sys.web.vm.SysEmployeeDetailVM;
+import com.ruowei.modules.sys.web.vm.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.util.List;
+
 /**
- * Mapper for the entity {@link SysUser} and its DTO {@link SysUserDTO}.
+ * Mapper for the entity {@link SysUserTable} and its DTO {@link SysUserDTO}.
  */
 @Mapper(componentModel = "spring", uses = {})
 public interface SysUserEmployeeMapper{
@@ -22,15 +23,42 @@ public interface SysUserEmployeeMapper{
      * @param sysEmployee
      * @return
      */
-    com.ruowei.modules.sys.domain.table.SysEmployee SysUserEmployeeDetailVMToSysEmployee(SysEmployee sysEmployee);
+    SysEmployeeTable SysUserEmployeeDetailVMToSysEmployee(SysEmployee sysEmployee);
 
     @Mappings({
         @Mapping(source = "sysEmployeeDetailVM.userInfo", target = "user"),
         @Mapping(source = "sysEmployeeDetailVM.officeInfo", target = "office"),
         @Mapping(source = "sysEmployeeDetailVM.companyInfo", target = "company"),
-        @Mapping(source = "sysEmployeeDetailVM.postInfoList", target = "postList")
+        @Mapping(source = "sysEmployeeDetailVM.postInfoList", target = "postList"),
+        @Mapping(source = "sysEmployeeDetailVM.officePostInfoList", target = "officePostList")
     })
-    SysEmployee sysUserEmployeeDetailVMToSysEmployeeDetail(SysEmployeeDetailVM sysEmployeeDetailVM);
+    SysEmployee sysUserEmployeeDetailVMToSysEmployee(SysEmployeeDetailVM sysEmployeeDetailVM);
+
+    @Mappings({
+        @Mapping(source = "sysEmployee.user", target = "userInfo"),
+        @Mapping(source = "sysEmployee.office", target = "officeInfo"),
+        @Mapping(source = "sysEmployee.company", target = "companyInfo"),
+        @Mapping(source = "sysEmployee.postList", target = "postInfoList"),
+        @Mapping(source = "sysEmployee.officePostList", target = "officePostInfoList")
+    })
+    SysEmployeeDetailVM sysEmployeeToSysEmployeeDetailVM(SysEmployee sysEmployee);
+
+    SysEmployeeUserVM sysUserToSysEmployeeUserVM(SysUser sysUser);
+
+    SysEmployeeOfficeVM sysOfficeToSysEmployeeOfficeVM(SysOffice sysOffice);
+
+    SysEmployeeCompanyVM sysCompanyToSysEmployeeCompanyVM(SysCompany sysCompany);
+
+    List<SysEmployeePostVM> sysPostToSysEmployeePostVM(List<SysPost> sysPostList);
+
+    @Mappings({
+        @Mapping(source = "sysEmployee.user", target = "userInfo"),
+        @Mapping(source = "sysEmployee.user.lastModifiedDate", target = "lastModifiedDate"),
+        @Mapping(source = "sysEmployee.office", target = "officeInfo"),
+        @Mapping(source = "sysEmployee.company", target = "companyInfo"),
+        @Mapping(source = "sysEmployee.postList", target = "postInfoList")
+    })
+    SysEmployeeListVM sysEmployeeToSysEmployeeListVM(SysEmployee sysEmployee);
 
     /**
      * 投影到SysUser
@@ -45,16 +73,16 @@ public interface SysUserEmployeeMapper{
 
     /**
      * 组装SysUserEmployeeDTO
-     * @param sysUser
+     * @param sysUserTable
      * @param sysEmployee
      * @return
      * TODO
      */
-    @Mappings({
-        @Mapping(source = "sysUser.id", target = "id"),
-        @Mapping(source = "sysUser.remarks", target = "remarks")
-    })
-    SysUserEmployeeDTO assembleSysUserEmployeeDTO(SysUser sysUser, com.ruowei.modules.sys.domain.table.SysEmployee sysEmployee);
+//    @Mappings({
+//        @Mapping(source = "sysUser.id", target = "id"),
+//        @Mapping(source = "sysUser.remarks", target = "remarks")
+//    })
+//    SysUserEmployeeDTO assembleSysUserEmployeeDTO(SysUserTable sysUserTable, com.ruowei.modules.sys.domain.table.SysEmployee sysEmployee);
 
     SysOfficeDTO sysOfficeToSysOfficeDTO(SysOffice sysOffice);
 

@@ -617,8 +617,6 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
             ", activationKey='" + activationKey + '\'' +
             ", resetKey='" + resetKey + '\'' +
             ", resetDate=" + resetDate +
-            ", employee=" + employee +
-            ", roleList=" + roleList +
             '}';
     }
 }

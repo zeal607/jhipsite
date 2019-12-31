@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.table.QSysUser;
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.table.QSysUserTable;
+import com.ruowei.modules.sys.domain.table.SysUserTable;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +20,7 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 @Repository
 public interface SysUserRepository
-    extends BaseRepository<Long,SysUser, QSysUser> {
+    extends BaseRepository<Long, SysUserTable, QSysUserTable> {
 
     String USERS_BY_LOGIN_CODE_CACHE = "usersByLoginCode";
     String USERS_BY_EMAIL_CACHE = "usersByEmail";
@@ -30,28 +30,28 @@ public interface SysUserRepository
      * @author 刘东奇
      * @date 2019/9/25
      */
-    Optional<SysUser> findFirstByUserCodeNotNullOrderByUserCodeDesc();
+    Optional<SysUserTable> findFirstByUserCodeNotNullOrderByUserCodeDesc();
 
-    Optional<SysUser> findOneByActivationKey(String activationKey);
+    Optional<SysUserTable> findOneByActivationKey(String activationKey);
 
-    List<SysUser> findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant dateTime);
+    List<SysUserTable> findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant dateTime);
 
-    Optional<SysUser> findOneByResetKey(String resetKey);
+    Optional<SysUserTable> findOneByResetKey(String resetKey);
 
-    Optional<SysUser> findOneByEmailIgnoreCase(String email);
+    Optional<SysUserTable> findOneByEmailIgnoreCase(String email);
 
-    Optional<SysUser> findOneByLoginCode(String loginCode);
+    Optional<SysUserTable> findOneByLoginCode(String loginCode);
 
     @EntityGraph(attributePaths = "authorities")
-    Optional<SysUser> findOneWithAuthoritiesById(Long id);
+    Optional<SysUserTable> findOneWithAuthoritiesById(Long id);
 
     @EntityGraph(attributePaths = "authorities")
     @Cacheable(cacheNames = USERS_BY_LOGIN_CODE_CACHE)
-    Optional<SysUser> findOneWithAuthoritiesByLoginCode(String loginCode);
+    Optional<SysUserTable> findOneWithAuthoritiesByLoginCode(String loginCode);
 
     @EntityGraph(attributePaths = "authorities")
     @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
-    Optional<SysUser> findOneWithAuthoritiesByEmailIgnoreCase(String email);
+    Optional<SysUserTable> findOneWithAuthoritiesByEmailIgnoreCase(String email);
 
-    Page<SysUser> findAllByLoginCodeNot(Pageable pageable, String loginCode);
+    Page<SysUserTable> findAllByLoginCodeNot(Pageable pageable, String loginCode);
 }

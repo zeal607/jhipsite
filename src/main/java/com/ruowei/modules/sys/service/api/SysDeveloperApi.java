@@ -1,7 +1,7 @@
 package com.ruowei.modules.sys.service.api;
 
 import com.ruowei.modules.sys.domain.entity.SysDeveloperUser;
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.table.SysUserTable;
 import com.ruowei.modules.sys.pojo.UserDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -59,7 +59,7 @@ public interface SysDeveloperApi {
      * @param key
      * @return
      */
-    Optional<SysUser> activateRegistration(String key);
+    Optional<SysUserTable> activateRegistration(String key);
 
     /**
      * 获取当前登录用户信息并携带权限
@@ -134,7 +134,7 @@ public interface SysDeveloperApi {
      * @param key
      * @return
      */
-    Optional<SysUser> completePasswordReset(String newPassword, String key);
+    Optional<SysUserTable> completePasswordReset(String newPassword, String key);
 
     /**
      * 分页获取用户

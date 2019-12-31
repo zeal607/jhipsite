@@ -4,7 +4,7 @@ import com.ruowei.common.pojo.BaseDTO;
 import com.ruowei.modules.sys.domain.enumeration.GenderType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
-import com.ruowei.modules.sys.domain.table.SysUser;
+import com.ruowei.modules.sys.domain.table.SysUserTable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * A DTO for the {@link SysUser} entity.
+ * A DTO for the {@link SysUserTable} entity.
  * @author 刘东奇
  */
 @ApiModel(description = "用户表 @author 刘东奇")

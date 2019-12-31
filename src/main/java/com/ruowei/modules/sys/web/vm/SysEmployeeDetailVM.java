@@ -1,8 +1,10 @@
 package com.ruowei.modules.sys.web.vm;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ruowei.modules.sys.domain.entity.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruowei.common.json.LongJsonDeserializer;
+import com.ruowei.common.json.LongJsonSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -26,6 +28,8 @@ public class SysEmployeeDetailVM implements Serializable{
      * 主键
      */
     @ApiModelProperty(value = "主键")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /**
@@ -64,30 +68,37 @@ public class SysEmployeeDetailVM implements Serializable{
      * 机构
      */
     @ApiModelProperty(value = "机构")
-    private SysEmployeeOfficeInfo officeInfo;
+    private SysEmployeeOfficeVM officeInfo;
 
     /**
      * 公司
      */
     @ApiModelProperty(value = "公司")
-    private SysEmployeeCompanyInfo companyInfo;
+    private SysEmployeeCompanyVM companyInfo;
 
     /**
      * 所在岗位
      */
     @ApiModelProperty(value = "所在岗位")
-    private List<SysEmployeePostInfo> postInfoList;
+    private List<SysEmployeePostVM> postInfoList;
 
     /**
      *  附属机构及岗位
      */
-    @JsonIgnoreProperties("employeeDetail")
     @ApiModelProperty(value = "附属机构及岗位")
-    private List<SysEmployeeOfficePostInfo> officePostInfoList;
+    private List<SysEmployeeOfficePostVM> officePostInfoList;
 
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmpCode() {
@@ -130,35 +141,35 @@ public class SysEmployeeDetailVM implements Serializable{
         this.userInfo = userInfo;
     }
 
-    public SysEmployeeOfficeInfo getOfficeInfo() {
+    public SysEmployeeOfficeVM getOfficeInfo() {
         return officeInfo;
     }
 
-    public void setOfficeInfo(SysEmployeeOfficeInfo officeInfo) {
+    public void setOfficeInfo(SysEmployeeOfficeVM officeInfo) {
         this.officeInfo = officeInfo;
     }
 
-    public SysEmployeeCompanyInfo getCompanyInfo() {
+    public SysEmployeeCompanyVM getCompanyInfo() {
         return companyInfo;
     }
 
-    public void setCompanyInfo(SysEmployeeCompanyInfo companyInfo) {
+    public void setCompanyInfo(SysEmployeeCompanyVM companyInfo) {
         this.companyInfo = companyInfo;
     }
 
-    public List<SysEmployeePostInfo> getPostInfoList() {
+    public List<SysEmployeePostVM> getPostInfoList() {
         return postInfoList;
     }
 
-    public void setPostInfoList(List<SysEmployeePostInfo> postInfoList) {
+    public void setPostInfoList(List<SysEmployeePostVM> postInfoList) {
         this.postInfoList = postInfoList;
     }
 
-    public List<SysEmployeeOfficePostInfo> getOfficePostInfoList() {
+    public List<SysEmployeeOfficePostVM> getOfficePostInfoList() {
         return officePostInfoList;
     }
 
-    public void setOfficePostInfoList(List<SysEmployeeOfficePostInfo> officePostInfoList) {
+    public void setOfficePostInfoList(List<SysEmployeeOfficePostVM> officePostInfoList) {
         this.officePostInfoList = officePostInfoList;
     }
 

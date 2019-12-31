@@ -1,10 +1,9 @@
 package com.ruowei.modules.sys.web.api;
 
 import com.querydsl.core.types.Predicate;
-import com.ruowei.modules.sys.domain.entity.SysEmployee;
-import com.ruowei.modules.sys.domain.entity.SysEmployeeList;
 import com.ruowei.modules.sys.web.vm.AssignRoleVM;
 import com.ruowei.modules.sys.web.vm.SysEmployeeDetailVM;
+import com.ruowei.modules.sys.web.vm.SysEmployeeListVM;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,7 @@ public interface SysUserEmployeeApi {
      * @param id
      * @return
      */
-    ResponseEntity<SysEmployee> getSysUserEmployee(@PathVariable Long id);
+    ResponseEntity<SysEmployeeDetailVM> getSysUserEmployee(@PathVariable Long id);
 
     /**
      * 分页查询员工数据
@@ -37,8 +36,8 @@ public interface SysUserEmployeeApi {
      * @param pageable
      * @return
      */
-    ResponseEntity<List<SysEmployeeList>> getAllSysUserEmployees(
-        @QuerydslPredicate(root = SysEmployeeList.class) Predicate sysUserEmployeeListPredicate,
+    ResponseEntity<List<SysEmployeeListVM>> getAllSysUserEmployees(
+        @QuerydslPredicate(root = SysEmployeeListVM.class) Predicate sysUserEmployeeListPredicate,
         Pageable pageable);
 
     /**
@@ -48,7 +47,7 @@ public interface SysUserEmployeeApi {
      * @param sysEmployeeDetail
      * @return
      */
-    ResponseEntity<SysEmployee> createSysUserEmployee(@Valid @RequestBody SysEmployeeDetailVM sysEmployeeDetail) throws URISyntaxException;
+    ResponseEntity<SysEmployeeDetailVM> createSysUserEmployee(@Valid @RequestBody SysEmployeeDetailVM sysEmployeeDetail) throws URISyntaxException;
 
     /**
      * 修改员工
@@ -57,7 +56,7 @@ public interface SysUserEmployeeApi {
      * @param sysEmployee
      * @return
      */
-    ResponseEntity<SysEmployee> modifySysUserEmployee(@Valid @RequestBody SysEmployee sysEmployee);
+    ResponseEntity<SysEmployeeDetailVM> modifySysUserEmployee(@Valid @RequestBody SysEmployeeDetailVM sysEmployee);
 
     /**
      * 停用员工

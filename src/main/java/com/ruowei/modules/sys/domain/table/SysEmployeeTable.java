@@ -18,7 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "sys_employee")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployee extends AbstractAuditingEntity implements Serializable {
+public class SysEmployeeTable extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -92,7 +92,7 @@ public class SysEmployee extends AbstractAuditingEntity implements Serializable 
         return empCode;
     }
 
-    public SysEmployee empCode(String empCode) {
+    public SysEmployeeTable empCode(String empCode) {
         this.empCode = empCode;
         return this;
     }
@@ -105,7 +105,7 @@ public class SysEmployee extends AbstractAuditingEntity implements Serializable 
         return empName;
     }
 
-    public SysEmployee empName(String empName) {
+    public SysEmployeeTable empName(String empName) {
         this.empName = empName;
         return this;
     }
@@ -118,7 +118,7 @@ public class SysEmployee extends AbstractAuditingEntity implements Serializable 
         return empNameEn;
     }
 
-    public SysEmployee empNameEn(String empNameEn) {
+    public SysEmployeeTable empNameEn(String empNameEn) {
         this.empNameEn = empNameEn;
         return this;
     }
@@ -131,7 +131,7 @@ public class SysEmployee extends AbstractAuditingEntity implements Serializable 
         return sysOfficeId;
     }
 
-    public SysEmployee sysOfficeId(Long sysOfficeId) {
+    public SysEmployeeTable sysOfficeId(Long sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
         return this;
     }
@@ -144,7 +144,7 @@ public class SysEmployee extends AbstractAuditingEntity implements Serializable 
         return officeName;
     }
 
-    public SysEmployee officeName(String officeName) {
+    public SysEmployeeTable officeName(String officeName) {
         this.officeName = officeName;
         return this;
     }
@@ -157,7 +157,7 @@ public class SysEmployee extends AbstractAuditingEntity implements Serializable 
         return sysCompanyId;
     }
 
-    public SysEmployee sysCompanyId(Long sysCompanyId) {
+    public SysEmployeeTable sysCompanyId(Long sysCompanyId) {
         this.sysCompanyId = sysCompanyId;
         return this;
     }
@@ -170,7 +170,7 @@ public class SysEmployee extends AbstractAuditingEntity implements Serializable 
         return companyName;
     }
 
-    public SysEmployee companyName(String companyName) {
+    public SysEmployeeTable companyName(String companyName) {
         this.companyName = companyName;
         return this;
     }
@@ -183,7 +183,7 @@ public class SysEmployee extends AbstractAuditingEntity implements Serializable 
         return status;
     }
 
-    public SysEmployee status(EmployeeStatusType status) {
+    public SysEmployeeTable status(EmployeeStatusType status) {
         this.status = status;
         return this;
     }
@@ -196,7 +196,7 @@ public class SysEmployee extends AbstractAuditingEntity implements Serializable 
         return remarks;
     }
 
-    public SysEmployee remarks(String remarks) {
+    public SysEmployeeTable remarks(String remarks) {
         this.remarks = remarks;
         return this;
     }
@@ -214,7 +214,7 @@ public class SysEmployee extends AbstractAuditingEntity implements Serializable 
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SysEmployee that = (SysEmployee) o;
+        SysEmployeeTable that = (SysEmployeeTable) o;
         return Objects.equals(empCode, that.empCode) &&
             Objects.equals(empName, that.empName) &&
             Objects.equals(empNameEn, that.empNameEn) &&

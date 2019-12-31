@@ -1,13 +1,11 @@
-package com.ruowei.modules.sys.domain.entity;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+package com.ruowei.modules.sys.web.vm;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruowei.common.json.LongJsonDeserializer;
+import com.ruowei.common.json.LongJsonSerializer;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -15,48 +13,41 @@ import java.util.Objects;
  * 员工的所属机构信息
  * @author 刘东奇
  */
-@Entity
-@Table(name = "sys_office")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployeeOfficeInfo implements Serializable {
+@ApiModel(description = "员工的所属机构信息 @author 刘东奇")
+public class SysEmployeeOfficeVM implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * sys_office表主键
+     * 主键
      */
-    @Id
+    @ApiModelProperty(value = "主键")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /**
      * 机构编码
      */
-    @NotNull
-    @Size(max = 100)
-    @Column(name = "office_code", length = 100, nullable = false, unique = true)
+    @ApiModelProperty(value = "机构编码")
     private String officeCode;
 
     /**
      * 机构代码
      */
-    @Size(max = 100)
-    @Column(name = "view_code", length = 100)
+    @ApiModelProperty(value = "机构代码")
     private String viewCode;
 
     /**
      * 机构名称
      */
-    @NotNull
-    @Size(max = 200)
-    @Column(name = "office_name", length = 200, nullable = false)
+    @ApiModelProperty(value = "机构名称")
     private String officeName;
 
     /**
      * 机构全称
      */
-    @NotNull
-    @Size(max = 200)
-    @Column(name = "full_name", length = 200, nullable = false, unique = true)
+    @ApiModelProperty(value = "机构全称")
     private String fullName;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -65,7 +56,7 @@ public class SysEmployeeOfficeInfo implements Serializable {
         return officeCode;
     }
 
-    public SysEmployeeOfficeInfo officeCode(String officeCode) {
+    public SysEmployeeOfficeVM officeCode(String officeCode) {
         this.officeCode = officeCode;
         return this;
     }
@@ -78,7 +69,7 @@ public class SysEmployeeOfficeInfo implements Serializable {
         return viewCode;
     }
 
-    public SysEmployeeOfficeInfo viewCode(String viewCode) {
+    public SysEmployeeOfficeVM viewCode(String viewCode) {
         this.viewCode = viewCode;
         return this;
     }
@@ -91,7 +82,7 @@ public class SysEmployeeOfficeInfo implements Serializable {
         return officeName;
     }
 
-    public SysEmployeeOfficeInfo officeName(String officeName) {
+    public SysEmployeeOfficeVM officeName(String officeName) {
         this.officeName = officeName;
         return this;
     }
@@ -104,7 +95,7 @@ public class SysEmployeeOfficeInfo implements Serializable {
         return fullName;
     }
 
-    public SysEmployeeOfficeInfo fullName(String fullName) {
+    public SysEmployeeOfficeVM fullName(String fullName) {
         this.fullName = fullName;
         return this;
     }
@@ -129,7 +120,7 @@ public class SysEmployeeOfficeInfo implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SysEmployeeOfficeInfo that = (SysEmployeeOfficeInfo) o;
+        SysEmployeeOfficeVM that = (SysEmployeeOfficeVM) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(officeCode, that.officeCode) &&
             Objects.equals(viewCode, that.viewCode) &&

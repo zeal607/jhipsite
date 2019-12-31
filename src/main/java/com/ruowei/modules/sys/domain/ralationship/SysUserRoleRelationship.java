@@ -1,11 +1,9 @@
 package com.ruowei.modules.sys.domain.ralationship;
-import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -15,9 +13,13 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_user_role")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUserRoleRelationship extends PrimaryKeyAutoIncrementEntity implements Serializable {
+public class SysUserRoleRelationship implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    public Long id;
 
     /**
      * 用户ID
@@ -61,6 +63,19 @@ public class SysUserRoleRelationship extends PrimaryKeyAutoIncrementEntity imple
         this.sysRoleId = sysRoleId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(Object o) {

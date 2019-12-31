@@ -1,5 +1,9 @@
 package com.ruowei.modules.sys.web.vm;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ruowei.common.json.LongJsonDeserializer;
+import com.ruowei.common.json.LongJsonSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -7,6 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -23,6 +28,8 @@ public class SysEmployeeUserVM implements Serializable {
      * 主键
      */
     @ApiModelProperty(value = "主键")
+    @JsonSerialize(using = LongJsonSerializer.class)
+    @JsonDeserialize(using = LongJsonDeserializer.class)
     private Long id;
 
     /**
@@ -67,6 +74,12 @@ public class SysEmployeeUserVM implements Serializable {
      */
     @ApiModelProperty(value = "用户权重，用于排序（降序）")
     private Integer userSort;
+
+    /**
+     * 用户角色
+     */
+    @ApiModelProperty(value = "用户角色")
+    private List<SysUserRoleVM> roleList;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
@@ -160,6 +173,14 @@ public class SysEmployeeUserVM implements Serializable {
         this.id = id;
     }
 
+    public List<SysUserRoleVM> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<SysUserRoleVM> roleList) {
+        this.roleList = roleList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -171,12 +192,13 @@ public class SysEmployeeUserVM implements Serializable {
             Objects.equals(email, that.email) &&
             Objects.equals(mobile, that.mobile) &&
             Objects.equals(phone, that.phone) &&
-            Objects.equals(userSort, that.userSort);
+            Objects.equals(userSort, that.userSort) &&
+            Objects.equals(roleList, that.roleList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, loginCode, userName, email, mobile, phone, userSort);
+        return Objects.hash(id, loginCode, userName, email, mobile, phone, userSort, roleList);
     }
 
     @Override
@@ -189,6 +211,7 @@ public class SysEmployeeUserVM implements Serializable {
             ", mobile='" + mobile + '\'' +
             ", phone='" + phone + '\'' +
             ", userSort=" + userSort +
+            ", roleList=" + roleList +
             '}';
     }
 }

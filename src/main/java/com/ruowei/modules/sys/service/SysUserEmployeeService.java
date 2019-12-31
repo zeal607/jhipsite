@@ -2,34 +2,41 @@ package com.ruowei.modules.sys.service;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAUpdateClause;
 import com.ruowei.common.error.ErrorMessageUtils;
+import com.ruowei.common.lang.ObjectUtils;
 import com.ruowei.common.lang.StringUtils;
 import com.ruowei.common.service.BaseService;
 import com.ruowei.modules.sys.domain.entity.SysEmployee;
-import com.ruowei.modules.sys.domain.entity.SysEmployeeOfficePostInfo;
+import com.ruowei.modules.sys.domain.entity.SysEmployeeOfficePost;
+import com.ruowei.modules.sys.domain.entity.SysUser;
 import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
-import com.ruowei.modules.sys.domain.ralationship.QSysUserRole;
-import com.ruowei.modules.sys.domain.table.*;
+import com.ruowei.modules.sys.domain.ralationship.QSysUserRoleRelationship;
+import com.ruowei.modules.sys.domain.ralationship.SysUserRoleRelationship;
+import com.ruowei.modules.sys.domain.table.QSysEmployeeTable;
+import com.ruowei.modules.sys.domain.table.QSysUserTable;
+import com.ruowei.modules.sys.domain.table.SysCompany;
+import com.ruowei.modules.sys.domain.table.SysOffice;
 import com.ruowei.modules.sys.mapper.SysUserEmployeeMapper;
-import com.ruowei.modules.sys.repository.SysEmployeeRepository;
+import com.ruowei.modules.sys.repository.SysEmployeeTableRepository;
 import com.ruowei.modules.sys.repository.SysUserRepository;
-import com.ruowei.modules.sys.repository.entity.SysEmployeeDetailRepository;
+import com.ruowei.modules.sys.repository.entity.SysEmployeeRepository;
+import com.ruowei.modules.sys.repository.relationship.SysUserRoleRelationshioRepository;
 import com.ruowei.modules.sys.service.api.SysUserEmployeeApi;
 import com.ruowei.modules.sys.service.query.SysUserQueryService;
 import com.ruowei.modules.sys.service.util.SysEmployeeUtil;
 import com.ruowei.modules.sys.service.util.SysUserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author 刘东奇
@@ -47,8 +54,9 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
     private final SysUserQueryService sysUserQueryService;
 
     private final SysUserRepository sysUserRepository;
+    private final SysEmployeeTableRepository sysEmployeeTableRepository;
+    private final SysUserRoleRelationshioRepository sysUserRoleRelationshioRepository;
     private final SysEmployeeRepository sysEmployeeRepository;
-    private final SysEmployeeDetailRepository sysEmployeeDetailRepository;
 
     private final SysUserEmployeeMapper sysUserEmployeeMapper;
     /**
@@ -62,8 +70,8 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
                                   SysOfficeService sysOfficeService,
                                   SysUserQueryService sysUserQueryService,
                                   SysUserRepository sysUserRepository,
-                                  SysEmployeeRepository sysEmployeeRepository,
-                                  SysEmployeeDetailRepository sysEmployeeDetailRepository, SysUserEmployeeMapper sysUserEmployeeMapper,
+                                  SysEmployeeTableRepository sysEmployeeTableRepository,
+                                  SysUserRoleRelationshioRepository sysUserRoleRelationshioRepository, SysEmployeeRepository sysEmployeeRepository, SysUserEmployeeMapper sysUserEmployeeMapper,
                                   PasswordEncoder passwordEncoder) {
         this.sysCompanyService = sysCompanyService;
         this.sysOfficeService = sysOfficeService;
@@ -71,8 +79,9 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
         this.sysUserQueryService = sysUserQueryService;
 
         this.sysUserRepository = sysUserRepository;
+        this.sysEmployeeTableRepository = sysEmployeeTableRepository;
+        this.sysUserRoleRelationshioRepository = sysUserRoleRelationshioRepository;
         this.sysEmployeeRepository = sysEmployeeRepository;
-        this.sysEmployeeDetailRepository = sysEmployeeDetailRepository;
 
         this.sysUserEmployeeMapper = sysUserEmployeeMapper;
         this.passwordEncoder = passwordEncoder;
@@ -88,6 +97,19 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      */
     @Override
     public SysEmployee createSysUserEmployee(SysEmployee sysEmployee) {
+        // 判断机构是否有效存在
+        SysOffice sysOffice = sysOfficeService.checkOfficeExistsById(sysEmployee.getOffice().getId());
+        sysEmployee.setOffice(sysOffice);
+        // 判断公司是否有效存在
+        SysCompany sysCompany = sysCompanyService.checkCompanyExistsById(sysEmployee.getCompany().getId());
+        sysEmployee.setCompany(sysCompany);
+        // 判断登录ID、手机号是否重复
+        this.checkSysUserExists(
+            sysEmployee.getUser().getLoginCode(),
+            sysEmployee.getUser().getMobile(),
+            sysEmployee.getUser().getEmail(),
+            null);
+
         //员工信息
         sysEmployee.setEmpCode(SysEmployeeUtil.generateEmpCode(sysEmployee.getOffice().getId().toString(),sysEmployee.getOffice().getOfficeCode()));
         sysEmployee.setStatus(EmployeeStatusType.NORMAL);
@@ -101,78 +123,218 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
         sysEmployee.getUser().setRefName(sysEmployee.getEmpName());
         sysEmployee.getUser().setEmployee(sysEmployee);
         //员工机构职务信息
-        for(SysEmployeeOfficePostInfo info: sysEmployee.getOfficePostInfoList()){
-            info.setEmployeeDetail(sysEmployee);
+        for(SysEmployeeOfficePost info: sysEmployee.getOfficePostList()){
+            info.setEmployee(sysEmployee);
         }
-        sysEmployeeDetailRepository.save(sysEmployee);
-
-        // 判断机构是否有效存在
-//        SysOffice sysOffice = sysOfficeService.checkOfficeExistsById(Long.valueOf(sysUserEmployeeDetail.getSysOfficeId()));
-        // 判断公司是否有效存在
-//        SysCompany sysCompany = sysCompanyService.checkCompanyExistsById(Long.valueOf(sysUserEmployeeDetail.getSysCompanyId()));
-        // 判断登录ID、手机号是否重复
-//        this.checkSysUserExists(sysEmployeeDetail.getLoginCode(), sysEmployeeDetail.getMobile(), sysEmployeeDetail.getEmail(),null);
-
-        //先创建员工
-//        SysEmployee sysEmployee = sysUserEmployeeMapper.SysUserEmployeeDetailVMToSysEmployee(sysEmployeeDetail);
-//        sysEmployee.setOfficeName(sysOffice.getOfficeName());
-//        sysEmployee.setCompanyName(sysCompany.getCompanyName());
-//        sysEmployee.setStatus(EmployeeStatusType.NORMAL);
-//        sysEmployee.setEmpCode(SysEmployeeUtil.generateEmpCode(sysUserEmployeeDetail.getSysOfficeId(),sysOffice.getOfficeCode()));
-//        sysEmployee = sysEmployeeRepository.insert(sysEmployee);
-
-        //再创建用户
-//        SysUser sysUser = sysUserEmployeeMapper.SysUserEmployeeDetailVMToSysUser(sysEmployeeDetail);
-//        sysUser.setUserType(UserType.EMPLOYEE);
-//        sysUser.setRefCode(sysEmployee.getId());
-//        sysUser.setRefName(sysEmployee.getEmpName());
-//        sysUser.setStatus(UserStatusType.NORMAL);
-//        sysUser.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
-//        sysUser.setUserCode(SysUserUtil.generateUserCode());
-//        sysUser = sysUserRepository.insert(sysUser);
-        //返回员工表主键
-//        sysEmployeeDetail.setId(sysEmployee.getId());
+        sysEmployeeRepository.save(sysEmployee);
         return sysEmployee;
     }
 
     /**
      * 修改员工
      *
-     * @param sysEmployeeDetail
+     * @param newSysEmployee
      * @return
      * @author 刘东奇
      * @date 2019/11/14
      */
     @Override
-    public SysEmployee modifySysUserEmployee(com.ruowei.modules.sys.domain.entity.SysEmployee sysEmployeeDetail) {
+    public SysEmployee modifySysUserEmployee(SysEmployee newSysEmployee) {
+        // 判断登录ID、手机号、电子邮箱、员工编号是否重复
+        this.checkSysUserExists(
+            newSysEmployee.getUser().getLoginCode(),
+            newSysEmployee.getUser().getMobile(),
+            newSysEmployee.getUser().getEmail(),
+            newSysEmployee.getId());
+        // 判断员工是否存在
+        Assert.isTrue(sysEmployeeRepository.existsById(newSysEmployee.getId()),
+            ErrorMessageUtils.getNotFoundMessage(
+                "员工", ObjectUtils.toString(newSysEmployee.getId()))
+        );
+
+        QSysEmployeeTable qSysEmployeeTable = QSysEmployeeTable.sysEmployeeTable;
+        JPAUpdateClause sysEmployeeTableUpdateClause = this.queryFactory.update(qSysEmployeeTable);
         // 判断机构是否有效存在
-//        if(StringUtils.isNotEmpty(sysUserEmployeeDetail.getSysOfficeId())){
-//            SysOffice sysOffice = sysOfficeService.checkOfficeExistsById(Long.valueOf(sysUserEmployeeDetail.getSysOfficeId()));
-//        }
+        if(newSysEmployee.getOffice() !=null){
+            SysOffice sysOffice = sysOfficeService.checkOfficeExistsById(newSysEmployee.getOffice().getId());
+            sysEmployeeTableUpdateClause.set(qSysEmployeeTable.sysOfficeId,sysOffice.getId());
+            sysEmployeeTableUpdateClause.set(qSysEmployeeTable.officeName,sysOffice.getOfficeName());
+        }
         // 判断公司是否有效存在
-//        if(StringUtils.isNotEmpty(sysUserEmployeeDetail.getSysCompanyId())){
-//            SysCompany sysCompany = sysCompanyService.checkCompanyExistsById(Long.valueOf(sysUserEmployeeDetail.getSysCompanyId()));
-//        }
+        if(newSysEmployee.getCompany() != null){
+            SysCompany sysCompany = sysCompanyService.checkCompanyExistsById(newSysEmployee.getCompany().getId());
+            sysEmployeeTableUpdateClause.set(qSysEmployeeTable.sysCompanyId,sysCompany.getId());
+            sysEmployeeTableUpdateClause.set(qSysEmployeeTable.companyName,sysCompany.getCompanyName());
+        }
+        //判断员工编号
+        if(StringUtils.isNotEmpty(newSysEmployee.getEmpCode())){
+            sysEmployeeTableUpdateClause.set(qSysEmployeeTable.empCode,newSysEmployee.getEmpCode());
+        }
+        //判断员工姓名
+        if(StringUtils.isNotEmpty(newSysEmployee.getEmpName())){
+            sysEmployeeTableUpdateClause.set(qSysEmployeeTable.empName,newSysEmployee.getEmpName());
+        }
+        //判断员工英文名
+        if(StringUtils.isNotEmpty(newSysEmployee.getEmpNameEn())){
+            sysEmployeeTableUpdateClause.set(qSysEmployeeTable.empNameEn,newSysEmployee.getEmpNameEn());
+        }
+        //判断备注信息
+        if(StringUtils.isNotEmpty(newSysEmployee.getRemarks())){
+            sysEmployeeTableUpdateClause.set(qSysEmployeeTable.remarks,newSysEmployee.getRemarks());
+        }
+        //判断状态
+        if(newSysEmployee.getStatus()!=null){
+            sysEmployeeTableUpdateClause.set(qSysEmployeeTable.status,newSysEmployee.getStatus());
+        }
+        // 判断用户
+        if(newSysEmployee.getUser() != null){
+            SysUser sysUser = newSysEmployee.getUser();
+            QSysUserTable qSysUserTable = QSysUserTable.sysUserTable;
+            JPAUpdateClause sysUserTableUpdateClause = this.queryFactory.update(qSysUserTable);
+            //用户编号
+            if(StringUtils.isNotEmpty(sysUser.getUserCode())){
+                sysUserTableUpdateClause.set(qSysUserTable.userCode,sysUser.getUserCode());
+            }
+            //登录账号
+            if(StringUtils.isNotEmpty(sysUser.getLoginCode())){
+                sysUserTableUpdateClause.set(qSysUserTable.loginCode,sysUser.getLoginCode());
+            }
+            //用户昵称
+            if(StringUtils.isNotEmpty(sysUser.getUserName())){
+                sysUserTableUpdateClause.set(qSysUserTable.userName,sysUser.getUserName());
+            }
+            //密码
+            if(StringUtils.isNotEmpty(sysUser.getPassword())){
+                sysUserTableUpdateClause.set(qSysUserTable.password,passwordEncoder.encode(sysUser.getPassword()));
+            }
+            //电子邮箱
+            if(StringUtils.isNotEmpty(sysUser.getEmail())){
+                sysUserTableUpdateClause.set(qSysUserTable.email,sysUser.getEmail());
+            }
+            //手机号
+            if(StringUtils.isNotEmpty(sysUser.getMobile())){
+                sysUserTableUpdateClause.set(qSysUserTable.mobile,sysUser.getMobile());
+            }
+            //办公电话
+            if(StringUtils.isNotEmpty(sysUser.getPhone())){
+                sysUserTableUpdateClause.set(qSysUserTable.phone,sysUser.getPhone());
+            }
+            //用户性别
+            if(sysUser.getSex()!=null){
+                sysUserTableUpdateClause.set(qSysUserTable.sex,sysUser.getSex());
+            }
+            //头像相对路径
+            if(StringUtils.isNotEmpty(sysUser.getAvatar())){
+                sysUserTableUpdateClause.set(qSysUserTable.avatar,sysUser.getAvatar());
+            }
+            //个性签名
+            if(StringUtils.isNotEmpty(sysUser.getSign())){
+                sysUserTableUpdateClause.set(qSysUserTable.sign,sysUser.getSign());
+            }
+            //绑定的微信号
+            if(StringUtils.isNotEmpty(sysUser.getSign())){
+                sysUserTableUpdateClause.set(qSysUserTable.wxOpenid,sysUser.getWxOpenid());
+            }
+            //绑定的手机MID
+            if(StringUtils.isNotEmpty(sysUser.getMobileImei())){
+                sysUserTableUpdateClause.set(qSysUserTable.mobileImei,sysUser.getMobileImei());
+            }
+            //用户类型
+            if(sysUser.getUserType()!=null){
+                sysUserTableUpdateClause.set(qSysUserTable.userType,sysUser.getUserType());
+            }
+            //用户类型引用姓名
+            if(StringUtils.isNotEmpty(sysUser.getRefName())||
+                StringUtils.isNotEmpty(newSysEmployee.getEmpName())
+            ){
+                sysUserTableUpdateClause.set(qSysUserTable.refName,newSysEmployee.getEmpName());
+            }
+
+            SysCompany sysCompany = sysCompanyService.checkCompanyExistsById(newSysEmployee.getCompany().getId());
+            jpaUpdateClause.set(qSysEmployeeTable.sysCompanyId,sysCompany.getId());
+            jpaUpdateClause.set(qSysEmployeeTable.companyName,sysCompany.getCompanyName());
+        }
+
+
+        SysEmployee oldSysEmployee = sysEmployeeOptional.get();
+        //获取空属性并处理成null
+        Set<String> nullProperties = ObjectUtils.getNullPropertiesSet(newSysEmployee);
+        nullProperties.add("user");
+        //更新非空属性
+        BeanUtils.copyProperties(newSysEmployee, oldSysEmployee, nullProperties.toArray(new String[0]));
+        if(newSysEmployee.getUser()!=null){
+            nullProperties = ObjectUtils.getNullPropertiesSet(newSysEmployee.getUser());
+            //不支持用户变更
+            nullProperties.add("id");
+            //不支持密码修改
+            nullProperties.add("password");
+            BeanUtils.copyProperties(newSysEmployee.getUser(), oldSysEmployee.getUser(), nullProperties.toArray(new String[0]));
+        }
+        //更新
+        if(StringUtils.isNotEmpty(newSysEmployee.getEmpName())){
+            oldSysEmployee.getUser().setRefName(oldSysEmployee.getEmpName());
+        }
+        //员工机构职务信息
+        if(newSysEmployee.getOfficePostList()!=null){
+            for(SysEmployeeOfficePost info: oldSysEmployee.getOfficePostList()){
+                info.setEmployee(oldSysEmployee);
+            }
+        }
+        sysEmployeeRepository.save(oldSysEmployee);
+        return oldSysEmployee;
+    }
+
+    public SysEmployee modifySysUserEmployee2(SysEmployee newSysEmployee) {
+
+        // 判断机构是否有效存在
+        if(newSysEmployee.getOffice()!=null){
+            SysOffice sysOffice = sysOfficeService.checkOfficeExistsById(newSysEmployee.getOffice().getId());
+            newSysEmployee.setOffice(sysOffice);
+        }
+        // 判断公司是否有效存在
+        if(newSysEmployee.getCompany()!=null){
+            SysCompany sysCompany = sysCompanyService.checkCompanyExistsById(newSysEmployee.getCompany().getId());
+            newSysEmployee.setCompany(sysCompany);
+        }
+
         // 判断登录ID、手机号是否重复
-//        this.checkSysUserExists(sysEmployeeDetail.getLoginCode(), sysEmployeeDetail.getMobile(), sysEmployeeDetail.getEmail(), sysEmployeeDetail.getId());
+        this.checkSysUserExists(
+            newSysEmployee.getUser().getLoginCode(),
+            newSysEmployee.getUser().getMobile(),
+            newSysEmployee.getUser().getEmail(),
+            newSysEmployee.getId());
 
-        //先更新员工
-        com.ruowei.modules.sys.domain.table.SysEmployee sysEmployee = sysUserEmployeeMapper.SysUserEmployeeDetailVMToSysEmployee(sysEmployeeDetail);
-        sysEmployee = sysEmployeeRepository.updateIgnoreNull(sysEmployee);
-
-        //再更新用户
-//        SysUser sysUser = sysUserEmployeeMapper.SysUserEmployeeDetailVMToSysUser(sysEmployeeDetail);
-//        if(StringUtils.isNotEmpty(sysEmployee.getEmpName())){
-//            sysUser.setRefName(sysEmployee.getEmpName());
-//        }
-//        if(StringUtils.isNotEmpty(sysUser.getPassword())){
-//            sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));
-//        }
-//        sysUser.setId(this.getSysUserIdBySysEmployeeId(sysEmployee.getId()));
-//        sysUser = sysUserRepository.updateIgnoreNull(sysUser);
-        //返回员工表主键
-//        sysEmployeeDetail = sysUserEmployeeMapper.assembleSysUserEmployeeDetail(sysUser,sysEmployee);
-        return sysEmployeeDetail;
+        Optional<SysEmployee> sysEmployeeOptional = sysEmployeeRepository.findById(newSysEmployee.getId());
+        Assert.isTrue(sysEmployeeOptional.isPresent(),
+            ErrorMessageUtils.getNotFoundMessage(
+                "员工", ObjectUtils.toString(newSysEmployee.getId()))
+        );
+        SysEmployee oldSysEmployee = sysEmployeeOptional.get();
+        //获取空属性并处理成null
+        Set<String> nullProperties = ObjectUtils.getNullPropertiesSet(newSysEmployee);
+        nullProperties.add("user");
+        //更新非空属性
+        BeanUtils.copyProperties(newSysEmployee, oldSysEmployee, nullProperties.toArray(new String[0]));
+        if(newSysEmployee.getUser()!=null){
+            nullProperties = ObjectUtils.getNullPropertiesSet(newSysEmployee.getUser());
+            //不支持用户变更
+            nullProperties.add("id");
+            //不支持密码修改
+            nullProperties.add("password");
+            BeanUtils.copyProperties(newSysEmployee.getUser(), oldSysEmployee.getUser(), nullProperties.toArray(new String[0]));
+        }
+        //更新
+        if(StringUtils.isNotEmpty(newSysEmployee.getEmpName())){
+            oldSysEmployee.getUser().setRefName(oldSysEmployee.getEmpName());
+        }
+        //员工机构职务信息
+        if(newSysEmployee.getOfficePostList()!=null){
+            for(SysEmployeeOfficePost info: oldSysEmployee.getOfficePostList()){
+                info.setEmployee(oldSysEmployee);
+            }
+        }
+        sysEmployeeRepository.save(oldSysEmployee);
+        return oldSysEmployee;
     }
 
     /**
@@ -191,48 +353,29 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
     public void checkSysUserExists(String loginCode, String mobile, String email, Long employeeId) {
         // 创建用户
         // 判断登录id、电话是否重复
-        QSysUser qSysUser = QSysUser.sysUser;
+        QSysUserTable qSysUserTable = QSysUserTable.sysUserTable;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-        HashMap map= new HashMap<String,String>();
+        HashMap<String,String> map= new HashMap<String,String>();
         if(StringUtils.isNotEmpty(loginCode)){
-            booleanBuilder.or( qSysUser.loginCode.eq(loginCode));
+            booleanBuilder.or( qSysUserTable.loginCode.eq(loginCode));
             map.put("登录ID", loginCode);
         }
         if(StringUtils.isNotEmpty(mobile)){
-            booleanBuilder.or(qSysUser.mobile.eq(mobile));
+            booleanBuilder.or(qSysUserTable.mobile.eq(mobile));
             map.put("手机号", mobile);
         }
         if(StringUtils.isNotEmpty(email)){
-            booleanBuilder.or(qSysUser.email.eq(email));
+            booleanBuilder.or(qSysUserTable.email.eq(email));
             map.put("电子邮箱", email);
         }
         if(map.size()==0){
             return;
         }else if(employeeId != null){
             //curId不为空，表示是更新用户操作，且curId表示更新用户的主键
-            booleanBuilder.and(qSysUser.refCode.castToNum(Long.class).ne(employeeId));
+            booleanBuilder.and(qSysUserTable.refCode.castToNum(Long.class).ne(employeeId));
         }
         Assert.isTrue(!this.sysUserQueryService.exists(booleanBuilder),
             ErrorMessageUtils.getAlreadyExistMessageByOrMap("用户",map));
-    }
-
-    /**
-     * 获取员工的角色列表
-     *
-     * @param id
-     * @return
-     * @author 刘东奇
-     * @date 2019/11/13
-     */
-    @Override
-    public List<SysRole> getSysRoleListBySysEmployeeId(Long id) {
-        QSysRole qSysRole = QSysRole.sysRole;
-        QSysUserRole qSysUserRole = QSysUserRole.sysUserRole;
-        QSysUser qSysUser = QSysUser.sysUser;
-        JPAQuery<SysRole> jpaQuery = this.queryFactory.selectFrom(qSysRole).leftJoin(qSysUserRole).on(qSysRole.id.eq(qSysUserRole.sysRoleId.castToNum(Long.class)))
-            .leftJoin(qSysUser).on(qSysUser.id.eq(qSysUserRole.sysUserId.castToNum(Long.class)))
-        .where(qSysUser.refCode.castToNum(Long.class).eq(id));
-        return jpaQuery.fetch();
     }
 
     /**
@@ -245,7 +388,7 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      */
     @Override
     public Long getSysUserIdBySysEmployeeId(Long id) {
-        QSysUser qSysUser = QSysUser.sysUser;
+        QSysUserTable qSysUser = QSysUserTable.sysUserTable;
         JPAQuery<Long> jpaQuery = this.queryFactory.select(qSysUser.id).from(qSysUser)
             .where(qSysUser.refCode.castToNum(Long.class).eq(id));
         return jpaQuery.fetchOne();
@@ -258,9 +401,9 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      */
     @Override
     public void disableSysEmployee(Long sysEmployeeId) {
-        QSysUser qSysUser = QSysUser.sysUser;
-        this.queryFactory.update(qSysUser).set(qSysUser.status,UserStatusType.DISABLE)
-            .where(qSysUser.refCode.castToNum(Long.class).eq(sysEmployeeId)).execute();
+        QSysUserTable qSysUserTable = QSysUserTable.sysUserTable;
+        this.queryFactory.update(qSysUserTable).set(qSysUserTable.status,UserStatusType.DISABLE)
+            .where(qSysUserTable.refCode.castToNum(Long.class).eq(sysEmployeeId)).execute();
     }
 
     /**
@@ -272,9 +415,9 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      */
     @Override
     public void enableSysEmployee(Long sysEmployeeId) {
-        QSysUser qSysUser = QSysUser.sysUser;
-        this.queryFactory.update(qSysUser).set(qSysUser.status,UserStatusType.NORMAL)
-            .where(qSysUser.refCode.castToNum(Long.class).eq(sysEmployeeId)).execute();
+        QSysUserTable qSysUserTable = QSysUserTable.sysUserTable;
+        this.queryFactory.update(qSysUserTable).set(qSysUserTable.status,UserStatusType.NORMAL)
+            .where(qSysUserTable.refCode.castToNum(Long.class).eq(sysEmployeeId)).execute();
     }
 
     /**
@@ -286,13 +429,13 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      */
     @Override
     public void deleteSysEmployee(Long sysEmployeeId) {
-        QSysUser qSysUser = QSysUser.sysUser;
-        this.queryFactory.update(qSysUser).set(qSysUser.status,UserStatusType.DELETE)
-            .where(qSysUser.refCode.castToNum(Long.class).eq(sysEmployeeId)).execute();
+        QSysUserTable qSysUserTable = QSysUserTable.sysUserTable;
+        this.queryFactory.update(qSysUserTable).set(qSysUserTable.status,UserStatusType.DELETE)
+            .where(qSysUserTable.refCode.castToNum(Long.class).eq(sysEmployeeId)).execute();
 
-        QSysEmployee qSysEmployee = QSysEmployee.sysEmployee;
-        this.queryFactory.update(qSysEmployee).set(qSysEmployee.status,EmployeeStatusType.DELETE)
-            .where(qSysEmployee.id.eq(sysEmployeeId)).execute();
+        QSysEmployeeTable qSysEmployeeTable = QSysEmployeeTable.sysEmployeeTable;
+        this.queryFactory.update(qSysEmployeeTable).set(qSysEmployeeTable.status,EmployeeStatusType.DELETE)
+            .where(qSysEmployeeTable.id.eq(sysEmployeeId)).execute();
     }
 
     /**
@@ -304,9 +447,9 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      */
     @Override
     public void resetSysEmployeePassword(Long sysEmployeeId) {
-        QSysUser qSysUser = QSysUser.sysUser;
-        this.queryFactory.update(qSysUser).set(qSysUser.password,passwordEncoder.encode(DEFAULT_PASSWORD))
-            .where(qSysUser.refCode.castToNum(Long.class).eq(sysEmployeeId)).execute();
+        QSysUserTable qSysUserTable = QSysUserTable.sysUserTable;
+        this.queryFactory.update(qSysUserTable).set(qSysUserTable.password,passwordEncoder.encode(DEFAULT_PASSWORD))
+            .where(qSysUserTable.refCode.castToNum(Long.class).eq(sysEmployeeId)).execute();
     }
 
     /**
@@ -319,21 +462,21 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      */
     @Override
     public void assignRoleToSysEmployee(Long sysEmployeeId, List<Long> roleIdList) {
+        //员工ID转换成用户ID
+        Long sysUserId = this.getSysUserIdBySysEmployeeId(sysEmployeeId);
+        //先删除
+        QSysUserRoleRelationship qSysUserRoleRelationship = QSysUserRoleRelationship.sysUserRoleRelationship;
+        sysUserRoleRelationshioRepository.deleteAll(qSysUserRoleRelationship.sysUserId.eq(sysUserId));
+        //后新增
+        List<SysUserRoleRelationship> userRoleRelationshipList = new ArrayList<>();
 
-        if(roleIdList.size() > 0){
-            Long sysUserId = this.getSysUserIdBySysEmployeeId(sysEmployeeId);
-            SysUser sysUser = new SysUser();
-            sysUser.setId(sysUserId);
-            List<SysRole> sysRoleList = new ArrayList<>();
-            for(Long roleId:roleIdList){
-                SysRole sysRole = new SysRole();
-                sysRole.setId(roleId);
-                sysRoleList.add(sysRole);
-            }
-//            sysUser.setSysRoleList(sysRoleList);
-            this.sysUserRepository.updateIgnoreNull(sysUser);
+        for(Long roldId:roleIdList){
+            SysUserRoleRelationship userRoleRelationship = new SysUserRoleRelationship();
+            userRoleRelationship.setSysRoleId(roldId);
+            userRoleRelationship.setSysUserId(sysUserId);
+            userRoleRelationshipList.add(userRoleRelationship);
         }
-
+        sysUserRoleRelationshioRepository.saveAll(userRoleRelationshipList);
 
     }
 }

@@ -30,4 +30,13 @@ public abstract class BaseService {
     public void init() {
         queryFactory = new JPAQueryFactory(entityManager);
     }
+
+    public EntityManager getEntityManager(){
+        return entityManager;
+    }
+
+    public JPAQueryFactory getJPAQueryFactory(){
+        return queryFactory;
+    }
+
 }
