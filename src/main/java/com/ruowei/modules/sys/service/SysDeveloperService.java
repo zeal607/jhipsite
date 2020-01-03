@@ -13,7 +13,7 @@ import com.ruowei.modules.sys.mapper.SysUserMapper;
 import com.ruowei.modules.sys.pojo.UserDTO;
 import com.ruowei.modules.sys.repository.AuthorityRepository;
 import com.ruowei.modules.sys.repository.SysDeveloperUserRepository;
-import com.ruowei.modules.sys.repository.SysUserRepository;
+import com.ruowei.modules.sys.repository.table.SysUserTableRepository;
 import com.ruowei.modules.sys.service.api.SysDeveloperApi;
 import com.ruowei.modules.sys.service.util.RandomUtil;
 import com.ruowei.security.AuthoritiesConstants;
@@ -45,7 +45,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
     private final MailService mailService;
 
     private final AuthorityRepository authorityRepository;
-    private final SysUserRepository sysUserRepository;
+    private final SysUserTableRepository sysUserTableRepository;
     private final SysDeveloperUserRepository sysDeveloperUserRepository;
 
     private final SysUserMapper sysUserMapper;
@@ -54,10 +54,10 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
 
     private final CacheManager cacheManager;
 
-    public SysDeveloperService(MailService mailService, AuthorityRepository authorityRepository, SysUserRepository sysUserRepository, SysDeveloperUserRepository sysDeveloperUserRepository, SysUserMapper sysUserMapper, PasswordEncoder passwordEncoder, CacheManager cacheManager) {
+    public SysDeveloperService(MailService mailService, AuthorityRepository authorityRepository, SysUserTableRepository sysUserTableRepository, SysDeveloperUserRepository sysDeveloperUserRepository, SysUserMapper sysUserMapper, PasswordEncoder passwordEncoder, CacheManager cacheManager) {
         this.mailService = mailService;
         this.authorityRepository = authorityRepository;
-        this.sysUserRepository = sysUserRepository;
+        this.sysUserTableRepository = sysUserTableRepository;
         this.sysDeveloperUserRepository = sysDeveloperUserRepository;
         this.sysUserMapper = sysUserMapper;
         this.passwordEncoder = passwordEncoder;
@@ -85,7 +85,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
      */
     @Override
     public Optional<UserDTO> getUserWithAuthoritiesByLoginCode(String loginCode) {
-        return sysUserRepository.findOneWithAuthoritiesByLoginCode(loginCode)
+        return sysUserTableRepository.findOneWithAuthoritiesByLoginCode(loginCode)
             .map(UserDTO::new);
     }
 
@@ -99,8 +99,8 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
      */
     @Override
     public void deleteUserByLoginCode(String loginCode) {
-        sysUserRepository.findOneByLoginCode(loginCode).ifPresent(user -> {
-            sysUserRepository.delete(user);
+        sysUserTableRepository.findOneByLoginCode(loginCode).ifPresent(user -> {
+            sysUserTableRepository.delete(user);
             this.clearUserCaches(user.getLoginCode(),user.getEmail());
             log.debug("Deleted User: {}", user);
         });
@@ -172,7 +172,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
     public Optional<SysUserTable> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
         // 根据激活码找到SysUser并更新激活状态
-        return sysUserRepository.findOneByActivationKey(key)
+        return sysUserTableRepository.findOneByActivationKey(key)
             .map(user -> {
                 user.setActivated(true);
                 user.setActivationKey(null);
@@ -230,7 +230,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
      */
     @Override
     public Optional<UserDTO> updateUser(UserDTO userDTO) {
-        return Optional.of(this.sysUserRepository
+        return Optional.of(this.sysUserTableRepository
             .findById(userDTO.getId()))
             .filter(Optional::isPresent)
             .map(Optional::get)
@@ -272,7 +272,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
     @Override
     public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
         SecurityUtils.getCurrentUserLogin()
-            .flatMap(this.sysUserRepository::findOneByLoginCode)
+            .flatMap(this.sysUserTableRepository::findOneByLoginCode)
             .ifPresent(user -> {
                 user.setUserName(firstName);
                 user.setRefName(lastName);
@@ -295,7 +295,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
     @Override
     public void changePassword(String currentClearTextPassword, String newPassword) {
         SecurityUtils.getCurrentUserLogin()
-            .flatMap(this.sysUserRepository::findOneByLoginCode)
+            .flatMap(this.sysUserTableRepository::findOneByLoginCode)
             .ifPresent(user -> {
                 String currentEncryptedPassword = user.getPassword();
                 if (!passwordEncoder.matches(currentClearTextPassword, currentEncryptedPassword)) {
@@ -344,7 +344,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
     @Override
     public Optional<SysUserTable> completePasswordReset(String newPassword, String key) {
         log.debug("Reset user password for reset key {}", key);
-        return this.sysUserRepository.findOneByResetKey(key)
+        return this.sysUserTableRepository.findOneByResetKey(key)
             .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
             .map(user -> {
                 user.setPassword(passwordEncoder.encode(newPassword));
@@ -381,7 +381,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
         Pageable newPageable = new PageRequest(pageable.getPageNumber(),
             pageable.getPageSize(),
             new Sort(sortOrderList));
-        return this.sysUserRepository.findAllByLoginCodeNot(newPageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
+        return this.sysUserTableRepository.findAllByLoginCodeNot(newPageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
     }
 
     /**
@@ -430,13 +430,13 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
      * @param email
      */
     private void clearUserCaches(String loginCode,String email) {
-        Objects.requireNonNull(cacheManager.getCache(SysUserRepository.USERS_BY_LOGIN_CODE_CACHE)).evict(loginCode);
-        Objects.requireNonNull(cacheManager.getCache(SysUserRepository.USERS_BY_EMAIL_CACHE)).evict(email);
+        Objects.requireNonNull(cacheManager.getCache(SysUserTableRepository.USERS_BY_LOGIN_CODE_CACHE)).evict(loginCode);
+        Objects.requireNonNull(cacheManager.getCache(SysUserTableRepository.USERS_BY_EMAIL_CACHE)).evict(email);
     }
 
     private void clearUserCaches(SysUserTable user) {
-        Objects.requireNonNull(cacheManager.getCache(SysUserRepository.USERS_BY_LOGIN_CODE_CACHE)).evict(user.getLoginCode());
-        Objects.requireNonNull(cacheManager.getCache(SysUserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
+        Objects.requireNonNull(cacheManager.getCache(SysUserTableRepository.USERS_BY_LOGIN_CODE_CACHE)).evict(user.getLoginCode());
+        Objects.requireNonNull(cacheManager.getCache(SysUserTableRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
     }
 
     private void clearUserCaches(SysDeveloperUser user) {

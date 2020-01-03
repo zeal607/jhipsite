@@ -1,9 +1,9 @@
 package com.ruowei.config;
 
-import com.ruowei.modules.sys.domain.ralationship.SysUserRoleRelationship;
+import com.ruowei.modules.sys.domain.relationship.SysUserRoleRelationship;
 import com.ruowei.modules.sys.domain.table.*;
 import com.ruowei.modules.sys.repository.SysDeveloperUserRepository;
-import com.ruowei.modules.sys.repository.SysUserRepository;
+import com.ruowei.modules.sys.repository.table.SysUserTableRepository;
 import io.github.jhipster.config.JHipsterProperties;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
@@ -43,8 +43,8 @@ public class CacheConfiguration {
     @Bean
     public JCacheManagerCustomizer cacheManagerCustomizer() {
         return cm -> {
-            createCache(cm, SysUserRepository.USERS_BY_LOGIN_CODE_CACHE);
-            createCache(cm, SysUserRepository.USERS_BY_EMAIL_CACHE);
+            createCache(cm, SysUserTableRepository.USERS_BY_LOGIN_CODE_CACHE);
+            createCache(cm, SysUserTableRepository.USERS_BY_EMAIL_CACHE);
             createCache(cm, SysDeveloperUserRepository.USERS_BY_LOGIN_CACHE);
             createCache(cm, SysDeveloperUserRepository.USERS_BY_EMAIL_CACHE);
             createCache(cm, SysUserTable.class.getName());

@@ -1,7 +1,7 @@
 package com.ruowei.security;
 
 import com.ruowei.modules.sys.domain.table.SysUserTable;
-import com.ruowei.modules.sys.repository.SysUserRepository;
+import com.ruowei.modules.sys.repository.table.SysUserTableRepository;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +24,9 @@ public class DomainUserDetailsService implements UserDetailsService {
 
     private final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
-    private final SysUserRepository userRepository;
+    private final SysUserTableRepository userRepository;
 
-    public DomainUserDetailsService(SysUserRepository userRepository) {
+    public DomainUserDetailsService(SysUserTableRepository userRepository) {
         this.userRepository = userRepository;
     }
 

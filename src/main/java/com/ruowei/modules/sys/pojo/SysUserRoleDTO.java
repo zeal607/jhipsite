@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.pojo;
 import com.ruowei.common.pojo.BaseDTO;
-import com.ruowei.modules.sys.domain.ralationship.SysUserRoleRelationship;
+import com.ruowei.modules.sys.domain.relationship.SysUserRoleRelationship;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;

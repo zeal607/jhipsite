@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.domain.ralationship;
+package com.ruowei.modules.sys.domain.relationship;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 

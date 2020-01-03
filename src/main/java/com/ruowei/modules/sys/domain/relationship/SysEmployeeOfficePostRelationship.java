@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.domain.ralationship;
+package com.ruowei.modules.sys.domain.relationship;
 
 import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
 import org.hibernate.annotations.Cache;
@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -18,7 +17,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_employee_office")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployeeOfficeRelationship extends PrimaryKeyAutoIncrementEntity implements Serializable {
+public class SysEmployeeOfficePostRelationship extends PrimaryKeyAutoIncrementEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +25,6 @@ public class SysEmployeeOfficeRelationship extends PrimaryKeyAutoIncrementEntity
      * 员工ID
      */
     @NotNull
-    @Size(max = 100)
     @Column(name = "sys_employee_id", length = 20, nullable = false)
     private Long sysEmployeeId;
 
@@ -41,7 +39,6 @@ public class SysEmployeeOfficeRelationship extends PrimaryKeyAutoIncrementEntity
      * 岗位ID
      */
     @NotNull
-    @Size(max = 100)
     @Column(name = "sys_post_id", length = 20, nullable = false)
     private Long sysPostId;
 
@@ -51,7 +48,7 @@ public class SysEmployeeOfficeRelationship extends PrimaryKeyAutoIncrementEntity
         return sysEmployeeId;
     }
 
-    public SysEmployeeOfficeRelationship sysEmployeeId(Long sysEmployeeId) {
+    public SysEmployeeOfficePostRelationship sysEmployeeId(Long sysEmployeeId) {
         this.sysEmployeeId = sysEmployeeId;
         return this;
     }
@@ -64,7 +61,7 @@ public class SysEmployeeOfficeRelationship extends PrimaryKeyAutoIncrementEntity
         return sysOfficeId;
     }
 
-    public SysEmployeeOfficeRelationship sysOfficeId(Long sysOfficeId) {
+    public SysEmployeeOfficePostRelationship sysOfficeId(Long sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
         return this;
     }
@@ -77,7 +74,7 @@ public class SysEmployeeOfficeRelationship extends PrimaryKeyAutoIncrementEntity
         return sysPostId;
     }
 
-    public SysEmployeeOfficeRelationship sysPostId(Long sysPostId) {
+    public SysEmployeeOfficePostRelationship sysPostId(Long sysPostId) {
         this.sysPostId = sysPostId;
         return this;
     }
@@ -92,10 +89,10 @@ public class SysEmployeeOfficeRelationship extends PrimaryKeyAutoIncrementEntity
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SysEmployeeOfficeRelationship)) {
+        if (!(o instanceof SysEmployeeOfficePostRelationship)) {
             return false;
         }
-        return id != null && id.equals(((SysEmployeeOfficeRelationship) o).id);
+        return id != null && id.equals(((SysEmployeeOfficePostRelationship) o).id);
     }
 
     @Override

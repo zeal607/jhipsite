@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.domain.ralationship;
+package com.ruowei.modules.sys.domain.relationship;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

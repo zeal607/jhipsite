@@ -11,7 +11,7 @@ import com.ruowei.modules.sys.domain.table.SysUserTable;
 import com.ruowei.modules.sys.mapper.SysUserMapper;
 import com.ruowei.modules.sys.pojo.PasswordChangeDTO;
 import com.ruowei.modules.sys.pojo.UserDTO;
-import com.ruowei.modules.sys.repository.SysUserRepository;
+import com.ruowei.modules.sys.repository.table.SysUserTableRepository;
 import com.ruowei.modules.sys.service.MailService;
 import com.ruowei.modules.sys.service.SysDeveloperService;
 import com.ruowei.modules.sys.web.MeijuBody;
@@ -59,7 +59,7 @@ public class SysDeveloperResource implements SysDeveloperApi {
     private final SysDeveloperService sysDeveloperService;
     private final MailService mailService;
 
-    private final SysUserRepository sysUserRepository;
+    private final SysUserTableRepository sysUserTableRepository;
 
     private final SysUserMapper sysUserMapper;
 
@@ -72,10 +72,10 @@ public class SysDeveloperResource implements SysDeveloperApi {
         }
     }
 
-    public SysDeveloperResource(SysDeveloperService sysDeveloperService, MailService mailService, SysUserRepository sysUserRepository, SysUserMapper sysUserMapper) {
+    public SysDeveloperResource(SysDeveloperService sysDeveloperService, MailService mailService, SysUserTableRepository sysUserTableRepository, SysUserMapper sysUserMapper) {
         this.sysDeveloperService = sysDeveloperService;
         this.mailService = mailService;
-        this.sysUserRepository = sysUserRepository;
+        this.sysUserTableRepository = sysUserTableRepository;
         this.sysUserMapper = sysUserMapper;
     }
 
@@ -202,11 +202,11 @@ public class SysDeveloperResource implements SysDeveloperApi {
     @PostMapping("/account")
     public void saveAccount(@Valid @RequestBody UserDTO userDTO) {
         String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("Current user login not found"));
-        Optional<SysUserTable> existingUser = this.sysUserRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
+        Optional<SysUserTable> existingUser = this.sysUserTableRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getLoginCode().equalsIgnoreCase(userLogin))) {
             throw new EmailAlreadyUsedException();
         }
-        Optional<SysUserTable> user = this.sysUserRepository.findOneByLoginCode(userLogin);
+        Optional<SysUserTable> user = this.sysUserTableRepository.findOneByLoginCode(userLogin);
         if (!user.isPresent()) {
             throw new AccountResourceException("User could not be found");
         }
@@ -281,12 +281,12 @@ public class SysDeveloperResource implements SysDeveloperApi {
     @Transactional
     public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UserDTO userDTO) {
         log.debug("REST request to update User : {}", userDTO);
-        Optional<SysUserTable> existingUser = this.sysUserRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
+        Optional<SysUserTable> existingUser = this.sysUserTableRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(userDTO.getId()))) {
             throw new EmailAlreadyUsedException();
         }
 
-        existingUser = this.sysUserRepository.findOneByLoginCode(userDTO.getLogin().toLowerCase());
+        existingUser = this.sysUserTableRepository.findOneByLoginCode(userDTO.getLogin().toLowerCase());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(userDTO.getId()))) {
             throw new LoginAlreadyUsedException();
         }

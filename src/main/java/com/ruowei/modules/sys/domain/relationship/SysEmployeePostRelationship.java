@@ -1,11 +1,10 @@
-package com.ruowei.modules.sys.domain.ralationship;
+package com.ruowei.modules.sys.domain.relationship;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -26,7 +25,6 @@ public class SysEmployeePostRelationship implements Serializable {
      * 员工ID
      */
     @NotNull
-    @Size(max = 100)
     @Column(name = "sys_employee_id", length = 20, nullable = false)
     private Long sysEmployeeId;
 
@@ -34,7 +32,6 @@ public class SysEmployeePostRelationship implements Serializable {
      * 岗位ID
      */
     @NotNull
-    @Size(max = 100)
     @Column(name = "sys_post_id", length = 20, nullable = false)
     private Long sysPostId;
 

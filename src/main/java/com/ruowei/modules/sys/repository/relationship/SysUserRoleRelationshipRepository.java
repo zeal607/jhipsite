@@ -1,8 +1,8 @@
 package com.ruowei.modules.sys.repository.relationship;
 
 import com.ruowei.common.repository.BaseRepository;
-import com.ruowei.modules.sys.domain.ralationship.QSysUserRoleRelationship;
-import com.ruowei.modules.sys.domain.ralationship.SysUserRoleRelationship;
+import com.ruowei.modules.sys.domain.relationship.QSysUserRoleRelationship;
+import com.ruowei.modules.sys.domain.relationship.SysUserRoleRelationship;
 import org.springframework.stereotype.Repository;
 
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface SysUserRoleRelationshioRepository
+public interface SysUserRoleRelationshipRepository
     extends BaseRepository<Long, SysUserRoleRelationship, QSysUserRoleRelationship> {
 
 }

@@ -1,5 +1,7 @@
 package com.ruowei.modules.sys.web.vm;
 
+import com.ruowei.modules.sys.domain.table.SysRole;
+
 import java.util.List;
 
 /**
@@ -9,7 +11,7 @@ import java.util.List;
 public class AssignRoleVM {
 
     private Long sysEmployeeId;
-    private List<Long> roleIdList;
+    private List<SysRole> roleList;
 
     public Long getSysEmployeeId() {
         return sysEmployeeId;
@@ -19,11 +21,11 @@ public class AssignRoleVM {
         this.sysEmployeeId = sysEmployeeId;
     }
 
-    public List<Long> getRoleIdList() {
-        return roleIdList;
+    public List<SysRole> getRoleList() {
+        return roleList;
     }
 
-    public void setRoleIdList(List<Long> roleIdList) {
-        this.roleIdList = roleIdList;
+    public void setRoleList(List<SysRole> roleList) {
+        this.roleList = roleList;
     }
 }

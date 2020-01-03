@@ -1,6 +1,10 @@
 package com.ruowei.modules.sys.service.api;
 
 import com.ruowei.modules.sys.domain.entity.SysEmployee;
+import com.ruowei.modules.sys.domain.entity.SysEmployeeOfficePost;
+import com.ruowei.modules.sys.domain.entity.SysUser;
+import com.ruowei.modules.sys.domain.table.SysPost;
+import com.ruowei.modules.sys.domain.table.SysRole;
 
 import java.util.List;
 
@@ -33,13 +37,13 @@ public interface SysUserEmployeeApi {
      * 如果存在，抛异常
      * @author 刘东奇
      * @date 2019/11/8
+     * @param employeeId 所更新员工的主键，如果传表示是更新操作，否则是新增操作
      * @param loginCode
      * @param mobile
-     * @param email
-     * @param employeeId 所更新员工的主键，如果传表示是更新操作，否则是新增操作
+     * @param email     *
      * @return
      */
-    void checkSysUserExists(String loginCode, String mobile,String email, Long employeeId);
+    void checkSysUserExists(Long employeeId, String loginCode, String mobile,String email);
 
     /**
      * 根据员工ID获取用户ID
@@ -90,8 +94,53 @@ public interface SysUserEmployeeApi {
      * @author 刘东奇
      * @date 2019/11/16
      * @param sysEmployeeId
-     * @param roleIdList
+     * @param roleList
      * @return
      */
-    void assignRoleToSysEmployee(Long sysEmployeeId, List<Long> roleIdList);
+    void assignRoleToSysEmployee(Long sysEmployeeId, List<SysRole> roleList);
+
+    /**
+     * 更新员工表
+     * @author 刘东奇
+     * @date 2020/1/2
+     * @param newSysEmployee
+     * @return
+     */
+    void updateSysEmployeeTable(SysEmployee newSysEmployee);
+
+    /**
+     * 更新用户表
+     * @author 刘东奇
+     * @date 2020/1/2
+     * @param newSysUser
+     * @param empName
+     */
+    void updateSysUserTable(SysUser newSysUser, String empName);
+
+    /**
+     * 更新员工职位关系表
+     * @author 刘东奇
+     * @date 2020/1/2
+     * @param sysEmployeeId
+     * @param postList
+     */
+    void updateSysEmployeePostRelationship(Long sysEmployeeId, List<SysPost> postList);
+
+    /**
+     * 更新员工机构职位关系表
+     * @author 刘东奇
+     * @date 2020/1/2
+     * @param sysEmployeeId
+     * @param employeeOfficePostList
+     */
+    void updateSysEmployeeOfficePostRelationship(Long sysEmployeeId, List<SysEmployeeOfficePost> employeeOfficePostList);
+
+    /**
+     * 更新用户角色关系表
+     * @author 刘东奇
+     * @date 2020/1/2
+     * @param sysUserId
+     * @param roleList
+     */
+    void updateSysUserRoleRelationship(Long sysUserId, List<SysRole> roleList);
 }

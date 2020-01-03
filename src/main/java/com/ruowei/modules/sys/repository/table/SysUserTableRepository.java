@@ -1,4 +1,4 @@
-package com.ruowei.modules.sys.repository;
+package com.ruowei.modules.sys.repository.table;
 
 import com.ruowei.common.repository.BaseRepository;
 import com.ruowei.modules.sys.domain.table.QSysUserTable;
@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Repository;
 
-import java.time.Instant;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -19,39 +17,65 @@ import java.util.Optional;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface SysUserRepository
+public interface SysUserTableRepository
     extends BaseRepository<Long, SysUserTable, QSysUserTable> {
 
     String USERS_BY_LOGIN_CODE_CACHE = "usersByLoginCode";
     String USERS_BY_EMAIL_CACHE = "usersByEmail";
 
     /**
-     * 通过usercode倒叙找第一个Sysuser
-     * @author 刘东奇
-     * @date 2019/9/25
+     * 根据激活密钥寻找用户
+     * @param activationKey
+     * @return
      */
-    Optional<SysUserTable> findFirstByUserCodeNotNullOrderByUserCodeDesc();
-
     Optional<SysUserTable> findOneByActivationKey(String activationKey);
 
-    List<SysUserTable> findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant dateTime);
-
+    /**
+     * 根据重置密钥寻找用户
+     * @param resetKey
+     * @return
+     */
     Optional<SysUserTable> findOneByResetKey(String resetKey);
 
+    /**
+     * 根据邮箱寻找用户
+     * @param email
+     * @return
+     */
     Optional<SysUserTable> findOneByEmailIgnoreCase(String email);
 
+    /**
+     * 根据登录ID寻找用户
+     * @param loginCode
+     * @return
+     */
     Optional<SysUserTable> findOneByLoginCode(String loginCode);
 
-    @EntityGraph(attributePaths = "authorities")
-    Optional<SysUserTable> findOneWithAuthoritiesById(Long id);
-
+    /**
+     * 根据登录ID寻找用户及其权限
+     * TODO 有必要替换SysUserTable为SysUser，把关系从table中剔除
+     * @param loginCode
+     * @return
+     */
     @EntityGraph(attributePaths = "authorities")
     @Cacheable(cacheNames = USERS_BY_LOGIN_CODE_CACHE)
     Optional<SysUserTable> findOneWithAuthoritiesByLoginCode(String loginCode);
 
+    /**
+     * 根据邮箱寻找用户及其权限
+     * TODO 有必要替换SysUserTable为SysUser，把关系从table中剔除
+     * @param email
+     * @return
+     */
     @EntityGraph(attributePaths = "authorities")
     @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
     Optional<SysUserTable> findOneWithAuthoritiesByEmailIgnoreCase(String email);
 
+    /**
+     * 查询登录ID不是XX的用户
+     * @param pageable
+     * @param loginCode
+     * @return
+     */
     Page<SysUserTable> findAllByLoginCodeNot(Pageable pageable, String loginCode);
 }
