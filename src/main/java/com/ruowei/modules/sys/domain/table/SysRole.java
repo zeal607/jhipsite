@@ -1,9 +1,5 @@
 package com.ruowei.modules.sys.domain.table;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
-import com.ruowei.common.json.LongJsonDeserializer;
-import com.ruowei.common.json.LongJsonSerializer;
+import com.ruowei.common.entity.AbstractAuditingUUIDEntity;
 import com.ruowei.modules.sys.domain.enumeration.DataScopeType;
 import com.ruowei.modules.sys.domain.enumeration.RoleStatusType;
 import com.ruowei.modules.sys.domain.enumeration.RoleType;
@@ -11,8 +7,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -22,15 +18,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_role")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysRole extends PrimaryKeyAutoIncrementEntity implements Serializable {
-
-    public SysRole(){};
-
-    public SysRole( @JsonSerialize(using = LongJsonSerializer.class)
-                    @JsonDeserialize(using = LongJsonDeserializer.class)
-                        Long id) {
-        this.id = id;
-    }
+public class SysRole extends AbstractAuditingUUIDEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

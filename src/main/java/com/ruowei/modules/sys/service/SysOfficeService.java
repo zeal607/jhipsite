@@ -1,5 +1,6 @@
 package com.ruowei.modules.sys.service;
 
+import com.ruowei.common.lang.StringUtils;
 import com.ruowei.common.pojo.TreeDTO;
 import com.ruowei.common.service.BaseService;
 import com.ruowei.modules.sys.domain.table.SysOffice;
@@ -42,11 +43,14 @@ public class SysOfficeService extends BaseService implements SysOfficeApi {
      * @date 2019/11/2
      */
     @Override
-    public SysOffice checkOfficeExistsById(Long id) {
-        Assert.notNull(id,"机构ID不能为空");
-        Optional<SysOffice> sysOffice = sysOfficeRepository.findById(id);
-        Assert.isTrue(sysOffice.isPresent(),"机构："+id+"不存在");
-        return sysOffice.get();
+    public SysOffice checkOfficeExistsById(String id) {
+        if(StringUtils.isNotEmpty(id)){
+            Optional<SysOffice> sysOffice = sysOfficeRepository.findById(id);
+            Assert.isTrue(sysOffice.isPresent(),"机构："+id+"不存在");
+            return sysOffice.get();
+        }else{
+            return null;
+        }
     }
 
     /**
@@ -57,7 +61,7 @@ public class SysOfficeService extends BaseService implements SysOfficeApi {
      * @return
      */
     @Override
-    public TreeDTO getSysOfficeAllNodesByRoot(Long rootId) {
+    public TreeDTO getSysOfficeAllNodesByRoot(String rootId) {
         SysOffice root;
         //获取根节点
         if(rootId == null){
@@ -115,7 +119,7 @@ public class SysOfficeService extends BaseService implements SysOfficeApi {
      * @return
      */
     @Override
-    public TreeDTO getSysOfficeDirectNodesByRoot(Long rootId) {
+    public TreeDTO getSysOfficeDirectNodesByRoot(String rootId) {
         SysOffice root;
         //获取根节点
         if(rootId == null){

@@ -1,7 +1,8 @@
 package com.ruowei.config;
 
-import com.ruowei.modules.sys.domain.relationship.SysUserRoleRelationship;
-import com.ruowei.modules.sys.domain.table.*;
+import com.ruowei.modules.sys.domain.entity.SysEmployee;
+import com.ruowei.modules.sys.domain.table.SysEmployeeTable;
+import com.ruowei.modules.sys.domain.table.SysUserTable;
 import com.ruowei.modules.sys.repository.SysDeveloperUserRepository;
 import com.ruowei.modules.sys.repository.table.SysUserTableRepository;
 import io.github.jhipster.config.JHipsterProperties;
@@ -47,13 +48,9 @@ public class CacheConfiguration {
             createCache(cm, SysUserTableRepository.USERS_BY_EMAIL_CACHE);
             createCache(cm, SysDeveloperUserRepository.USERS_BY_LOGIN_CACHE);
             createCache(cm, SysDeveloperUserRepository.USERS_BY_EMAIL_CACHE);
-            createCache(cm, SysUserTable.class.getName());
-            createCache(cm, SysRole.class.getName());
-            createCache(cm, SysUserRoleRelationship.class.getName());
-            createCache(cm, SysCompany.class.getName());
-            createCache(cm, SysOffice.class.getName());
+            createCache(cm, SysEmployee.class.getName());
             createCache(cm, SysEmployeeTable.class.getName());
-            createCache(cm, SysPost.class.getName());
+            createCache(cm, SysUserTable.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

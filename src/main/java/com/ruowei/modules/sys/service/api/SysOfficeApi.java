@@ -17,7 +17,7 @@ public interface SysOfficeApi {
      * @param id
      * @return SysOffice
      */
-    SysOffice checkOfficeExistsById(Long id);
+    SysOffice checkOfficeExistsById(String id);
 
     /**
      * 根据根节点获取全部节点
@@ -26,7 +26,7 @@ public interface SysOfficeApi {
      * @param rootId
      * @return
      */
-    TreeDTO getSysOfficeAllNodesByRoot(@PathVariable Long rootId);
+    TreeDTO getSysOfficeAllNodesByRoot(@PathVariable String rootId);
 
     /**
      * 根据根节点获取直接子节点
@@ -35,5 +35,5 @@ public interface SysOfficeApi {
      * @param rootId
      * @return
      */
-    TreeDTO getSysOfficeDirectNodesByRoot(@PathVariable Long rootId);
+    TreeDTO getSysOfficeDirectNodesByRoot(@PathVariable String rootId);
 }

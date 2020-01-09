@@ -1,5 +1,5 @@
 package com.ruowei.modules.sys.domain.table;
-import com.ruowei.common.entity.AbstractAuditingEntity;
+import com.ruowei.common.entity.AbstractAuditingUUIDEntity;
 import com.ruowei.modules.sys.domain.enumeration.OfficeStatusType;
 import com.ruowei.modules.sys.domain.enumeration.OfficeType;
 import org.hibernate.annotations.Cache;
@@ -18,7 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "sys_office")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysOffice extends AbstractAuditingEntity implements Serializable {
+public class SysOffice extends AbstractAuditingUUIDEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -224,10 +224,6 @@ public class SysOffice extends AbstractAuditingEntity implements Serializable {
 
     public void setTreeSorts(Integer treeSorts) {
         this.treeSorts = treeSorts;
-    }
-
-    public Boolean isTreeLeaf() {
-        return treeLeaf;
     }
 
     public SysOffice treeLeaf(Boolean treeLeaf) {

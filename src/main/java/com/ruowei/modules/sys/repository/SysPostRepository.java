@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface SysPostRepository
-    extends BaseRepository<Long, SysPost, QSysPost> {
+    extends BaseRepository<String, SysPost, QSysPost> {
 
 }

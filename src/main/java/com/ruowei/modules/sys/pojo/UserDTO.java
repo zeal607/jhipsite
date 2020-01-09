@@ -1,9 +1,6 @@
 package com.ruowei.modules.sys.pojo;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.ruowei.common.json.LongJsonDeserializer;
-import com.ruowei.common.json.LongJsonSerializer;
 import com.ruowei.common.json.StringSetJsonDeserializer;
 import com.ruowei.config.Constants;
 import com.ruowei.modules.sys.domain.table.Authority;
@@ -11,8 +8,8 @@ import com.ruowei.modules.sys.domain.table.SysUserTable;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import javax.validation.constraints.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -24,9 +21,7 @@ import java.util.stream.Collectors;
  */
 public class UserDTO implements Serializable {
 
-    @JsonSerialize(using = LongJsonSerializer.class)
-    @JsonDeserialize(using = LongJsonDeserializer.class)
-    private Long id;
+    private String id;
 
     @NotBlank
     @Pattern(regexp = Constants.LOGIN_REGEX)
@@ -72,7 +67,7 @@ public class UserDTO implements Serializable {
         this.firstName = user.getUserName();
         this.lastName = user.getRefName();
         this.email = user.getEmail();
-        this.activated = user.isActivated();
+        this.activated = user.isActivated()==null?false:user.isActivated();
 //        this.imageUrl;
 //        this.langKey;
         this.createdBy = user.getCreatedBy();
@@ -84,11 +79,11 @@ public class UserDTO implements Serializable {
             .collect(Collectors.toSet());
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

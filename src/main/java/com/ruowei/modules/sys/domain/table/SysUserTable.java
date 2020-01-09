@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.domain.table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ruowei.common.entity.AbstractAuditingEntity;
+import com.ruowei.common.entity.AbstractAuditingUUIDEntity;
 import com.ruowei.modules.sys.domain.enumeration.GenderType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
@@ -26,7 +26,7 @@ import java.util.Set;
 @Entity
 @Table(name = "sys_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUserTable extends AbstractAuditingEntity implements Serializable {
+public class SysUserTable extends AbstractAuditingUUIDEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -127,8 +127,8 @@ public class SysUserTable extends AbstractAuditingEntity implements Serializable
     /**
      * 用户类型引用编号（雇员表或会员表的ID）
      */
-    @Column(name = "ref_code", length = 100)
-    private Long refCode;
+    @Column(name = "ref_code", length = 32)
+    private String refCode;
 
     /**
      * 用户类型引用姓名
@@ -392,16 +392,16 @@ public class SysUserTable extends AbstractAuditingEntity implements Serializable
         this.userType = userType;
     }
 
-    public Long getRefCode() {
+    public String getRefCode() {
         return refCode;
     }
 
-    public SysUserTable refCode(Long refCode) {
+    public SysUserTable refCode(String refCode) {
         this.refCode = refCode;
         return this;
     }
 
-    public void setRefCode(Long refCode) {
+    public void setRefCode(String refCode) {
         this.refCode = refCode;
     }
 

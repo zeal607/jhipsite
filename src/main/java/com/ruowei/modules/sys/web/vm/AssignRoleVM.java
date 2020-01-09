@@ -10,14 +10,14 @@ import java.util.List;
  */
 public class AssignRoleVM {
 
-    private Long sysEmployeeId;
+    private String sysEmployeeId;
     private List<SysRole> roleList;
 
-    public Long getSysEmployeeId() {
+    public String getSysEmployeeId() {
         return sysEmployeeId;
     }
 
-    public void setSysEmployeeId(Long sysEmployeeId) {
+    public void setSysEmployeeId(String sysEmployeeId) {
         this.sysEmployeeId = sysEmployeeId;
     }
 

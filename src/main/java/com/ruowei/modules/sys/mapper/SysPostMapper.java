@@ -14,7 +14,7 @@ public interface SysPostMapper extends EntityMapper<SysPostDTO, SysPost> {
 
 
 
-    default SysPost fromId(Long id) {
+    default SysPost fromId(String id) {
         if (id == null) {
             return null;
         }

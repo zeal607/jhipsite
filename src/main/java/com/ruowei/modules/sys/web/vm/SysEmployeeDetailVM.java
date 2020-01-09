@@ -1,14 +1,9 @@
 package com.ruowei.modules.sys.web.vm;
 
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.ruowei.common.json.LongJsonDeserializer;
-import com.ruowei.common.json.LongJsonSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -28,9 +23,7 @@ public class SysEmployeeDetailVM implements Serializable{
      * 主键
      */
     @ApiModelProperty(value = "主键")
-    @JsonSerialize(using = LongJsonSerializer.class)
-    @JsonDeserialize(using = LongJsonDeserializer.class)
-    private Long id;
+    private String id;
 
     /**
      * 员工编码
@@ -41,7 +34,6 @@ public class SysEmployeeDetailVM implements Serializable{
     /**
      * 员工姓名
      */
-    @NotNull
     @ApiModelProperty(value = "员工姓名", required = true)
     private String empName;
 
@@ -93,11 +85,11 @@ public class SysEmployeeDetailVM implements Serializable{
         return serialVersionUID;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

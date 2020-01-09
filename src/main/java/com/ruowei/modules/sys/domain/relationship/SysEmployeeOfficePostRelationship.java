@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.domain.relationship;
 
-import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
+import com.ruowei.common.entity.AbstractPrimaryKeyAutoEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 员工附属机构关系表
@@ -17,7 +18,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_employee_office")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployeeOfficePostRelationship extends PrimaryKeyAutoIncrementEntity implements Serializable {
+public class SysEmployeeOfficePostRelationship extends AbstractPrimaryKeyAutoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,88 +26,87 @@ public class SysEmployeeOfficePostRelationship extends PrimaryKeyAutoIncrementEn
      * 员工ID
      */
     @NotNull
-    @Column(name = "sys_employee_id", length = 20, nullable = false)
-    private Long sysEmployeeId;
+    @Column(name = "sys_employee_id", length = 32, nullable = false)
+    private String sysEmployeeId;
 
     /**
      * 机构ID
      */
     @NotNull
-    @Column(name = "sys_office_id", length = 20, nullable = false)
-    private Long sysOfficeId;
+    @Column(name = "sys_office_id", length = 32, nullable = false)
+    private String sysOfficeId;
 
     /**
      * 岗位ID
      */
     @NotNull
-    @Column(name = "sys_post_id", length = 20, nullable = false)
-    private Long sysPostId;
+    @Column(name = "sys_post_id", length = 32, nullable = false)
+    private String sysPostId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
-    public Long getSysEmployeeId() {
+    public String getSysEmployeeId() {
         return sysEmployeeId;
     }
 
-    public SysEmployeeOfficePostRelationship sysEmployeeId(Long sysEmployeeId) {
+    public SysEmployeeOfficePostRelationship sysEmployeeId(String sysEmployeeId) {
         this.sysEmployeeId = sysEmployeeId;
         return this;
     }
 
-    public void setSysEmployeeId(Long sysEmployeeId) {
+    public void setSysEmployeeId(String sysEmployeeId) {
         this.sysEmployeeId = sysEmployeeId;
     }
 
-    public Long getSysOfficeId() {
+    public String getSysOfficeId() {
         return sysOfficeId;
     }
 
-    public SysEmployeeOfficePostRelationship sysOfficeId(Long sysOfficeId) {
+    public SysEmployeeOfficePostRelationship sysOfficeId(String sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
         return this;
     }
 
-    public void setSysOfficeId(Long sysOfficeId) {
+    public void setSysOfficeId(String sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
     }
 
-    public Long getSysPostId() {
+    public String getSysPostId() {
         return sysPostId;
     }
 
-    public SysEmployeeOfficePostRelationship sysPostId(Long sysPostId) {
+    public SysEmployeeOfficePostRelationship sysPostId(String sysPostId) {
         this.sysPostId = sysPostId;
         return this;
     }
 
-    public void setSysPostId(Long sysPostId) {
+    public void setSysPostId(String sysPostId) {
         this.sysPostId = sysPostId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof SysEmployeeOfficePostRelationship)) {
-            return false;
-        }
-        return id != null && id.equals(((SysEmployeeOfficePostRelationship) o).id);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SysEmployeeOfficePostRelationship that = (SysEmployeeOfficePostRelationship) o;
+        return Objects.equals(sysEmployeeId, that.sysEmployeeId) &&
+            Objects.equals(sysOfficeId, that.sysOfficeId) &&
+            Objects.equals(sysPostId, that.sysPostId);
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hash(sysEmployeeId, sysOfficeId, sysPostId);
     }
 
     @Override
     public String toString() {
-        return "SysEmployeeOffice{" +
-            "id=" + getId() +
-            ", sysEmployeeId='" + getSysEmployeeId() + "'" +
-            ", sysOfficeId='" + getSysOfficeId() + "'" +
-            ", sysPostId='" + getSysPostId() + "'" +
-            "}";
+        return "SysEmployeeOfficePostRelationship{" +
+            "sysEmployeeId='" + sysEmployeeId + '\'' +
+            ", sysOfficeId='" + sysOfficeId + '\'' +
+            ", sysPostId='" + sysPostId + '\'' +
+            '}';
     }
 }

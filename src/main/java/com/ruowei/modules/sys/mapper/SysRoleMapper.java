@@ -14,7 +14,7 @@ public interface SysRoleMapper extends EntityMapper<SysRoleDTO, SysRole> {
 
 
 
-    default SysRole fromId(Long id) {
+    default SysRole fromId(String id) {
         if (id == null) {
             return null;
         }

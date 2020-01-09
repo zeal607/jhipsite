@@ -27,7 +27,7 @@ public class SysOfficeResource implements SysOfficeApi {
      */
     @Override
     @GetMapping("/sys-office/all")
-    public ResponseEntity getSysOfficeAllNodesByRoot(@PathVariable Long rootId) {
+    public ResponseEntity getSysOfficeAllNodesByRoot(@PathVariable String rootId) {
         return null;
     }
 
@@ -40,7 +40,7 @@ public class SysOfficeResource implements SysOfficeApi {
      */
     @Override
     @GetMapping("/sys-office/direct")
-    public ResponseEntity getSysOfficeDirectNodesByRoot(@PathVariable Long rootId) {
+    public ResponseEntity getSysOfficeDirectNodesByRoot(@PathVariable String rootId) {
         return null;
     }
 }

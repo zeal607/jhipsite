@@ -32,10 +32,10 @@ public class SysOfficeSysPostMapJsonDeserializer extends JsonDeserializer<Map<Sy
         for(Map.Entry<String,String> entry:map.entrySet()){
             SysOffice sysOffice = new SysOffice();
             String sysOfficeId = entry.getKey();
-            sysOffice.setId(Long.parseLong(sysOfficeId));
+            sysOffice.setId(sysOfficeId);
             SysPost sysPost = new SysPost();
             String sysPostId = entry.getValue();
-            sysPost.setId(Long.parseLong(sysPostId));
+            sysPost.setId(sysPostId);
             sysOfficeSysPostLinkedHashMap.put(sysOffice, sysPost);
         }
         return sysOfficeSysPostLinkedHashMap;

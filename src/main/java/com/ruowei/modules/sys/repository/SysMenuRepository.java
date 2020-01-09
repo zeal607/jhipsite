@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface SysMenuRepository
-    extends BaseRepository<Long, SysMenu, QSysMenu> {
+    extends BaseRepository<String, SysMenu, QSysMenu> {
 
 }

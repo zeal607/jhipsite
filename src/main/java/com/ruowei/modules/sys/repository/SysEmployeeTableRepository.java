@@ -15,7 +15,7 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 @Repository
 public interface SysEmployeeTableRepository
-    extends BaseRepository<Long, SysEmployeeTable, QSysEmployeeTable> {
+    extends BaseRepository<String, SysEmployeeTable, QSysEmployeeTable> {
     /**
      * @author 刘东奇
      * @date 2019/9/25

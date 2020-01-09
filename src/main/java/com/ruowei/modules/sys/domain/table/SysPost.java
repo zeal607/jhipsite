@@ -1,9 +1,5 @@
 package com.ruowei.modules.sys.domain.table;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.ruowei.common.entity.AbstractAuditingEntity;
-import com.ruowei.common.json.LongJsonDeserializer;
-import com.ruowei.common.json.LongJsonSerializer;
+import com.ruowei.common.entity.AbstractAuditingUUIDEntity;
 import com.ruowei.modules.sys.domain.enumeration.PostStatusType;
 import com.ruowei.modules.sys.domain.enumeration.PostType;
 import org.hibernate.annotations.Cache;
@@ -21,15 +17,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_post")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysPost extends AbstractAuditingEntity implements Serializable {
-
-    public SysPost(){}
-
-    public SysPost( @JsonSerialize(using = LongJsonSerializer.class)
-                    @JsonDeserialize(using = LongJsonDeserializer.class)
-                        Long id) {
-        this.id = id;
-    }
+public class SysPost extends AbstractAuditingUUIDEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -26,7 +26,7 @@ public interface SysUserEmployeeApi {
      * @param id
      * @return
      */
-    ResponseEntity<SysEmployeeDetailVM> getSysUserEmployee(@PathVariable Long id);
+    ResponseEntity<SysEmployeeDetailVM> getSysUserEmployee(@PathVariable String id);
 
     /**
      * 分页查询员工数据
@@ -65,7 +65,7 @@ public interface SysUserEmployeeApi {
      * @param sysEmployeeId
      * @return
      */
-    ResponseEntity disableSysEmployee(Long sysEmployeeId);
+    ResponseEntity disableSysEmployee(String sysEmployeeId);
 
     /**
      * 启用用户
@@ -74,7 +74,7 @@ public interface SysUserEmployeeApi {
      * @param sysEmployeeId
      * @return
      */
-    ResponseEntity enableSysEmployee(Long sysEmployeeId);
+    ResponseEntity enableSysEmployee(String sysEmployeeId);
 
     /**
      * 删除员工
@@ -83,7 +83,7 @@ public interface SysUserEmployeeApi {
      * @param sysEmployeeId
      * @return
      */
-    ResponseEntity deleteSysEmployee(Long sysEmployeeId);
+    ResponseEntity deleteSysEmployee(String sysEmployeeId);
 
     /**
      * 重置员工密码
@@ -92,7 +92,7 @@ public interface SysUserEmployeeApi {
      * @param sysEmployeeId
      * @return
      */
-    ResponseEntity resetSysEmployeePassword(Long sysEmployeeId);
+    ResponseEntity resetSysEmployeePassword(String sysEmployeeId);
 
     /**
      * 给员工分配角色

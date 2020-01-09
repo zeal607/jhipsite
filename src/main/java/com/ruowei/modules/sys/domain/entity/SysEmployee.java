@@ -2,7 +2,7 @@ package com.ruowei.modules.sys.domain.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ruowei.common.entity.AbstractAuditingEntity;
+import com.ruowei.common.entity.AbstractAuditingUUIDEntity;
 import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 import com.ruowei.modules.sys.domain.table.SysCompany;
 import com.ruowei.modules.sys.domain.table.SysOffice;
@@ -27,7 +27,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "sys_employee")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployee extends AbstractAuditingEntity implements Serializable{
+public class SysEmployee extends AbstractAuditingUUIDEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

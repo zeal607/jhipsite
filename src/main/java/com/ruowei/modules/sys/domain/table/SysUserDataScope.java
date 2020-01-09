@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.domain.table;
 
-import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
+import com.ruowei.common.entity.AbstractPrimaryKeyUUIDEntity;
 import com.ruowei.modules.sys.domain.enumeration.ControlType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -17,20 +17,16 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_user_data_scope")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUserDataScope extends PrimaryKeyAutoIncrementEntity implements Serializable {
+public class SysUserDataScope extends AbstractPrimaryKeyUUIDEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     /**
      * 控制用户ID
      */
     @NotNull
-    @Column(name = "sys_user_id", nullable = false)
-    private Long sysUserId;
+    @Column(name = "sys_user_id", nullable = false, length = 32)
+    private String sysUserId;
 
     /**
      * 控制类型
@@ -56,16 +52,16 @@ public class SysUserDataScope extends PrimaryKeyAutoIncrementEntity implements S
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
-    public Long getSysUserId() {
+    public String getSysUserId() {
         return sysUserId;
     }
 
-    public SysUserDataScope sysUserId(Long sysUserId) {
+    public SysUserDataScope sysUserId(String sysUserId) {
         this.sysUserId = sysUserId;
         return this;
     }
 
-    public void setSysUserId(Long sysUserId) {
+    public void setSysUserId(String sysUserId) {
         this.sysUserId = sysUserId;
     }
 

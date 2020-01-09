@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface SysUserDataScopeRepository
-    extends BaseRepository<Long,SysUserDataScope, QSysUserDataScope> {
+    extends BaseRepository<String,SysUserDataScope, QSysUserDataScope> {
 
 }

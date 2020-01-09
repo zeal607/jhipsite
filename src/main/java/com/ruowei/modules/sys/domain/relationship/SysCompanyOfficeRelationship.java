@@ -1,12 +1,16 @@
 package com.ruowei.modules.sys.domain.relationship;
 
+import com.ruowei.common.entity.AbstractPrimaryKeyAutoEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 公司机构关系表
@@ -16,54 +20,49 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_company_office")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysCompanyOfficeRelationship implements Serializable {
+public class SysCompanyOfficeRelationship  extends AbstractPrimaryKeyAutoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    public Long id;
-
     /**
      * 公司ID
      */
     @ApiModelProperty(value = "公司ID")
-    @Column(name = "sys_company_id")
-    private Long sysCompanyId;
+    @Column(name = "sys_company_id",length = 32)
+    private String sysCompanyId;
 
     /**
      * 机构ID
      */
     @ApiModelProperty(value = "机构ID")
-    @Column(name = "sys_office_id")
-    private Long sysOfficeId;
+    @Column(name = "sys_office_id",length = 32)
+    private String sysOfficeId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
 
-    public Long getSysCompanyId() {
+    public String getSysCompanyId() {
         return sysCompanyId;
     }
 
-    public SysCompanyOfficeRelationship sysCompanyId(Long sysCompanyId) {
+    public SysCompanyOfficeRelationship sysCompanyId(String sysCompanyId) {
         this.sysCompanyId = sysCompanyId;
         return this;
     }
 
-    public void setSysCompanyId(Long sysCompanyId) {
+    public void setSysCompanyId(String sysCompanyId) {
         this.sysCompanyId = sysCompanyId;
     }
 
-    public Long getSysOfficeId() {
+    public String getSysOfficeId() {
         return sysOfficeId;
     }
 
-    public SysCompanyOfficeRelationship sysOfficeId(Long sysOfficeId) {
+    public SysCompanyOfficeRelationship sysOfficeId(String sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
         return this;
     }
 
-    public void setSysOfficeId(Long sysOfficeId) {
+    public void setSysOfficeId(String sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
     }
 
@@ -74,36 +73,25 @@ public class SysCompanyOfficeRelationship implements Serializable {
         return serialVersionUID;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof SysCompanyOfficeRelationship)) {
-            return false;
-        }
-        return id != null && id.equals(((SysCompanyOfficeRelationship) o).id);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SysCompanyOfficeRelationship that = (SysCompanyOfficeRelationship) o;
+        return Objects.equals(sysCompanyId, that.sysCompanyId) &&
+            Objects.equals(sysOfficeId, that.sysOfficeId);
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hash(sysCompanyId, sysOfficeId);
     }
 
     @Override
     public String toString() {
-        return "SysCompanyOffice{" +
-            "id=" + getId() +
-            ", sysCompanyId='" + getSysCompanyId() + "'" +
-            ", sysOfficeId='" + getSysOfficeId() + "'" +
-            "}";
+        return "SysCompanyOfficeRelationship{" +
+            "sysCompanyId='" + sysCompanyId + '\'' +
+            ", sysOfficeId='" + sysOfficeId + '\'' +
+            '}';
     }
 }

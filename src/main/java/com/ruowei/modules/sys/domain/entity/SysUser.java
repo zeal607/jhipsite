@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ruowei.common.entity.AbstractAuditingEntity;
+import com.ruowei.common.entity.AbstractAuditingUUIDEntity;
 import com.ruowei.modules.sys.domain.enumeration.GenderType;
 import com.ruowei.modules.sys.domain.enumeration.UserStatusType;
 import com.ruowei.modules.sys.domain.enumeration.UserType;
@@ -27,7 +27,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "sys_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysUser extends AbstractAuditingEntity implements Serializable {
+public class SysUser extends AbstractAuditingUUIDEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -490,9 +490,6 @@ public class SysUser extends AbstractAuditingEntity implements Serializable {
         return serialVersionUID;
     }
 
-    public Boolean isActivated() {
-        return activated;
-    }
 
     public void setActivated(Boolean activated) {
         this.activated = activated;

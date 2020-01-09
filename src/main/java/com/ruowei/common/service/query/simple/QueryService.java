@@ -37,9 +37,9 @@ import java.util.Optional;
 public abstract class QueryService<
         Entity,
         QEntity extends EntityPath<Entity>,
-        Repository extends BaseRepository<Long,Entity,QEntity>>
+        Repository extends BaseRepository<String,Entity,QEntity>>
     extends io.github.jhipster.service.QueryService<Entity>
-    implements QuerySimpleApi<Long,Entity> {
+    implements QuerySimpleApi<String,Entity> {
 
     private final Logger log = LoggerFactory.getLogger(QueryService.class);
 
@@ -66,7 +66,7 @@ public abstract class QueryService<
      * @return
      */
     @Override
-    public Optional<Entity> findById(Long id){
+    public Optional<Entity> findById(String id){
         return jpaRepository.findById(id);
     }
 
@@ -78,7 +78,7 @@ public abstract class QueryService<
      * @return
      */
     @Override
-    public boolean existsById(Long id){
+    public boolean existsById(String id){
         return jpaRepository.existsById(id);
     }
 

@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface SysCompanyRepository
-    extends BaseRepository<Long, SysCompany, QSysCompany> {
+    extends BaseRepository<String, SysCompany, QSysCompany> {
 
 }

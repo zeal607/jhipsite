@@ -1,7 +1,7 @@
 package com.ruowei.modules.sys.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
+import com.ruowei.common.entity.AbstractAuditingUUIDEntity;
 import com.ruowei.modules.sys.domain.table.Authority;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
@@ -26,7 +26,7 @@ import java.util.Set;
 @Entity
 @Table(name = "sys_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysDeveloperUser extends PrimaryKeyAutoIncrementEntity implements Serializable{
+public class SysDeveloperUser extends AbstractAuditingUUIDEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
@@ -196,10 +196,6 @@ public class SysDeveloperUser extends PrimaryKeyAutoIncrementEntity implements S
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public boolean isActivated() {
-        return activated;
     }
 
     public Instant getCreatedDate() {

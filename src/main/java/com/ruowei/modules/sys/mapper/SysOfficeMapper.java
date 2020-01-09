@@ -16,7 +16,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {})
 public interface SysOfficeMapper extends EntityMapper<SysOfficeDTO, SysOffice> {
 
-    default SysOffice fromId(Long id) {
+    default SysOffice fromId(String id) {
         if (id == null) {
             return null;
         }

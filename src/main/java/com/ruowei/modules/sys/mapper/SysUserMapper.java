@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring", uses = {})
 public interface SysUserMapper extends EntityMapper<SysUserDTO, SysUserTable> {
 
-    default SysUserTable fromId(Long id) {
+    default SysUserTable fromId(String id) {
         if (id == null) {
             return null;
         }

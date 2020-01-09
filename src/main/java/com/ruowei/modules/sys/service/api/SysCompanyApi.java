@@ -15,5 +15,5 @@ public interface SysCompanyApi {
      * @param id
      * @return SysCompany
      */
-    SysCompany checkCompanyExistsById(Long id);
+    SysCompany checkCompanyExistsById(String id);
 }

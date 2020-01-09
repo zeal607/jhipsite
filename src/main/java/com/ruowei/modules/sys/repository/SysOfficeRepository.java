@@ -16,7 +16,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface SysOfficeRepository
-    extends BaseRepository<Long, SysOffice, QSysOffice> {
+    extends BaseRepository<String, SysOffice, QSysOffice> {
     /**
      * 查询机构树根节点
      * @author 刘东奇

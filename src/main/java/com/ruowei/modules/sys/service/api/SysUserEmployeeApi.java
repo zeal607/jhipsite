@@ -43,7 +43,7 @@ public interface SysUserEmployeeApi {
      * @param email     *
      * @return
      */
-    void checkSysUserExists(Long employeeId, String loginCode, String mobile,String email);
+    void checkSysUserExists(String employeeId, String loginCode, String mobile,String email);
 
     /**
      * 根据员工ID获取用户ID
@@ -52,7 +52,7 @@ public interface SysUserEmployeeApi {
      * @param id
      * @return
      */
-    Long getSysUserIdBySysEmployeeId(Long id);
+    String getSysUserIdBySysEmployeeId(String id);
 
     /**
      * 停用员工
@@ -60,7 +60,7 @@ public interface SysUserEmployeeApi {
      * @date 2019/11/16
      * @param sysEmployeeId
      */
-    void disableSysEmployee(Long sysEmployeeId);
+    void disableSysEmployee(String sysEmployeeId);
 
     /**
      * 启用用户
@@ -69,7 +69,7 @@ public interface SysUserEmployeeApi {
      * @param sysEmployeeId
      * @return
      */
-    void enableSysEmployee(Long sysEmployeeId);
+    void enableSysEmployee(String sysEmployeeId);
 
     /**
      * 删除员工
@@ -78,7 +78,7 @@ public interface SysUserEmployeeApi {
      * @param sysEmployeeId
      * @return
      */
-    void deleteSysEmployee(Long sysEmployeeId);
+    void deleteSysEmployee(String sysEmployeeId);
 
     /**
      * 重置员工密码
@@ -87,7 +87,7 @@ public interface SysUserEmployeeApi {
      * @param sysEmployeeId
      * @return
      */
-    void resetSysEmployeePassword(Long sysEmployeeId);
+    void resetSysEmployeePassword(String sysEmployeeId);
 
     /**
      * 给员工分配角色
@@ -97,7 +97,7 @@ public interface SysUserEmployeeApi {
      * @param roleList
      * @return
      */
-    void assignRoleToSysEmployee(Long sysEmployeeId, List<SysRole> roleList);
+    void assignRoleToSysEmployee(String sysEmployeeId, List<SysRole> roleList);
 
     /**
      * 更新员工表
@@ -124,7 +124,7 @@ public interface SysUserEmployeeApi {
      * @param sysEmployeeId
      * @param postList
      */
-    void updateSysEmployeePostRelationship(Long sysEmployeeId, List<SysPost> postList);
+    void updateSysEmployeePostRelationship(String sysEmployeeId, List<SysPost> postList);
 
     /**
      * 更新员工机构职位关系表
@@ -133,7 +133,7 @@ public interface SysUserEmployeeApi {
      * @param sysEmployeeId
      * @param employeeOfficePostList
      */
-    void updateSysEmployeeOfficePostRelationship(Long sysEmployeeId, List<SysEmployeeOfficePost> employeeOfficePostList);
+    void updateSysEmployeeOfficePostRelationship(String sysEmployeeId, List<SysEmployeeOfficePost> employeeOfficePostList);
 
     /**
      * 更新用户角色关系表
@@ -142,5 +142,5 @@ public interface SysUserEmployeeApi {
      * @param sysUserId
      * @param roleList
      */
-    void updateSysUserRoleRelationship(Long sysUserId, List<SysRole> roleList);
+    void updateSysUserRoleRelationship(String sysUserId, List<SysRole> roleList);
 }

@@ -15,7 +15,7 @@ public interface SysOfficeApi {
      * @param rootId
      * @return
      */
-    ResponseEntity getSysOfficeAllNodesByRoot(@PathVariable Long rootId);
+    ResponseEntity getSysOfficeAllNodesByRoot(@PathVariable String rootId);
 
     /**
      * 根据根节点获取直接子节点
@@ -24,5 +24,5 @@ public interface SysOfficeApi {
      * @param rootId
      * @return
      */
-    ResponseEntity getSysOfficeDirectNodesByRoot(@PathVariable Long rootId);
+    ResponseEntity getSysOfficeDirectNodesByRoot(@PathVariable String rootId);
 }

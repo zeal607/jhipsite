@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.domain.table;
 
-import com.ruowei.common.entity.AbstractAuditingEntity;
+import com.ruowei.common.entity.AbstractAuditingUUIDEntity;
 import com.ruowei.modules.sys.domain.enumeration.EmployeeStatusType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -18,7 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "sys_employee")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysEmployeeTable extends AbstractAuditingEntity implements Serializable {
+public class SysEmployeeTable extends AbstractAuditingUUIDEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,8 +48,8 @@ public class SysEmployeeTable extends AbstractAuditingEntity implements Serializ
     /**
      * 机构ID
      */
-    @Column(name = "sys_office_id", length = 20)
-    private Long sysOfficeId;
+    @Column(name = "sys_office_id", length = 32)
+    private String sysOfficeId;
 
     /**
      * 机构名称
@@ -61,8 +61,8 @@ public class SysEmployeeTable extends AbstractAuditingEntity implements Serializ
     /**
      * 公司ID
      */
-    @Column(name = "sys_company_id")
-    private Long sysCompanyId;
+    @Column(name = "sys_company_id", length = 32)
+    private String sysCompanyId;
 
     /**
      * 公司名称
@@ -127,16 +127,16 @@ public class SysEmployeeTable extends AbstractAuditingEntity implements Serializ
         this.empNameEn = empNameEn;
     }
 
-    public Long getSysOfficeId() {
+    public String getSysOfficeId() {
         return sysOfficeId;
     }
 
-    public SysEmployeeTable sysOfficeId(Long sysOfficeId) {
+    public SysEmployeeTable sysOfficeId(String sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
         return this;
     }
 
-    public void setSysOfficeId(Long sysOfficeId) {
+    public void setSysOfficeId(String sysOfficeId) {
         this.sysOfficeId = sysOfficeId;
     }
 
@@ -153,16 +153,16 @@ public class SysEmployeeTable extends AbstractAuditingEntity implements Serializ
         this.officeName = officeName;
     }
 
-    public Long getSysCompanyId() {
+    public String getSysCompanyId() {
         return sysCompanyId;
     }
 
-    public SysEmployeeTable sysCompanyId(Long sysCompanyId) {
+    public SysEmployeeTable sysCompanyId(String sysCompanyId) {
         this.sysCompanyId = sysCompanyId;
         return this;
     }
 
-    public void setSysCompanyId(Long sysCompanyId) {
+    public void setSysCompanyId(String sysCompanyId) {
         this.sysCompanyId = sysCompanyId;
     }
 

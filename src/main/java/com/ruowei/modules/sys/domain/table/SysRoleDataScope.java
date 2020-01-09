@@ -1,6 +1,6 @@
 package com.ruowei.modules.sys.domain.table;
 
-import com.ruowei.common.entity.PrimaryKeyAutoIncrementEntity;
+import com.ruowei.common.entity.AbstractPrimaryKeyUUIDEntity;
 import com.ruowei.modules.sys.domain.enumeration.ControlType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_role_data_scope")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysRoleDataScope extends PrimaryKeyAutoIncrementEntity implements Serializable {
+public class SysRoleDataScope extends AbstractPrimaryKeyUUIDEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,8 +25,8 @@ public class SysRoleDataScope extends PrimaryKeyAutoIncrementEntity implements S
      * 控制角色ID
      */
     @NotNull
-    @Column(name = "sys_role_id", nullable = false)
-    private Long sysRoleId;
+    @Column(name = "sys_role_id", nullable = false, length = 32)
+    private String sysRoleId;
 
     /**
      * 控制类型
@@ -52,16 +52,16 @@ public class SysRoleDataScope extends PrimaryKeyAutoIncrementEntity implements S
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
-    public Long getSysRoleId() {
+    public String getSysRoleId() {
         return sysRoleId;
     }
 
-    public SysRoleDataScope sysRoleId(Long sysRoleId) {
+    public SysRoleDataScope sysRoleId(String sysRoleId) {
         this.sysRoleId = sysRoleId;
         return this;
     }
 
-    public void setSysRoleId(Long sysRoleId) {
+    public void setSysRoleId(String sysRoleId) {
         this.sysRoleId = sysRoleId;
     }
 

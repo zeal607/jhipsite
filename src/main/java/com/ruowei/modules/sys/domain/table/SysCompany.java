@@ -1,5 +1,5 @@
 package com.ruowei.modules.sys.domain.table;
-import com.ruowei.common.entity.AbstractAuditingEntity;
+import com.ruowei.common.entity.AbstractAuditingUUIDEntity;
 import com.ruowei.modules.sys.domain.enumeration.CompanyStatusType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sys_company")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SysCompany extends AbstractAuditingEntity implements Serializable {
+public class SysCompany extends AbstractAuditingUUIDEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -189,10 +189,6 @@ public class SysCompany extends AbstractAuditingEntity implements Serializable {
         this.treeSorts = treeSorts;
     }
 
-    public Boolean isTreeLeaf() {
-        return treeLeaf;
-    }
-
     public SysCompany treeLeaf(Boolean treeLeaf) {
         this.treeLeaf = treeLeaf;
         return this;
@@ -340,7 +336,7 @@ public class SysCompany extends AbstractAuditingEntity implements Serializable {
             ", parentCodes='" + getParentCodes() + "'" +
             ", treeSort=" + getTreeSort() +
             ", treeSorts=" + getTreeSorts() +
-            ", treeLeaf='" + isTreeLeaf() + "'" +
+            ", treeLeaf='" + getTreeLeaf() + "'" +
             ", treeLevel=" + getTreeLevel() +
             ", treeNames='" + getTreeNames() + "'" +
             ", viewCode='" + getViewCode() + "'" +

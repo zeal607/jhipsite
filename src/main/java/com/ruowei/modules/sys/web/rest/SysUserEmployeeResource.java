@@ -72,18 +72,18 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
         "详细描述：该接口为前端的【用户管理页】提供分页查询员工数据功能")
     @ApiImplicitParams({
         @ApiImplicitParam(name="id", value = "主键", paramType = "query", dataType="Long"),
-        @ApiImplicitParam(name="loginCode", value = "登录账号", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="userName", value = "用户昵称", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="email", value = "电子邮箱", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="mobile", value = "手机号码", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="phone", value = "办公电话", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="userType", value = "用户类型", paramType = "query", dataType="UserType"),
+        @ApiImplicitParam(name="user.loginCode", value = "登录账号", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="user.userName", value = "用户昵称", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="user.email", value = "电子邮箱", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="user.mobile", value = "手机号码", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="user.phone", value = "办公电话", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="user.userType", value = "用户类型", paramType = "query", dataType="UserType"),
         @ApiImplicitParam(name="lastModifiedDate", value = "更新时间", paramType = "query", dataType="Instant"),
-        @ApiImplicitParam(name="status", value = "用户状态", paramType = "query", dataType="UserStatusType"),
+        @ApiImplicitParam(name="user.status", value = "用户状态", paramType = "query", dataType="UserStatusType"),
         @ApiImplicitParam(name="empName", value = "员工姓名", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="sysOfficeId", value = "机构ID", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="sysCompanyId", value = "公司ID", paramType = "query", dataType="String"),
-        @ApiImplicitParam(name="sysPostList", value = "岗位ID", paramType = "query", dataType="String")
+        @ApiImplicitParam(name="office.id", value = "机构ID", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="company.id", value = "公司ID", paramType = "query", dataType="String"),
+        @ApiImplicitParam(name="postList.id", value = "岗位ID", paramType = "query", dataType="String")
     })
     @GetMapping("/user-employees")
     public ResponseEntity<List<SysEmployeeListVM>> getAllSysUserEmployees(
@@ -112,7 +112,7 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
     @ApiOperation(value = "获取单个员工", notes = "作者：刘东奇</br>"+
         "详细描述：该接口为前端的【用户管理页-用户详情页、用户修改页】提供获取单个员工数据功能")
     @GetMapping("/user-employee/{id}")
-    public ResponseEntity<SysEmployeeDetailVM> getSysUserEmployee(@PathVariable Long id) {
+    public ResponseEntity<SysEmployeeDetailVM> getSysUserEmployee(@PathVariable String id) {
         log.debug("REST request to 获取单个员工 : {}", id);
         Optional<SysEmployee> one = sysEmployeeRepository.findById(id);
         SysEmployeeDetailVM result = null;
@@ -174,7 +174,7 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
     @ApiOperation(value = "停用员工", notes = "作者：刘东奇</br>"+
         "详细描述：该接口为前端的【用户管理页】提供停用单个员工账号功能")
     @PutMapping("/user-employees/disable")
-    public ResponseEntity disableSysEmployee(@Valid @RequestBody Long sysEmployeeId) {
+    public ResponseEntity disableSysEmployee(@Valid @RequestBody String sysEmployeeId) {
         log.debug("REST request to 停用员工 : {}", sysEmployeeId);
         sysUserEmployeeService.disableSysEmployee(sysEmployeeId);
         return ResponseEntity.ok().build();
@@ -189,7 +189,7 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
     @ApiOperation(value = "启用员工", notes = "作者：刘东奇</br>"+
         "详细描述：该接口为前端的【用户管理页】提供启用单个员工账号功能")
     @PutMapping("/user-employees/enable")
-    public ResponseEntity enableSysEmployee(@Valid @RequestBody Long sysEmployeeId) {
+    public ResponseEntity enableSysEmployee(@Valid @RequestBody String sysEmployeeId) {
         log.debug("REST request to 启用员工 : {}", sysEmployeeId);
         sysUserEmployeeService.enableSysEmployee(sysEmployeeId);
         return ResponseEntity.ok().build();
@@ -203,8 +203,8 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
     @Override
     @ApiOperation(value = "删除员工", notes = "作者：刘东奇</br>"+
         "详细描述：该接口为前端的【用户管理页】提供删除单个员工功能")
-    @DeleteMapping("/user-employees/delete")
-    public ResponseEntity deleteSysEmployee(@Valid @RequestBody Long sysEmployeeId) {
+    @DeleteMapping("/user-employees/delete/{sysEmployeeId}")
+    public ResponseEntity deleteSysEmployee(@PathVariable String sysEmployeeId) {
         log.debug("REST request to 删除员工 : {}", sysEmployeeId);
         sysUserEmployeeService.deleteSysEmployee(sysEmployeeId);
         return ResponseEntity.ok().build();
@@ -219,7 +219,7 @@ public class SysUserEmployeeResource implements SysUserEmployeeApi {
     @ApiOperation(value = "重置员工密码", notes = "作者：刘东奇</br>"+
         "详细描述：该接口为前端的【用户管理页】提供重置单个员工密码功能")
     @PutMapping("/user-employees/reset-password")
-    public ResponseEntity resetSysEmployeePassword(@Valid @RequestBody Long sysEmployeeId) {
+    public ResponseEntity resetSysEmployeePassword(@Valid @RequestBody String sysEmployeeId) {
         log.debug("REST request to 重置员工密码 : {}", sysEmployeeId);
         sysUserEmployeeService.resetSysEmployeePassword(sysEmployeeId);
         return ResponseEntity.ok().build();

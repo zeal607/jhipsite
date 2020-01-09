@@ -25,6 +25,7 @@ import com.ruowei.modules.sys.service.util.SysEmployeeUtil;
 import com.ruowei.modules.sys.service.util.SysUserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.CacheManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +52,9 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
     private final SysEmployeePostRelationshipRepository sysEmployeePostRelationshipRepository;
     private final SysEmployeeOfficePostRelationshipRepository sysEmployeeOfficePostRelationshipRepository;
     private final SysEmployeeRepository sysEmployeeRepository;
+
+    private final CacheManager cacheManager;
+
     /**
      * 密码加密器
      */
@@ -65,7 +69,7 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
                                   SysEmployeePostRelationshipRepository sysEmployeePostRelationshipRepository,
                                   SysEmployeeOfficePostRelationshipRepository sysEmployeeOfficePostRelationshipRepository,
                                   SysEmployeeRepository sysEmployeeRepository,
-                                  PasswordEncoder passwordEncoder) {
+                                  CacheManager cacheManager, PasswordEncoder passwordEncoder) {
         this.sysCompanyService = sysCompanyService;
         this.sysOfficeService = sysOfficeService;
         this.sysUserTableRepository = sysUserTableRepository;
@@ -73,6 +77,7 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
         this.sysEmployeePostRelationshipRepository = sysEmployeePostRelationshipRepository;
         this.sysEmployeeOfficePostRelationshipRepository = sysEmployeeOfficePostRelationshipRepository;
         this.sysEmployeeRepository = sysEmployeeRepository;
+        this.cacheManager = cacheManager;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -131,11 +136,13 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
     @Override
     public SysEmployee modifySysUserEmployee(SysEmployee newSysEmployee) {
         // 判断登录ID、手机号、电子邮箱、员工编号是否重复
-        this.checkSysUserExists(
-            newSysEmployee.getId(),
-            newSysEmployee.getUser().getLoginCode(),
-            newSysEmployee.getUser().getMobile(),
-            newSysEmployee.getUser().getEmail());
+        if(null!=newSysEmployee.getUser()){
+            this.checkSysUserExists(
+                newSysEmployee.getId(),
+                newSysEmployee.getUser().getLoginCode(),
+                newSysEmployee.getUser().getMobile(),
+                newSysEmployee.getUser().getEmail());
+        }
         // 判断员工是否存在
         Assert.isTrue(sysEmployeeRepository.existsById(newSysEmployee.getId()),
             ErrorMessageUtils.getNotFoundMessage(
@@ -149,7 +156,7 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
             //不支持修改密码
             newSysEmployee.getUser().setPassword(null);
             //自动查询主键
-            Long sysUserId = this.getSysUserIdBySysEmployeeId(newSysEmployee.getId());
+            String sysUserId = this.getSysUserIdBySysEmployeeId(newSysEmployee.getId());
             newSysEmployee.getUser().setId(sysUserId);
             updateSysUserTable(newSysEmployee.getUser(),newSysEmployee.getEmpName());
             //3、更新用户角色关系表数据
@@ -159,7 +166,10 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
         updateSysEmployeePostRelationship(newSysEmployee.getId(),newSysEmployee.getPostList());
         //5、更新员工附属机构及岗位关系表数据
         updateSysEmployeeOfficePostRelationship(newSysEmployee.getId(),newSysEmployee.getOfficePostList());
-        return sysEmployeeRepository.findById(newSysEmployee.getId()).get();
+        //6、更新缓存
+        //TODO 此处更新缓存有待优化，应该只更新指定记录的缓存，而不是更新全部
+        cacheManager.getCache(SysEmployee.class.getName()).clear();
+        return newSysEmployee;
     }
 
     /**
@@ -176,14 +186,25 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
         // 判断机构是否有效存在
         if(newSysEmployee.getOffice() !=null){
             SysOffice sysOffice = sysOfficeService.checkOfficeExistsById(newSysEmployee.getOffice().getId());
-            sysEmployeeTableUpdateClause.set(qSysEmployeeTable.sysOfficeId,sysOffice.getId());
-            sysEmployeeTableUpdateClause.set(qSysEmployeeTable.officeName,sysOffice.getOfficeName());
+            if(sysOffice==null){
+                sysEmployeeTableUpdateClause.setNull(qSysEmployeeTable.sysOfficeId);
+                sysEmployeeTableUpdateClause.setNull(qSysEmployeeTable.officeName);
+            }else{
+                sysEmployeeTableUpdateClause.set(qSysEmployeeTable.sysOfficeId,sysOffice.getId());
+                sysEmployeeTableUpdateClause.set(qSysEmployeeTable.officeName,sysOffice.getOfficeName());
+            }
+
         }
         // 判断公司是否有效存在
         if(newSysEmployee.getCompany() != null){
             SysCompany sysCompany = sysCompanyService.checkCompanyExistsById(newSysEmployee.getCompany().getId());
-            sysEmployeeTableUpdateClause.set(qSysEmployeeTable.sysCompanyId,sysCompany.getId());
-            sysEmployeeTableUpdateClause.set(qSysEmployeeTable.companyName,sysCompany.getCompanyName());
+            if(sysCompany==null){
+                sysEmployeeTableUpdateClause.setNull(qSysEmployeeTable.sysCompanyId);
+                sysEmployeeTableUpdateClause.setNull(qSysEmployeeTable.companyName);
+            }else{
+                sysEmployeeTableUpdateClause.set(qSysEmployeeTable.sysCompanyId,sysCompany.getId());
+                sysEmployeeTableUpdateClause.set(qSysEmployeeTable.companyName,sysCompany.getCompanyName());
+            }
         }
         //判断员工编号
         if(StringUtils.isNotEmpty(newSysEmployee.getEmpCode())){
@@ -338,7 +359,7 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      * @param postList
      */
     @Override
-    public void updateSysEmployeePostRelationship(Long sysEmployeeId, List<SysPost> postList){
+    public void updateSysEmployeePostRelationship(String sysEmployeeId, List<SysPost> postList){
         if(postList!=null){
             //先删除
             QSysEmployeePostRelationship qSysEmployeePostRelationship = QSysEmployeePostRelationship.sysEmployeePostRelationship;
@@ -362,7 +383,7 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      * @param employeeOfficePostList
      */
     @Override
-    public void updateSysEmployeeOfficePostRelationship(Long sysEmployeeId, List<SysEmployeeOfficePost> employeeOfficePostList){
+    public void updateSysEmployeeOfficePostRelationship(String sysEmployeeId, List<SysEmployeeOfficePost> employeeOfficePostList){
         if(employeeOfficePostList!=null){
             //先删除
             QSysEmployeeOfficePostRelationship qSysEmployeeOfficePostRelationship = QSysEmployeeOfficePostRelationship.sysEmployeeOfficePostRelationship;
@@ -392,7 +413,7 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      * @date 2019/11/8
      */
     @Override
-    public void checkSysUserExists(Long employeeId,String loginCode, String mobile, String email) {
+    public void checkSysUserExists(String employeeId,String loginCode, String mobile, String email) {
         // 创建用户
         // 判断登录id、电话是否重复
         QSysUserTable qSysUserTable = QSysUserTable.sysUserTable;
@@ -414,7 +435,7 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
             return;
         }else if(employeeId != null){
             //curId不为空，表示是更新用户操作，且curId表示更新用户的主键
-            booleanBuilder.and(qSysUserTable.refCode.castToNum(Long.class).ne(employeeId));
+            booleanBuilder.and(qSysUserTable.refCode.ne(employeeId));
         }
         Assert.isTrue(!this.sysUserTableRepository.exists(booleanBuilder),
             ErrorMessageUtils.getAlreadyExistMessageByOrMap("用户",map));
@@ -429,10 +450,10 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      * @date 2019/11/14
      */
     @Override
-    public Long getSysUserIdBySysEmployeeId(Long id) {
+    public String getSysUserIdBySysEmployeeId(String id) {
         QSysUserTable qSysUser = QSysUserTable.sysUserTable;
-        JPAQuery<Long> jpaQuery = this.queryFactory.select(qSysUser.id).from(qSysUser)
-            .where(qSysUser.refCode.castToNum(Long.class).eq(id));
+        JPAQuery<String> jpaQuery = this.queryFactory.select(qSysUser.id).from(qSysUser)
+            .where(qSysUser.refCode.eq(id));
         return jpaQuery.fetchOne();
     }
     /**
@@ -442,10 +463,10 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      * @param sysEmployeeId
      */
     @Override
-    public void disableSysEmployee(Long sysEmployeeId) {
+    public void disableSysEmployee(String sysEmployeeId) {
         QSysUserTable qSysUserTable = QSysUserTable.sysUserTable;
         this.queryFactory.update(qSysUserTable).set(qSysUserTable.status,UserStatusType.DISABLE)
-            .where(qSysUserTable.refCode.castToNum(Long.class).eq(sysEmployeeId)).execute();
+            .where(qSysUserTable.refCode.eq(sysEmployeeId)).execute();
     }
 
     /**
@@ -456,10 +477,10 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      * @return
      */
     @Override
-    public void enableSysEmployee(Long sysEmployeeId) {
+    public void enableSysEmployee(String sysEmployeeId) {
         QSysUserTable qSysUserTable = QSysUserTable.sysUserTable;
         this.queryFactory.update(qSysUserTable).set(qSysUserTable.status,UserStatusType.NORMAL)
-            .where(qSysUserTable.refCode.castToNum(Long.class).eq(sysEmployeeId)).execute();
+            .where(qSysUserTable.refCode.eq(sysEmployeeId)).execute();
     }
 
     /**
@@ -470,10 +491,10 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      * @return
      */
     @Override
-    public void deleteSysEmployee(Long sysEmployeeId) {
+    public void deleteSysEmployee(String sysEmployeeId) {
         QSysUserTable qSysUserTable = QSysUserTable.sysUserTable;
         this.queryFactory.update(qSysUserTable).set(qSysUserTable.status,UserStatusType.DELETE)
-            .where(qSysUserTable.refCode.castToNum(Long.class).eq(sysEmployeeId)).execute();
+            .where(qSysUserTable.refCode.eq(sysEmployeeId)).execute();
 
         QSysEmployeeTable qSysEmployeeTable = QSysEmployeeTable.sysEmployeeTable;
         this.queryFactory.update(qSysEmployeeTable).set(qSysEmployeeTable.status,EmployeeStatusType.DELETE)
@@ -488,10 +509,10 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      * @return
      */
     @Override
-    public void resetSysEmployeePassword(Long sysEmployeeId) {
+    public void resetSysEmployeePassword(String sysEmployeeId) {
         QSysUserTable qSysUserTable = QSysUserTable.sysUserTable;
         this.queryFactory.update(qSysUserTable).set(qSysUserTable.password,passwordEncoder.encode(DEFAULT_PASSWORD))
-            .where(qSysUserTable.refCode.castToNum(Long.class).eq(sysEmployeeId)).execute();
+            .where(qSysUserTable.refCode.eq(sysEmployeeId)).execute();
     }
 
     /**
@@ -503,8 +524,8 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      * @return
      */
     @Override
-    public void assignRoleToSysEmployee(Long sysEmployeeId, List<SysRole> roleList) {
-        Long sysUserId = this.getSysUserIdBySysEmployeeId(sysEmployeeId);
+    public void assignRoleToSysEmployee(String sysEmployeeId, List<SysRole> roleList) {
+        String sysUserId = this.getSysUserIdBySysEmployeeId(sysEmployeeId);
         this.updateSysUserRoleRelationship(sysUserId,roleList);
     }
 
@@ -516,7 +537,7 @@ public class SysUserEmployeeService extends BaseService implements SysUserEmploy
      * @param roleList
      */
     @Override
-    public void updateSysUserRoleRelationship(Long sysUserId, List<SysRole> roleList){
+    public void updateSysUserRoleRelationship(String sysUserId, List<SysRole> roleList){
         if(sysUserId!=null && roleList!=null){
             //先删除
             QSysUserRoleRelationship qSysUserRoleRelationship = QSysUserRoleRelationship.sysUserRoleRelationship;

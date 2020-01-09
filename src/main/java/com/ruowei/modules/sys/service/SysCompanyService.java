@@ -1,5 +1,6 @@
 package com.ruowei.modules.sys.service;
 
+import com.ruowei.common.lang.StringUtils;
 import com.ruowei.common.service.BaseService;
 import com.ruowei.modules.sys.domain.table.SysCompany;
 import com.ruowei.modules.sys.repository.SysCompanyRepository;
@@ -34,10 +35,13 @@ public class SysCompanyService extends BaseService implements SysCompanyApi {
      * @date 2019/11/2
      */
     @Override
-    public SysCompany checkCompanyExistsById(Long id) {
-        Assert.notNull(id,"公司ID不能为空");
-        Optional<SysCompany> sysCompany = sysCompanyRepository.findById(id);
-        Assert.isTrue(sysCompany.isPresent(),"公司："+id+"不存在");
-        return sysCompany.get();
+    public SysCompany checkCompanyExistsById(String id) {
+        if(StringUtils.isNotEmpty(id)){
+            Optional<SysCompany> sysCompany = sysCompanyRepository.findById(id);
+            Assert.isTrue(sysCompany.isPresent(),"公司："+id+"不存在");
+            return sysCompany.get();
+        }else{
+            return null;
+        }
     }
 }

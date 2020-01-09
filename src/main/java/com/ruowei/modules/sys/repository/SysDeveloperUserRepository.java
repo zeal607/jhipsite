@@ -16,7 +16,7 @@ import java.util.Optional;
  * Spring Data JPA repository for the {@link User} entity.
  */
 @Repository
-public interface SysDeveloperUserRepository extends JpaRepository<SysDeveloperUser, Long> {
+public interface SysDeveloperUserRepository extends JpaRepository<SysDeveloperUser, String> {
 
     String USERS_BY_LOGIN_CACHE = "usersByLogin";
 
@@ -35,7 +35,7 @@ public interface SysDeveloperUserRepository extends JpaRepository<SysDeveloperUs
     Optional<SysDeveloperUser> findOneByLogin(String login);
 
     @EntityGraph(attributePaths = "authorities")
-    Optional<SysDeveloperUser> findOneWithAuthoritiesById(Long id);
+    Optional<SysDeveloperUser> findOneWithAuthoritiesById(String id);
 
     @EntityGraph(attributePaths = "authorities")
     @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)

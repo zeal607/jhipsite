@@ -14,11 +14,12 @@ import java.util.Optional;
 
 /**
  * Spring Data  repository for the SysUser entity.
+ * @author 刘东奇
  */
 @SuppressWarnings("unused")
 @Repository
 public interface SysUserTableRepository
-    extends BaseRepository<Long, SysUserTable, QSysUserTable> {
+    extends BaseRepository<String, SysUserTable, QSysUserTable> {
 
     String USERS_BY_LOGIN_CODE_CACHE = "usersByLoginCode";
     String USERS_BY_EMAIL_CACHE = "usersByEmail";

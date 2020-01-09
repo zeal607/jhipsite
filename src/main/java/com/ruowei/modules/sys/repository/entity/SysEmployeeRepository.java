@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Spring Data  repository for the SysEmployee entity.
+ * @author 刘东奇
  */
 @SuppressWarnings("unused")
 @Repository
 public interface SysEmployeeRepository
-    extends BaseRepository<Long, SysEmployee, QSysEmployee> {
+    extends BaseRepository<String, SysEmployee, QSysEmployee> {
 }

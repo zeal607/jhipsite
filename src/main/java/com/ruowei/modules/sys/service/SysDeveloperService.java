@@ -322,7 +322,7 @@ public class SysDeveloperService extends BaseService implements SysDeveloperApi 
         // 生成重置码
         // 发送对方邮箱
         mailService.sendPasswordResetMail(findOneByEmailIgnoreCase(mail)
-            .filter(SysDeveloperUser::isActivated)
+            .filter(SysDeveloperUser::getActivated)
             .map(user -> {
                 user.setResetKey(RandomUtil.generateResetKey());
                 user.setResetDate(Instant.now());
